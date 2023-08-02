@@ -1,0 +1,4055 @@
+﻿1
+00:00:00,275 --> 00:00:05,700
+我想我们应该先介绍一下这个问题，
+I guess we should do an intro to this as well, 
+
+2
+00:00:05,700 --> 00:00:14,075
+这是一个自由问答的讲座，你们两个可以问问题，
+so this is just sort of a free-form Q&A lecture where you as in the two people sitting here, 
+
+3
+00:00:14,075 --> 00:00:19,225
+但也包括在家里的所有人。
+but also everyone at home who did not come here in person, get to ask questions. 
+
+4
+00:00:19,225 --> 00:00:21,850
+我们事先收到了一些问题，
+And we have a bunch of questions people asked in advance, 
+
+5
+00:00:21,850 --> 00:00:24,075
+但你们也可以在讲座期间提出其他问题。
+but you can also ask additional questions during, 
+
+6
+00:00:24,075 --> 00:00:26,103
+对于在场的两位，
+for the two of you who are here, 
+
+7
+00:00:26,103 --> 00:00:30,275
+你们可以举手提问，也可以匿名地在论坛上提交问题，
+you can do it either by raising your hand or you can submit it on the forum and be anonymous. 
+
+8
+00:00:30,325 --> 00:00:31,700
+这取决于你们自己。
+It's up to you. 
+
+9
+00:00:32,725 --> 00:00:36,275
+无论如何，我们将会回答一些已经被问到的问题，
+Regardless though, what we're gonna do is just go through some of the questions that have been asked 
+
+10
+00:00:36,275 --> 00:00:42,800
+尽可能给出有用的答案，虽然我们没有做过任何准备。
+and try to give as helpful answers as we can, although they are unprepared on our side.  
+
+11
+00:00:42,800 --> 00:00:44,575
+好的，这就是我们的计划。
+And yeah, that's the plan. 
+
+12
+00:00:44,575 --> 00:00:48,050
+我们将按照问题的受欢迎程度来回答。
+I guess we go from popular to least popular. 
+
+13
+00:00:48,050 --> 00:00:49,425
+开始吧！
+Fire away!
+
+14
+00:00:49,425 --> 00:00:51,329
+第一个问题是：
+Alright, so for our first question, 
+
+15
+00:00:51,329 --> 00:00:55,027
+有没有关于学习操作系统相关主题，
+any recommendations on learning operating system related topics like 
+
+16
+00:00:55,027 --> 00:00:59,350
+比如进程、虚拟内存、中断、内存管理等的建议？
+processes, virtual memory, interrupts, memory management, etc.? 
+
+17
+00:00:59,350 --> 00:01:03,350
+我认为这是一个有趣的问题，
+So I think, this is an interesting question because 
+
+18
+00:01:03,350 --> 00:01:08,000
+因为这些都是非常低层的概念，
+these are really low-level concepts that often do not matter 
+
+19
+00:01:08,000 --> 00:01:11,300
+除非你必须在某些情况下处理这些问题，否则通常并不重要，对吧？
+unless you have to deal with this in some capacity, right? 
+
+20
+00:01:11,300 --> 00:01:15,199
+比如你正在编写非常低层的代码，
+So one instance where this matters is 
+
+21
+00:01:15,199 --> 00:01:19,550
+比如实现内核
+if you're writing really low-level code like you're implementing a kernel or something like that, 
+
+22
+00:01:19,550 --> 00:01:21,650
+或者想要对Linux内核进行修改。
+or you want to just hack on the Linux kernel. 
+
+23
+00:01:21,650 --> 00:01:27,075
+否则，你很少需要自己处理这些问题，尤其是像虚拟内存和中断这样的问题。
+It's rare otherwise that you need to work with, especially like virtual memory and interrupts and stuff yourself. 
+
+24
+00:01:27,075 --> 00:01:32,750
+进程是一个更一般的概念，我们在这门课程中也稍微谈到了一些，
+Processes, I think, are a more general concept that we've talked a little bit about in this class as well, 
+
+25
+00:01:32,750 --> 00:01:37,350
+并且工具如htop、pgrep、kill、信号等也是相关的。
+and tools like `htop`, `pgrep`, `kill`, and signals and that sort of stuff.
+
+26
+00:01:37,350 --> 00:01:45,450
+关于学习这个问题，也许最好的方法之一是尝试参加这个主题的入门课程。
+In terms of learning it, maybe one of the best ways is to try to take either an introductory class on the topic. 
+
+27
+00:01:45,450 --> 00:01:49,150
+例如，麻省理工学院有一个称为6828的课程，
+So for example, MIT has a class called 6828, 
+
+28
+00:01:49,150 --> 00:01:53,618
+你可以根据给定的代码
+which is where you essentially build and develop your own operating system 
+
+29
+00:01:53,618 --> 00:01:55,775
+构建和开发自己的操作系统，
+based on some code that you're given, 
+
+30
+00:01:55,775 --> 00:02:00,200
+所有实验和课程资源都是公开的。
+and all of those labs are publicly available and all the resources for the class are publicly available, 
+
+31
+00:02:00,200 --> 00:02:03,525
+通过亲自动手去实践，这是学习的好方法。
+and so that is a good way to really learn them is by doing them yourself. 
+
+32
+00:02:03,525 --> 00:02:11,550
+此外，还有各种在线教程，可以指导你从零开始编写内核。
+There are also various tutorials online that basically guide you through how do you write a kernel from scratch. 
+
+33
+00:02:11,550 --> 00:02:17,050
+这不一定是一个非常精细的内核，不能运行任何真正的软件，
+Not necessarily a very elaborate one, not one you would want to run any real software on, 
+
+34
+00:02:17,050 --> 00:02:18,500
+但它可以教你基本知识。
+but just to teach you the basics. 
+
+35
+00:02:19,225 --> 00:02:24,675
+你可以搜索如何使用你选择的编程语言编写内核，
+And so that would be another thing to look up, like how do I write a kernel in and then your language of choice. 
+
+36
+00:02:24,675 --> 00:02:27,500
+你可能找不到可以在Python中编写内核的教程，
+You will probably not find one that lets you do it in Python, 
+
+37
+00:02:27,500 --> 00:02:32,625
+但是在C、C++、Rust等语言中，有许多这样的教程。
+but in like C, C++, Rust, there are a bunch of topics like this.
+
+38
+00:02:33,275 --> 00:02:36,400
+关于操作系统的另一个注释，
+One other note on operating systems, 
+
+39
+00:02:36,400 --> 00:02:39,400
+正如Jon提到的，麻省理工学院有一个6.828的课程，
+so like Jon mentioned, MIT has a 6828 class, 
+
+40
+00:02:39,400 --> 00:02:41,733
+但如果你想了解更高层次的概述，
+but if you're looking for a more high-level overview, 
+
+41
+00:02:41,733 --> 00:02:43,850
+不一定是关于编程或操作系统，
+not necessarily programming or an operating system, 
+
+42
+00:02:43,850 --> 00:02:44,950
+而是学习概念，
+but just learning about the concepts, 
+
+43
+00:02:44,950 --> 00:02:49,650
+另一个好的资源是Andy Tannenbaum写的《现代操作系统》一书。
+another good resource is a book called "Modern Operating Systems" by Andy Tannenbaum. 
+
+44
+00:02:50,750 --> 00:02:57,825
+实际上还有一本名为《FreeBSD操作系统》的书也非常好。
+There's also actually a book called "The FreeBSD Operating System" which is really good. 
+
+45
+00:02:57,825 --> 00:02:59,325
+它并没有涉及Linux，
+It doesn't go through Linux, 
+
+46
+00:02:59,325 --> 00:03:00,550
+而是介绍了FreeBSD，
+but it goes through FreeBSD, 
+
+47
+00:03:00,550 --> 00:03:06,375
+BSD内核的组织和文档可能比Linux更好，
+and the BSD kernel is arguably better organized than the Linux one and better documented, 
+
+48
+00:03:06,375 --> 00:03:11,075
+因此它可能是比尝试理解Linux更温和的介绍一些主题的方式。
+and so it might be a gentler introduction to some of those topics than trying to understand Linux.
+
+49
+00:03:12,586 --> 00:03:16,950
+解决了？
+Do you want to check it as an answered?Yes!Nice!Answered.
+
+50
+00:03:16,950 --> 00:03:21,942
+下一个问题，你会优先学习哪些工具？
+For our next question, what are some of the tools you'd prioritize learning first? 
+
+51
+00:03:21,942 --> 00:03:26,450
+也许我们都可以分享一下我们的看法？好的。
+Maybe we can all go through and give our opinion on this? Yeah.
+
+52
+00:03:26,475 --> 00:03:32,875
+首先优先学习哪些工具？我认为熟练掌握编辑器
+Tools to prioritize learning first? I think learning your editor well, 
+
+53
+00:03:32,875 --> 00:03:35,947
+可以在各个方面为你提供帮助，
+just serves you in all capacities 
+
+54
+00:03:35,947 --> 00:03:38,757
+例如高效地编辑文件，
+like being efficient at editing files, 
+
+55
+00:03:38,757 --> 00:03:41,701
+这基本上就是你会花费大部分时间做的事情。
+is just like a majority of what you're going to spend your time doing. 
+
+56
+00:03:41,701 --> 00:03:46,300
+而且总体来说，尽量使用键盘而不是鼠标，
+And in general, just using your keyboard more and your mouse less. 
+
+57
+00:03:46,300 --> 00:03:52,325
+这意味着你可以花更多时间做有用的事情，而不是浪费时间在移动上。
+It means that you get to spend more of your time doing useful things and less of your time moving. 
+
+58
+00:03:52,325 --> 00:03:56,125
+我认为这应该是我的首要任务，
+I think that would be my top priority, 
+
+59
+00:04:03,525 --> 00:04:09,750
+所以我会说，优先学习哪些工具取决于你正在做什么。
+so I would say that for what tool to prioritize will depend on what exactly you're doing. 
+
+60
+00:04:09,750 --> 00:04:17,675
+我认为核心思想是要尝试找到你正在反复执行的任务类型，
+I think the core idea is you should try to find the types of tasks that you are doing repetitively and, 
+
+61
+00:04:17,675 --> 00:04:23,740
+例如，如果你正在执行某种机器学习工作量，
+so if you are doing some sort of like machine learning workload 
+
+62
+00:04:23,740 --> 00:04:27,300
+并且发现自己经常使用我们昨天介绍的Jupyter笔记本，
+and you find yourself using Jupyter notebooks, like the one we presented yesterday, a lot. 
+
+63
+00:04:27,300 --> 00:04:33,148
+那么使用鼠标可能不是最好的选择，
+Then again, using a mouse for that might not be the best idea 
+
+64
+00:04:33,148 --> 00:04:35,825
+你需要熟悉键盘快捷键。
+and you want to familiarize with the keyboard shortcuts. 
+
+65
+00:04:35,825 --> 00:04:41,450
+几乎任何事情都是如此，你最终会发现有一些重复的任务，
+And pretty much with anything, you will end up figuring out that there are some repetitive tasks, 
+
+66
+00:04:41,450 --> 00:04:43,425
+你正在运行一台计算机，
+and you're running a computer, 
+
+67
+00:04:43,425 --> 00:04:50,350
+而只是试图找出，“哦，可能有更好的方法来做这件事”，无论是终端还是编辑器。
+and just trying to figure out, "oh, there's probably a better way to do this," be it a terminal, be it an editor. 
+
+68
+00:04:50,350 --> 00:04:56,850
+学习使用我们涉及的一些主题可能非常有趣，
+And it might be really interesting to learn to use some of the topics that we have covered, 
+
+69
+00:04:56,850 --> 00:05:04,750
+但如果它们在日常工作中不是非常有用，那么可能不值得优先考虑它们。
+but if they're not extremely useful on an everyday basis, then it might not be worth prioritizing them.
+
+70
+00:05:06,150 --> 00:05:09,175
+在我看来，本课程所涵盖的主题中，
+Out of the topics covered in this class, 
+
+71
+00:05:09,175 --> 00:05:12,950
+我认为最有用的两个是版本控制和文本编辑器。
+in my opinion, two of the most useful things are version control and text editors. 
+
+72
+00:05:13,050 --> 00:05:16,275
+我认为它们有点不同，
+And I think they're a little bit different from each other, in the sense that
+
+73
+00:05:16,275 --> 00:05:18,750
+因为文本编辑器非常有用，
+ text editors I think are really useful to learn well, 
+
+74
+00:05:18,750 --> 00:05:21,225
+但在我们开始使用Vim
+but it was probably the case that before we started using Vim 
+
+75
+00:05:21,225 --> 00:05:22,575
+和它所有的花式键盘快捷键之前，
+and all its fancy keyboard shortcuts, 
+
+76
+00:05:22,575 --> 00:05:25,209
+你可能已经在使用其他文本编辑器，
+you had some other text editor you were using before
+
+77
+00:05:25,209 --> 00:05:28,350
+并且可以很好地编辑文本，只是可能有点低效。
+ and you could edit text just fine, maybe a little bit inefficiently. 
+
+78
+00:05:28,350 --> 00:05:31,475
+而我认为版本控制是另一个非常有用的技能，
+Whereas I think version control is another really useful skill, 
+
+79
+00:05:31,475 --> 00:05:34,575
+如果你不真正了解该工具，
+and that's one where if you don't really know the tool properly, 
+
+80
+00:05:34,575 --> 00:05:38,925
+它实际上可能会导致一些问题，例如数据丢失或与人无法有效合作。
+it can actually lead to some problems like loss of data or just inability to collaborate properly with people. 
+
+81
+00:05:38,925 --> 00:05:42,750
+因此，我认为版本控制是值得好好学习的第一件事。
+So I think version control is one of the first things that's worth learning well.
+
+82
+00:05:42,750 --> 00:05:44,100
+是的，我同意这一点。
+Yeah, I agree with that. 
+
+83
+00:05:44,100 --> 00:05:48,700
+我认为学习像Git这样的工具将在以后为你节省很多心酸。
+I think learning a tool like Git is just gonna save you so much heartache down the line. 
+
+84
+00:05:48,700 --> 00:05:53,925
+此外，它还有助于你与他人合作。
+It also, to add on to that, really helps you collaborate with others, 
+
+85
+00:05:53,925 --> 00:05:58,000
+Anish在上一堂课中提到了GitHub，
+and Anish touched a little bit on GitHub in the last lecture, 
+
+86
+00:05:58,000 --> 00:06:01,438
+学会使用这个工具可以在
+and just learning to use that tool well in order to 
+
+87
+00:06:01,438 --> 00:06:06,275
+参与其他人正在进行的大型软件项目时帮助你。这是一项非常宝贵的技能。
+work on larger software projects that other people are working on is an invaluable skill.
+
+88
+00:06:09,475 --> 00:06:14,600
+关于"何时使用Python, 何时使用Bash脚本或其他编程语言"这个问题,
+For our next question, "When do I use Python versus a Bash script versus some other language?" 
+
+89
+00:06:15,400 --> 00:06:21,450
+这很难回答,因为正如Jose之前所说的,
+This is tough because I think this comes down to what Jose was saying earlier too, 
+
+90
+00:06:21,450 --> 00:06:23,818
+这取决于你要做什么.
+that it really depends on what you're trying to do. 
+
+91
+00:06:23,818 --> 00:06:27,018
+对于我来说,特别是对于Bash脚本来说,
+For me, I think for Bash scripts in particular, 
+
+92
+00:06:27,018 --> 00:06:31,242
+它是用于自动运行一堆命令的.
+Bash scripts are for automating running a bunch of commands. 
+
+93
+00:06:31,242 --> 00:06:35,300
+你不想在Bash脚本中编写其他的业务逻辑.
+You don't want to write any other, like, business logic in Bash. 
+
+94
+00:06:35,300 --> 00:06:40,125
+比如说,'我想按这个顺序运行这些命令...
+Like, it is just for, 'I want to run these commands, in this order... 
+
+95
+00:06:40,125 --> 00:06:42,182
+也许带一些参数?' 
+maybe with arguments?' 
+
+96
+00:06:42,182 --> 00:06:46,975
+但是,即使这样,一旦你开始传递参数,你也不确定是否需要一个Bash脚本.
+But - but, like, even that, it's unclear that you want a Bash script once you start taking arguments. 
+
+97
+00:06:46,975 --> 00:06:52,102
+同样的,一旦你开始进行任何类型的文本处理
+Similarly, like, once you start doing any kind of, like, text processing,
+
+98
+00:06:52,102 --> 00:06:56,198
+或配置,
+ or configuration, all that, reach for a language that is... 
+
+99
+00:06:56,250 --> 00:07:00,375
+就要使用比Bash更专业的编程语言.
+a more serious programming language than Bash is. 
+
+100
+00:07:00,375 --> 00:07:03,703
+ Bash只适用于短小的单次脚本
+Bash is really for short, one-off scripts,
+
+101
+00:07:03,703 --> 00:07:08,475
+或在终端、shell上
+ or ones that have a very well-defined use case, 
+
+102
+00:07:08,475 --> 00:07:11,525
+有一个非常明确的使用案例. 
+on the terminal, in the shell, probably.
+
+103
+00:07:11,950 --> 00:07:15,067
+对于稍微具体的指导方针,可以说,
+For a slightly more concrete guideline, you might say, 
+
+104
+00:07:15,067 --> 00:07:18,139
+"如果代码行数不到一百行,可以编写一个Bash脚本",
+'Write a Bash script if it's less than a hundred lines of code or so', 
+
+105
+00:07:18,175 --> 00:07:20,825
+但一旦超过这个点,Bash就变得不灵活,
+but once it gets beyond that point, Bash is kind of unwieldy, 
+
+106
+00:07:20,825 --> 00:07:24,025
+并且可能值得转向一个更为专业的编程语言,比如Python.
+and it's probably worth switching to a more serious programming language, like Python. 
+
+107
+00:07:24,025 --> 00:07:29,400
+此外,我想补充的是,有时候我发现
+And, to add to that, I would say, like, I found myself writing, 
+
+108
+00:07:29,400 --> 00:07:30,998
+自己在Python中编写脚本,
+sometimes, scripts in Python, 
+
+109
+00:07:30,998 --> 00:07:36,700
+因为如果我已经在Python中解决了某些子问题,
+because if I have already solved some subproblem that covers part of the problem in Python, 
+
+110
+00:07:36,700 --> 00:07:41,121
+我发现使用之前在Python中找到的解决方案
+I find it much easier to compose the previous solution that I found out in Python than 
+
+111
+00:07:41,121 --> 00:07:45,750
+比尝试重复使用Bash代码更容易。
+just try to reuse Bash code, that I don't find as reusable as Python.
+
+112
+00:07:45,825 --> 00:07:49,407
+同样的，很多人写了像Python库或Ruby库这样的东西
+And in the same way it's kind of nice that a lot of people have written something like
+
+113
+00:07:49,407 --> 00:07:53,887
+来完成很多这样的任务，这种方式是非常好的。
+ Python libraries or like Ruby libraries to do a lot of these things, whereas, in Bash, 
+
+114
+00:07:53,887 --> 00:07:56,050
+而在Bash中，很难进行代码重用。
+it's kind of hard to have, like, code reuse. 
+
+115
+00:07:58,275 --> 00:08:03,103
+事实上，
+And, in fact, I think to add to that, 
+
+116
+00:08:03,103 --> 00:08:07,775
+如果你在某种语言中找到一个帮助你完成任务的库，
+usually, if you find a library, in some language that 
+
+117
+00:08:07,775 --> 00:08:11,487
+通常应该使用该语言来处理这项任务。
+helps with the task you're trying to do, use that language for the job. 
+
+118
+00:08:11,487 --> 00:08:13,625
+在Bash中，没有库，
+And in Bash, there are no libraries. 
+
+119
+00:08:13,625 --> 00:08:15,275
+只有计算机上的程序。
+There are only the programs on your computer.
+
+120
+00:08:15,275 --> 00:08:19,925
+所以你不要使用它，除非有一个程序你可以调用，
+So you don't use it unless like there's a programme you can just invoke
+
+121
+00:08:19,925 --> 00:08:23,850
+我确实认为其他事情值得，记住 bash 是......
+I do think other thing worth,remembering that bash is...
+
+122
+00:08:23,850 --> 00:08:26,150
+Bash很难写对。
+Bash is really hard to get right. 
+
+123
+00:08:26,150 --> 00:08:29,925
+对于你现在要解决的特定用例，很容易写对，
+It's very easy to get it right for the particular use case you're trying to solve right now, 
+
+124
+00:08:29,925 --> 00:08:35,624
+但是，例如“如果一个文件名中有一个空格怎么办？”
+but, like, things like, "What if one of the filenames has a space in it?"
+
+125
+00:08:35,624 --> 00:08:38,200
+这种问题在Bash脚本中
+ It has caused so many bugs, 
+
+126
+00:08:38,200 --> 00:08:39,900
+会导致很多错误和问题。
+and so many problems in Bash scripts. 
+
+127
+00:08:39,900 --> 00:08:44,800
+如果使用真正的编程语言，那么这些问题就会消失。
+And, if you use a real programming language, then those problems just go away. 
+
+128
+00:08:48,875 --> 00:08:50,025
+是的！检查过了。
+Yes! Checked it.
+
+129
+00:08:50,025 --> 00:08:54,153
+接下来，我们来回答一个问题，
+For our next question, what is the difference between sourcing a script, 
+
+130
+00:08:54,200 --> 00:08:55,575
+那就是“源脚本”和“执行脚本”的区别是什么？
+and executing that script? Ooh. 
+
+131
+00:08:56,400 --> 00:09:01,911
+这个问题我们在一段时间前的办公时间也曾提到过，
+So, this, actually, we got in office hours a while back, as well, which is, 
+
+132
+00:09:01,911 --> 00:09:06,583
+就是“它们不是一样的吗？它们不都只是运行Bash脚本吗？”
+'Aren't they the same? Like, aren't they both just running the Bash script?' 
+
+133
+00:09:06,583 --> 00:09:12,000
+的确，这两者都会执行脚本中的代码行。
+And, it is true both of these will end up executing the lines of code that are in the script.
+
+134
+00:09:12,000 --> 00:09:14,250
+它们之间的区别在于，
+The ways in which they differ is that 
+
+135
+00:09:14,250 --> 00:09:20,825
+"source"脚本是告诉你当前的Bash脚本会话来执行该程序，
+sourcing a script is telling your current Bash script, your current Bash session, 
+
+136
+00:09:20,825 --> 00:09:26,250
+而另一个是"启动一个新的Bash实例，
+to execute that program, whereas the other one is, 'Start up a new instance of Bash, 
+
+137
+00:09:26,250 --> 00:09:31,000
+并在那里运行程序。"这对于像......
+and run the program there, instead.' And, this matters for things like... 
+
+138
+00:09:31,000 --> 00:09:34,150
+想象一下，"script.sh"试图更改目录的情况是很重要的。
+Imagine that "script.sh" tries to change directories. 
+
+139
+00:09:34,150 --> 00:09:37,565
+如果你像第二个调用"./script.sh"那样运行脚本，
+If you are running the script, as in the second invocation, 
+
+140
+00:09:37,565 --> 00:09:43,225
+那么新的进程将更改目录。
+"./script.sh", then the new process is going to change directories. 
+
+141
+00:09:43,225 --> 00:09:45,225
+但是，当脚本退出
+But, by the time that script exits, 
+
+142
+00:09:45,225 --> 00:09:48,925
+并返回到你的shell时，你的shell仍然保持在原地。
+and returns to your shell, your shell still remains in the same place. 
+
+143
+00:09:48,925 --> 00:09:50,625
+然而，如果你在脚本中执行"cd"并"source"它，
+However, if you do "cd" in a script, 
+
+144
+00:09:50,625 --> 00:09:54,900
+你当前的Bash实例就会运行它，
+and you "source" it, your current instance of Bash is the one that ends up running it, 
+
+145
+00:09:54,900 --> 00:09:57,800
+所以它会"cd"到你所在的地方。
+and so, it ends up "cd"-ing where you are.
+
+146
+00:09:57,800 --> 00:10:00,950
+这也是为什么，如果你定义函数，
+This is also why, if you define functions, 
+
+147
+00:10:00,950 --> 00:10:04,214
+例如，你可能想在你的shell会话中执行它们，
+for example, that you may want to execute in your shell session, 
+
+148
+00:10:04,300 --> 00:10:06,617
+你需要"source"脚本而不是运行它，
+you need to source the script, not run it, 
+
+149
+00:10:06,617 --> 00:10:11,737
+因为如果你运行它，那个函数将被定义在
+because if you run it, that function will be defined in the instance of Bash,
+
+150
+00:10:11,737 --> 00:10:14,041
+启动的Bash进程中，
+ in the Bash process that gets launched, 
+
+151
+00:10:14,041 --> 00:10:16,625
+但它将不会在你当前的shell中被定义。
+but it will not be defined in your current shell. 
+
+152
+00:10:17,300 --> 00:10:20,825
+我认为这是它们之间最大的两个区别。
+I think those are two of the biggest differences between the two.
+
+153
+00:10:28,425 --> 00:10:29,725
+下一个问题是... 
+Next question... 
+
+154
+00:10:29,725 --> 00:10:33,056
+"各种软件包和工具存储的位置在哪里，
+"What are the places where various packages and tools are stored 
+
+155
+00:10:33,056 --> 00:10:35,040
+引用它们的方式是怎样的？
+and how does referencing them work?
+
+156
+00:10:35,040 --> 00:10:37,625
+ /bin或/lib到底是什么？"
+ What even is /bin or /lib?" 
+
+157
+00:10:39,275 --> 00:10:44,775
+ 正如我们在第一次讲座中提到的那样，有一个名为PATH的环境变量，
+So, as we covered in the first lecture, there is this PATH environment variable, 
+
+158
+00:10:44,775 --> 00:10:49,493
+它是一个以分号分隔的字符串，
+which is like a semicolon-separated- string of all the places 
+
+159
+00:10:49,493 --> 00:10:52,250
+其中包含您的Shell查找二进制文件的所有位置。
+where your shell is gonna look for binaries.
+
+160
+00:10:52,250 --> 00:10:56,341
+如果您只是执行"echo $PATH"，
+And, if you just do something like "echo $PATH", 
+
+161
+00:10:56,341 --> 00:11:01,325
+您将获得此列表；所有这些位置将按顺序进行查询。
+you're gonna get this list; all these places are gonna be consulted, in order. 
+
+162
+00:11:01,325 --> 00:11:02,975
+它将遍历所有位置，
+It's gonna go through all of them, 
+
+163
+00:11:02,975 --> 00:11:04,275
+并且实际上——我们已经...
+and, in fact, - There is already... 
+
+164
+00:11:04,275 --> 00:11:06,725
+我们介绍过哪些？是的。
+Did we cover which? Yeah.
+
+165
+00:11:06,725 --> 00:11:08,600
+因此，如果您运行"which"
+So, if you run "which", 
+
+166
+00:11:08,600 --> 00:11:13,500
+和一个特定的命令，Shell实际上会告诉您它在哪里找到此（命令）。
+and a specific command, the shell is actually gonna tell you where it's finding this (command). 
+
+167
+00:11:13,500 --> 00:11:20,200
+除此之外，有一些公约，许多程序将安装其二进制文件，
+Beyond that, there is like some conventions where a lot of programs will install their binaries 
+
+168
+00:11:20,200 --> 00:11:25,575
+例如/usr/bin（或者至少包含符号链接）在/usr/bin中，以便您可以找到它们。
+and they're like /usr/bin (or at least they will include symlinks) in /usr/bin so you can find them.
+
+169
+00:11:25,575 --> 00:11:27,575
+还有一个/usr/local/bin。
+There's also a /usr/local/bin. 
+
+170
+00:11:27,575 --> 00:11:30,125
+有一些特殊的目录，
+There are special directories. 
+
+171
+00:11:30,125 --> 00:11:33,635
+例如，/usr/sbin仅用于sudo用户，
+For example, /usr/sbin it's only for sudo user 
+
+172
+00:11:33,635 --> 00:11:37,875
+一些这些公约在不同的发行版之间略有不同。
+and some of these conventions are slightly different between different distros. 
+
+173
+00:11:37,875 --> 00:11:45,150
+我知道有些发行版例如在/opt下安装用户库。
+So I know like some distros, for example, install the user libraries under /opt for example.
+
+174
+00:11:50,800 --> 00:11:55,897
+是的，我认为可以再详细介绍一下 /bin，Anish 
+Yeah, I think one thing just to talk a little bit of more about /bin 
+
+175
+00:11:55,897 --> 00:11:59,100
+可以说一下其他的文件夹。
+and then Anish maybe you can do the other folders. 
+
+176
+00:11:59,100 --> 00:12:03,600
+关于 /bin，有一些惯例，
+So when it comes to /bin, the convention: there are conventions, 
+
+177
+00:12:03,600 --> 00:12:09,850
+通常 /bin 用于系统基本工具，
+and the conventions are usually /bin are for essential system utilities,
+
+178
+00:12:09,850 --> 00:12:12,346
+/usr/bin 用于用户程序，
+ /usr/bin are for user programs, 
+
+179
+00:12:12,346 --> 00:12:16,250
+/usr/local/bin 用于用户编译的程序，
+and /usr/local/bin are for user compiled programs, 
+
+180
+00:12:16,250 --> 00:12:21,050
+所以那些你想让用户运行的程序都应该放在 /usr/bin 中，
+sort of so things that you installed that you intend the user to run, are in /usr/bin, 
+
+181
+00:12:21,050 --> 00:12:23,610
+用户自己编译
+things that a user has compiled themselves 
+
+182
+00:12:23,610 --> 00:12:26,243
+并安装在系统中的程序通常会放在 /usr/local/bin，
+and stuck on your system, probably goes in /usr/local/bin 
+
+183
+00:12:26,243 --> 00:12:29,675
+但是这也因机器和发行版而异。
+but again, this varies a lot from machine to machine,  and distro to distro. 
+
+184
+00:12:29,700 --> 00:12:33,775
+例如，在 Arch Linux 上，/bin 是指向 /usr/bin 的符号链接。
+On Arch Linux, for example, /bin is a symlink to /usr/bin. 
+
+185
+00:12:33,775 --> 00:12:34,800
+它们是一样的，
+They're the same, 
+
+186
+00:12:34,800 --> 00:12:41,350
+正如 Jose 提到的，还有 /sbin 专门为需要以 root 权限运行的程序准备，
+and as Jose mentioned, there's also /sbin which is for programs that are intended to only be run as root, 
+
+187
+00:12:41,350 --> 00:12:45,100
+这也因发行版而异，有些发行版甚至没有这个目录，
+that also varies from distro to distro whether you even have that directory, 
+
+188
+00:12:45,100 --> 00:12:48,492
+在许多系统上，/usr/local/bin 可能不在你的 PATH 中，
+and on many systems like /usr/local/bin might not even be in your PATH, 
+
+189
+00:12:48,492 --> 00:12:50,348
+甚至不存在于你的系统中。
+or might not even exist on your system.
+
+190
+00:12:50,348 --> 00:12:55,125
+另一方面，在BSD中，/usr/local/bin通常使用得更加频繁。
+On BSD on the other hand /usr/local/bin is often used a lot more heavily, yeah. 
+
+191
+00:12:56,225 --> 00:12:58,900
+我们到目前为止讨论的
+So what we were talking about so far, 
+
+192
+00:12:58,900 --> 00:13:01,775
+都是Linux中文件和文件夹的组织方式。
+these are all ways that files and folders are organized on Linux. 
+
+193
+00:13:01,775 --> 00:13:06,900
+Linux、BSD与macOS等平台之间存在一些差异。
+Things or Linux or BSD things vary a little bit between that and macOS or other platforms.
+
+194
+00:13:06,900 --> 00:13:11,025
+如果你想要确切地知道某个位置的用途，可以查阅相关资料。
+I think for the specific locations, if you want to know exactly what it's used for, you can look it up. 
+
+195
+00:13:11,025 --> 00:13:13,132
+但需要记住的一些一般规律是：
+But some general patterns to keep in mind
+
+196
+00:13:13,132 --> 00:13:16,780
+带有/bin的文件夹中包含可执行的二进制程序，
+ or anything with /bin in it has binary executable programs in it, 
+
+197
+00:13:16,780 --> 00:13:21,450
+带有/lib的文件夹中包含库文件，可供程序链接使用。
+anything with \lib in it,  has libraries in it so things that programs can link against,  
+
+198
+00:13:21,450 --> 00:13:27,110
+还有一些其他的有用信息，例如，许多系统都有一个/etc文件夹，
+and then some other things that are useful to know are there's a /etc on many systems, 
+
+199
+00:13:27,110 --> 00:13:29,094
+其中包含配置文件；
+which has configuration files in it, 
+
+200
+00:13:29,100 --> 00:13:30,716
+/home文件夹下的
+and then there's /home, 
+
+201
+00:13:30,716 --> 00:13:34,172
+每个子文件夹都是一个用户的主文件夹，
+which underneath that directory contains each user's home directory 
+
+202
+00:13:34,172 --> 00:13:36,348
+在Linux上，我的用户名
+so like on a Linux box my username 
+
+203
+00:13:36,400 --> 00:13:41,025
+或者Anish的用户名将与/home/anish这个主文件夹相对应。
+or if it's Anish will correspond to a home directory /home/anish.
+
+204
+00:13:41,925 --> 00:13:46,919
+还有一些其他的文件夹，例如/tmp通常是一个临时目录，
+Yeah, I guess there are a couple of others like /tmp is usually a temporary directory 
+
+205
+00:13:46,919 --> 00:13:50,119
+在重启时会被清空
+that gets erased when you reboot not always but sometimes, 
+
+206
+00:13:50,119 --> 00:13:51,275
+（但并非总是如此，需要在系统上检查）
+you should check on your system. 
+
+207
+00:13:51,275 --> 00:13:58,767
+/var通常保存着随时间而变化的文件，
+There's a /var which often holds like files the change over time 
+
+208
+00:13:58,767 --> 00:14:06,025
+通常会是像软件包管理器的锁文件、日志文件
+so these these are usually going to be things like lock files for package managers 
+
+209
+00:14:06,025 --> 00:14:11,950
+以及用于跟踪进程ID的文件；
+they're gonna be things like log files files to keep track of process IDs 
+
+210
+00:14:11,950 --> 00:14:15,919
+/dev文件夹中包含着系统的设备，
+then there's /dev which shows devices 
+
+211
+00:14:15,919 --> 00:14:19,759
+通常是对应于系统设备的特殊文件。
+so usually so these are special files that correspond to devices on your system 
+
+212
+00:14:19,759 --> 00:14:25,900
+我们之前提到过/sys，Anish提到了/etc。
+we talked about /sys, Anish mentioned /etc. 
+
+213
+00:14:25,900 --> 00:14:31,791
+/opt是常见的第三方软件文件夹，
+/opt is a common one for just like 
+
+214
+00:14:31,791 --> 00:14:38,255
+一般用于公司将其软件移植到Linux上，
+third-party software that basically it's usually for companies ported their software to Linux 
+
+215
+00:14:38,425 --> 00:14:42,675
+但它们实际上并不理解在Linux上运行软件的情况，
+but they don't actually understand what running software on Linux is like, 
+
+216
+00:14:42,675 --> 00:14:46,579
+因此它们只是将所有东西放在一个目录中，
+and so they just have a directory with all their stuff in it
+
+217
+00:14:46,579 --> 00:14:49,950
+并将其安装到/opt中。
+ and when those get installed they usually get installed into /opt.
+
+218
+00:14:51,375 --> 00:14:56,625
+我想这些是我能想到的所有文件夹了。
+I think those are the ones off the top of my head, yeah. 
+
+219
+00:14:57,100 --> 00:15:01,400
+我们会在本次讲座后制作的讲座笔记中列出这些文件夹。
+And we will list these in our lecture notes, which will produce after this lecture.
+
+220
+00:15:02,625 --> 00:15:09,375
+下一个问题：我应该使用 apt-get 安装 Python 包还是使用 pip 安装？
+Next question: Should I apt-get install a Python whatever package or pip install that package? 
+
+221
+00:15:10,500 --> 00:15:14,975
+这是一个很好的问题，我认为从更高的层面来看，这个问题正在询问
+So, this is a good question that I think at a higher level, this question is asking
+
+222
+00:15:14,975 --> 00:15:18,650
+我是否应该使用系统的软件包管理器来安装东西，
+ should I use my system's package manager to install things 
+
+223
+00:15:18,650 --> 00:15:20,010
+还是应该使用一些其他的软件包管理器？
+or should I use some other package manager? 
+
+224
+00:15:20,010 --> 00:15:23,125
+比如在这种情况下，更特定于某个语言的软件包管理器。
+Like in this case, one that's more specific to a particular language. 
+
+225
+00:15:23,125 --> 00:15:25,775
+答案也有点因情况而异。
+And the answer here is also kind of, it depends. 
+
+226
+00:15:25,775 --> 00:15:28,664
+有时使用系统的软件包管理器来管理东西很方便，
+Sometimes it's nice to manage things using a system package manager 
+
+227
+00:15:28,664 --> 00:15:31,325
+因为所有的东西都可以在一个地方安装和升级，
+so everything can be installed and upgraded in a single place, 
+
+228
+00:15:31,325 --> 00:15:34,300
+但我认为通常系统库中提供的东西，
+but I think oftentimes whatever is available in the system repositories, 
+
+229
+00:15:34,300 --> 00:15:37,535
+比如通过 apt-get 或类似工具获得的东西，
+the things you can get via a tool like apt-get or something similar
+
+230
+00:15:37,535 --> 00:15:41,225
+可能会比更特定于某个语言的库稍微过时一些。
+ might be slightly out of date compared to the more language-specific repository.
+
+231
+00:15:41,225 --> 00:15:45,950
+例如，我使用的很多 Python 包，我真的想要最新的版本，
+So, for example, a lot of the Python packages I use, I really want the most up-to-date version, 
+
+232
+00:15:45,950 --> 00:15:47,300
+因此我使用 pip 来安装它们。
+and so I use pip to install them. 
+
+233
+00:15:48,000 --> 00:15:50,600
+进一步说，系统，它们没有很多 Python 包的 wheel，所以编译它们会花费更长的时间。
+Then, to extend on that, 
+
+234
+00:15:50,600 --> 00:15:56,023
+有时候系统软件包
+sometimes the case, the system packages 
+
+235
+00:15:56,023 --> 00:16:00,425
+可能需要一些你可能没有意识到的其他依赖项，
+might require some other dependencies that you might not have realized about, 
+
+236
+00:16:00,425 --> 00:16:06,275
+而且对于某些系统，至少对于像 Alpine Linux 这样的
+and it might also be the case, for some systems, at least for like Alpine Linux, 
+
+237
+00:16:06,275 --> 00:16:09,859
+它们没有很多 Python 包的 wheel，
+they don't have wheels for like a lot of the Python packages, 
+
+238
+00:16:09,859 --> 00:16:12,800
+所以编译它们会花费更长的时间。
+so it will just take longer to compile them. 
+
+239
+00:16:12,800 --> 00:16:15,850
+它们需要从头开始编译，所以需要更多的空间。
+It will take more space because they have to compile them from scratch. 
+
+240
+00:16:15,850 --> 00:16:22,750
+而如果你只是使用 pip，pip 有许多不同平台的二进制文件，那可能会更好用。
+Whereas if you just go to pip, pip has binaries for a lot of different platforms and that will probably work.
+
+241
+00:16:22,750 --> 00:16:28,850
+另外你也应该知道，pip 在不同的电脑上可能不会做完全相同的事情。
+You should also be aware that pip might not do the exact same thing in different computers. 
+
+242
+00:16:28,850 --> 00:16:32,415
+比如，如果你在运行 x86 或 x86_64 的笔记本电脑或台式机上，
+So, for example, if you are in a kind of laptop or like a desktop 
+
+243
+00:16:32,415 --> 00:16:37,663
+你可能有二进制文件，
+that is running like x86 or x86_64, you probably have binaries, 
+
+244
+00:16:37,675 --> 00:16:42,207
+但如果你在运行 Raspberry Pi 或其他嵌入式设备上，
+but if you're running something like Raspberry Pi or some other kind of embedded device, 
+
+245
+00:16:42,207 --> 00:16:44,975
+这些设备运行在不同的硬件架构上，
+these are running on a different kind of hardware architecture 
+
+246
+00:16:44,975 --> 00:16:46,775
+你可能没有二进制文件。
+and you might not have binaries. 
+
+247
+00:16:46,775 --> 00:16:49,350
+我认为这也值得考虑。
+I think that's also good to take into account. 
+
+248
+00:16:49,350 --> 00:16:53,950
+在这种情况下，使用系统包可能是值得的，
+In that case, it might be worthwhile to use the system packages 
+
+249
+00:16:53,950 --> 00:16:57,995
+因为它们需要的时间比
+just because they will take much shorter to get them than 
+
+250
+00:16:57,995 --> 00:17:01,200
+从头开始编译整个 Python 安装要短得多。
+to just to compile from scratch the entire Python installation. 
+
+251
+00:17:01,200 --> 00:17:04,049
+除此之外，我想不出任何例外情况，
+Apart from that, I don't think I can think of any exceptions 
+
+252
+00:17:04,049 --> 00:17:08,529
+我会真正使用系统包而不是 Python 提供的包。
+where I would actually use the system packages instead of the Python provided ones.
+
+253
+00:17:18,375 --> 00:17:20,943
+另外要记住的一件事是，
+So, one other thing to keep in mind is that 
+
+254
+00:17:20,943 --> 00:17:25,350
+有时你的电脑上会有多个程序，
+sometimes you will have more than one program on your computer 
+
+255
+00:17:25,350 --> 00:17:27,900
+你可能正在开发多个程序，
+and you might be developing more than one program on your computer, 
+
+256
+00:17:27,900 --> 00:17:32,875
+但由于某种原因，并不总是使用最新版本的东西来构建所有程序，
+and for some reason, not all programs are always built with the latest version of things, 
+
+257
+00:17:32,875 --> 00:17:35,175
+有时它们会滞后一些。
+sometimes they are a little bit behind, 
+
+258
+00:17:35,175 --> 00:17:39,552
+当你在整个系统上安装某些东西时，你只能......
+and when you install something system-wide you can only... 
+
+259
+00:17:39,552 --> 00:17:41,975
+这取决于你的具体系统，
+depends on your exact system, 
+
+260
+00:17:41,975 --> 00:17:43,900
+但通常只有一个版本。
+but often you just have one version. 
+
+261
+00:17:43,900 --> 00:17:49,175
+pip 可以让你做的，尤其是与像 python 的 virtualenv 
+What pip lets you do, especially combined with something like python's virtualenv, 
+
+262
+00:17:49,175 --> 00:17:52,543
+这样的东西结合使用时，其他语言也有类似的概念，
+and similar concepts exist for other languages, 
+
+263
+00:17:52,543 --> 00:17:55,167
+你可以说我想
+where you can sort of say I want to 
+
+264
+00:17:55,167 --> 00:17:59,007
+（例如，NPM 对其节点模块也做同样的事情）
+(NPM does the same thing as well with its node modules, for example) 
+
+265
+00:17:59,007 --> 00:18:03,871
+在它自己的子目录中
+where I'm gonna compile the dependencies of this package 
+
+266
+00:18:03,871 --> 00:18:07,007
+编译这个包的依赖项，
+in sort of a subdirectory of its own, 
+
+267
+00:18:07,007 --> 00:18:10,335
+它所需的所有版本都将在那里构建，
+and all of the versions that it requires are going to be built in there 
+
+268
+00:18:10,335 --> 00:18:12,895
+你可以为不同的项目单独做这个，
+and you can do this separately for separate projects 
+
+269
+00:18:12,895 --> 00:18:16,735
+所以它们有不同的依赖项或相同的依赖项，
+so there they have different dependencies or the same dependencies with different versions 
+
+270
+00:18:16,735 --> 00:18:18,783
+但不同版本仍然被分开保留。
+they still sort of kept separate. 
+
+271
+00:18:18,825 --> 00:18:21,725
+这是使用系统包难以实现的一件事。
+And that is one thing that's hard to achieve with system packages.
+
+272
+00:18:26,350 --> 00:18:32,575
+下一个问题是：什么是最容易和最好的性能分析工具，用于优化我的代码？
+Next question: What's the easiest and best profiling tools to use to improve performance of my code?
+
+273
+00:18:33,625 --> 00:18:37,275
+这是一个我们可以讨论很长时间的话题。
+This is a topic we could talk about for a very long time. 
+
+274
+00:18:37,275 --> 00:18:42,725
+最容易和最好的方法是使用时间打印输出。
+The easiest and best is to print stuff using time. 
+
+275
+00:18:42,725 --> 00:18:48,350
+就像，我不是在开玩笑，很多时候最简单的方法就在你的代码里。
+Like, I'm not joking, very often the easiest thing is in your code. 
+
+276
+00:18:48,350 --> 00:18:52,150
+在代码的顶部，你确定当前时间，
+At the top, you figure out what the current time is, 
+
+277
+00:18:52,150 --> 00:18:55,538
+然后在你的程序中进行二分查找，
+and then you do sort of a binary search over your program of 
+
+278
+00:18:55,538 --> 00:19:00,146
+添加一个打印语句，打印自程序启动以来经过了多长时间，
+add a print statement that prints how much time has elapsed since the start of your program, 
+
+279
+00:19:00,146 --> 00:19:05,000
+然后一直重复这样的步骤，直到找到花费时间最长的代码段。
+and then you do that until you find the segment of code that took the longest. 
+
+280
+00:19:05,000 --> 00:19:07,775
+然后进入那个函数，再次执行同样的操作，一直重复，
+And then you go into that function and then you do the same thing again, 
+
+281
+00:19:07,775 --> 00:19:10,825
+直到找到大概的时间花费位置。
+and you keep doing this until you find roughly where the time was spent. 
+
+282
+00:19:10,825 --> 00:19:12,450
+这并不是百分之百可靠的，
+It's not foolproof, 
+
+283
+00:19:12,450 --> 00:19:16,100
+但它非常简单，可以很快地为你提供有用的信息。
+but it is really easy and it gives you good information quickly. 
+
+284
+00:19:16,100 --> 00:19:19,426
+如果你需要更高级的信息，
+If you do need more advanced information, 
+
+285
+00:19:19,426 --> 00:19:27,200
+Valgrind有一个叫做cache-grind或call grind的工具。
+Valgrind has a tool called cache-grind or call grind. 
+
+286
+00:19:27,325 --> 00:19:29,150
+二者选一
+One of the two. 
+
+287
+00:19:29,150 --> 00:19:33,058
+这个工具可以让你运行你的程序
+And this tool lets you run your program 
+
+288
+00:19:33,058 --> 00:19:36,082
+并测量所有的调用堆栈，
+and measure how long everything takes 
+
+289
+00:19:36,082 --> 00:19:40,075
+比如哪个函数调用了哪个函数，
+and all of the call stacks, like which function called which function, 
+
+290
+00:19:40,075 --> 00:19:44,466
+最终你会得到一个非常漂亮的程序源代码注释，
+and what you end up with is a really neat annotation of your entire program source 
+
+291
+00:19:44,466 --> 00:19:48,242
+基本上显示了每行花费的时间。
+with the heat of every line, basically how much time was spent there. 
+
+292
+00:19:48,242 --> 00:19:52,466
+这会让你的程序变得慢十倍甚至更多，
+It does slow down your program by like an order of magnitude or more, 
+
+293
+00:19:52,466 --> 00:19:54,625
+而且它并不支持线程，
+and it doesn't really support threads, 
+
+294
+00:19:54,625 --> 00:19:57,125
+但是如果你能使用它，它非常有用。
+but it is really useful if you can use it. 
+
+295
+00:19:57,125 --> 00:19:59,817
+如果你不能使用这些工具，那么像perf
+If you can't, then tools like perf 
+
+296
+00:19:59,817 --> 00:20:04,800
+或其他语言的类似工具通常会提供
+or similar tools for other languages that do usually some kind of sampling profiling 
+
+297
+00:20:04,800 --> 00:20:09,344
+一些采样分析类的有用数据，
+like we talked about in the profiler lecture can give you pretty useful data quickly, 
+
+298
+00:20:09,344 --> 00:20:13,525
+但是会有很多数据，
+but it's a lot of data around this, 
+
+299
+00:20:13,525 --> 00:20:18,275
+它们会有一些偏见，并且通常会突出显示一些问题，
+but they're a little bit biased and what kind of things they usually highlight as a problem, 
+
+300
+00:20:18,275 --> 00:20:20,391
+有时很难提取有意义的信息
+and it can sometimes be hard to extract 
+
+301
+00:20:20,391 --> 00:20:24,575
+来回答“我应该改变什么”。
+meaningful information about what should I change in response to them. 
+
+302
+00:20:24,600 --> 00:20:30,887
+相比之下，使用打印输出的方法可以很快地让你知道哪些部分是糟糕的或缓慢的。
+Whereas the sort of print approach very quickly gives you like this section of code is bad or slow, 
+
+303
+00:20:30,887 --> 00:20:34,600
+我想这就是我的答案
+I think would be my answer. 
+
+304
+00:20:34,600 --> 00:20:40,225
+火焰图也很好用，可以用来可视化一些信息。
+Flamegraphs are great, they're a good way to visualize some of this information. 
+
+305
+00:20:41,025 --> 00:20:42,918
+是的，我只有一件事要补充，
+Yeah, I just have one thing to add, 
+
+306
+00:20:42,918 --> 00:20:47,800
+通常编程语言都有专门的工具用于分析性能，
+oftentimes programming languages have language-specific tools for profiling, 
+
+307
+00:20:47,800 --> 00:20:49,925
+所以要找出适合你的语言的正确工具，
+so to figure out what's the right tool to use for your language, 
+
+308
+00:20:49,925 --> 00:20:51,909
+比如如果你在Web浏览器中使用JavaScript，
+like if you're doing JavaScript in the web browser, 
+
+309
+00:20:51,909 --> 00:20:55,325
+Web浏览器有一个非常好用的分析工具，你应该使用它。
+the web browser has a really nice tool for doing profiling, you should just use that. 
+
+310
+00:20:55,325 --> 00:21:00,575
+或者如果你正在使用Go，Go有一个好用的内置性能分析工具，你应该使用它。
+Or if you are using go, for example, go has a built-in profiler that is really good, you should just use that. 
+
+311
+00:21:01,175 --> 00:21:03,875
+最后要补充的是，
+A last thing to add to that, 
+
+312
+00:21:03,875 --> 00:21:11,875
+有时你可能会发现自己正在进行这种时间上的二分查找，
+sometimes you might find that doing this binary search over time that you're kind of finding where the time is going, 
+
+313
+00:21:11,875 --> 00:21:16,900
+你找到的时间可能是由于你正在等待网络或文件等原因导致的，
+but this time is sometimes happening because you're waiting on the network, or you're waiting for some file, 
+
+314
+00:21:16,900 --> 00:21:21,579
+如果是这种情况，你需要确保所花费的时间是最小的，
+and in that case, you want to make sure that the time that is, 
+
+315
+00:21:21,579 --> 00:21:27,250
+比如如果我想要写一个1GB的文件或读取一个1GB的文件并将其存入内存，
+if I want to write like 1 gigabyte file or like read 1 gigabyte file and put it into memory, 
+
+316
+00:21:27,250 --> 00:21:33,175
+你需要检查实际的时间是否是你实际必须等待的最小时间。
+you want to check that the actual time there is the minimum amount of time you actually have to wait. 
+
+317
+00:21:33,175 --> 00:21:36,450
+如果时间是十倍长，你应该尝试使用
+If it's ten times longer, you should try to use some other tools 
+
+318
+00:21:36,450 --> 00:21:38,815
+我们在调试和性能分析部分中介绍的其他工具，
+that we covered in the debugging and profiling section
+
+319
+00:21:38,815 --> 00:21:42,500
+以查看为什么你没有利用所有的资源，
+ to see why you're not utilizing all your resources because 
+
+320
+00:21:50,525 --> 00:21:54,614
+因为这可能是发生的很多事情，
+that might be a lot of what's happening thing, like for example, 
+
+321
+00:21:54,614 --> 00:21:58,550
+例如在我的机器学习工作负载研究中，大部分时间都是用来加载数据的，
+in my research in machine learning workloads, a lot of time is loading data, 
+
+322
+00:21:58,550 --> 00:22:00,034
+你必须确保
+and you have to make sure well like 
+
+323
+00:22:00,034 --> 00:22:03,101
+加载数据的时间实际上是
+the time it takes to load data is actually the minimum amount of time
+
+324
+00:22:03,101 --> 00:22:06,225
+你想要的最短时间。
+ you want to have that happening. 
+
+325
+00:22:08,750 --> 00:22:14,700
+并且在此基础上，实际上有专门的工具可以进行等待时间分析。
+And to build on that, there are actually specialized tools for doing things like analyzing wait times. 
+
+326
+00:22:14,700 --> 00:22:19,200
+很多时候，当你在等待某些东西时，真正发生的事情是你正在发出系统调用，
+Very often when you're waiting for something, what's really happening is you're issuing your system call, 
+
+327
+00:22:19,200 --> 00:22:21,700
+这个系统调用需要一些时间来响应。
+and that system call takes some amount of time to respond. 
+
+328
+00:22:21,700 --> 00:22:24,975
+如果你需要进行大量的写入或读取操作，或者需要进行多个此类操作，
+Like you do a really large write, or a really large read or you do many of them, 
+
+329
+00:22:24,975 --> 00:22:28,751
+那么一件非常方便的事情是
+and one thing that can be really handy here is to try to
+
+330
+00:22:28,751 --> 00:22:32,450
+尝试从内核中获取关于程序花费时间的信息。
+ get information out of the kernel about where your program is spending its time. 
+
+331
+00:22:32,450 --> 00:22:35,500
+现在有一个
+And so there's (it's not new), 
+
+332
+00:22:35,500 --> 00:22:40,625
+相对较新的可用工具，叫做 BPF 或 eBPF，
+but there's a relatively newly available thing called BPF or eBPF. 
+
+333
+00:22:40,625 --> 00:22:45,225
+它本质上是内核跟踪工具，可以进行一些非常酷的操作，
+Which is essentially kernel tracing and you can do some really cool things with it, 
+
+334
+00:22:45,225 --> 00:22:47,475
+包括跟踪用户程序。
+and that includes tracing user programs. 
+
+335
+00:22:47,500 --> 00:22:50,800
+虽然它可能有点棘手，
+It can be a little bit awkward to get started with, 
+
+336
+00:22:50,800 --> 00:22:54,768
+但是如果你需要进行这种低级性能调试，
+there's a tool called BPF trace that I would recommend you looking to, 
+
+337
+00:22:54,825 --> 00:22:58,225
+我建议你看看一个叫做 BPF trace 的工具。
+if you need to do like this kind of low-level performance debugging. 
+
+338
+00:22:58,225 --> 00:23:00,525
+但是对于这种工作来说它真的非常好用，
+But it is really good for this kind of stuff. 
+
+339
+00:23:00,525 --> 00:23:05,800
+可以得到一些关于特定系统调用花费时间的直方图等信息。
+You can get things like histograms over how much time was spent in particular system calls. 
+
+340
+00:23:05,800 --> 00:23:07,800
+这是一个非常好的工具。
+It's a great tool.
+
+341
+00:23:12,475 --> 00:23:14,525
+你使用哪些浏览器插件？
+What browser plugins do you use? 
+
+342
+00:23:14,525 --> 00:23:19,389
+我尽量少使用插件，
+I try to use as few as I can get away with using 
+
+343
+00:23:19,389 --> 00:23:22,781
+因为我不喜欢我的浏览器中有太多东西，
+because I don't like things being in my browser, 
+
+344
+00:23:22,781 --> 00:23:28,100
+但是有一些是比较常用的。
+but there are a couple of ones that are sort of staples. 
+
+345
+00:23:28,100 --> 00:23:30,100
+第一个是 uBlock Origin。
+The first one is uBlock Origin. 
+
+346
+00:23:30,100 --> 00:23:36,125
+uBlock Origin 是众多广告拦截器之一，但它不仅仅是一个广告拦截器。
+So uBlock Origin is one of many ad blockers but it's a little bit more than an ad blocker. 
+
+347
+00:23:36,125 --> 00:23:44,975
+它是一个网络过滤工具，可以让你做更多的事情，不仅仅是拦截广告。
+It is (a what do they call it?) a network filtering tool so it lets you do more things than just block ads. 
+
+348
+00:23:44,975 --> 00:23:48,025
+它还可以像阻止某些域名的连接、
+It also lets you like block connections to certain domains, 
+
+349
+00:23:48,025 --> 00:23:51,025
+阻止某些类型的资源的连接。
+block connections for certain types of resources. 
+
+350
+00:23:51,075 --> 00:23:54,888
+我把它设置成了高级模式，
+So I have mine set up in what they call the Advanced Mode,
+
+351
+00:23:54,888 --> 00:23:59,825
+基本上可以禁用所有的网络请求。
+ where basically you can disable basically all network requests. 
+
+352
+00:23:59,850 --> 00:24:02,829
+但不仅仅是网络请求，
+But it's not just Network requests, It's also like
+
+353
+00:24:02,829 --> 00:24:06,375
+我也禁用了每个页面上的所有内嵌脚本、
+ I have disabled all inline scripts on every page
+
+354
+00:24:06,375 --> 00:24:09,400
+所有第三方图像和资源，
+ and all third-party images and resources, 
+
+355
+00:24:09,475 --> 00:24:12,209
+然后你可以为每个页面创建一个白名单，
+and then you can sort of create a whitelist for every page 
+
+356
+00:24:12,209 --> 00:24:15,473
+它会提供关于
+so it gives you really low-level tools around 
+
+357
+00:24:15,473 --> 00:24:18,025
+如何提高浏览安全性的非常低级别的工具。
+how to how to improve the security of your browsing. 
+
+358
+00:24:18,025 --> 00:24:20,575
+但是你也可以将其设置为非高级模式，
+But you can also set it in not the advanced mode, 
+
+359
+00:24:20,575 --> 00:24:24,031
+然后它会做很多与普通广告拦截器类似的事情，
+and then it does much of the same as a regular ad blocker would do, 
+
+360
+00:24:24,031 --> 00:24:27,850
+如果你在寻找广告拦截器，
+although in a fairly efficient way if you're looking at an ad blocker 
+
+361
+00:24:27,850 --> 00:24:30,600
+它可能是你想要使用的，并且它适用于几乎所有的浏览器。
+it's probably the one to use and it works on like every browser. 
+
+362
+00:24:30,600 --> 00:24:34,500
+我认为这是我的首选。
+That would be my top pick I think.
+
+363
+00:24:38,475 --> 00:24:45,725
+我觉得我最常使用的插件可能是一个叫做Stylus的插件。
+I think probably the one I use like the most actively is one called Stylus. 
+
+364
+00:24:45,725 --> 00:24:51,725
+它让你修改网页的CSS或样式表。
+It lets you modify the CSS or like the stylesheets that webpages have. 
+
+365
+00:24:51,725 --> 00:24:55,600
+这非常方便，因为有时你在浏览一个网站时，
+And it's pretty neat, because sometimes you're looking at a website 
+
+366
+00:24:55,600 --> 00:24:59,100
+想要隐藏一些你不关心的部分，
+and you want to hide some part of the website you don't care about. 
+
+367
+00:24:59,100 --> 00:25:03,800
+比如广告或者某个侧边栏。
+Like maybe an ad, maybe some sidebar you're not finding useful. 
+
+368
+00:25:03,800 --> 00:25:07,275
+问题是，这些东西最终都会在你的浏览器中显示，
+The thing is, at the end of the day these things are displaying in your browser, 
+
+369
+00:25:07,275 --> 00:25:09,950
+而你可以控制哪些代码执行。
+and you have control of what code is executing 
+
+370
+00:25:09,950 --> 00:25:14,218
+就像Jon所说的那样，你可以无限制地自定义它，
+and similar to what Jon was saying, like you can customize this to no end, 
+
+371
+00:25:14,218 --> 00:25:17,825
+我已经为很多网页设定了隐藏这一部分，
+and what I have for a lot of web pages like hide this this part, 
+
+372
+00:25:17,825 --> 00:25:21,275
+或者为它们尝试制作暗黑模式，
+or also trying to make like dark modes for them
+
+373
+00:25:21,275 --> 00:25:24,750
+你几乎可以为每个网站更改颜色。
+ like you can change pretty much the color for every single website. 
+
+374
+00:25:24,750 --> 00:25:28,819
+实际上，还有一个在线仓库，
+And what is actually pretty neat is that there's like a repository online of people
+
+375
+00:25:28,819 --> 00:25:32,400
+里面有很多人为网站编写的样式表。
+ that have contributed this is stylesheets for the websites. 
+
+376
+00:25:32,400 --> 00:25:34,925
+有人可能已经为GitHub准备好了
+So someone probably has (done) one for GitHub. 
+
+377
+00:25:34,925 --> 00:25:36,355
+例如我想要暗黑界面的GitHub
+Like I want dark GitHub 
+
+378
+00:25:36,355 --> 00:25:41,500
+有人已经为GitHub制作了暗黑版，这使得浏览更加愉悦。
+and someone has already contributed one that makes that much more pleasing to browse.
+
+379
+00:25:41,500 --> 00:25:44,775
+ 除此之外，还有一个并不很花哨，
+Apart from that, one that it's not really fancy, 
+
+380
+00:25:44,775 --> 00:25:50,275
+但我发现非常有用的插件，它可以截取整个网站的屏幕截图。
+but I have found incredibly helpful is one that just takes a screenshot an entire website. 
+
+381
+00:25:50,275 --> 00:25:55,267
+它会自动滚动并制作出整个网站的复合图像，
+And It will scroll for you and make compound image of the entire website
+
+382
+00:25:55,267 --> 00:25:59,261
+这对于打印一个看起来很糟糕的网站非常有用。
+ and that's really great for when you're trying to print a website and is just terrible. 
+
+383
+00:26:00,525 --> 00:26:01,875
+哦，有趣！
+Oh interesting! 
+
+384
+00:26:01,875 --> 00:26:04,435
+既然你提到了Firefox内置的插件，
+Oh now that you mention built into Firefox,
+
+385
+00:26:04,435 --> 00:26:09,425
+还有一个我非常喜欢的是Firefox的多账户容器。
+ another one that I really like about Firefox is the multi-account containers. 
+
+386
+00:26:09,775 --> 00:26:11,949
+
+Which kind of lets you 
+
+387
+00:26:11,949 --> 00:26:15,597
+默认情况下，许多网页浏览器，比如Chrome，
+By default, a lot of web browsers, like for example Chrome,
+
+388
+00:26:15,597 --> 00:26:19,050
+有一个叫做“会话”的概念，
+ have this notion of like there's session that you have, 
+
+389
+00:26:19,050 --> 00:26:20,653
+你在其中保存了所有的cookies，
+where you have all your cookies 
+
+390
+00:26:20,653 --> 00:26:24,557
+它们在不同的网站之间共享，
+and they are kind of all shared from the different websites in the sense of 
+
+391
+00:26:24,557 --> 00:26:26,797
+也就是说，你打开新标签页时，
+you keep opening new tabs 
+
+392
+00:26:26,797 --> 00:26:30,425
+除非你进入无痕模式，否则你使用的都是同一个档案。
+and unless you go into incognito you kind of have the same profile. 
+
+393
+00:26:30,425 --> 00:26:33,575
+而这个档案是适用于所有网站的，
+And that profile is the same for all websites, there is this. 
+
+394
+00:26:33,575 --> 00:26:39,950
+是通过一款浏览器插件还是内置功能实现的呢？（这是混合的，很复杂。）
+Is it an extension or is it built in? (it's a mix, it's complicated). 
+
+395
+00:26:39,950 --> 00:26:44,175
+我想你实际上需要说出你想要安装它或启用它，
+So I think you actually have to say you want to install it or enable it, 
+
+396
+00:26:44,175 --> 00:26:47,250
+而这个名字叫做“多帐户容器”，
+and again the name is Multi Account Containers, 
+
+397
+00:26:47,250 --> 00:26:51,575
+它可以让你告诉Firefox要有单独的隔离会话。
+and these let you tell Firefox to have separate isolated sessions. 
+
+398
+00:26:51,575 --> 00:26:55,659
+比如说，你想对每次访问Google
+So for example, you want to say I have a separate sessions for 
+
+399
+00:26:55,659 --> 00:26:58,825
+或每次访问Amazon建立独立的会话，
+whenever I visit to Google or whenever I visit Amazon, 
+
+400
+00:26:58,900 --> 00:27:02,025
+这样你就可以
+and that can be pretty neat, because then you can. 
+
+401
+00:27:02,025 --> 00:27:07,755
+在浏览器级别上确保它们之间没有信息共享。
+At a browser level, it's ensuring that no information sharing is happening between the two of them. 
+
+402
+00:27:07,775 --> 00:27:12,107
+这比打开无痕窗口更方便，
+And it's much more convenient than having to open an incognito window 
+
+403
+00:27:12,107 --> 00:27:13,771
+因为后者每次都会清除所有东西。
+where it's gonna clean all the time the stuff. 
+
+404
+00:27:13,875 --> 00:27:19,175
+（提醒一下，Stylus与Stylish之间的区别。）哦，是啊，我忘了这一点。
+(One thing to mention is Stylus vs Stylish) Oh yeah, I forgot about that. 
+
+405
+00:27:19,175 --> 00:27:27,950
+有一件重要的事情是浏览器扩展程序可以加载CSS样式表，它叫做Stylus，
+One important thing is the browser extension for side loading CSS Stylesheets, it's called Stylus, 
+
+406
+00:27:27,950 --> 00:27:32,942
+不同于旧版的Stylish，
+and that's different from the older one that was called Stylish
+
+407
+00:27:32,942 --> 00:27:39,675
+因为Stylish曾经被某个不怎么靠谱的公司收购，
+ because that one got bought at some point by some shady company that started abusing 
+
+408
+00:27:39,675 --> 00:27:44,846
+他们不仅使用这个功能，还读取了你的整个浏览器历史记录
+it not only to have that functionality but also to read your entire browser history 
+
+409
+00:27:44,846 --> 00:27:48,000
+并将其发送回他们的服务器，以便进行数据挖掘。
+and send that back to their servers so they could data mine it. 
+
+410
+00:27:48,000 --> 00:27:52,675
+于是人们就开发了这个开源的替代品，叫做Stylus，
+So then people just built this open-source alternative that is called Stylus, 
+
+411
+00:27:52,675 --> 00:27:54,425
+这是我们推荐的。
+and that's the one we recommend. 
+
+412
+00:27:54,425 --> 00:28:00,225
+话虽如此，我认为两个工具的样式库是相同的，
+Said that, I think the repository for styles is the same for the two of them, 
+
+413
+00:28:00,225 --> 00:28:02,500
+但我需要再次确认一下。
+but I would have to double-check that.
+
+414
+00:28:03,825 --> 00:28:05,875
+"Anish，你有使用任何浏览器插件吗？"
+Do you have any browser plugins, Anish?
+
+415
+00:28:05,875 --> 00:28:08,750
+是的，我也有一些浏览器插件的推荐。
+Yes, so I also have some recommendations for browser plugins. 
+
+416
+00:28:08,750 --> 00:28:10,975
+我也使用uBlock Origin
+I also use uBlock Origin, 
+
+417
+00:28:10,975 --> 00:28:13,475
+和Stylus，
+and I also use Stylus, 
+
+418
+00:28:13,675 --> 00:28:18,075
+但我还要推荐一款密码管理器的集成插件。
+but one other one that I'd recommend is integration with a password manager. 
+
+419
+00:28:18,075 --> 00:28:21,850
+我们在安全讲座的讲义中有涉及到这个主题，
+So this is a topic that we have in the lecture notes for the security lecture, 
+
+420
+00:28:21,850 --> 00:28:23,325
+但我们没有详细讨论。
+but we didn't really get to talk about in detail. 
+
+421
+00:28:23,325 --> 00:28:26,852
+基本上，密码管理器在处理在线账户时
+But basically, password managers do a really good job of increasing your security 
+
+422
+00:28:26,852 --> 00:28:28,634
+可以大大提高您的安全性，
+when working with online accounts, 
+
+423
+00:28:28,634 --> 00:28:32,700
+与浏览器集成可以节省您很多时间。
+and having browser integration with your password manager can save you a lot of time. 
+
+424
+00:28:32,700 --> 00:28:35,760
+您可以打开一个网站，然后它可以自动填充您的登录信息，
+Like you can open up a website then it can autofill your login information for you, 
+
+425
+00:28:35,760 --> 00:28:38,000
+而不是您必须在独立的程序之间
+instead of you having to go and copy and paste it back and forth 
+
+426
+00:28:38,000 --> 00:28:40,775
+来回复制和粘贴。
+between a separate program if it's not integrated with your web browser. 
+
+427
+00:28:40,775 --> 00:28:43,527
+而且，这种集成可以避免某些攻击，
+And it can also, this integration, can save you from certain attacks
+
+428
+00:28:43,527 --> 00:28:47,303
+否则如果您进行手动复制和粘贴，则可能会受到攻击，
+ that would otherwise be possible if you were doing this manual copy-pasting. 
+
+429
+00:28:47,303 --> 00:28:48,925
+例如钓鱼攻击。
+For example, phishing attacks. 
+
+430
+00:28:48,925 --> 00:28:53,775
+因此，如果您找到一个看起来非常像Facebook的网站，并使用登录凭据进行登录，
+So you find a website that looks very similar to Facebook and you go to log in with your Facebook login credentials, 
+
+431
+00:28:53,775 --> 00:28:57,325
+然后将正确的凭据复制粘贴到这个奇怪的网站，
+and you go to your password manager and copy-paste the correct credentials into this funny website, 
+
+432
+00:28:57,325 --> 00:28:59,025
+那么现在它就有了您的密码。
+and now all of a sudden it has your password. 
+
+433
+00:28:59,025 --> 00:29:02,900
+但如果您有浏览器集成，则扩展程序可以自动检查，例如：
+But if you have browser integration, then the extension can automatically check like. 
+
+434
+00:29:02,900 --> 00:29:07,525
+我是在F A C E B O O K.com上还是在其他看起来相似的域名上，
+Am I on F A C E B O O K.com or is it some other domain that maybe looks similar, 
+
+435
+00:29:07,525 --> 00:29:10,300
+并且如果是错误的域名，则不会输入登录信息。
+and it will not enter the login information if it's the wrong domain. 
+
+436
+00:29:10,300 --> 00:29:14,050
+所以，密码管理的浏览器插件很好用。
+So browser extension for password managing is good. 
+
+437
+00:29:14,450 --> 00:29:16,225
+是的，我同意。
+Yeah, I agree.
+
+438
+00:29:18,975 --> 00:29:23,075
+下一个问题是，还有哪些有用的数据整理工具？
+Next question, what are other useful data wrangling tools?
+
+439
+00:29:25,275 --> 00:29:28,550
+昨天的讲座中，我提到了curl。
+So in yesterday's lecture, I mentioned curl. 
+
+440
+00:29:28,550 --> 00:29:34,025
+Curl是一个非常好用的工具，可以直接在终端中进行网页请求并将其转储。
+Curl is a fantastic tool for just making web requests and dumping them to your terminal. 
+
+441
+00:29:34,025 --> 00:29:39,025
+您还可以使用它来上传文件，非常方便。
+You can also use it for things like uploading files, which is really handy.
+
+442
+00:29:39,025 --> 00:29:42,796
+在那个讲座的练习中，
+In the exercises of that lecture, 
+
+443
+00:29:42,796 --> 00:29:45,740
+我们还谈到了JQ和pup，
+we also talked about JQ and pup, 
+
+444
+00:29:45,740 --> 00:29:51,036
+这是命令行工具，
+which are command line tools that let you basically write queries over
+
+445
+00:29:51,036 --> 00:29:55,496
+可以让您在JSON和HTML文档上编写查询，非常有用。
+ JSON and HTML documents respectively that can be really handy. 
+
+446
+00:29:57,125 --> 00:30:01,225
+其他的数据整理工具？啊，Perl。
+Other data wrangling tools? Ah, Perl. 
+
+447
+00:30:01,225 --> 00:30:06,652
+Perl编程语言通常被称为只能写不能读的编程语言，
+The Perl programming language is often referred to as a write-only programming language 
+
+448
+00:30:06,652 --> 00:30:09,375
+因为即使您编写它，也无法阅读它。
+because it's impossible to read, even if you wrote it. 
+
+449
+00:30:09,450 --> 00:30:17,850
+但是，它非常擅长于处理纯文本，没有什么能超越它。
+But it is fantastic at doing just like straight-up text processing, like nothing beats it there. 
+
+450
+00:30:18,425 --> 00:30:24,075
+因此，也许值得学习一些非常基础的Perl知识，以编写一些脚本。
+So, maybe worth learning some very rudimentary Perl just to write some of those scripts. 
+
+451
+00:30:24,075 --> 00:30:29,000
+这通常比编写一些grep、awk和sed的组合要容易得多，
+It's easier often than writing some like hacked-up combination of grep and awk and sed, 
+
+452
+00:30:29,000 --> 00:30:35,375
+而且直接编写比例如Python的代码也要快得多。
+and it will be much faster to just tack something up than writing it up in Python, for example. 
+
+453
+00:30:35,375 --> 00:30:46,850
+但是除此之外，其他的数据整理工具呢？我脑海中没有想到。
+But apart from that, other data wrangling? No, not off the top of my head. Really,
+
+454
+00:30:46,850 --> 00:30:49,000
+实际上，"column -t"就非常好用。
+ column -t. 
+
+455
+00:30:49,825 --> 00:30:55,575
+如果您将任何以空格为分隔符的输入导入"column -t"，
+If you pipe any whitespace-separated input into column -t, 
+
+456
+00:30:55,575 --> 00:31:00,925
+它会使列的所有空格对齐，从而使您得到漂亮的对齐列。
+it will align all the whitespace of the columns so that you get nicely aligned columns. 
+
+457
+00:31:01,975 --> 00:31:07,525
+这是一种非常实用的工具，还有"head"和"tail"，但我们已经谈论过这些了。
+That's,  and head and tail,  but we talked about those.  
+
+458
+00:31:08,425 --> 00:31:15,325
+我认为还有几个我经常使用的工具需要补充：一个是Vim。
+I think a couple of additions to that, that I find myself using commonly: one is Vim. 
+
+459
+00:31:15,325 --> 00:31:19,500
+Vim在数据整理中非常有用。
+Vim can be pretty useful for like data wrangling on itself. 
+
+460
+00:31:19,500 --> 00:31:23,567
+有时候您可能会发现要完成的操作很难用
+Sometimes you might find that the operation that you're trying to do is hard to 
+
+461
+00:31:23,567 --> 00:31:26,500
+管道运算符来表达。
+put down in terms of piping different operators. 
+
+462
+00:31:26,500 --> 00:31:30,749
+但是，如果您可以打开文件，
+But if you can just open the file and just record
+
+463
+00:31:30,749 --> 00:31:35,687
+只需记录一些快速的Vim宏来执行所需的操作，
+ a couple of quick Vim macros to do what you want it to do, 
+
+464
+00:31:35,687 --> 00:31:38,150
+那么这可能会更加容易。
+it might be like much, much easier. 
+
+465
+00:31:38,200 --> 00:31:42,536
+这是其中一个工具，另一个是如果您正在处理表格数据，
+That's one, and then the other one, if you're dealing with tabular data
+
+466
+00:31:42,536 --> 00:31:46,184
+并且想要执行更复杂的操作，例如按一列排序，
+ and you want to do more complex operations like sorting by one column, 
+
+467
+00:31:46,184 --> 00:31:49,384
+然后分组并计算某种统计数据，
+then grouping and then computing some sort of statistic,
+
+468
+00:31:49,384 --> 00:31:53,480
+我认为这种工作负载的大部分内容都可以使用Python和pandas来完成，
+ I think a lot of that workload I ended up just using Python and pandas
+
+469
+00:31:53,480 --> 00:31:55,625
+因为它专门为此而建立。
+ because it's built for that. 
+
+470
+00:31:55,625 --> 00:31:57,941
+我还发现
+And one of the pretty neat features 
+
+471
+00:31:57,941 --> 00:32:02,248
+自己经常使用的一个相当不错的功能是它可以导出许多不同的格式。
+that I find myself also using is that it will export to many different formats. 
+
+472
+00:32:02,248 --> 00:32:07,800
+因此，这种中间状态具有自己的pandas数据框架对象，
+So this intermediate state has its own kind of pandas dataframe object, 
+
+473
+00:32:07,800 --> 00:32:12,825
+但它可以导出到HTML、LaTeX等许多不同的表格格式。
+but it can export to HTML, LaTeX, a lot of different like table formats. 
+
+474
+00:32:12,825 --> 00:32:16,568
+如果你的最终产品是某种摘要表格，
+So if your end product is some sort of summary table, 
+
+475
+00:32:16,568 --> 00:32:18,950
+那么我认为Pandas是一个非常好的选择。
+then pandas I think it's a fantastic choice for that. 
+
+476
+00:32:20,550 --> 00:32:23,675
+我也同意使用Vim和Python。
+I would second the Vim and also Python. 
+
+477
+00:32:23,750 --> 00:32:26,275
+我认为这两个工具是我最常用的数据处理工具之一。
+I think those are two of my most used data wrangling tools. 
+
+478
+00:32:26,275 --> 00:32:30,075
+关于Vim，去年我们在系列课程的讲义中进行了演示，
+For the Vim one, last year we had a demo in the series in the lecture notes, 
+
+479
+00:32:30,075 --> 00:32:31,125
+但是我们没有在课堂上介绍它。
+but we didn't cover it in class. 
+
+480
+00:32:31,125 --> 00:32:37,625
+我们进行了一个演示，将一个XML文件转换为JSON版本，只使用了Vim宏。
+We had a demo of turning an XML file into a JSON version of that same data using only Vim macros. 
+
+481
+00:32:37,700 --> 00:32:40,075
+我认为这实际上是我实践中的处理方式。
+And I think that's actually the way I would do it in practice. 
+
+482
+00:32:40,075 --> 00:32:41,700
+我不想去找一个工具来做这个转换。
+I don't want to go find a tool that does this conversion. 
+
+483
+00:32:41,700 --> 00:32:44,975
+将其编码成Vim宏实际上很简单，然后我就可以这样做。
+It is actually simple to encode as a Vim macro, then I just do it that way. 
+
+484
+00:32:44,975 --> 00:32:48,900
+此外，特别是在像Jupyter笔记本这样的交互式工具中，
+And then also Python, especially in an interactive tool like a Jupyter notebook,
+
+485
+00:32:48,900 --> 00:32:50,756
+Python是进行数据处理的一种非常好的方式。
+ is a really great way of doing data wrangling. 
+
+486
+00:32:50,775 --> 00:32:52,574
+我还想提到第三个工具，
+A third tool I'd mention which I don't remember 
+
+487
+00:32:52,574 --> 00:32:56,325
+我不记得我们是否介绍过，那就是一个叫做pandoc的工具，
+if we covered in the data wrangling lecture or elsewhere is a tool called pandoc, 
+
+488
+00:32:56,325 --> 00:32:59,425
+它可以在不同的文本文档格式之间进行转换。
+which can do transformations between different text document formats. 
+
+489
+00:32:59,425 --> 00:33:02,831
+因此，你可以将纯文本转换为HTML或HTML转换为Markdown
+So you can convert from plaintext to HTML or HTML to markdown 
+
+490
+00:33:02,831 --> 00:33:06,078
+或LaTeX转换为HTML或许多其他格式。
+or LaTeX to HTML or many other formats. 
+
+491
+00:33:06,078 --> 00:33:09,750
+它实际上支持大量的输入格式和输出格式。
+It actually supports a large list of input formats and a large list of output formats. 
+
+492
+00:33:10,300 --> 00:33:15,695
+我想最后还有一个，我在数据处理讲座中简要提到过，
+I think there's one last one which I mentioned briefly in the lecture on data wrangling,
+
+493
+00:33:15,695 --> 00:33:17,425
+那就是R编程语言。
+ which is the R programming language. 
+
+494
+00:33:17,425 --> 00:33:21,650
+它是一个非常糟糕的（我认为是非常糟糕的）编程语言，
+It's an awful (I think it's an awful) language to program in, 
+
+495
+00:33:21,650 --> 00:33:25,500
+我不会在数据处理流水线的中间使用它。
+and I would never use it in the middle of a data wrangling pipeline. 
+
+496
+00:33:25,500 --> 00:33:30,800
+但是，在最后阶段，为了生成漂亮的图表和统计数据，R是非常好的。
+But at the end, in order to like produce pretty plots and statistics, R is great. 
+
+497
+00:33:30,800 --> 00:33:33,525
+因为 R 是为统计和绘图而建的，
+Because R is built for doing statistics and plotting,
+
+498
+00:33:33,525 --> 00:33:40,500
+所以有一个叫做 ggplot 的库，非常棒。
+ there's a library called ggplot which is just amazing. 
+
+499
+00:33:40,500 --> 00:33:45,025
+ggplot2 从技术上讲很棒。
+ggplot2, I guess technically, it's great. 
+
+500
+00:33:45,025 --> 00:33:47,285
+它可以产生非常好的可视化效果，
+It produces very nice visualizations 
+
+501
+00:33:47,285 --> 00:33:51,509
+让你可以很容易地做出像
+and it lets you do very easily do things like 
+
+502
+00:33:51,509 --> 00:33:55,650
+数据集具有多个方面这样的东西，
+if you have a data set that has like multiple facets, 
+
+503
+00:33:55,675 --> 00:34:01,425
+不仅仅是 X 和 Y，还有 Z 和其他变量，
+like it's not just X and Y, it's like X Y Z and some other variable, 
+
+504
+00:34:01,425 --> 00:34:03,733
+然后你想一次性将所有这些参数分组的吞吐量
+and then you want to plot like the throughput 
+
+505
+00:34:03,733 --> 00:34:08,250
+绘制成可视化效果。
+grouped by all of those parameters at the same time and produce a visualization. 
+
+506
+00:34:08,250 --> 00:34:09,800
+R 可以让你非常容易地做到这一点，
+R very easily lets you do this, 
+
+507
+00:34:09,800 --> 00:34:13,950
+我还没有看到其他工具能像 R 那样容易地做到这一点。
+and I haven't seen anywhere that lets you do that as easily.
+
+508
+00:34:15,925 --> 00:34:20,437
+下一个问题，Docker 和虚拟机的区别是什么？
+Next question, what's the difference between Docker and a virtual machine?
+
+509
+00:34:22,612 --> 00:34:26,325
+最容易解释的方法是什么？
+ What's the easiest way to explain this? 
+
+510
+00:34:26,400 --> 00:34:29,325
+所以，Docker 开始了一些叫做容器的东西，
+So, Docker starts something called containers, 
+
+511
+00:34:29,325 --> 00:34:31,825
+Docker 并不是唯一启动容器的程序。
+and Docker is not the only program that starts containers. 
+
+512
+00:34:31,825 --> 00:34:33,325
+还有许多其他的程序，
+There are many others, 
+
+513
+00:34:33,325 --> 00:34:37,500
+通常它们依赖于底层内核的某些特性。
+and usually they rely on some feature of the underlying kernel. 
+
+514
+00:34:37,500 --> 00:34:42,100
+在 Docker 的情况下，它们使用了一些叫做 LXC 的东西，这是 Linux 容器。
+In the case of Docker, they use something called LXC, which are Linux containers. 
+
+515
+00:34:42,100 --> 00:34:45,717
+基本原理是，
+The basic premise there is
+
+516
+00:34:45,717 --> 00:34:49,557
+如果你想启动一个看起来像虚拟机的东西，
+ if you want to start what looks like a virtual machine 
+
+517
+00:34:49,557 --> 00:34:55,573
+它运行的操作系统与你已经在计算机上运行的操作系统大致相同，
+that is running roughly the same operating system as you are already running on your computer, 
+
+518
+00:34:55,573 --> 00:35:00,600
+那么你实际上不需要运行另一个内核实例。
+then you don't really need to run another instance of the kernel. 
+
+519
+00:35:00,600 --> 00:35:05,100
+实际上，另一个虚拟机可以共享一个内核，
+Really, that other virtual machine can share a kernel, 
+
+520
+00:35:05,100 --> 00:35:09,196
+你可以使用内核内置的隔离机制来启动一个程序，
+and you can just use the kernel's built-in isolation mechanisms 
+
+521
+00:35:09,196 --> 00:35:13,036
+让它认为它在它的硬件上运行，
+to spin up a program that thinks it's running on its hardware, 
+
+522
+00:35:13,036 --> 00:35:15,125
+但实际上，它是在共享内核。
+but in reality, it's sharing the kernel. 
+
+523
+00:35:15,125 --> 00:35:19,463
+这意味着容器通常可以
+And so this means that containers can often run with much lower overhead
+
+524
+00:35:19,463 --> 00:35:21,900
+比完整虚拟机使用更低的开销运行。
+ than a full virtual machine will do. 
+
+525
+00:35:21,900 --> 00:35:23,707
+但是你应该记住，
+But you should keep in mind that it also has 
+
+526
+00:35:23,707 --> 00:35:27,700
+它的隔离性也比较弱，因为你在两个容器之间共享内核。
+somewhat weaker isolation because you are sharing a kernel between the two. 
+
+527
+00:35:27,700 --> 00:35:29,568
+如果你启动了一个虚拟机，
+If you spin up a virtual machine,
+
+528
+00:35:29,568 --> 00:35:35,071
+唯一共享的是硬件和某种程度上的 hypervisor，
+ the only thing that's shared is sort of the hardware and to some extent, the hypervisor, 
+
+529
+00:35:35,071 --> 00:35:38,450
+而 Docker 容器则共享整个内核，
+whereas with a Docker container, you're sharing the full kernel, 
+
+530
+00:35:38,450 --> 00:35:43,250
+这是一个不同的威胁模型，你可能需要考虑这一点。
+and that is a different threat model that you might have to keep in mind.
+
+531
+00:35:47,450 --> 00:35:51,675
+正如Jon指出的那样，要使用容器（例如Docker），
+One another small note there as Jon pointed out, to use containers, 
+
+532
+00:35:51,675 --> 00:35:55,579
+你需要底层操作系统
+something like Docker, you need the underlying operating system to be roughly the same
+
+533
+00:35:55,579 --> 00:35:59,227
+与运行在容器顶部的程序所期望的操作系统大致相同。
+ as whatever the program that's running on top of the container expects. 
+
+534
+00:35:59,227 --> 00:36:01,659
+如果你使用的是macOS，
+And so if you're using macOS, for example, 
+
+535
+00:36:01,659 --> 00:36:04,795
+那么你需要在虚拟机中运行Linux，
+the way you use Docker is you run Linux inside a virtual machine, 
+
+536
+00:36:04,800 --> 00:36:06,875
+然后在Linux上运行Docker。
+and then you can run Docker on top of Linux. 
+
+537
+00:36:06,875 --> 00:36:09,787
+因此，如果你使用容器来提高性能，
+So maybe if you're going for containers 
+
+538
+00:36:09,787 --> 00:36:12,900
+那么你就是在为性能而牺牲隔离性。
+in order to get better performance, you're trading isolation for performance. 
+
+539
+00:36:12,900 --> 00:36:16,275
+如果你在macOS上运行，那么可能无法达到预期的效果。
+If you're running on macOS, that may not work out exactly as expected. 
+
+540
+00:36:17,025 --> 00:36:21,275
+最后需要注意的是，Docker和容器有一个细微的区别。
+And one last note is that there is a slight difference. 
+
+541
+00:36:21,275 --> 00:36:26,250
+使用容器需要注意的问题之一是，
+So with Docker and containers, one of the gotchas you have to be familiar with is that 
+
+542
+00:36:26,250 --> 00:36:30,715
+容器更类似于虚拟机，
+containers are more similar to virtual machines in the sense that 
+
+543
+00:36:30,715 --> 00:36:32,975
+因为它们会持久化存储所有内容，
+they will persist all the storage that you have,
+
+544
+00:36:32,975 --> 00:36:35,407
+而默认情况下，Docker并不会这样做。
+ whereas Docker by default won't have that. 
+
+545
+00:36:35,475 --> 00:36:38,000
+Docker的主要想法是
+Like Docker is supposed to be running, 
+
+546
+00:36:38,000 --> 00:36:41,250
+“我想运行一些软件，
+so the main idea is like I want to run some software, 
+
+547
+00:36:41,250 --> 00:36:43,075
+我获得了镜像，然后它运行起来了”，
+and I get the image,  and it runs,  
+
+548
+00:36:43,075 --> 00:36:48,275
+如果你想要与主机系统链接的任何持久性存储，
+and if you want to have any kind of persistent storage that links to the host system, 
+
+549
+00:36:48,275 --> 00:36:50,594
+你必须手动指定，
+you have to kind of manually specify that,
+
+550
+00:36:50,594 --> 00:36:56,250
+而虚拟机则使用提供的虚拟磁盘。
+ whereas a virtual machine is using some virtual disk that is being provided.
+
+551
+00:37:01,075 --> 00:37:05,050
+下一个问题是，每个操作系统的优点是什么，
+Next question, what are the advantages of each operating system, 
+
+552
+00:37:05,050 --> 00:37:06,650
+我们如何在它们之间进行选择？
+and how can we choose between them? 
+
+553
+00:37:06,650 --> 00:37:10,175
+例如，选择最适合我们需求的Linux发行版。
+For example, choosing the best Linux distribution for our purposes. 
+
+554
+00:37:13,675 --> 00:37:16,225
+我想说的是，对于很多任务来说，
+I will say that for many, many tasks, 
+
+555
+00:37:16,225 --> 00:37:19,975
+你所运行的具体的Linux发行版并不是那么重要的。
+The specific Linux distribution that you're running is not that important. 
+
+556
+00:37:19,975 --> 00:37:25,633
+重要的是了解不同类型
+The thing is, it's just what kind of knowing that there are different types 
+
+557
+00:37:25,633 --> 00:37:27,425
+或者分组的发行版。
+or like groups of distributions. 
+
+558
+00:37:27,425 --> 00:37:32,033
+例如，有一些发行版有着很频繁的更新，
+So, for example, there are some distributions that have really frequent updates, 
+
+559
+00:37:32,033 --> 00:37:34,250
+但是它们更容易出问题。
+but they kind of break more easily. 
+
+560
+00:37:34,250 --> 00:37:40,500
+例如，Arch Linux通过滚动更新的方式来推送更新，
+So, for example, Arch Linux has a rolling update way of pushing updates, 
+
+561
+00:37:40,500 --> 00:37:44,050
+可能会出现一些问题，但是他们习惯于事情是这样的。
+where things might break but they're fine with the things being that way. 
+
+562
+00:37:44,050 --> 00:37:48,184
+但是，如果你有一些非常重要的Web服务器来
+Where maybe where you have some really important web server that 
+
+563
+00:37:48,184 --> 00:37:50,225
+托管你所有的业务分析，
+is hosting all your business analytics, 
+
+564
+00:37:50,225 --> 00:37:53,825
+你肯定希望它更新的方式更加稳定。
+you want that thing to have like a much more steady way of updates. 
+
+565
+00:37:53,825 --> 00:37:55,286
+这就是为什么
+So that's, for example, 
+
+566
+00:37:55,286 --> 00:37:59,625
+你会看到像Debian这样的发行版在他们推送更新时更加保守，
+why you will see distributions like Debian being much more conservative about what they push, 
+
+567
+00:37:59,625 --> 00:38:02,646
+或者比如Ubuntu区分了长期支持版本，
+or even for example Ubuntu makes a difference 
+
+568
+00:38:02,646 --> 00:38:07,700
+它们只每两年更新一次，
+between the Long Term Releases that they are only updated every two years 
+
+569
+00:38:07,700 --> 00:38:14,650
+还有更加定期的更新，每年会有两次。
+and the more periodic releases of one there is - it's like two a year that they make. 
+
+570
+00:38:14,650 --> 00:38:18,100
+所以，了解到这种差别很重要。此外，
+So, kind of knowing that there's the difference.  Apart from that,  
+
+571
+00:38:18,100 --> 00:38:21,671
+一些发行版提供
+some distributions have different ways of 
+
+572
+00:38:21,671 --> 00:38:28,450
+二进制文件的方式以及仓库的方式也有所不同。
+providing the binaries to you and the way they have the repositories. 
+
+573
+00:38:28,450 --> 00:38:32,084
+例如，我认为很多Red Hat Linux不想在官方仓库中提供非自由驱动程序，
+So, I think a lot of Red Hat Linux don't want non-free 
+
+574
+00:38:32,084 --> 00:38:37,725
+但Ubuntu则对其中的一些驱动程序没有问题。
+drivers in their official repositories where I think Ubuntu is fine with some of them. 
+
+575
+00:38:38,075 --> 00:38:45,375
+除此之外，我认为大多数Linux发行版的核心是共享的，
+Apart from that, I think like just a lot of what is core to most Linux distros is kind of shared between them, 
+
+576
+00:38:45,375 --> 00:38:48,025
+在共同点上有很多学习的内容。
+and there's a lot of learning in the common ground. 
+
+577
+00:38:48,025 --> 00:38:50,800
+所以，你不必担心具体的细节。
+So, you don't have to worry about the specifics.
+
+578
+00:38:51,700 --> 00:38:54,875
+继续保持这个课程有些主观的主题，
+Keeping with the theme of this class being somewhat opinionated, 
+
+579
+00:38:54,875 --> 00:38:59,099
+我想说如果你是第一次使用Linux，
+I'm gonna go ahead and say that if you're using Linux, especially for the first time, 
+
+580
+00:38:59,125 --> 00:39:00,750
+选择类似Ubuntu或Debian这样的东西。
+choose something like Ubuntu or Debian. 
+
+581
+00:39:00,750 --> 00:39:04,475
+所以，Ubuntu也是基于Debian的发行版，但可能更加友好。
+So, you Ubuntu too is a Debian-based distribution but maybe is a little bit more friendly. 
+
+582
+00:39:04,475 --> 00:39:06,150
+Debian则更加简约。
+Debian is a little bit more minimalist. 
+
+583
+00:39:06,150 --> 00:39:08,475
+例如，我在所有的服务器上使用Debian，
+I use Debian and all my servers, for example. 
+
+584
+00:39:08,475 --> 00:39:11,025
+我在运行Linux的桌面计算机上使用Debian桌面。
+And I use Debian desktop on my desktop computers that run Linux. 
+
+585
+00:39:11,025 --> 00:39:14,858
+如果你想尝试学习更多的东西，
+If you're going for maybe trying to learn more things 
+
+586
+00:39:14,858 --> 00:39:19,100
+并且想要一种在稳定性和软件更加更新之间做出权衡的发行版，
+and you want a distribution that trades stability for having more up-to-date software 
+
+587
+00:39:19,100 --> 00:39:21,898
+也许你可以考虑
+maybe at the expense of you having to fix a broken distribution every once in a while, 
+
+588
+00:39:21,898 --> 00:39:28,625
+像Arch Linux、Gentoo或Slackware这样的东西。
+then maybe you can consider something like Arch Linux or Gentoo or Slackware. 
+
+589
+00:39:28,650 --> 00:39:32,051
+噢，我想说，如果你正在安装Linux并想要完成工作，
+Oh man, I'd say that like if you're installing Linux 
+
+590
+00:39:32,051 --> 00:39:34,550
+Debian是一个很好的选择。
+and just like want to get work done, Debian is a great choice. 
+
+591
+00:39:35,275 --> 00:39:37,500
+是的，我同意这个观点。
+Yeah, I think I agree with that.
+
+592
+00:39:37,500 --> 00:39:40,475
+另一个观察是，你可以安装BSD。
+The other observation is like you couldn't install BSD. 
+
+593
+00:39:40,475 --> 00:39:44,450
+BSD从过去到现在发生了很大的变化。
+BSD has come a long way from where it was. 
+
+594
+00:39:44,450 --> 00:39:47,900
+仍然有一些软件在BSD上无法使用，
+There's still a bunch of software you can't really get for BSD, 
+
+595
+00:39:47,900 --> 00:39:50,925
+但它提供了一个非常完善的文档体验。
+but it gives you a very well-documented experience, 
+
+596
+00:39:50,925 --> 00:39:55,797
+与Linux不同的是，
+and one thing that's different about BSD compared to Linux is that
+
+597
+00:39:55,797 --> 00:40:02,150
+在安装BSD时，你会得到一个完整的操作系统。
+ in BSD when you install BSD, you get a full operating system, mostly. 
+
+598
+00:40:02,225 --> 00:40:06,067
+因此，许多程序由同一个团队维护，
+So many of the programs are maintained by the same team 
+
+599
+00:40:06,067 --> 00:40:09,395
+他们同时升级，
+that maintains the kernel and everything is sort of upgraded together, 
+
+600
+00:40:09,395 --> 00:40:12,500
+这与Linux世界的工作方式有些不同。
+which is a little different than how things work in the Linux world. 
+
+601
+00:40:12,500 --> 00:40:15,100
+这确实意味着事情通常会慢一点。
+It does mean that things often move a little bit slower. 
+
+602
+00:40:15,100 --> 00:40:19,575
+我不会将其用于游戏等方面，因为驱动程序支持一般。
+I would not use it for things like gaming either because driver support is meh. 
+
+603
+00:40:19,575 --> 00:40:23,625
+但这是一个有趣的环境值得一看。
+But it is an interesting environment to look at.
+
+604
+00:40:23,625 --> 00:40:32,675
+接下来，对于像 Mac OS 和 Windows 这样的东西，如果你是一个程序员，
+And then for things like Mac OS and Windows, I think if you are a programmer, 
+
+605
+00:40:32,675 --> 00:40:37,125
+我不知道为什么你会使用 Windows，除非你正在构建 Windows 的东西，
+I don't know why you are using Windows unless you are building things for Windows, 
+
+606
+00:40:37,125 --> 00:40:42,062
+或者你想玩游戏之类的东西，
+or you want to be able to do gaming and stuff, 
+
+607
+00:40:42,062 --> 00:40:46,800
+但在这种情况下，也许尝试双重启动，即使这也很麻烦。
+but in that case, maybe try dual booting, even though that's a pain too. 
+
+608
+00:40:46,800 --> 00:40:50,639
+Mac OS 是两者之间的一个很好的中间点，
+Mac OS is a good sort of middle point 
+
+609
+00:40:50,639 --> 00:40:54,750
+你可以得到一个相对不错的系统。
+between the two where you get a system that is relatively nicely polished for you. 
+
+610
+00:40:54,750 --> 00:41:00,650
+但你仍然可以在某种程度上访问一些较低级别的内容。
+But you still have access to some of the lower-level bits at least to a certain extent. 
+
+611
+00:41:00,650 --> 00:41:03,850
+而且双重启动 Mac OS 和 Windows 也非常容易。
+It's also really easy to dual boot Mac OS and Windows.
+
+612
+00:41:03,850 --> 00:41:09,500
+但 Mac OS 和 Linux，以及 Linux 和 Windows 之间就不是这种情况了。
+It is not quite the case with like Mac OS and Linux or Linux and Windows. 
+
+613
+00:41:13,300 --> 00:41:15,000
+好的，对于其余的问题，
+Alright, for the rest of the questions, 
+
+614
+00:41:15,000 --> 00:41:16,650
+这些问题都没有人点赞，
+so these are all 0 upvote questions, 
+
+615
+00:41:16,650 --> 00:41:19,750
+所以我们可以在课程的最后五分钟内快速回答它们。
+so maybe we can go through them quickly in the last five or so minutes of class. 
+
+616
+00:41:19,750 --> 00:41:24,050
+下一个问题是 Vim 和 Emacs 呢？Vim！很容易的答案，
+So the next one is Vim versus Emacs? Vim! Easy answer, 
+
+617
+00:41:24,050 --> 00:41:30,400
+但更严肃的答案是，我认为我们三个人都使用 Vim 作为我们的主要编辑器。
+but a more serious answer is like I think all three of us use vim as our primary editor. 
+
+618
+00:41:30,400 --> 00:41:34,175
+我在某些需要使用 Emacs 的研究特定工作中使用 Emacs，
+I use Emacs for some research-specific stuff which requires Emacs, 
+
+619
+00:41:34,175 --> 00:41:38,050
+但在更高的层面上，两个编辑器都有有趣的思想。
+but at a higher level, both editors have interesting ideas behind them. 
+
+620
+00:41:38,050 --> 00:41:41,200
+如果你有时间的话，值得探索一下两者，看哪一个更适合你。
+And if you have the time, it's worth exploring both to see which fits you better. 
+
+621
+00:41:41,200 --> 00:41:46,125
+另外，你可以使用 Emacs 并在 vim 模拟模式下运行它。
+Also, you can use Emacs and run it in a vim emulation mode. 
+
+622
+00:41:46,125 --> 00:41:48,025
+我实际上认识很多这样做的人，
+I actually know a good number of people who do that, 
+
+623
+00:41:48,025 --> 00:41:49,984
+这样他们就可以访问一些很酷的 Emacs 功能
+so they get access to some of the cool Emacs functionality 
+
+624
+00:41:49,984 --> 00:41:51,904
+和一些酷的哲学思想。
+and some of the cool philosophy behind that. 
+
+625
+00:41:51,904 --> 00:41:55,025
+就像 Emacs 可以通过 Lisp 进行编程一样，这很酷。
+Like Emacs is programmable through Lisp, which is kind of cool. 
+
+626
+00:41:55,025 --> 00:41:56,300
+比 vimscript 好多了，
+Much better than vimscript, 
+
+627
+00:41:56,300 --> 00:41:58,425
+但人们喜欢 vim 的模态编辑，
+but people like vim's modal editing, 
+
+628
+00:41:58,425 --> 00:42:03,700
+所以有一个 Emacs 插件叫做 evil 模式，它在 Emacs 中提供了 vim 模态编辑。
+so there's an emacs plugin called evil mode which gives you vim modal editing within Emacs. 
+
+629
+00:42:03,700 --> 00:42:08,400
+所以这不一定是一个二元的选择，如果你愿意，可以将两个工具结合起来。
+So it's not necessarily a binary choice, you can kind of combine both tools if you want to. 
+
+630
+00:42:08,400 --> 00:42:10,750
+如果你有时间，值得探索一下两者。
+And it's worth exploring both if you have the time.
+
+631
+00:42:11,000 --> 00:42:15,151
+下一个问题：机器学习应用有什么技巧或诀窍吗？
+Next question: Any tips or tricks for machine learning applications?
+
+632
+00:42:18,701 --> 00:42:23,232
+我认为，了解这些工具的使用方法，
+ I think, like knowing how a lot of these tools, 
+
+633
+00:42:23,232 --> 00:42:25,750
+尤其是
+mainly the data wrangling a lot of the shell tools, 
+
+634
+00:42:25,750 --> 00:42:28,182
+数据处理方面的许多shell工具非常重要，
+it's really important because
+
+635
+00:42:28,182 --> 00:42:33,686
+因为作为机器学习研究人员，你似乎正在尝试不同的方法。
+ it seems a lot of what you're doing as a machine learning researcher is trying different things. 
+
+636
+00:42:33,686 --> 00:42:36,050
+但我认为做到这一点的一个核心方面，
+But I think one core aspect of doing that, 
+
+637
+00:42:36,050 --> 00:42:38,290
+就像许多科学工作一样，
+and like a lot of scientific work, 
+
+638
+00:42:38,290 --> 00:42:43,730
+是能够以合理的方式获得可重复的结果并记录下来。
+is being able to have reproducible results and logging them in a sensible way. 
+
+639
+00:42:43,750 --> 00:42:47,223
+例如，与其想出
+So for example, instead of trying to come up with really hacky solutions of
+
+640
+00:42:47,223 --> 00:42:50,850
+如何命名你的文件夹以理解实验，
+ how you name your folders to make sense of the experiments, 
+
+641
+00:42:50,850 --> 00:42:53,367
+也许直接使用
+maybe it's just worth having, for example, what I do is 
+
+642
+00:42:53,367 --> 00:42:56,375
+一个描述整个实验的JSON文件更值得，
+have like a JSON file that describes the entire experiment. 
+
+643
+00:42:56,375 --> 00:42:58,500
+我通常会在其中记录所有的参数，
+I know like all the parameters that are within 
+
+644
+00:42:58,500 --> 00:43:02,925
+然后我可以使用我们已经介绍过的工具，
+and then I can really quickly, using the tools that we have covered, 
+
+645
+00:43:02,925 --> 00:43:09,525
+快速查询使用特定数据集的实验。
+query for all the experiments that have some specific purpose or use some dataset. 
+
+646
+00:43:09,525 --> 00:43:10,400
+诸如此类
+Things like that. 
+
+647
+00:43:10,400 --> 00:43:13,706
+除此之外，另一方面，
+Apart from that, the other side of this is 
+
+648
+00:43:13,706 --> 00:43:19,250
+如果你正在运行训练机器学习应用的任务，
+if you are running kind of things for training machine learning applications 
+
+649
+00:43:19,250 --> 00:43:21,900
+而你还没有使用
+and you are not already using some sort of cluster,
+
+650
+00:43:21,900 --> 00:43:25,250
+类似于大学或公司提供的某种集群，
+ like university or your company is providing 
+
+651
+00:43:25,300 --> 00:43:31,025
+而是像许多实验室一样手动ssh连接，这可能是因为这是一种简单的方式。
+and you're just kind of manually sshing, like a lot of labs do because that's kind of the easy way. 
+
+652
+00:43:31,025 --> 00:43:33,996
+那么自动化这项工作是很值得的，
+It's worth automating a lot of that job because 
+
+653
+00:43:33,996 --> 00:43:35,949
+因为手动进行这些操作可能看起来很不起眼，
+it might not seem like it 
+
+654
+00:43:35,949 --> 00:43:40,045
+但却需要
+but manually doing a lot of these operations takes away a lot of your time 
+
+655
+00:43:40,045 --> 00:43:45,200
+大量的时间和精力。
+and also kind of your mental energy for running these things.
+
+656
+00:43:47,925 --> 00:43:52,725
+还有其他的vim技巧吗？我有一个建议。
+Anymore vim tips? I have one. 
+
+657
+00:43:52,725 --> 00:43:57,197
+在vim讲座中，我们尽量不会向您介绍太多不同的vim插件，
+So in the vim lecture we tried not to link you to too many different vim plugins 
+
+658
+00:43:57,197 --> 00:43:59,275
+因为我们不希望那堂课让您感到不知所措。
+because we didn't want that lecture to be overwhelming. 
+
+659
+00:43:59,275 --> 00:44:01,535
+但我认为探索vim插件是值得的，
+But I think it's actually worth exploring vim plugins 
+
+660
+00:44:01,535 --> 00:44:04,050
+因为有很多非常酷的插件可供选择。
+because there are lots and lots of really cool ones out there. 
+
+661
+00:44:04,050 --> 00:44:07,475
+一个资源可以使用不同的讲师点文件。
+One resource you can use is the different instructors dotfiles. 
+
+662
+00:44:07,475 --> 00:44:11,251
+像我们大多数人一样，我使用了大约两打vim插件，
+Like a lot of us, I think I use like two dozen vim plugins 
+
+663
+00:44:11,251 --> 00:44:14,325
+我发现其中很多都很有用，而且我每天都在使用它们。
+and I find a lot of them quite helpful and I use them every day. 
+
+664
+00:44:14,325 --> 00:44:16,200
+我们所有人都使用略微不同的子集。
+We all use slightly different subsets of them. 
+
+665
+00:44:16,200 --> 00:44:19,912
+因此，去看看我们使用了什么或查看我们链接到的其他资源，
+So go look at what we use or look at some of the other resources we've linked to 
+
+666
+00:44:19,912 --> 00:44:21,960
+您可能会发现一些有用的东西。
+and you might find some stuff useful. 
+
+667
+00:44:22,050 --> 00:44:23,705
+另外，
+A thing to add to that is, 
+
+668
+00:44:23,705 --> 00:44:27,975
+我认为我们在讲座中没有详细介绍过的是熟悉leader键，
+I don't think we went into a lot of detail in the lecture, correct me if I'm wrong. 
+
+669
+00:44:27,975 --> 00:44:30,041
+这是一种特殊的键，
+It's getting familiar with the leader key 
+
+670
+00:44:30,041 --> 00:44:36,475
+很多程序，特别是插件，都会链接到它，
+which is kind of a special key that a lot of programs will especially plugins, that will link to 
+
+671
+00:44:36,475 --> 00:44:41,250
+而且vim有很多常见操作的简短方式，
+and for a lot of the common operations vim has short ways of doing it, 
+
+672
+00:44:41,250 --> 00:44:45,150
+但是你可以想出更快的方法来完成它们。
+But you can just figure out like quicker versions for doing them. 
+
+673
+00:44:45,150 --> 00:44:51,457
+例如，我知道您可以使用分号WQ来保存和退出，
+So for example, like I know that you can do like semicolon WQ to save 
+
+674
+00:44:51,457 --> 00:44:54,777
+或者可以使用大写ZZ，
+and exit or that you can do like capital ZZ 
+
+675
+00:44:54,777 --> 00:44:58,282
+但我实际上只是使用leader（对我来说是空格），然后W。
+but I just actually just do leader (which for me is the space) and then W.
+
+676
+00:44:58,282 --> 00:45:02,906
+我已经为我经常执行的很多常见操作
+And I have done that for a lot of a lot of kind of common operations 
+
+677
+00:45:02,906 --> 00:45:04,375
+做到了这一点。
+that I keep doing all the time. 
+
+678
+00:45:04,375 --> 00:45:06,540
+因为在极其常见的操作中
+Because just saving one keystroke
+
+679
+00:45:06,540 --> 00:45:10,500
+节省一个按键只是每月节省数千个按键。
+ for an extremely common operation is just saving thousands a month.
+
+680
+00:45:11,300 --> 00:45:14,075
+是的，稍微展开一下什么是leader key，
+Yeah just to expand a little bit on what the leader key is, 
+
+681
+00:45:14,075 --> 00:45:15,575
+所以在vim中，您可以绑定一些键。
+so in vim you can bind some keys. 
+
+682
+00:45:15,575 --> 00:45:19,679
+我可以做像Ctrl J这样的事情，就像按住一个键然后按另一个键。
+I can do like ctrl J does something like holding one key and then pressing another. 
+
+683
+00:45:19,679 --> 00:45:22,775
+我可以将其绑定到某个动作，或者我可以将单个击键绑定到某个动作。
+I can bind that to something or I can bind a single keystroke to something.
+
+684
+00:45:22,775 --> 00:45:25,425
+leader key让您做的是绑定。
+What the leader key lets you do, is bind. 
+
+685
+00:45:25,425 --> 00:45:27,975
+因此，您可以分配任何键作为leader key，
+So you can assign any key to be the leader key
+
+686
+00:45:27,975 --> 00:45:32,025
+然后将leader加上其他某个键分配给某个操作。
+ and then you can assign leader followed by some other key to some action. 
+
+687
+00:45:32,025 --> 00:45:36,125
+例如，像Jose的leader key是空格，
+So for example, like Jose's leader key is space and they can combine space 
+
+688
+00:45:36,125 --> 00:45:40,725
+他们可以将空格与释放空格后的某个其他键组合在一起，绑定到任意vim命令。
+and then releasing space followed by some other key to an arbitrary vim command. 
+
+689
+00:45:40,725 --> 00:45:45,100
+它只是给您另一种绑定整套键组合的方法。
+It just gives you yet another way of binding like a whole set of key combinations. 
+
+690
+00:45:45,100 --> 00:45:49,100
+Leader key加上键盘上的任何键可以实现某种功能。
+Leader key plus kind of any key on the keyboard to some functionality.
+
+691
+00:45:49,625 --> 00:45:54,287
+我忘记我们是否在vim uh中涵盖了宏，
+I think I've I forget whether we covered macros in the vim uh sure 
+
+692
+00:45:54,287 --> 00:45:57,096
+但是学习vim宏是值得的。
+but like vim macros are worth learning. 
+
+693
+00:45:57,175 --> 00:45:59,125
+它们并不复杂，
+They're not that complicated 
+
+694
+00:45:59,125 --> 00:46:02,075
+但知道它们的存在
+but knowing that they're there and knowing how to use them 
+
+695
+00:46:02,075 --> 00:46:03,803
+以及如何使用它们将节省您很多时间。
+is going to save you so much time.
+
+696
+00:46:03,825 --> 00:46:07,250
+另一个是称为标记的东西。
+The other one is something called marks. 
+
+697
+00:46:07,250 --> 00:46:13,200
+因此，在vim中，您可以按m，然后按键盘上的任何字母，以在该文件中打标记，
+So in vim you can press m and then any letter on your keyboard to make a mark in that file 
+
+698
+00:46:13,200 --> 00:46:18,375
+然后可以按相同字母的单引号跳回同一位置。
+and then you can press apostrophe on the same letter to jump back to the same place. 
+
+699
+00:46:18,375 --> 00:46:21,056
+例如，如果您在两个代码不同的部分之间来回移动，
+This is really useful if you're like moving back 
+
+700
+00:46:21,056 --> 00:46:23,808
+这将非常有用。
+and forth between two different parts of your code for example. 
+
+701
+00:46:23,808 --> 00:46:28,825
+您可以将一个标记为A，另一个标记为B，然后使用tick A和tick B在它们之间跳转。
+You can mark one as A and one as B and you can then jump between them with tick A and tick B.
+
+702
+00:46:28,825 --> 00:46:33,797
+还有Ctrl + O，它跳转到文件中您上次在哪个位置，
+There's also Ctrl+O which jumps to the previous place you were in the file
+
+703
+00:46:33,797 --> 00:46:36,350
+无论您因何而动。
+ no matter what caused you to move. 
+
+704
+00:46:36,350 --> 00:46:39,625
+例如，如果我在某行，
+So for example if I am in a some line 
+
+705
+00:46:39,625 --> 00:46:41,574
+然后跳转到B，然后跳转到A，
+and then I jump to B  and then I jump to A, 
+
+706
+00:46:41,574 --> 00:46:46,200
+Ctrl + O将带我回到B，然后回到我最初的位置。
+ Ctrl+O will take me back to B and then back to the place I originally was. 
+
+707
+00:46:46,200 --> 00:46:47,907
+如果您正在执行搜索，
+This can also be handy for things like 
+
+708
+00:46:47,907 --> 00:46:52,963
+则可以使用Ctrl + O从搜索的位置移动到文件的其他部分。
+if you're doing a search then the place that you started the search is a part of that stack. 
+
+709
+00:46:53,000 --> 00:46:56,291
+所以我可以进行搜索，然后我可以喜欢逐步浏览结果并更改它们，
+So I can do a search I can then like step through the results 
+
+710
+00:46:56,291 --> 00:46:59,850
+然后按 Ctrl+O 一直回到搜索。
+and like change them and then Ctrl+O all the way back up to the search. 
+
+711
+00:46:59,850 --> 00:47:03,203
+Ctrl+O 还允许您跨文件移动
+Ctrl+O also lets you move across files 
+
+712
+00:47:03,203 --> 00:47:06,531
+因此如果我从一个文件转到另一个文件的某个位置，
+so if I go from one file to somewhere else in different file 
+
+713
+00:47:06,531 --> 00:47:10,499
+然后再返回第一个文件的某个位置，Ctrl + O将通过该堆栈将我移动回去。
+and somewhere else in the first file Ctrl+O will move me back through that stack
+
+714
+00:47:10,499 --> 00:47:15,500
+Ctrl + I可以向前移动该堆栈。
+ and then there's Ctrl+I to move forward in that stack. 
+
+715
+00:47:15,500 --> 00:47:18,425
+因此，它并不是一旦弹出就永远消失。
+So it's not as though you pop it and it goes away forever.
+
+716
+00:47:18,425 --> 00:47:23,150
+"colon earlier" 这个命令真的很方便。
+The command colon earlier is really handy. 
+
+717
+00:47:23,150 --> 00:47:27,725
+使用"colon earlier"可以获取文件的早期版本，
+So, colon earlier gives you an earlier version of the same file
+
+718
+00:47:27,725 --> 00:47:32,675
+这是基于时间而不是基于操作的。
+ and it does this based on time not based on actions. 
+
+719
+00:47:32,675 --> 00:47:35,725
+例如，如果你按了一些撤销和重做操作
+So for example if you press a bunch of like undo and redo
+
+720
+00:47:35,725 --> 00:47:37,300
+并进行了一些更改，
+ and make some changes and stuff, 
+
+721
+00:47:37,300 --> 00:47:43,575
+"earlier"将获取文件的真正早期版本并将其还原到缓冲区。
+earlier will take a literally earlier as in time version of your file and restore it to your buffer. 
+
+722
+00:47:43,575 --> 00:47:45,773
+有时这很有用，
+This can sometimes be good if you like
+
+723
+00:47:45,773 --> 00:47:50,000
+如果你撤销了一些更改并重新写了一些内容，
+ undid and then rewrote something and then realize you actually wanted the version 
+
+724
+00:47:50,000 --> 00:47:53,775
+然后意识到你实际上想要撤销之前的版本，"earlier"可以让你这样做。
+that was there before you started undoing earlier lets you do this.
+
+725
+00:47:53,775 --> 00:47:59,850
+另外，还有一个叫做"undo tree"的插件，
+And there's a plugin called undo tree or something like that. 
+
+726
+00:47:59,850 --> 00:48:05,750
+它允许你浏览vim保留的撤销历史记录的完整树形结构。
+There are several of these, that let you actually explore the full tree of undo history the vim keeps,
+
+727
+00:48:05,750 --> 00:48:09,175
+因为它不仅仅保留线性历史记录，而是保留了完整的树形结构。
+Because it doesn't just keep a linear history, it actually keeps the full tree. 
+
+728
+00:48:09,175 --> 00:48:10,418
+探索这个功能
+Letting you explore that 
+
+729
+00:48:10,418 --> 00:48:14,066
+在某些情况下可能会帮助你避免重新输入过去输入过的东西，
+might in some cases save you from having to re-type stuff you typed in the past 
+
+730
+00:48:14,066 --> 00:48:18,925
+或者你已经忘记了曾经使用的工作了的东西。
+or stuff  you just forgot exactly what you had there that used to work and no longer works.  
+
+731
+00:48:18,925 --> 00:48:22,122
+还有一个我想要提到的就是，
+And this is one final one I want to mention, which is,
+
+732
+00:48:22,122 --> 00:48:27,178
+我们提到过vim中有动词和名词，
+ we mentioned how in vim you have verbs and nouns, right? 
+
+733
+00:48:27,178 --> 00:48:28,950
+对于你的动词比如删除或复制，
+To your verbs like delete or yank, 
+
+734
+00:48:28,950 --> 00:48:33,660
+你还有名词，比如下一个字符
+and then you have nouns like next of this character 
+
+735
+00:48:33,660 --> 00:48:35,964
+或百分号来交换括号等等。
+or percent to swap brackets and that sort of stuff. 
+
+736
+00:48:35,964 --> 00:48:40,025
+搜索命令是一个名词，
+The search command is a noun, 
+
+737
+00:48:40,025 --> 00:48:44,400
+所以你可以做一些类似D/某个字符串的操作，
+so you can do things like D slash and then a string, 
+
+738
+00:48:44,400 --> 00:48:48,025
+它会删除到下一个匹配的字符串。
+and it will delete up to the next match of that pattern. 
+
+739
+00:48:48,025 --> 00:48:52,800
+这个功能非常有用，我经常使用。
+This is extremely useful and I use it all the time. 
+
+740
+00:48:58,100 --> 00:49:01,577
+还有一个
+One another neat addition on the undo stuff 
+
+741
+00:49:01,577 --> 00:49:04,841
+我在日常使用中发现非常有价值的撤销功能的一个很好的补充是，
+that I find incredibly valuable in an everyday basis is that 
+
+742
+00:49:04,841 --> 00:49:11,250
+vim内置的一个功能，就是你可以指定一个撤销目录。
+like one of the built-in functionalities of vim is that you can specify an undo directory. 
+
+743
+00:49:11,250 --> 00:49:14,185
+如果你指定了一个撤销目录，
+And if you have specified an undo directory, 
+
+744
+00:49:14,185 --> 00:49:16,860
+默认情况下，如果你没有启用这个功能，
+by default vim, if you don't have this enabled, 
+
+745
+00:49:16,860 --> 00:49:21,400
+每次进入一个文件时，你的撤销历史记录都是干净的。
+whenever you enter a file, your undo history is clean. 
+
+746
+00:49:21,400 --> 00:49:22,625
+什么东西都不会留下
+There's nothing in there. 
+
+747
+00:49:22,625 --> 00:49:26,550
+当你在文件中进行修改并撤消操作时，你会创建一个历史记录，
+And as you make changes and then undo them, you kind of create this history, 
+
+748
+00:49:26,550 --> 00:49:29,350
+但一旦你退出文件，它就会丢失。
+but as soon as you exit the file, that's lost. 
+
+749
+00:49:31,275 --> 00:49:34,000
+对不起，一旦你退出vim，它就会丢失。
+Sorry, as soon as you exit vim, that's lost. 
+
+750
+00:49:34,000 --> 00:49:36,470
+然而，如果你设置了一个undodir，
+However, if you have an undodir,
+
+751
+00:49:36,470 --> 00:49:40,118
+vim将持久化所有这些更改到这个目录中，
+ vim is gonna persist all those changes into this directory, 
+
+752
+00:49:40,118 --> 00:49:44,450
+所以无论你进入和离开多少次，历史记录都将被保存，
+so no matter how many times you enter and leave that history is persisted, 
+
+753
+00:49:44,450 --> 00:49:46,377
+并且这非常有帮助，
+and it's incredibly helpful 
+
+754
+00:49:46,377 --> 00:49:50,296
+因为它可以帮助你保持文件的更新。
+because even like it can be very helpful for some files that you modify often 
+
+755
+00:49:50,296 --> 00:49:52,825
+如果你经常修改某些文件，你可以跟踪它们的变化。
+because then you can kind of keep the flow. 
+
+756
+00:49:52,825 --> 00:49:57,449
+但有时候也很有帮助，例如，如果你修改了你的bashrc，
+But it's also sometimes really helpful if you modify your bashrc see
+
+757
+00:49:57,449 --> 00:50:00,905
+然后五天后发现某些东西坏了，然后你又使用vim。
+ and something broke like five days later and then you've vim again. 
+
+758
+00:50:00,925 --> 00:50:04,361
+如果你没有版本控制，
+Like what actually did I change, if you don't have say like version control, 
+
+759
+00:50:04,361 --> 00:50:07,900
+你可以查看撤消记录，这就是实际发生的事情。
+then you can just check the undos and that's actually what happened. 
+
+760
+00:50:07,900 --> 00:50:12,809
+最后，值得熟悉
+And the last one, it's also really worth familiarizing yourself with registers 
+
+761
+00:50:12,809 --> 00:50:16,521
+vim使用的不同特殊寄存器，
+and what different special registers vim uses. 
+
+762
+00:50:16,521 --> 00:50:21,725
+例如，如果你想复制/粘贴一个东西，它会进入一个特定的寄存器，
+So for example, if you want to copy/paste really that's gone into in a specific register, 
+
+763
+00:50:21,725 --> 00:50:27,337
+如果你想使用类似于操作系统剪贴板的a OS a复制，
+and if you want to for example use the a OS a copy like the OS clipboard, 
+
+764
+00:50:27,337 --> 00:50:32,850
+你应该从不同的寄存器中复制或粘贴，
+you should be copying or yanking copying and pasting from a different register, 
+
+765
+00:50:32,850 --> 00:50:34,275
+寄存器有很多种。
+and there's a lot of them. 
+
+766
+00:50:34,275 --> 00:50:39,775
+我认为你应该探索一下，有很多关于寄存器的知识需要了解。
+And yeah, I think that you should explore, there's a lot of things to know about registers. 
+
+767
+00:50:41,400 --> 00:50:44,041
+下一个问题是关于双因素身份验证的，
+The next question is asking about two-factor authentication, 
+
+768
+00:50:44,075 --> 00:50:47,200
+出于时间考虑，我将简单回答一下。
+and I'll just give a very quick answer to this one in the interest of time. 
+
+769
+00:50:47,225 --> 00:50:50,953
+对于任何安全敏感的事情，使用双因素身份验证是值得的。
+So it's worth using two-factor auth for anything security-sensitive.
+
+770
+00:50:51,050 --> 00:50:54,375
+我用双因素认证来保护我的GitHub账号和邮箱等安全敏感信息。
+So I use it for my GitHub account and for my email and stuff like that. 
+
+771
+00:50:54,375 --> 00:50:57,417
+有很多不同类型的双因素认证，
+And there's a bunch of different types of two-factor auth. 
+
+772
+00:50:57,425 --> 00:51:02,346
+从基于短信的双因素认证，当你尝试登录时，
+From SMS based to factor auth where you get special like a number texted to you 
+
+773
+00:51:02,346 --> 00:51:04,775
+会向你发送一个特殊的数字，你必须输入这个数字，
+when you try to log in you have to type that number 
+
+774
+00:51:04,775 --> 00:51:07,544
+到像通用双因素认证这样的工具，
+and to other tools like universal to factor 
+
+775
+00:51:07,544 --> 00:51:10,360
+比如那些需要插入Yubikey的东西，每次登录都需要轻触。
+this is like those Yubikeys that you plug into your you have to tap it 
+
+776
+00:51:10,360 --> 00:51:13,560
+每次登录时，所以不是全部，
+every time you login so not all, 
+
+777
+00:51:13,560 --> 00:51:15,675
+嗯，jon搞了一个
+(yeah Jon is holding a Yubikey),
+
+778
+00:51:15,675 --> 00:51:18,700
+并不是所有的双因素认证都是一样的，
+ not all two-factor auth is created equal
+
+779
+00:51:18,700 --> 00:51:22,860
+你真的想使用像U2F这样的认证，而不是基于短信的认证。
+ and you really want to be using something like U2F rather than SMS based to factor auth. 
+
+780
+00:51:22,860 --> 00:51:25,700
+有些基于一次性密码的认证，你需要输入这个密码，
+There something based on one-time pass codes that you have to type in 
+
+781
+00:51:25,700 --> 00:51:29,348
+我们没时间深入讨论为什么有些方法比其他方法更好，
+we don't have time to get into the details of why some methods are better than others 
+
+782
+00:51:29,348 --> 00:51:31,100
+但在高层次上使用U2F。
+but at a high level use U2F 
+
+783
+00:51:31,100 --> 00:51:35,850
+互联网上有很多解释为什么其他方法不是一个好主意。
+and the Internet has plenty of explanations for why other methods are not a great idea.
+
+784
+00:51:37,675 --> 00:51:41,463
+最后一个问题：任何关于Web浏览器之间差异的评论，
+Last question:Any comments on differences between web browsers, 
+
+785
+00:51:57,663 --> 00:52:01,363
+这些天Web浏览器之间的差异越来越少。
+there are fewer and fewer differences between web browsers these day. 
+
+786
+00:52:01,400 --> 00:52:06,008
+几乎所有的网页浏览器都是Chrome，
+At this point almost all web browsers are chrome
+
+787
+00:52:06,008 --> 00:52:09,023
+或者是Chrome
+ Either because you're using Chrome or because you're using a browser
+
+788
+00:52:09,023 --> 00:52:12,050
+或者是使用与Chrome相同的浏览器引擎的浏览器。
+ that's using the same browser engine as Chrome. 
+
+789
+00:52:12,050 --> 00:52:14,625
+这有点让人难过，
+It's a little bit sad, one might say, 
+
+790
+00:52:14,625 --> 00:52:22,925
+但我认为Chrome是一个很好的选择，
+but I think these days whether you choose Chrome is a great browser for security reasons 
+
+791
+00:52:22,925 --> 00:52:28,045
+如果您想要一个更可定制
+if you want to have something that's more customizable 
+
+792
+00:52:28,045 --> 00:52:35,469
+或不想被Google绑架的安全浏览器，那么使用Firefox，
+or you don't want to be tied to Google then use Firefox, 
+
+793
+00:52:35,469 --> 00:52:41,125
+不要使用Safari，它是Chrome的更糟糕的版本。
+don't use Safari it's a worse version of Chrome. 
+
+794
+00:52:41,125 --> 00:52:45,112
+新的Internet Explorer Edge也很不错，
+The new Internet Explorer edge is pretty decent 
+
+795
+00:52:45,112 --> 00:52:47,544
+也使用与Chrome相同的浏览器引擎，
+and also uses the same browser engine as Chrome 
+
+796
+00:52:47,544 --> 00:52:52,551
+这可能是可以接受的，但如果可以的话还是要避免它，
+and that's probably fine although avoid it if you can 
+
+797
+00:52:52,551 --> 00:52:55,025
+因为它有一些像遗留模式的东西，你不想处理。
+because it has some like legacy modes you don't want to deal with. 
+
+798
+00:52:58,000 --> 00:53:02,279
+还有一个很酷的新浏览器叫做flow，
+I think that's Oh, there's a cool new browser called flow 
+
+799
+00:53:02,279 --> 00:53:04,525
+你目前不能用它做什么有用的事情，
+that you can't use for anything useful yet 
+
+800
+00:53:04,525 --> 00:53:06,800
+但他们正在编写自己的浏览器引擎，
+but they're actually writing their own browser engine 
+
+801
+00:53:06,800 --> 00:53:08,450
+这真的很棒。
+and that's really neat
+
+802
+00:53:08,450 --> 00:53:11,125
+Firefox也有一个叫做Servo的项目，
+ Firefox also has this project called servo
+
+803
+00:53:11,125 --> 00:53:15,475
+他们正在使用Rust实现他们的浏览器引擎，
+ which is they're really implementing their browser engine in Rust 
+
+804
+00:53:15,475 --> 00:53:18,050
+以便使其超级并发。
+in order to write it to be like super concurrent 
+
+805
+00:53:18,050 --> 00:53:23,825
+他们已经开始从该版本中获取模块，
+and what they've done is they've started to take modules from that version 
+
+806
+00:53:23,825 --> 00:53:25,638
+并将它们移植到gecko中，
+and port them over to gecko 
+
+807
+00:53:25,638 --> 00:53:29,400
+gecko是Firefox的主要浏览器引擎，
+or integrate them with gecko which is the main browser engine for Firefox 
+
+808
+00:53:29,550 --> 00:53:31,583
+以便在那里获得速度提升，
+just to get those speed ups there as well 
+
+809
+00:53:31,583 --> 00:53:35,450
+这是一个很酷的东西，你可以关注一下。
+and that's a neat neat thing you can be watching out for.
+
+810
+00:53:38,625 --> 00:53:40,700
+这就是所有的问题，嘿，我们做到了。
+That is all the questions, hey we did it. 
+
+811
+00:53:40,700 --> 00:53:49,575
+很好，我想感谢你参加了这门缺失的学期课程，我们明年再见。
+Nice I guess thanks for taking the missing semester class and let's do it again next year.
+

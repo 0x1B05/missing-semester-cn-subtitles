@@ -1,0 +1,4730 @@
+﻿1
+00:00:00,675 --> 00:00:02,800
+大家好,能听到我声音吗?
+Hi, can everyone hear me okay? 
+
+2
+00:00:02,800 --> 00:00:09,134
+好的,欢迎回到我们的课堂.
+Okay, so welcome back to the missing semester of your CS education, 
+
+3
+00:00:09,134 --> 00:00:12,425
+今天我们讲一些杂项.
+today we're having as a lecture topic "potpourri". 
+
+4
+00:00:12,425 --> 00:00:15,532
+这将是一些我们讲师认为有趣
+It's gonna be some miscellaneous combination of topics that we the instructors find that are interesting.
+
+5
+00:00:18,500 --> 00:00:20,972
+但又不足以成为单独拿一节课来讲的东西.
+But none of them were on their own lecture 
+
+6
+00:00:20,972 --> 00:00:25,000
+不过我们都希望希望你们能了解一下,
+because they're kind of certain topics that we just want you to know about,
+
+7
+00:00:25,000 --> 00:00:27,436
+因为它们非常有用.
+because they can be really helpful 
+
+8
+00:00:27,436 --> 00:00:33,192
+由于我们不会详细探讨这些主题,
+And since we're not gonna delve into a lot of detail in the topics.
+
+9
+00:00:33,192 --> 00:00:36,140
+如果你对它们很感兴趣,
+If you're more interested about them just feel free to come
+
+10
+00:00:36,140 --> 00:00:40,625
+可以随时在讲座期间或讲座结束后向我们提问.
+and ask us questions at the end or as we go over them in the lecture.
+
+11
+00:00:40,625 --> 00:00:45,325
+首先我想先讲讲按键映射.
+So the first thing I want to talk about is keyboard re-mappings.
+
+12
+00:00:45,325 --> 00:00:48,487
+到现在为止,你可能已经意识到
+So by now you probably realized that 
+
+13
+00:00:48,487 --> 00:00:52,250
+我们鼓励你使用键盘作为主要的输入方法.
+we have encouraged you to use the keyboard as your main input method.
+
+14
+00:00:52,250 --> 00:00:55,399
+比如我们讲过的Vim,
+So for example, when we went into the editors lecture, 
+
+15
+00:00:55,399 --> 00:01:00,025
+Vim 的一个主要思想就是尽可能多地使用键盘,
+one of the main ideas of Vim was using your keyboard as much as possible,
+
+16
+00:01:00,025 --> 00:01:02,887
+这样你就不必依赖鼠标,
+so you don't have to rely on going to the mouse 
+
+17
+00:01:02,887 --> 00:01:04,700
+因为切换到鼠标很费时间.
+because going to the mouse is slow
+
+18
+00:01:04,700 --> 00:01:08,711
+事实上,你的键盘,就像电脑中的许多其他东西一样,
+And the thing is your keyboard, as with many things in your computer 
+
+19
+00:01:08,711 --> 00:01:11,575
+都可以进行配置.
+is nothing kind of magical, it can be configured
+
+20
+00:01:11,575 --> 00:01:16,925
+而且花时间去配置是值得的,因为许多默认设置可能不是最优的.
+And it's worth configuring because a lot of the defaults might not be optimal
+
+21
+00:01:16,925 --> 00:01:22,775
+最简单的修改方法就是重新映射一些键.
+The most simple modification that you can do is just to remap keys
+
+22
+00:01:22,775 --> 00:01:26,183
+例如,在编辑器讲座中我们提到,
+So one of the things we alerted in the editor lecture 
+
+23
+00:01:26,183 --> 00:01:28,125
+"CapsLock(大写锁定键)"是一个非常好的键,
+is the CapsLock key is a really good key
+
+24
+00:01:28,125 --> 00:01:33,348
+因为它位于主键盘区,而且很大,
+because it's kind of right in the home row and it's kind of large and there, 
+
+25
+00:01:33,348 --> 00:01:34,625
+但它用处不大.
+but it's not useful
+
+26
+00:01:34,625 --> 00:01:37,764
+你可能会意识到
+You'll probably realize that you don't use your "CapsLock" 
+
+27
+00:01:37,764 --> 00:01:40,275
+你不常使用大写锁定键.
+as often as when you'd want to use that
+
+28
+00:01:40,275 --> 00:01:43,859
+因此,你可以将大写锁定键重新映射为更有用的键,
+So you can just remap your "CapsLock" key to something more useful 
+
+29
+00:01:43,859 --> 00:01:48,625
+如果你是 Vim 用户,可以映射为"Esc",或如果你是 Emacs 用户,可以映射为"Ctrl".
+as we mentioned like "Esc" if you're a Vim user or like "Ctrl" if you're an Emacs user.
+
+30
+00:01:48,625 --> 00:01:51,155
+你还可以进行一些其他有用的按键映射,
+Or useful re-mappings, 
+
+31
+00:01:51,155 --> 00:01:56,500
+如重新映射 F 功能键或 "PrintScreen"键.
+like a lot of the upper row so like the F key, or like "PrintScreen"
+
+32
+00:01:56,500 --> 00:01:58,809
+比如说,你可以将它们重新映射为媒体键,
+You can remap them for example to your media key
+
+33
+00:01:58,809 --> 00:02:00,925
+因为你可能不需要那么频繁地截屏,
+ so like when you type "PrintScreen",
+
+34
+00:02:00,925 --> 00:02:03,657
+但你可能需要频繁播放或暂停音乐.
+you probably don't have to do "PrintScreen" that often 
+
+35
+00:02:03,657 --> 00:02:07,025
+这样当你按下 "PrintScreen" 时,就会播放或者暂停.
+but you probably want to play or pause your music.
+
+36
+00:02:07,025 --> 00:02:14,250
+几乎每个操作系统都有一些工具可以用来配置这些功能.
+And pretty much every operating system has some tools that you can use to configure this
+
+37
+00:02:14,250 --> 00:02:19,500
+我不会详细介绍,课堂笔记中已经列出了一些.
+I'm not gonna go into the details but there's some of them listed in the notes
+
+38
+00:02:19,500 --> 00:02:22,947
+emm..让我看一下.
+Emm... Let me check.
+
+39
+00:02:22,947 --> 00:02:26,825
+对,你可以使用键盘重新映射来
+Oh yeah, another thing that you can do with keyboard re-mappings is
+
+40
+00:02:26,825 --> 00:02:29,159
+执行更复杂的操作.
+that you can do more complex combinations 
+
+41
+00:02:29,159 --> 00:02:33,650
+你可以将一些键的组合映射到具体操作上.
+You can have a combination of keys mapped to some action
+
+42
+00:02:33,650 --> 00:02:38,605
+例如,我有一些键盘映射,每当我按下 "Ctrl+Enter" 时,
+So for example, I have keyboard re-mappings that whenever I do "Ctrl+Enter", 
+
+43
+00:02:38,605 --> 00:02:40,175
+就会打开一个新的终端窗口.
+I open a new terminal window
+
+44
+00:02:40,175 --> 00:02:42,100
+因为这是我经常做的事情,
+because that's a thing I do fairly often 
+
+45
+00:02:42,100 --> 00:02:45,550
+并且在Mac上默认情况下执行该操作的快捷键,
+and by default on Mac there is no key binding to do that
+
+46
+00:02:45,550 --> 00:02:48,981
+或者"Ctrl+Shift+Enter"将打开一个新的浏览器窗口,
+or "Ctrl+Shift+Enter" will open a new browser window, 
+
+47
+00:02:48,981 --> 00:02:51,600
+这是我经常要做的另一个操作.
+another operation that I do on a daily basis
+
+48
+00:02:51,600 --> 00:02:55,825
+所以我不必再切换到鼠标去点击Chrome图标.
+So I don't have to like grab my mouse and go to Chrome to do that.
+
+49
+00:02:55,825 --> 00:02:59,797
+你也可以把一些操作映射到按键上.
+You can also do remapping to perform actions 
+
+50
+00:02:59,797 --> 00:03:02,075
+如果你不想老是输入你的密码.
+If you don't want to be typing your password .
+
+51
+00:03:02,075 --> 00:03:05,001
+不对,不是密码.比如说你的电子邮件,密码,
+Sorry, not your password Your Email or your password, 
+
+52
+00:03:05,001 --> 00:03:09,050
+或者就说你的MIT ID,你可能一直记不住它,
+or for example, your MIT ID like, you may not remember it by heart
+
+53
+00:03:09,050 --> 00:03:12,361
+那么你可以用一个组合按键
+then you can just have a keyboard combination 
+
+54
+00:03:12,361 --> 00:03:17,125
+来进行文本粘贴.
+that will just perform the action of pasting that text
+
+55
+00:03:17,875 --> 00:03:20,931
+最后,还有更多...
+Lastly, there are more... 
+
+56
+00:03:20,931 --> 00:03:24,650
+现在看起来你只能做到
+Like right now it looks like you just have to do some function of
+
+57
+00:03:24,650 --> 00:03:28,483
+这是你按下的键,这是即将进行的操作这样的功能.
+this is the keys that you press and this is the action that happens.
+
+58
+00:03:28,483 --> 00:03:32,095
+但实际上有更复杂的按键组合,
+But actually there are more complex keyboard combinations, 
+
+59
+00:03:32,100 --> 00:03:37,137
+随着你的不断学习,你可以学会使用键盘序列.
+and as you go through you'll learn so you can do keyboard sequences.
+
+60
+00:03:37,137 --> 00:03:39,200
+例如当我们使用tmux时,
+So for example when we were dealing with tmux,
+
+61
+00:03:39,225 --> 00:03:46,300
+在tmux中有这个概念,你先按下"Ctrl+A"或"Ctrl+B",
+in tmux there was this notion of first you press "Ctrl+A" or "Ctrl+B", 
+
+62
+00:03:46,300 --> 00:03:49,282
+就是你按下一些前缀,然后再按一些其他的键,那对应着某种操作.
+like you press some prefix and then some other key and that means something
+
+63
+00:03:49,282 --> 00:03:51,325
+很多这些软件都允许这样做.
+A lot of these softwares allow that
+
+64
+00:03:51,325 --> 00:03:55,938
+例如,对于我的键盘而言,我根本不使用"CapsLock",
+So for example, in my keyboard, since I'm not using "CapsLock" at all, 
+
+65
+00:03:55,938 --> 00:04:00,200
+但偶尔需要在我的本科生使用某些软件时
+but every so often I have to use when my undergrad has some software that
+
+66
+00:04:00,200 --> 00:04:03,362
+使用"CapsLock"来切换模式.
+relied on "CapsLock" for changing modes.
+
+67
+00:04:03,362 --> 00:04:08,525
+然后我可以快速连续按五次Shift键,
+Then I can press Shift five times in a row quickly, and then
+
+68
+00:04:08,525 --> 00:04:12,275
+然后会有个中间软件解释这些命令,
+this software that is in the middle interpreting these commands 
+
+69
+00:04:12,275 --> 00:04:16,975
+并将其重新映射为单个的"CapsLock"命令.
+and remapping to some other, will send a single "CapsLock" command for that.
+
+70
+00:04:16,975 --> 00:04:20,915
+还有一些例子,
+Some more examples of that is that 
+
+71
+00:04:20,915 --> 00:04:27,950
+我提到你可以把"CapsLock"键映射为"Esc"或"Ctrl",
+I mentioned that you can use your "CapsLock" key to map to "Esc" or "Ctrl"
+
+72
+00:04:27,950 --> 00:04:29,939
+但你可以把"CapsLock"同时为映射它们俩.
+but you actually can remap it to both 
+
+73
+00:04:29,939 --> 00:04:35,350
+所以在我的电脑上,当我轻按"CapsLock"键时,它被解释为"Esc".
+So in my computer when I just tap the "CapsLock" key, that's interpreted as an "Esc"
+
+74
+00:04:35,350 --> 00:04:38,131
+然而,如果我按住它,
+However if I press it and hold it, 
+
+75
+00:04:38,131 --> 00:04:42,000
+这个软件可以理解快速按键和长按的区别,
+this software can understand the difference between quickly pressing it and
+
+76
+00:04:42,000 --> 00:04:46,259
+以便将其与其他键配合使用,
+just holding it for using in combination with some other key
+
+77
+00:04:46,259 --> 00:04:49,000
+然后在长按情况下,它被映射为"Ctrl".
+and then in that case it's mapped to "Ctrl"
+
+78
+00:04:49,000 --> 00:04:54,350
+所以很多更高级的配置,都需要像这些工具的支持.
+So a lot of these more advanced configurations are supported on a lot of these tools.
+
+79
+00:04:54,975 --> 00:05:00,139
+正如我所提到的,我们列出了一个好的默认设置清单,
+As I mentioned we have a short list of good defaults 
+
+80
+00:05:00,139 --> 00:05:05,150
+适用于 Windows,Mac OS 和 Linux 平台.
+for these programs for kind of Windows, Mac OS and Linux.
+
+81
+00:05:05,150 --> 00:05:08,100
+现在有什么问题吗?
+Any questions on this topic?
+
+82
+00:05:12,675 --> 00:05:17,620
+好的,接下来我要讲一个与键盘映射无关的话题了.
+Okay, now I'm going to cover an unrelated topic to keyboard mappings.
+
+83
+00:05:17,620 --> 00:05:21,275
+这节课中将有许多这样不相关话题的过渡.
+We're going to see a lot of these unrelated transitions in this lecture.
+
+84
+00:05:21,275 --> 00:05:23,661
+接下来要讲"守护进程"的概念.
+And it's the concept of "daemons" 
+
+85
+00:05:25,681 --> 00:05:28,194
+也许你不熟悉这个词儿,它看起来有点陌生,
+Maybe if you are not familiar with the word, it might seem alien,
+
+86
+00:05:28,194 --> 00:05:30,494
+但实际上你们是老朋友了.
+but the concept of daemon you're pretty familiar with.
+
+87
+00:05:30,494 --> 00:05:36,975
+当你使用计算机时,需要启动和运行软件
+Like most computers when you are running them there's software that you start and run,
+
+88
+00:05:36,975 --> 00:05:38,638
+就像我们之前接触到的命令一样.
+like the commands that we have been seen.
+
+89
+00:05:38,638 --> 00:05:43,000
+比如输入"ls",就是调用"ls"命令.
+Like you'd type "ls" and then you're calling the "ls" command.
+
+90
+00:05:43,000 --> 00:05:44,157
+"ls"命令执行
+The "ls" command executes 
+
+91
+00:05:44,157 --> 00:05:47,037
+是因为你要求它执行,然后它就完成了.
+because you asked it to execute and then it finishes 
+
+92
+00:05:47,037 --> 00:05:51,700
+但是许多其他程序只是作为后台进程运行,
+But a lot of other programs are just running as background processes
+
+93
+00:05:51,700 --> 00:05:57,375
+有的进程是在后台运行并等待事件发生,
+and they're just executing in the background and waiting for events to happen
+
+94
+00:05:57,375 --> 00:06:00,477
+有的是用来启用计算机的某些功能.
+or enabling some sort of functionality in your computer.
+
+95
+00:06:00,477 --> 00:06:05,950
+比如说你的网络管理器,
+Examples of these processes might be like your Network Man
+
+96
+00:06:05,950 --> 00:06:08,669
+它是负责管理网络的计算机程序,
+like the part of your computer that is managing the network 
+
+97
+00:06:08,669 --> 00:06:12,225
+比如说还有管理显示的计算机程序.还有许多类似的程序.
+or the part of your computer that is managing the display... Things like that.
+
+98
+00:06:12,225 --> 00:06:18,925
+你会发现,守护进程启用的很多程序
+You will see that a lot of what is enabled by daemons
+
+99
+00:06:18,925 --> 00:06:21,739
+通常以"d"结尾.
+is usually programs that end with a "d".
+
+100
+00:06:21,739 --> 00:06:25,700
+例如,当你通过ssh连接到计算机时,
+So for instance, when you are sshing into a computer,
+
+101
+00:06:25,700 --> 00:06:30,571
+接收方必须有ssh守护进程,
+the receiving computer has to have a ssh daemon
+
+102
+00:06:30,571 --> 00:06:32,725
+该程序称为"sshd",
+and the program is called "sshd"
+
+103
+00:06:32,725 --> 00:06:37,750
+如果此程序未运行,则无法通过ssh连接到该计算机.
+and if this program is not running then there's no way for me to ssh into the computer
+
+104
+00:06:37,750 --> 00:06:39,211
+如果该程序正在运行,那么该程序将会进行监听.
+If the program is running, then that program will be listening.
+
+105
+00:06:39,211 --> 00:06:44,125
+当你通过ssh连接到该服务器时,
+And when you do ssh to that server,
+
+106
+00:06:44,125 --> 00:06:48,309
+一些传入请求将进入计算机,
+then some incoming request is gonna enter the computer 
+
+107
+00:06:48,309 --> 00:06:52,525
+计算机将其发送给后台运行的守护进程,
+the computer is gonna send it to this daemon that is running in the background
+
+108
+00:06:52,525 --> 00:06:56,287
+然后该守护进程将检查你是否有授权,
+and then the daemon is gonna check whether you have authorization,
+
+109
+00:06:56,287 --> 00:07:01,050
+如果有,它将启动一些登录Shell供你执行.
+and if so, it's gonna start some login shell that you can start executing from.
+
+110
+00:07:01,050 --> 00:07:06,650
+不同的操作系统处理此问题的方式有所不同,
+And different OSes handle this somewhat differently
+
+111
+00:07:06,650 --> 00:07:10,110
+它们都有某种系统守护进程
+The main idea is they all have some sort of 
+
+112
+00:07:10,110 --> 00:07:14,450
+来响应这些较小的守护进程.
+system daemon that responds a lot of these smaller daemons.
+
+113
+00:07:14,450 --> 00:07:18,942
+在我们选择的Linux中,
+In Linux, which is one of the OSes that we are choosing for lot of the examples, 
+
+114
+00:07:18,942 --> 00:07:24,375
+它使用的系统守护进程是"systemd".
+the tool that you're using is the "systemd".
+
+115
+00:07:24,375 --> 00:07:29,054
+首先,"systemd"将启动许多相关的守护进程进程.
+Okay, first the system daemon is gonna start a lot of these processes.
+
+116
+00:07:29,054 --> 00:07:33,775
+如果你使用"systemctl"命令,
+And if you use this "systemctl" command,
+
+117
+00:07:33,775 --> 00:07:37,502
+则可以检查不同守护进程的状态,
+you can check for the status of different daemons
+
+118
+00:07:37,502 --> 00:07:40,150
+你可以检查哪些正在运行,
+you can check for which ones are running,
+
+119
+00:07:40,200 --> 00:07:47,074
+可以要求它启动或停止进程.
+you can ask it to start processes, to stop them 
+
+120
+00:07:47,074 --> 00:07:49,900
+这是一种一次性的操作.
+This is kind of an once-off operation.
+
+121
+00:07:49,900 --> 00:07:53,154
+你还可以先启用它,然后再禁用它们,
+You can also enable it and then disable them, 
+
+122
+00:07:53,154 --> 00:07:57,400
+这将告诉系统在启动时运行它们
+which will tell the system to run them at boot
+
+123
+00:07:57,400 --> 00:08:00,450
+或停止启动它们(如果已启用).
+or stop running the boot if they were enabled.
+
+124
+00:08:00,450 --> 00:08:07,650
+更有趣的是,你可以配置自己的"systemd"单位.
+And perhaps more interestingly, you can configure your own "systemd" units
+
+125
+00:08:07,650 --> 00:08:13,275
+到目前为止,举的例子都是计算机必须执行的东西,
+So, so far all the examples are a lot of what the computer has to do,
+
+126
+00:08:13,275 --> 00:08:15,625
+但是现在比如说你想运行Web服务器.
+but say you want to run a web server.
+
+127
+00:08:15,625 --> 00:08:18,200
+一个解决方案是,
+One solution, you could just like, 
+
+128
+00:08:18,200 --> 00:08:22,985
+你可以每次启动计算机时打开一个tmux的会话,
+every time you start your computer you could open a tmux session,
+
+129
+00:08:22,985 --> 00:08:24,625
+然后执行命令来启动守护进程,
+and then execute the command,
+
+130
+00:08:24,625 --> 00:08:29,937
+但这并不是计算机默认的守护进程运行方式.
+but that's not really the way that your computer expects daemons to be run.
+
+131
+00:08:29,975 --> 00:08:35,953
+计算机通常使用"systemd"的单元来管理和运行守护进程.
+The way your computer expects daemons to be run is by using some sort of "systemd" unit.
+
+132
+00:08:35,953 --> 00:08:40,525
+这个"systemd"单元就像一个配置文件,告诉计算机如何启动和管理此进程.
+It's like a configuration that tells "systemd" how to execute this process.
+
+133
+00:08:40,525 --> 00:08:47,625
+这里有个简单例子是:
+So an example of this is... Here's a very simple example
+
+134
+00:08:47,625 --> 00:08:53,937
+这里是我们正在向"systemd"描述
+So what is happening here is we're describing to "systemd" 
+
+135
+00:08:53,937 --> 00:08:56,625
+如何执行此程序.
+what needs to be done for this program to execute.
+
+136
+00:08:56,625 --> 00:09:01,105
+这个例子只是运行一个简单的Python应用程序,
+This example is just running a simple Python app 
+
+137
+00:09:01,105 --> 00:09:03,733
+你可以看作是一个web服务器
+You can think of it as a web server 
+
+138
+00:09:03,733 --> 00:09:06,700
+是使用某些Python Web服务器库实现的.
+that can be implemented using some Python web server library. 
+
+139
+00:09:06,700 --> 00:09:10,453
+我们这里写了"Description",这是对要执行的程序的描述,
+And here we're saying oh,this is the description, 
+
+140
+00:09:10,453 --> 00:09:12,750
+我们定义了"After",这很重要,
+we're saying "After", this is important.
+
+141
+00:09:12,750 --> 00:09:16,943
+"systemd"有一个服务列表需要启动,
+"systemd" has a list of services that have to start.
+
+142
+00:09:16,943 --> 00:09:19,100
+例如,所有这些守护进程都必须启动,
+Like, all these daemons have to be started
+
+143
+00:09:19,175 --> 00:09:22,063
+但这些守护进程之间可能存在依赖关系,
+but maybe there are dependencies between these daemons, 
+
+144
+00:09:22,063 --> 00:09:28,015
+因此我们可以通过"systemd"来告诉计算机,"只有在网络设置完成后才能启动此服务",
+so here we're saying "no, you should only start this after the network has been set up"
+
+145
+00:09:28,015 --> 00:09:31,918
+不然,如果无法监听我们的网络端口,
+because otherwise how will you can even try to configure our web server 
+
+146
+00:09:31,918 --> 00:09:35,500
+应该咋配置我们的网站服务器呢?
+if I cannot listen to a network port?
+
+147
+00:09:35,500 --> 00:09:38,357
+然后我们定义了哪些用户应该运行这个守护进程,
+And then we are defining what users should run this, 
+
+148
+00:09:38,357 --> 00:09:42,389
+你可能希望你自己的用户来运行,或者使用其他用户来运行它,
+because you may want to run this as your user, or maybe other user,
+
+149
+00:09:42,389 --> 00:09:45,297
+甚至可能需要以root用户身份运行.
+or maybe the root user should be running this.
+
+150
+00:09:45,297 --> 00:09:48,700
+然后定义了要运行的命令和运行命令的目录.
+and then what command to run and under what directory
+
+151
+00:09:48,700 --> 00:09:50,865
+当你用这个时,
+And whenever you have this, 
+
+152
+00:09:50,865 --> 00:09:55,473
+可能有一些小的角落需要调试,
+there can be small corner cases that you might have to debug, 
+
+153
+00:09:55,473 --> 00:09:56,710
+不过这就是核心思想,
+but this is kind of the core idea 
+
+154
+00:09:56,710 --> 00:10:01,510
+可以自动化地管理守护进程的启动和运行.
+and it can be really useful to automate the process of running processes in the background.
+
+155
+00:10:01,510 --> 00:10:03,997
+还有一点点补充是,
+A small side note to this 
+
+156
+00:10:03,997 --> 00:10:11,075
+如果你想定期运行一个命令,
+is the fact that if you just want to run a command every so often, like in some periodicity,
+
+157
+00:10:11,075 --> 00:10:14,749
+比如每天早上我都想在我的计算机上做一些事情,
+say every morning I want to do something in my computer, 
+
+158
+00:10:14,749 --> 00:10:19,933
+你可以编写一个守护进程,它做一些事情然后休眠一天,
+you could write a daemon that just does something and then sleeps for a day,
+
+159
+00:10:20,025 --> 00:10:26,975
+但实际上Linux和Mac OS已经有了一个这样的守护进程,即"crond",
+but actually Linux and Mac OS have already a daemon that does this called "crond"
+
+160
+00:10:26,975 --> 00:10:30,449
+"crond"采用另一种类型的配置文件,
+and "crond" will take another type of configuration file 
+
+161
+00:10:30,449 --> 00:10:35,249
+你可以说,哦,我想在每天上午8点运行一个命令,
+where you can say oh, I want to run a command every day at 8 AM,
+
+162
+00:10:35,249 --> 00:10:38,050
+或者我想每5分钟运行一个命令,
+or I want to run a command every 5 minutes, 
+
+163
+00:10:38,050 --> 00:10:41,900
+它将只检查此事件并执行它.
+and it will just check for this event and execute it
+
+164
+00:10:41,900 --> 00:10:44,619
+对于许多事情,你会发现
+And with a lot of things you will find that 
+
+165
+00:10:44,619 --> 00:10:47,394
+已经配置好了相应的守护进程.
+there are already daemons that have been configured for that
+
+166
+00:10:47,725 --> 00:10:50,925
+关于守护进程,有什么问题吗?
+Any questions regarding daemons?
+
+167
+00:10:57,900 --> 00:11:02,839
+问题是,是否有一个计算机上的文件夹,其中包含所有这些配置文件?
+So the question is whether there is a folder in the computer where all of these are  
+
+168
+00:11:02,839 --> 00:11:04,739
+是也不是,
+So yeah, like yes and no 
+
+169
+00:11:04,739 --> 00:11:09,475
+这些配置文件一般位于几个不同的文件夹中,
+Some of these configuration files are in a couple of different folders
+
+170
+00:11:09,475 --> 00:11:13,361
+具体取决于它们是系统守护进程还是用户守护进程.
+depending on whether they are system daemons or they are user daemons.
+
+171
+00:11:13,361 --> 00:11:18,525
+在这里,这里第一行的路径就是你应该放置的位置
+Here you can see at the very first line is where you will place this
+
+172
+00:11:18,625 --> 00:11:23,025
+这样以便系统守护进程能够识别出它已经被安装.
+for the system daemon to recognize that it has been installed.
+
+173
+00:11:23,025 --> 00:11:26,161
+但是如果你只想列出正在运行的所有守护进程,
+But if you just want to list all the daemons that are running,
+
+174
+00:11:26,175 --> 00:11:29,937
+则例如在Linux中,你只需执行`systemctl status`,
+in Linux for example, you can just do "systemctl status" 
+
+175
+00:11:29,937 --> 00:11:33,329
+它将打印出所有守护进程的树状结构,
+and that's gonna print a tree of all the systems
+
+176
+00:11:33,329 --> 00:11:37,681
+可以看出哪个守护进程是由哪个守护进程产生的,
+and which daemon was spawned by which other daemon 
+
+177
+00:11:37,681 --> 00:11:41,450
+其中许多都是直接由"systemd"生成.
+and a lot of them will be spawned directly by "systemd"
+
+178
+00:11:44,250 --> 00:11:48,689
+下一个话题是有关用户空间的文件系统.
+The next topic is gonna be file systems in user space.
+
+179
+00:11:48,689 --> 00:11:55,989
+所以,让我来快速介绍一下,每当你使用现代操作系统时... 
+So, kind of a quick intro to this is the fact that whenever you're using a modern..
+
+180
+00:11:55,989 --> 00:12:01,980
+哦,对不起...每当你使用现代操作系统时...
+Oh, yeah, sorry... And whenever you're using a modern operating system,
+
+181
+00:12:01,980 --> 00:12:07,036
+你不必局限于特定的文件系统.
+you are not tied to a specific file system 
+
+182
+00:12:07,036 --> 00:12:11,175
+现代系统相当模块化,
+So modern systems are fairly modular  
+
+183
+00:12:11,175 --> 00:12:15,738
+例如在Linux中有许多不同的文件系统可供选择.
+and you can for example, in Linux there are different file systems that you can use,
+
+184
+00:12:15,738 --> 00:12:18,732
+这是因为
+and the way this works is because the kernel, 
+
+185
+00:12:18,732 --> 00:12:23,788
+内核负责运行多数操作系统,
+which is what is running most of the operating system,  
+
+186
+00:12:23,788 --> 00:12:29,275
+其中有一些模块知道如何与文件系统进行交互.
+has some modules that know how to interact with a file system
+
+187
+00:12:29,275 --> 00:12:37,750
+通常,当你执行像"touch foobar"这样的命令时,
+So usually when you do something like "touch foobar",
+
+188
+00:12:38,825 --> 00:12:44,700
+这是在用户级别进行的,
+this is happening at a user level
+
+189
+00:12:44,700 --> 00:12:49,225
+然后传递到内核,
+and then this is going through to the kernel level
+
+190
+00:12:49,750 --> 00:12:55,000
+中间会有一层检查这个动作发生的位置,
+and there is some kind of layer here that is checking where this action is happening 
+
+191
+00:12:55,000 --> 00:12:59,975
+以确定它属于哪个文件系统.
+to figure out what file system it is under 
+
+192
+00:12:59,975 --> 00:13:02,625
+例如,你将拥有多个磁盘,
+So for example, you will have multiple disks
+
+193
+00:13:02,625 --> 00:13:05,249
+每个磁盘都有不同的文件系统,
+and all the different disks have different file systems, 
+
+194
+00:13:05,249 --> 00:13:09,857
+因此内核必须确定要使用哪个文件系统操作,
+so the kernel has to figure out which file system operations to use,
+
+195
+00:13:09,857 --> 00:13:18,825
+并说这个文件可能在一个"Ext4"文件系统中,这是最常见的Linux文件系统之一.
+and say this file might be in an "Ext4", which is the most common Linux one,
+
+196
+00:13:18,825 --> 00:13:23,775
+那么,每当你执行"touch foobar"时,
+then whenever you do "touch foobar", 
+
+197
+00:13:23,775 --> 00:13:28,639
+内核会接收到这个命令并弄清楚它属于Ext4文件系统,
+the kernel will hear that and then it will try to figure out like, oh, this lives in an Ext4 file system
+
+198
+00:13:28,639 --> 00:13:35,725
+然后就会执行创建文件的相关指令.
+and it will perform the associated instruction for creating a file in an Ext4 file system
+
+199
+00:13:35,725 --> 00:13:40,031
+然而,这种系统的缺点是
+However, the caveat of having a system like this is right now 
+
+200
+00:13:40,031 --> 00:13:44,895
+在用户级别,不能定义如何创建文件,
+I cannot have user code that defines how to create a file
+
+201
+00:13:44,975 --> 00:13:48,004
+但这在某些情况下可能会很有用.
+and that might be kind of useful in some cases 
+
+202
+00:13:48,004 --> 00:13:53,188
+比如说,我想拥有一个文件系统,每次有人创建文件时,
+Say I want to have a file system that every time someone creates a file,
+
+203
+00:13:53,188 --> 00:13:57,796
+它会给我发送一封电子邮件,这样我就可以知道人们正在创建这些文件.
+it sends me an email, so I can know that people are creating these files.
+
+204
+00:13:57,796 --> 00:14:01,750
+但是在这里我无法修改内核来添加这个功能.
+Here I cannot modify the kernel to add this.
+
+205
+00:14:01,750 --> 00:14:05,156
+解决这个问题的方法叫做"FUSE",
+So the solution to this is something called "FUSE" 
+
+206
+00:14:05,156 --> 00:14:13,700
+FUSE是一种可以在用户空间中拥有文件系统的方法.
+And FUSE is a way of having file systems in user space
+
+207
+00:14:13,700 --> 00:14:21,348
+因此,如果这个文件不是在Ext4中,
+So what FUSE will do is, if this file instead of being in Ext4, 
+
+208
+00:14:21,348 --> 00:14:24,575
+而是在FUSE文件系统中,
+if this file is in a FUSE file system,
+
+209
+00:14:24,675 --> 00:14:31,675
+FUSE会将此操作转发给用户调用的其他部分,
+FUSE will forward this operation to some other part of user call
+
+210
+00:14:31,675 --> 00:14:34,980
+该部分会说"哦,创建这个文件".
+that will say "oh, create this file".
+
+211
+00:14:34,980 --> 00:14:40,725
+在这里,我就可以在用户级别的代码上实现,创建文件后发送邮件给我,
+And here I can have the part of the code that sends an email to me,
+
+212
+00:14:40,750 --> 00:14:43,100
+告诉我"哦,已经创建了这个文件".
+saying "oh, this file has been created".
+
+213
+00:14:43,100 --> 00:14:46,620
+如果你仍然想创建该文件,
+And in case you want to still create the file,
+
+214
+00:14:46,620 --> 00:14:53,400
+它可以把请求转发回来,做一些的内核操作.
+it can forward back the request to do some more kernel operations
+
+215
+00:14:53,850 --> 00:14:56,540
+这看着似乎并不是很实用,但这只是理论上的.
+It might not seem really practical, but this is just the theory.
+
+216
+00:14:56,540 --> 00:15:01,852
+在实践中,这很有用,
+In practice, why this is useful is because
+
+217
+00:15:01,852 --> 00:15:06,332
+因为现在你可以在执行文件系统操作时,
+now you can have user level code that executes arbitrary actions 
+
+218
+00:15:06,332 --> 00:15:09,025
+写用户级别的代码,想干啥就干啥.
+when you try to perform file system operations
+
+219
+00:15:09,025 --> 00:15:14,150
+一个非常有趣的例子是"sshFS"
+A really Interesting example of this is called "sshFS"
+
+220
+00:15:14,661 --> 00:15:19,411
+所以"sshFS"是每当你想....
+So sshFS is that whenever you try...
+
+221
+00:15:19,411 --> 00:15:28,100
+在一个sshFS FUSE文件系统上,每当你尝试创建,打开,读取,写入一个文件,
+On an sshFS FUSE file system, whenever you try to create, open, read, write to a file,
+
+222
+00:15:28,100 --> 00:15:30,813
+它都会通过ssh连接到远程服务器,
+instead of trying to do that to a local file, 
+
+223
+00:15:30,813 --> 00:15:35,375
+而不是仅仅在本地文件上执行操作.
+it has an ssh connection to a remote server.
+
+224
+00:15:35,375 --> 00:15:37,265
+因此,如果我在这里尝试创建一个文件,
+So if I try to create a file here, 
+
+225
+00:15:37,265 --> 00:15:42,705
+它将使用ssh连接将该操作转发到远程系统,
+It will use that ssh connection to forward that operation to the remote system
+
+226
+00:15:42,705 --> 00:15:44,550
+然后在那里执行这个创建操作.
+and then it will perform it there 
+
+227
+00:15:44,550 --> 00:15:48,262
+因此,在我的本地上运行的其他程序,
+So to all my local computer, to the rest of the programs running in my computer,
+
+228
+00:15:50,525 --> 00:15:54,150
+有一个路径看起来好像它在这里,
+there is this path that looks like it is here, 
+
+229
+00:15:54,150 --> 00:16:00,025
+但是对路径执行的所有操作都被转发到远程服务器的文件系统.
+but all the operations that are performed to the path are forwarded to the remote file system.
+
+230
+00:16:00,025 --> 00:16:04,050
+你可以在笔记中找到一些相关的例子,
+And with this idea, you will get some examples in the notes,
+
+231
+00:16:04,150 --> 00:16:06,778
+并在网上可以找到更多,
+and you will find more online,
+
+232
+00:16:06,778 --> 00:16:10,938
+看看人们如何利用这种能力来构建相当有趣的文件系统的.
+of ways people have leveraged this capability to do fairly interesting file systems
+
+233
+00:16:11,100 --> 00:16:14,138
+例如,如果你不不用ssh,
+So for example, if instead of having ssh, 
+
+234
+00:16:14,138 --> 00:16:18,975
+你使用Dropbox或Google Drive,
+you don't care about ssh because you use Dropbox or Google Drive,
+
+235
+00:16:18,975 --> 00:16:24,375
+那么人们已经实现了FUSE文件系统,可以在本地进行挂载,
+it's fine, people have implemented FUSE file systems that will mount locally
+
+236
+00:16:24,375 --> 00:16:27,461
+每次你尝试在本地执行操作时,
+and every time you try to do an operation locally,
+
+237
+00:16:27,461 --> 00:16:30,533
+实际上它会去找这些云存储提供商,
+actually it goes to one of these cloud storage providers
+
+238
+00:16:30,533 --> 00:16:33,669
+所以你也可以使用像Amazon S3或Google Cloud Storage这样的服务,
+so you can also use something like Amazon S3 or Google Cloud Storage,
+
+239
+00:16:41,989 --> 00:16:44,800
+它们没有像Dropbox或Google Drive那样的同步UI系统.
+that don't have the same kind of UI system that we synchronize, as Dropbox or Google Drive 
+
+240
+00:16:44,800 --> 00:16:50,816
+FUSE还有一个应用,与远程操作无关,
+Another application of this that is not related to doing something remotely,
+
+241
+00:16:50,825 --> 00:16:53,056
+就是加密文件系统.
+is something like an encrypted file system 
+
+242
+00:16:53,056 --> 00:16:57,856
+你可能有一个文件系统,每次你尝试写入一个文件时,
+You may have a file system that every time you try to write to a file,
+
+243
+00:16:57,900 --> 00:17:00,032
+你都会尝试以明文形式写入它,
+you will try to write it in plain text, 
+
+244
+00:17:00,032 --> 00:17:04,640
+但它会捕获该操作,动态地加密它,
+but it will capture that operation it will encrypt on the go,
+
+245
+00:17:04,650 --> 00:17:09,350
+然后在你的文件系统中会以常规文件的形式保存,但实际上是加密的.
+and then it will save it as a regular file in your file system, but that's actually encrypted 
+
+246
+00:17:09,350 --> 00:17:15,200
+一旦你卸载文件系统,一旦你断开FUSE连接,
+And once you dismount the file system, once you remove the FUSE connection,
+
+247
+00:17:15,200 --> 00:17:19,275
+你的计算机上只剩下一些加密的常规文件.
+all that is left in your computer are just regular files that are encrypted 
+
+248
+00:17:19,275 --> 00:17:27,400
+我要讨论的最后一个主题是备份,就是如何进行良好的备份工作.
+The last topic I wanna cover is backups and some good practices about them
+
+249
+00:17:27,400 --> 00:17:34,475
+主要的想法是,对于你关心的每个文件,
+The main idea is that for every file that you care about,
+
+250
+00:17:34,475 --> 00:17:36,998
+如果你没有备份它,
+if you don't have a backup of that file, 
+
+251
+00:17:36,998 --> 00:17:40,350
+如果你没有存储它的备份,你几乎可以在任何时候失去它.
+if you don't have a backup stored of that file, you can pretty much lose it at any moment
+
+252
+00:17:40,400 --> 00:17:42,822
+有许多不同的故障场景.
+There are many different failure scenarios
+
+253
+00:17:42,822 --> 00:17:45,062
+其中之一就是硬件故障.
+ One of them is just hardware failure.
+
+254
+00:17:45,062 --> 00:17:49,350
+所以你的硬盘可能在任何时刻都会出现故障.
+ So your hard drive can fail at any moment
+
+255
+00:17:49,350 --> 00:17:54,500
+因此,如果你只是在同一个驱动器上复制你的文件,那是没有用的.
+So if you are just making a copy of your files in the same drive, that's not useful
+
+256
+00:17:54,500 --> 00:17:58,250
+如果你的硬盘故障了,文件就丢失了.
+If your hard drive fails, the files are gone 
+
+257
+00:17:58,250 --> 00:18:02,275
+如果你在外部驱动器上进行备份,
+The same goes if you have an external drive where you are making a copy,
+
+258
+00:18:02,275 --> 00:18:06,725
+但是如果你把所有东西都存储在你的家里,而你的家着火了......
+but if you are storing everything in your home, and your home burns down... 
+
+259
+00:18:06,900 --> 00:18:11,300
+这虽然不太可能,但如果发生了,你就失去了所有的数据.
+Which yes, it's unlikely, but if it happens you just lost all your data
+
+260
+00:18:11,300 --> 00:18:15,750
+因此你需要有一个离线备份的解决方案.
+So you'd have some sort of off-site backup for having this solution
+
+261
+00:18:16,350 --> 00:18:23,125
+还有一件事是同步你的数据或创建镜像文件,不是备份.
+Another thing to take into account is that synchronization or mirroring options are not backups
+
+262
+00:18:23,125 --> 00:18:25,950
+所以像我之前提到的 Google Drive 和 Dropbox 
+So Google Drive, Dropbox that I was mentioning, 
+
+263
+00:18:25,950 --> 00:18:30,302
+只会同步你在本地对文件执行的任何操作.
+they will just propagate whatever is happening in your computer
+
+264
+00:18:30,302 --> 00:18:33,182
+比如说RAID这种硬件镜像也是这样的.
+This goes also for hardware mirroring, like RAID 
+
+265
+00:18:33,182 --> 00:18:37,022
+它们只是在制作副本.如果你不小心删除了一个文件,
+They are just making a copy. If you accidentally delete a file,
+
+266
+00:18:37,022 --> 00:18:42,300
+或者有人恶意删除了你的文件,或者使用某些勒索软件对它们进行加密,
+or someone maliciously deletes your files, or encrypts them using some ransomware,
+
+267
+00:18:42,300 --> 00:18:46,686
+那么你可能会有一个副本,这个副本没啥用.
+then you might have a copy, but you have a copy of the same useless data
+
+268
+00:18:46,686 --> 00:18:51,038
+你必须要有一个行之有效的解决方案.
+You actually have to have a solution of how you're running your backups
+
+269
+00:18:51,038 --> 00:18:53,193
+你应该问自己,
+And you should be asking yourself
+
+270
+00:18:53,193 --> 00:19:01,150
+要想删除你的全部数据,攻击者需要什么样的信息.
+what actually someone needs to have about you in order to delete all your data.
+
+271
+00:19:01,150 --> 00:19:09,175
+我们在笔记中链接了不同的软件,介绍了如何备份.
+And we have linked different softwares in the notes about how to do this
+
+272
+00:19:09,175 --> 00:19:12,802
+最后我要提到的是备份时,
+The last thing I want to mention about backups is that 
+
+273
+00:19:12,802 --> 00:19:16,898
+很多时候你只会考虑本地文件,
+a lot of the time when you think about backups, you just think about the local files
+
+274
+00:19:16,900 --> 00:19:21,575
+比如所有的照片和报税申报表,怎么备份?
+and like, all my photos and my tax return, and how can I make a backup of that? 
+
+275
+00:19:21,575 --> 00:19:25,325
+但在现代,越来越多的网络应用程序
+But increasingly in the modern age, there are more and more web applications
+
+276
+00:19:25,325 --> 00:19:30,975
+和很多数据只可能存在于一些云服务提供商,比如如果你使用 Webmail,
+and a lot of data might only live in some cloud provider, like for example if you have Webmail,
+
+277
+00:19:30,975 --> 00:19:36,875
+而且你没有将其同步到本地,它只存在于提供商的服务器上.
+and you're not synchronizing it to your computer, It's only living in that provider's servers
+
+278
+00:19:36,875 --> 00:19:41,663
+如果你没有这个数据的备份,并且由于某些原因无法访问该帐户,
+And if you don't have a copy for that and for some reason you lose access to that account
+
+279
+00:19:41,663 --> 00:19:44,671
+因为你忘记了密码,被黑客攻击,
+ because you forgot your password, you got hacked,
+
+280
+00:19:44,775 --> 00:19:47,743
+他们认为你违反了服务条款...
+they think you have violated the terms of service... 
+
+281
+00:19:47,743 --> 00:19:48,971
+所有的数据都会消失.
+All that data is gone 
+
+282
+00:19:48,971 --> 00:19:53,195
+因此,你应该寻找一些工具
+So you should look into some tools that people have developed
+
+283
+00:19:53,250 --> 00:19:57,900
+来制作所有这些数据的离线副本,
+for making offline copies of all that data 
+
+284
+00:19:57,900 --> 00:20:00,300
+然后你可以进行定期备份.
+so you can make regular backups of that
+
+285
+00:20:00,300 --> 00:20:05,125
+这个简短的备份主题就到这里了,
+And that kind of ends this short section on backups
+
+286
+00:20:05,125 --> 00:20:08,675
+有什么问题吗?
+ Any questions so far?
+
+287
+00:20:26,275 --> 00:20:29,889
+任何硬盘都可能随时失效,我们没有一个完美的解决方案.
+Any drive can fail at any moment. Like we don't... 
+
+288
+00:20:29,889 --> 00:20:33,950
+不同的存储介质都有有不同的故障率,
+Different media have different rates of failure
+
+289
+00:20:33,950 --> 00:20:36,481
+在网上有非常好的统计数据,
+and there are really good statistics online
+
+290
+00:20:36,481 --> 00:20:42,369
+例如,机械硬盘的故障率高于SSD固态硬盘,
+So for example, spinning hard drives have a higher rate of failure than SSDs for example like Solid-State Drives 
+
+291
+00:20:43,525 --> 00:20:46,925
+还有什么情况呢?或者像CD驱动器
+And what's another case? Or like CD drives.
+
+292
+00:20:47,050 --> 00:20:54,600
+如果你的硬盘摔了,故障率会更高,
+But if you drop a hard drive it's a higher rate of that failing, of course
+
+293
+00:20:54,600 --> 00:20:59,775
+但总体上我们没有一个完美的解决方案,
+But in general we don't really have an end-all solution
+
+294
+00:20:59,775 --> 00:21:02,150
+不会有"这个存储介质不会失效"的说法.
+for saying "this media is not gonna fail.
+
+295
+00:21:02,150 --> 00:21:08,358
+实际上,像SD卡,固态硬盘,硬盘,CD等都会随着时间而性能逐渐退化,
+Like pretty much, like SD cards, SSDs, hard drives, CDs, degrade with time
+
+296
+00:21:08,400 --> 00:21:12,710
+因此基本上每种数据都有可能
+Pretty much every data is kind of bound to this degradation
+
+297
+00:21:12,710 --> 00:21:15,825
+会随时丢失.
+or like this fact that it could be lost at any moment
+
+298
+00:21:15,825 --> 00:21:19,110
+此外,你还需要知道数据也有可能会损坏,
+And you should also know that data can become corrupted, 
+
+299
+00:21:19,110 --> 00:21:23,910
+你的硬盘看起来可能没问题,但是有些文件可能已经损坏了,
+your disk might look like it's okay, but maybe some files were corrupted
+
+300
+00:21:23,925 --> 00:21:26,406
+而像Google Drive或Dropbox这样的同步技术
+and something like synchronization techniques, 
+
+301
+00:21:26,406 --> 00:21:30,566
+会同步这种损坏.
+like Google Drive or Dropbox, will propagate that corruption
+
+302
+00:21:30,575 --> 00:21:36,000
+等到你意识到出现问题时,可能就已经太晚了.
+And by the time that you realize that things have gone wrong it's maybe too late
+
+303
+00:21:39,475 --> 00:21:46,225
+好的,我们将继续跳到下一个的主题,接下来我们讨论API.
+Alright, we're gonna continue this trend of jumping between random topics and talk about APIs
+
+304
+00:21:46,225 --> 00:21:49,200
+到目前为止,我们一直在讨论
+So so far we've really been talking about
+
+305
+00:21:49,200 --> 00:21:52,750
+如何在本地计算机上更有效地完成任务.
+ how do you do things more efficiently locally on your computer?
+
+306
+00:21:52,750 --> 00:21:55,379
+例如,我想更有效地完成此任务.
+Like I want to accomplish this task more efficiently. 
+
+307
+00:21:55,379 --> 00:21:58,963
+我该如何配置我的编辑器?我该如何使用我的shell?
+How do I like configure my editor? How do I use my shell?
+
+308
+00:21:58,963 --> 00:22:03,571
+但你应该意识到,通常你需要与外部世界集成才能实现某些功能.
+But one thing you should realize is that very often you can integrate with the outside world as well.
+
+309
+00:22:03,600 --> 00:22:08,200
+你日常互动的大多数服务都提供某种API,
+Most services that you interact with in your day-to-day provide some kind of API
+
+310
+00:22:08,200 --> 00:22:12,275
+供你与其中的数据或提供的服务进行交互.
+For you to interact with the data that they store or the services that they provide.
+
+311
+00:22:12,275 --> 00:22:15,050
+而且通常这些API都有很好的文档.
+And usually those APIs are pretty well documented
+
+312
+00:22:15,050 --> 00:22:22,375
+如果你查看Facebook,Twitter,Google Drive或Gmail等服务的API,
+If you looked at the APIs for things like Facebook, or Twitter, or Google Drive, or Gmail
+
+313
+00:22:22,375 --> 00:22:25,032
+你会发现许多接口都可以供你
+Many of these have interfaces that you can interact with
+
+314
+00:22:25,032 --> 00:22:28,750
+在本地使用这些服务.
+in order to use those services from your local machine
+
+315
+00:22:28,800 --> 00:22:30,652
+真正有趣的是,
+What's really neat is that 
+
+316
+00:22:30,652 --> 00:22:34,428
+你通常可以将此与我们在之前课堂上讲过的一些东西相结合.
+you can often combine this with some of the stuff that we've talked about in lecture so far.
+
+317
+00:22:34,428 --> 00:22:37,175
+例如,在数据整理的讲座中,
+Like for example in the Data Wrangling lecture, 
+
+318
+00:22:37,175 --> 00:22:40,580
+我们介绍了如何通过创建管道
+we looked at how you can create  these pipelines to extract data from 
+
+319
+00:22:40,580 --> 00:22:43,500
+来从各种格式的源中提取数据.
+some source that has a different format than you expected 
+
+320
+00:22:43,550 --> 00:22:47,950
+例如,美国政府提供了一个免费服务,
+So for instance, the US government has a free service 
+
+321
+00:22:47,950 --> 00:22:51,875
+你可以请求任何美国地点的天气预报.
+Where you can request the weather forecast for any given location in the US
+
+322
+00:22:51,875 --> 00:22:55,650
+你所要做的就是请求一个URL,
+And what you do is there is a URL that you request 
+
+323
+00:22:55,650 --> 00:22:59,125
+并在其中设置正确的参数,
+And if you set the right parameters in that URL 
+
+324
+00:22:59,125 --> 00:23:02,005
+然后获取数据,你将得到JSON,
+and then just fetch it, what you get back is JSON
+
+325
+00:23:02,025 --> 00:23:05,575
+这是一种定义良好的数据格式,你可以解析它,
+Which is sort of a well-defined data format that you can then parse 
+
+326
+00:23:05,575 --> 00:23:10,525
+并提取像未来14天的天气预报之类的信息,
+And you can extract things like your 14-day weather forecast
+
+327
+00:23:10,525 --> 00:23:13,341
+然后你可以将其导入到shell中,
+And maybe you then pipe that into your shell 
+
+328
+00:23:13,341 --> 00:23:17,885
+并生成一些方便的别名,以便在终端中打印出
+and produce some kind of like Handy alias in your terminal that's just gonna print...
+
+329
+00:23:17,885 --> 00:23:21,725
+任何位置的未来14天的天气预测.
+Of some handy reference for the next 14 days of weather in whatever location you were in.
+
+330
+00:23:24,325 --> 00:23:27,613
+这些事情都相对比较容易就可以做到.
+These are things you can pretty easily construct.
+
+331
+00:23:27,613 --> 00:23:32,225
+在课程笔记中有如何构建的详细说明.
+There are some notes in the notes about how you might go about this
+
+332
+00:23:32,225 --> 00:23:34,717
+一般来说,当你与这些API交互时,
+In general when you interact with these APIs, 
+
+333
+00:23:34,717 --> 00:23:38,175
+你会使用某种形式的URL,
+you're going to be using URLs of one form or another
+
+334
+00:23:38,175 --> 00:23:41,245
+而确切的格式因服务而异.
+And the exact format varies from service to service 
+
+335
+00:23:41,245 --> 00:23:44,775
+但总的来说,URL都需要包含一些参数.
+But in general the URL is going to contain some set of parameters
+
+336
+00:23:44,775 --> 00:23:47,362
+最终,你只需向它们发出一个Web请求,
+But ultimately you're just gonna issue a web request
+
+337
+00:23:47,362 --> 00:23:49,821
+然后获取某种格式的数据.
+to them and you're gonna get data back in some format
+
+338
+00:23:49,821 --> 00:23:53,186
+你应该知道的一个命令
+One command you should be aware of for interacting with these types of things 
+
+339
+00:23:53,186 --> 00:23:54,786
+是"curl".
+is one called "curl" 
+
+340
+00:23:54,786 --> 00:23:58,450
+所以curl是一个你调用的程序,你给它一个URL.
+So curl is a program that you invoke, you give it a URL
+
+341
+00:23:58,450 --> 00:24:01,378
+它只是获取该URL并把响应返回给你.
+And it just fetches that URL and gives you back the response
+
+342
+00:24:01,378 --> 00:24:03,810
+你对响应做什么操作,就完全取决于你.
+What you do with that response is entirely up to you
+
+343
+00:24:03,810 --> 00:24:06,882
+也许你会通过像"gq"这样的程序进行管道处理.
+Maybe you pipe it through a program like "gq".
+
+344
+00:24:06,882 --> 00:24:08,970
+呸,说错了,是"jq"
+Sorry, "jq" 
+
+345
+00:24:08,970 --> 00:24:15,500
+所以"jq"是一种JSON查询工具,可以接收JSON格式的数据,
+So "jq" is a JSON query tool that lets you take in data that's formatted as JSON
+
+346
+00:24:15,500 --> 00:24:19,500
+它可以编写查询以提取你感兴趣的数据.
+And then write a query over it to extract data that you're interested in 
+
+347
+00:24:19,500 --> 00:24:21,420
+你可以使用这些工具
+And this is one of the ways in which 
+
+348
+00:24:21,420 --> 00:24:25,075
+提取你感兴趣的数据.
+you can layer these tools to extract the data that you're interested in
+
+349
+00:24:25,425 --> 00:24:30,300
+一些外部服务需要进行身份验证才能访问它们的API.
+Some of these services also require that you authenticate in one way or another.
+
+350
+00:24:30,300 --> 00:24:33,575
+例如,如果你想与Facebook API交互,
+Like for example if you want to interact with a Facebook API.
+
+351
+00:24:33,575 --> 00:24:36,261
+你需要提供某种授权令牌,
+You need to have some authenticated token that
+
+352
+00:24:36,261 --> 00:24:39,150
+来证明你是Facebook认可的用户.
+proves who you are as far as Facebook is concerned.
+
+353
+00:24:39,150 --> 00:24:43,425
+否则,他们不能确定你是否能代表某个用户发帖.
+Otherwise, they can't say whether you're allowed to say, create a post as a given user 
+
+354
+00:24:43,425 --> 00:24:47,500
+很多外部服务都使用OAuth,但不全是.
+Very often these things are gonna use something called "OAuth", although not always
+
+355
+00:24:47,500 --> 00:24:51,749
+你应该查看相关文档.
+And you should look at the documentation for every service you care about 
+
+356
+00:24:51,875 --> 00:24:55,975
+但总的来说,你会从外部服务中获得一些秘密令牌,
+In general though you will get some kind of secret token back from the service,
+
+357
+00:24:55,975 --> 00:24:58,475
+并在向他们发出请求时将其包含在URL或其他Web头中.
+that you have to include in the requests that you make to them either in the URL or in additional sort of web headers,
+
+358
+00:24:58,475 --> 00:25:04,650
+你也可以通过curl发送请求.
+which you can also send with curl.
+
+359
+00:25:04,650 --> 00:25:07,325
+请注意,这些令牌是保密的,不能与他人共享.
+Keep in mind though that these tokens are secret. 
+
+360
+00:25:07,325 --> 00:25:10,700
+这些令牌是你的用户身份的另一种表示方式,
+They are another representation of your user
+
+361
+00:25:10,700 --> 00:25:14,365
+任何拿到它们的人都可以冒充你.
+And anyone who gets their hand on them can basically pretend to be you.
+
+362
+00:25:14,365 --> 00:25:17,100
+他们可以用那个令牌做你能做的一切.
+They can do whatever you can do with that token
+
+363
+00:25:17,150 --> 00:25:20,253
+所以要记住这一点,不要把它们放在你的"dotfiles"中,
+So keep this in mind, don't stick them in your "dotfiles"
+
+364
+00:25:20,253 --> 00:25:21,853
+然后把它们推到GitHub上.
+and then push them onto GitHub 
+
+365
+00:25:21,853 --> 00:25:23,675
+这会让你陷入麻烦.
+That will land you in trouble. 
+
+366
+00:25:24,325 --> 00:25:26,375
+你应该把它们看作密码.
+You should think of them as a password
+
+367
+00:25:26,375 --> 00:25:29,533
+网上也有一些非常好的工具,可以将服务集成在一起.
+There are also really neat tools online for integrating services 
+
+368
+00:25:29,533 --> 00:25:32,285
+有一个叫做"If This Then That"的服务,
+So there's a service called "If This Then That",
+
+369
+00:25:32,285 --> 00:25:36,957
+它提供了对一堆不同的服务的集成,
+which basically provides integrations with a bunch of different services,
+
+370
+00:25:36,957 --> 00:25:38,900
+并允许你将它们链接在一起,
+and lets you chain them together.
+
+371
+00:25:38,975 --> 00:25:41,900
+并且如果你愿意,也可以在本地部分访问它们.
+And then also access them partially locally if you wish 
+
+372
+00:25:41,900 --> 00:25:43,820
+如果你想以更高效的方式与特定服务进行交互,这是值得研究的东西.
+This is something that's worth looking into if there's a particular service you would like to interact with in a more efficient manner.
+
+373
+00:25:49,600 --> 00:25:52,325
+关于API,还有什么问题吗?
+Any questions about APIs?
+
+374
+00:25:55,000 --> 00:25:57,900
+好的,我们换个话题.
+Alright Switching gears entirely,
+
+375
+00:25:57,900 --> 00:25:59,692
+接下来讨论命令行参数.
+let's talk about command-line arguments.
+
+376
+00:25:59,692 --> 00:26:04,125
+命令行工具有很多,大多数都有许多不同的参数,
+So command-line tools, there are a lot of them.
+
+377
+00:26:04,125 --> 00:26:07,950
+因为它们执行不同的操作.
+And most of them take different arguments because they do different things 
+
+378
+00:26:07,950 --> 00:26:11,176
+我们已经谈到过查看命令的man页面,
+We've talked about looking at man pages for commands 
+
+379
+00:26:11,176 --> 00:26:13,544
+这会告诉你如何使用这个特定的命令,
+and that will tell you how this particular command works
+
+380
+00:26:13,544 --> 00:26:17,192
+你可以给它什么样的标志和选项,
+What kind of flags and options you might give to it 
+
+381
+00:26:17,192 --> 00:26:19,650
+以及当你调用它时它实际做了什么.
+And what it actually does when you invoke it
+
+382
+00:26:19,650 --> 00:26:22,800
+我们还需要了解一些共同的主题,它们很有用,
+But there are some common themes that are useful to know about 
+
+383
+00:26:22,800 --> 00:26:26,420
+比如说很多程序都采用的参数形式,
+either in arguments that many programs take,
+
+384
+00:26:26,420 --> 00:26:29,550
+还有许多程序都会使用的概念.
+or just concepts the many of them apply.
+
+385
+00:26:29,550 --> 00:26:35,188
+第一个我们在命令行环境讲座中已经提到了一些,
+The first of these we already mentioned a little bit in the lecture on command-line environments
+
+386
+00:26:35,188 --> 00:26:37,428
+那就是"--help"标志.
+Which is the "--help" flag. 
+
+387
+00:26:37,428 --> 00:26:41,025
+通常你可以将这个标志传递给程序,而不是运行它,
+Very often you can pass this to a program and instead of running,
+
+388
+00:26:41,025 --> 00:26:43,488
+它就会输出有关这个程序的信息,
+It will just print out information about
+
+389
+00:26:43,488 --> 00:26:47,200
+通常是一种非常简短的输出.
+how you can run this program, often in a very short, condensed way
+
+390
+00:26:47,600 --> 00:26:52,320
+类似的,还有一个是"--version"标志,
+A similar one is the "--version" flag,
+
+391
+00:26:52,320 --> 00:26:55,175
+它只打印你正在使用的软件版本.
+ which just prints the version of the software you're using
+
+392
+00:26:55,175 --> 00:26:58,100
+如果你正在进行比如说提交错误报告之类的操作,
+This can be really handy if you're doing something like filing a bug report, 
+
+393
+00:26:58,100 --> 00:27:00,020
+等会Anish会浅浅介绍一下,
+which Anish is going to talk a little bit about later.
+
+394
+00:27:00,020 --> 00:27:04,500
+并且想要报告你正在运行的版本,以防该错误已经修复.
+And you want to report what version you're running on in case the bug has been fixed since.
+
+395
+00:27:04,575 --> 00:27:08,930
+通常你也可以使用"-V",它与"--version"一样.
+Often you can also do "-V" and that means the same as version. 
+
+396
+00:27:08,930 --> 00:27:11,050
+但是,最好还是看看man页面.
+But again, check the main page
+
+397
+00:27:11,350 --> 00:27:16,700
+还有一个经常用到的是"--verbose"或"-v"标志,
+There's also "--verbose", or "-v" often,
+
+398
+00:27:16,700 --> 00:27:20,907
+它会让程序输出更多东西,
+which is a flag that lets you increase the output of the program.
+
+399
+00:27:20,907 --> 00:27:24,427
+使程序打印更多有关它正在做什么的信息.
+It makes the program print more about what it is doing. 
+
+400
+00:27:24,427 --> 00:27:26,400
+通常你可以重复使用这个标志,
+And very often you can repeat this flag
+
+401
+00:27:26,400 --> 00:27:31,300
+比如使用"-vvvvv"来从该工具获取更多的信息.
+So you can do like "-vvvvv" in order to get more information from that tool
+
+402
+00:27:31,300 --> 00:27:35,076
+如果你正在尝试调试问题,这可能特别有用.
+And this can be especially useful if you're trying to debug a problem 
+
+403
+00:27:35,076 --> 00:27:39,428
+如果你正在运行"rsync",并且想要知道它为什么决定复制这个文件,
+If you're like running "rsync" and you want to know why did it decide to copy this file?
+
+404
+00:27:39,450 --> 00:27:41,500
+或者为什么决定不复制这个文件,
+Or why did it decide not to copy this file?
+
+405
+00:27:41,500 --> 00:27:44,175
+那么这种调试输出就很有用了.
+ That kind of debug output can be useful
+
+406
+00:27:44,175 --> 00:27:47,964
+通常还有一个相反的标志叫做"quiet"或"silent",
+And often there's a sort of an inverse flag called "quiet" or "silent",
+
+407
+00:27:47,964 --> 00:27:52,925
+它意味着工具不会打印任何东西,除非出现错误.
+which means that the tool will not print anything unless it was like an error
+
+408
+00:27:52,950 --> 00:27:56,028
+不然,它会一保持沉默.
+Anything else, it will stay quiet about
+
+409
+00:27:56,028 --> 00:27:59,446
+很多工具,特别是那些执行破坏性操作
+Many tools, especially those that do destructive actions
+
+410
+00:27:59,450 --> 00:28:03,550
+或你无法撤销的操作,
+Or some kind of action that you cannot undo
+
+411
+00:28:03,550 --> 00:28:06,375
+提供了"模拟运行"的标志.
+Provide what's known as a "dry run flag"
+
+412
+00:28:06,425 --> 00:28:09,886
+它们的表示方式因工具而异.
+Exactly how this is represented in the command line varies from tool to tool.
+
+413
+00:28:09,886 --> 00:28:14,825
+不过,这个模拟运行模式只会对运行状态进行模拟,
+But essentially what this dry run mode will do is it will run the tool, 
+
+414
+00:28:14,825 --> 00:28:17,025
+实际上不会进行任何更改,
+but it will not actually make any changes
+
+415
+00:28:17,025 --> 00:28:20,600
+而是会告诉你
+Instead it will just inform you of what it would have done 
+
+416
+00:28:20,600 --> 00:28:23,200
+如果你实际上去运行,它将会做什么.
+if you hadn't run it with dry run
+
+417
+00:28:24,050 --> 00:28:27,066
+许多这些工具也有交互模式.
+Many of these tools also have an interactive mode.
+
+418
+00:28:27,066 --> 00:28:30,394
+例如,"rm"和"mv"工具都有交互模式,
+So for example, th "rm" and "mv" tools both do
+
+419
+00:28:30,450 --> 00:28:33,146
+通常只需要"-i",但不总是这样.
+Often just "-i", although not always.
+
+420
+00:28:33,146 --> 00:28:35,850
+当你在交互模式下运行工具时,
+When you run a tool in interactive mode
+
+421
+00:28:35,900 --> 00:28:40,378
+通常会在执行无法撤消的操作前提示你,
+It will usually prompt you whenever it's about to do an action that you can't undo
+
+422
+00:28:40,378 --> 00:28:44,500
+并询问你是否继续执行.
+And it will sort of prompt you for a confirmation that it should actually go ahead
+
+423
+00:28:45,575 --> 00:28:50,106
+当我们谈论有破坏性的工具时,
+When we're talking about destructive tools,
+
+424
+00:28:50,106 --> 00:28:53,175
+它们默认情况下都不会进行递归操作.
+Many of them are non-recursive by default
+
+425
+00:28:53,175 --> 00:28:57,246
+如果你尝试删除一个目录或对一个完整的目录进行操作时,
+If you try to remove a directory or you try to operate on a full directory 
+
+426
+00:28:57,246 --> 00:29:00,225
+它们默认不会继续进入该目录的内部.
+They will not continue into the files inside of that directory
+
+427
+00:29:00,300 --> 00:29:02,686
+原因是
+The reason being you might accidentally like, 
+
+428
+00:29:02,686 --> 00:29:05,275
+你可能会不小心删除整个硬盘,这很糟糕.
+remove your entire hard drive and that seems bad
+
+429
+00:29:05,300 --> 00:29:08,510
+因此,对于这些工具,它们都有一个"recurse"标志,
+Therefore for many of these tools, they have a "recurse" flag 
+
+430
+00:29:08,510 --> 00:29:10,825
+通常为"-r",但同样并非所有程序都支持该参数.
+Often "-r", but again not always,
+
+431
+00:29:10,825 --> 00:29:14,654
+这个参数会递归地遍历目录树以深入查看文件,
+which lets them traverse down into the tree to go deeper,
+
+432
+00:29:14,654 --> 00:29:17,406
+你需要显式地选择该选项才能实现这种递归行为.
+but you need to opt into this behavior.
+
+433
+00:29:17,406 --> 00:29:21,625
+例如,"rm"就是如此,"cp"也是这样的.
+So this is for example, the case for "rm". This is also the case for "cp"
+
+434
+00:29:23,300 --> 00:29:28,286
+在许多工具中,当它们要求你提供文件名或路径时,
+In many tools, when they ask you to give a file name or a path,
+
+435
+00:29:28,286 --> 00:29:31,425
+我们在数据整理讲座中也稍微谈到了这一点,
+and we talked about this a little bit in the data wrangling lecture.
+
+436
+00:29:31,425 --> 00:29:35,070
+你通常可以只给出一个破折号"-",
+Instead of giving a file name, you can often just give a dash,
+
+437
+00:29:35,070 --> 00:29:40,150
+这意味着标准输入或标准输出,
+Just a single "-", and what that means is standard input or standard output
+
+438
+00:29:40,150 --> 00:29:43,425
+具体取决于该参数是输入文件还是输出文件.
+depending on whether that argument is an input file or an output file.
+
+439
+00:29:43,425 --> 00:29:45,038
+那么了解这一点非常有用.
+This is handy to know about
+
+440
+00:29:45,038 --> 00:29:46,446
+如果你正试着
+If you're trying to construct those kinds of
+
+441
+00:29:46,446 --> 00:29:49,070
+构建我们之前讲的数据整理流水线,
+data wrangling pipelines that we've talked about before
+
+442
+00:29:49,070 --> 00:29:52,462
+而你压根没提供任何文件名,
+Many tools will also default to using standard in or standard out 
+
+443
+00:29:52,462 --> 00:29:54,350
+许多工具也将默认使用标准输入或标准输出.
+if you don't give any file name at all.
+
+444
+00:29:56,575 --> 00:30:03,918
+如果你想要传递一个看起来像是标志或选项的东西给一个命令,
+Sometimes you want to pass something that looks like a flag or an option to a command
+
+445
+00:30:03,918 --> 00:30:07,310
+但你实际上不想将其解释为标志或选项,则需要考虑一些问题.
+But you don't actually want it to be interpreted as a flag or an option 
+
+446
+00:30:07,310 --> 00:30:12,800
+例如,如果你想删除名为"-i"的文件,
+Consider for example, if you wanted to remove a file called "-i", 
+
+447
+00:30:12,800 --> 00:30:14,850
+该怎么办?
+what would you do?
+
+448
+00:30:14,850 --> 00:30:22,250
+是的,如果你编写以下命令...
+Right, if you write the following command... "rm -i"
+
+449
+00:30:22,250 --> 00:30:28,900
+"rm -i",那么"-i"是一个"rm"的标志,因此当你运行此命令时,
+Well, "-i" is a flag to "rm", so "rm" would, when you run this command say
+
+450
+00:30:28,900 --> 00:30:32,348
+"rm"会说"告诉我要删除哪个文件,
+Tell me what file to remove, you haven't given me a file
+
+451
+00:30:32,348 --> 00:30:35,525
+你没有给我一个文件",因为它将其解释为一个标志.
+And it's because it interprets this as a flag
+
+452
+00:30:35,550 --> 00:30:38,172
+同样,如果你做这样的事情...
+Similarly, if you do something like... 
+
+453
+00:30:38,172 --> 00:30:49,225
+ssh某台机器,某个命令,例如,"-r",
+ssh some machine, some command, and let's say, dash r
+
+454
+00:30:49,600 --> 00:30:54,044
+这就是说,在ssh上运行命令"foo",
+So this is saying, run command "foo" on this machine over ssh, 
+
+455
+00:30:54,044 --> 00:30:56,550
+并且我想把"-r"传递给"foo",
+and I wanna pass "-r" to "foo"
+
+456
+00:30:57,225 --> 00:31:02,275
+那么这俩命令的"-r"和"-i"将被误解为标志.
+Well, the way that both of these are gonna get interpreted is that 
+
+457
+00:31:02,275 --> 00:31:04,975
+这里"-i"将被解释为标志,这里"-r"会被解释成标志.
+These are flags or in this case, this is a flag. 
+
+458
+00:31:04,975 --> 00:31:07,400
+但对于这个命令来说,
+But to this command
+
+459
+00:31:07,850 --> 00:31:10,351
+这可能不是你想要的.
+Which is probably not what you expected
+
+460
+00:31:10,351 --> 00:31:14,900
+实际上,使用ssh的时候,它对某些命令有一些奇怪的行为.
+Actually in the case of ssh, it has some weird special behavior for some of these
+
+461
+00:31:14,900 --> 00:31:18,287
+如果你想要某些东西不被解释为标志,
+But often if you want something to not be interpreted as a flag 
+
+462
+00:31:18,287 --> 00:31:22,750
+有一种非常简单的方法,那就是使用"--".
+There's a very simple way to opt-out of that, and that is using double dash
+
+463
+00:31:22,775 --> 00:31:28,015
+如果你使用"--",那么你告诉命令的是,
+If you use double dash, what you tell the command is that very thing following this,
+
+464
+00:31:28,015 --> 00:31:33,647
+"--"后面的内容应该被视为参数,而不是选项或标志.
+you should not interpret so it will not be considered a flag or an option. 
+
+465
+00:31:33,647 --> 00:31:36,675
+例如,在使用"rm"命令时,
+In the case of "rm" you can do this
+
+466
+00:31:36,675 --> 00:31:40,303
+可以加上"--"来告诉它后面的第一个参数不是选项或标志,
+And now "rm" you will see that the first argument is a "--"
+
+467
+00:31:40,303 --> 00:31:44,975
+然后它会继续读取参数,但不再将它们解析为选项或标志,
+And then it will keep reading arguments, but it will not interpret them as flags.
+
+468
+00:31:44,975 --> 00:31:48,250
+因此,当它遇到"-i"时,它不会将其解释为"-i"标志,
+So when it gets the "-i", it will not interpret it as the dash i flag,
+
+469
+00:31:48,250 --> 00:31:51,150
+而仅仅是参数"-i".
+but just as an argument dash i.
+
+470
+00:31:51,200 --> 00:31:54,970
+同样,对于ssh,你也可以这样做,
+Similarly, for ssh you can do this 
+
+471
+00:31:54,970 --> 00:31:59,025
+用"--"来指示这些都是位置参数,
+to indicate that these are both positional arguments
+
+472
+00:31:59,025 --> 00:32:00,700
+它们不应解释以破折号开头的标志或选项.
+They are not flags or options and you should not interpret things that start with a dash.
+
+473
+00:32:07,950 --> 00:32:12,900
+(学生)但是,如果你使用"--version",它不会触发这个吗?
+(student) But if you do like "--version", it's not gonna trigger that? 
+
+474
+00:32:12,900 --> 00:32:17,500
+(Jon)不会,这是一个"--",它的两侧都有空格.
+(Jon) No, so this is a " -- ", with a space on both sides
+
+475
+00:32:19,825 --> 00:32:24,150
+现在还有啥问题吗?
+Any questions about any of this sort of command line conventions business?
+
+476
+00:32:28,500 --> 00:32:31,329
+好的,那么让我们谈谈窗口管理器.
+Alright then let's talk about window managers.
+
+477
+00:32:31,329 --> 00:32:35,681
+你们大多数人习惯于那种拖拽形式的窗口管理器.
+So most of you are used to some kind of drag-and-drop window manager.
+
+478
+00:32:35,681 --> 00:32:39,777
+如果你用的是Windows,Mac OS或Ubuntu,
+If you're running Windows, or Mac OS, or Ubuntu - 
+
+479
+00:32:39,777 --> 00:32:42,721
+那么这些系统默认的窗口管理器
+what comes with the machine is like, there are windows 
+
+480
+00:32:42,721 --> 00:32:44,118
+都支持窗口的拖拽和重叠显示功能.
+and they overlap partially on screen.
+
+481
+00:32:44,118 --> 00:32:47,318
+你可以拖拽移动它们,调整它们的大小等等.
+And you can like drag-and-drop and move them around and resize them and stuff
+
+482
+00:32:47,350 --> 00:32:50,902
+它们很好.
+And that works fine. 
+
+483
+00:32:50,902 --> 00:32:56,575
+但这并不是管理计算机窗口的唯一方式.
+But it is not the only way to manage windows on your computer it turns out
+
+484
+00:32:56,600 --> 00:33:00,118
+实际上,你习惯的是一种浮动窗口管理器,
+So what you are used to is something called a floating window manager, 
+
+485
+00:33:00,118 --> 00:33:02,825
+但并不是所有的窗口管理器都是浮动的.
+but not all window managers are floating
+
+486
+00:33:02,900 --> 00:33:06,198
+通常你可以选择其他类型的窗口管理器,
+Often you can opt-in to other types of window managers
+
+487
+00:33:06,198 --> 00:33:09,325
+它们有不同的行为方式来布置你的桌面.
+that have different behavior for how they arrange your desktop
+
+488
+00:33:09,325 --> 00:33:13,750
+一种常见的替代方案是平铺窗口管理器.
+A common alternative is a tiling window manager 
+
+489
+00:33:13,750 --> 00:33:17,675
+在平铺窗口管理器中,不再有浮动窗口,
+So in a tiling window manager, rather than having floating windows,
+
+490
+00:33:17,675 --> 00:33:20,662
+一切都设置成平铺布局.
+Everything is set up into a tiled layout. 
+
+491
+00:33:20,662 --> 00:33:23,925
+当你启动一个程序时,它的窗口被最大化.
+When you start a program, its window is maximized
+
+492
+00:33:23,925 --> 00:33:28,406
+如果你启动另一个程序,原来的窗口会缩小,
+If you start another program, the original window shrinks in size
+
+493
+00:33:28,406 --> 00:33:32,375
+新的窗口会占用总桌面空间的一部分.
+And then the new window takes up some subset of the total desktop space
+
+494
+00:33:32,425 --> 00:33:37,225
+除非没有打开任何程序,
+At no time is your desktop background visible unless you have no programs open 
+
+495
+00:33:37,225 --> 00:33:40,566
+否则在桌面上打开的任何程序
+All of the programs you have open on any given desktop
+
+496
+00:33:40,566 --> 00:33:42,675
+都将共享这个桌面空间.
+are going to share that space
+
+497
+00:33:42,725 --> 00:33:44,662
+这看起来有点像之前我们谈到的tmux面板,
+This looks a little bit like tmux panes, 
+
+498
+00:33:44,662 --> 00:33:48,925
+你可以在不同的方向上将它们分割.
+like we talked about earlier, where you can sort of split them in various directions
+
+499
+00:33:49,000 --> 00:33:52,100
+这种方式的一个好处是
+And one of the reasons why this is handy 
+
+500
+00:33:52,100 --> 00:33:54,800
+你基本上不需要使用鼠标,
+is it means you basically never need to go to your mouse
+
+501
+00:33:54,950 --> 00:33:56,964
+可以使用快捷键在不同的窗口之间移动.
+In order to move between windows, there are keyboard shortcuts to move to different windows 
+
+502
+00:33:59,250 --> 00:34:01,200
+键盘快捷键也可以调整窗口的大小.
+There are keyboard shortcuts for resizing the windows,
+
+503
+00:34:01,200 --> 00:34:02,916
+或在屏幕上交换它们的位置.
+or swapping them around on screen.
+
+504
+00:34:02,916 --> 00:34:07,700
+这被证明是一种相当高效的管理计算机窗口的方式.
+And this turns out to be a pretty efficient way to manage windows in your computer
+
+505
+00:34:09,600 --> 00:34:12,976
+我不会详细介绍
+Well, I won't go into too much of detail of
+
+506
+00:34:12,976 --> 00:34:15,200
+你有哪些窗口管理器可以选择,
+what kind of window managers you might use 
+
+507
+00:34:15,200 --> 00:34:17,725
+你只要知道它们的存在,了解到它们值得一看就好了.
+Just know that these exist out there and they're worth giving a look. 
+
+508
+00:34:17,725 --> 00:34:19,825
+它们可以更加高效地工作.
+They can be a lot more efficient to work with.
+
+509
+00:34:19,825 --> 00:34:22,944
+关于窗口管理器有什么问题吗?
+Questions about window managers? 
+
+510
+00:34:22,944 --> 00:34:28,250
+好的,接下来讲虚拟专用网路(VPN).与之前的课有点关联.
+All right, VPNs. Totally related to the previous topic
+
+511
+00:34:28,250 --> 00:34:32,480
+VPN现在非常流行,这让我感到难过.
+So VPNs are like all the rage these days and this makes me really sad.
+
+512
+00:34:32,480 --> 00:34:36,325
+我目前并不清楚人们使用VPN是否有很好的理由.
+It's not clear that VPNs are all the rage for any good reason
+
+513
+00:34:36,325 --> 00:34:40,224
+你应该意识到VPN能够做什么,不能做什么.
+Because you should be aware of what a VPN does and does not get you
+
+514
+00:34:40,224 --> 00:34:43,360
+在最好的情况下,
+A VPN, in the best case, 
+
+515
+00:34:43,360 --> 00:34:47,850
+VPN也就更改一下你的互联网服务提供商.
+is really just a way for you to change your internet service provider
+
+516
+00:34:47,925 --> 00:34:50,976
+这是一种让你在互联网上的流量
+It's a way for you to make traffic on the Internet 
+
+517
+00:34:50,976 --> 00:34:54,650
+看起来来自于实际位置之外的某个地方的方法.
+seem like it's coming from somewhere else than where you actually are.
+
+518
+00:34:56,700 --> 00:35:00,896
+虽然在某些情况下,这可能看起来很有吸引力,
+While that might seem attractive for certain purposes, 
+
+519
+00:35:00,896 --> 00:35:04,375
+但它在能否提高安全性这个方面还有待商榷.
+It's a little unclear what it buys you in terms of security
+
+520
+00:35:04,400 --> 00:35:07,616
+因为你只是转换了你的信任对象.
+Because all you're really doing is shifting who you are trusting
+
+521
+00:35:07,616 --> 00:35:10,975
+你不再信任你当前的互联网服务提供商,
+Rather than trusting who is providing your current internet service,
+
+522
+00:35:11,025 --> 00:35:16,150
+转而信任提供你VPN服务的企业.
+You're trusting that whatever business is giving you that VPN service.
+
+523
+00:35:16,150 --> 00:35:20,352
+你首先要相信他们正确设置了这个VPN业务,
+You're trusting that they, first of all, have set up this VPN business correctly,
+
+524
+00:35:20,352 --> 00:35:24,125
+还要信任他们不会对你的所作所为进行追踪.
+But also that they are not tracking what you are doing
+
+525
+00:35:24,125 --> 00:35:28,480
+这种信任的改变真的值得吗?并不清楚.
+And it's not clear whether that change of trust is actually worth it.
+
+526
+00:35:28,480 --> 00:35:33,500
+如果你正在使用一些不安全的公共Wi-Fi,那么也许值得考虑一下.
+If you're sitting at some like dodgy public Wi-Fi network then maybe
+
+527
+00:35:33,500 --> 00:35:35,335
+但如果你在麻省理工学院,这就不清楚了.
+But if you're sitting at MIT,it's not clear.
+
+528
+00:35:35,335 --> 00:35:40,327
+你是否比信任麻省理工学院的IS&T更信任你的VPN提供商?
+Do you trust your VPN provider more than you trust MIT's IS&T?
+
+529
+00:35:40,350 --> 00:35:44,999
+或许你就是这样认为的,你要考虑你信任什么,
+Or maybe you do, but that is a decision that you need to make about what you trust, 
+
+530
+00:35:44,999 --> 00:35:47,127
+信任谁以及为什么信任?
+who you trust and why?
+
+531
+00:35:47,450 --> 00:35:51,415
+你还应该知道,你的很多流量,
+You should also know that much of your traffic, 
+
+532
+00:35:51,415 --> 00:35:55,225
+尤其是敏感性数据在互联网上,
+Especially the stuff that's on a sensitive nature on the Internet,
+
+533
+00:35:55,225 --> 00:35:57,050
+已经被加密了.
+is already encrypted
+
+534
+00:35:57,050 --> 00:36:01,497
+无论是HTTPS还是其他使用类似TLS的协议的数据,
+Whether that's sort of HTTPS or other protocols that use something like TLS, 
+
+535
+00:36:01,497 --> 00:36:05,400
+大部分敏感数据都已经通过加密通道传输.
+a lot of the sensitive data is already sent over encrypted channels  
+
+536
+00:36:05,400 --> 00:36:07,777
+你的网络提供商是谁并不重要,
+and it doesn't really matter who your network provider is 
+
+537
+00:36:07,777 --> 00:36:09,550
+如果你在一个不安全的Wi-Fi网络上,
+if you're on a dodgy Wi-Fi network.
+
+538
+00:36:09,550 --> 00:36:13,050
+那些重要的流量可能已经被加密了,也可能没有,
+The stuff that matters is probably encrypted anyway,might not be.
+
+539
+00:36:13,050 --> 00:36:15,354
+但如果没有,
+But if it's not
+
+540
+00:36:15,354 --> 00:36:17,965
+你的VPN提供商也能看到这些数据的明文,
+Then your VPN provider can also see it in plain text 
+
+541
+00:36:17,965 --> 00:36:20,825
+就像管理这个不安全的Wi-Fi网络的人一样.
+just as much as whoever's hosting this dodgy Wi-Fi network.
+
+542
+00:36:21,300 --> 00:36:25,837
+请注意,我上面说的是"在最好的情况下".
+And notice that I said "in the best case above"
+
+543
+00:36:25,837 --> 00:36:29,600
+有些VPN提供商已经被实锤是大坏蛋了,
+There are VPN providers who have been shown to be malicious, 
+
+544
+00:36:29,600 --> 00:36:31,968
+它们会记录你的所有流量,
+that do logging of all your traffic,
+
+545
+00:36:31,968 --> 00:36:34,208
+将流量出售给第三方.
+That sell that traffic to third parties. 
+
+546
+00:36:34,208 --> 00:36:38,875
+有些VPN提供商忘记在VPN上启用加密,
+There are VPN providers that have forgotten to enable encryption on the VPN
+
+547
+00:36:38,875 --> 00:36:41,184
+所有这些都是真实存在的问题.
+All of these are real problems
+
+548
+00:36:41,184 --> 00:36:44,540
+因此,你需要非常仔细地考虑VPN
+And so you should think very carefully about whether a VPN 
+
+549
+00:36:44,540 --> 00:36:48,650
+是否真正为你提供了任何好处.
+actually serves any good purpose for you
+
+550
+00:36:48,900 --> 00:36:51,836
+关于VPN有问题吗?好的,请问?
+Questions about VPNs? Yes? 
+
+551
+00:36:51,836 --> 00:36:56,500
+(学生)所以我有一个关于公共Wi-Fi网络的问题,
+(student) So I have a question about public Wi-Fi networks, because
+
+552
+00:36:56,500 --> 00:36:59,439
+因为电脑与路由器之间的流量
+the traffic from your computer to the router isn't encrypted 
+
+553
+00:36:59,439 --> 00:37:02,475
+在传输时并没有加密,对吧?
+between the computer and the router, right?
+
+554
+00:37:02,525 --> 00:37:06,543
+除了通常通过HTTPS和TLS加密的内容,
+Except for what normally is via HTTPS and tls
+
+555
+00:37:06,543 --> 00:37:11,855
+那么这是否意味着别人可以通过DNS请求来嗅探出
+So then doesn't that mean that people could sniff out what domains 
+
+556
+00:37:11,855 --> 00:37:13,800
+我正在访问哪些域名呢?
+I'm going to via the DNS request?
+
+557
+00:37:13,800 --> 00:37:15,759
+(Jon)这是一个非常好的问题.
+(Jon) So, it's a very good question 
+
+558
+00:37:15,759 --> 00:37:18,250
+如果你连接在公共Wi-Fi网络上,
+If you're on a public Wi-Fi network,
+
+559
+00:37:18,250 --> 00:37:22,090
+则你与无线接入点之间的流量没有加密.
+then the traffic between you and the wireless access point is not encrypted,
+
+560
+00:37:22,100 --> 00:37:25,034
+至少在外层上没有加密.
+at least it's not encrypted sort of on the outer layer.
+
+561
+00:37:25,034 --> 00:37:27,425
+但它可能在像HTTPS这样的加密层中加密.
+But it might be encrypted in like HTTPS, for example.
+
+562
+00:37:27,425 --> 00:37:30,282
+这是完全正确的,
+And it is totally true the people observing that 
+
+563
+00:37:30,282 --> 00:37:34,250
+公共Wi-Fi网络上的其他人将能够看到未加密的任何内容.
+Wi-Fi network will be able to see anything that is not encrypted
+
+564
+00:37:34,250 --> 00:37:37,150
+解决方法就是加密所有流量,
+But the solution to that is to encrypt all your traffic,
+
+565
+00:37:37,150 --> 00:37:39,700
+但不一定要通过VPN.
+rather than necessarily going through a VPN
+
+566
+00:37:39,800 --> 00:37:44,126
+例如,可以使用DNS over TLS
+So one way to do this for example is to use DNS over TLS 
+
+567
+00:37:44,126 --> 00:37:49,570
+或DNS over HTTPS的方式来实现加密全部流量,
+or DNS over HTTPS, which gives you a way to actually encrypt even information
+
+568
+00:37:49,570 --> 00:37:51,475
+这可以使本来可能以明文泄露的信息得到加密.
+that might otherwise leak in plain text 
+
+569
+00:37:51,800 --> 00:37:56,025
+但不是试图相信某个提供商可以为你做到这一点.
+Rather than try to sort of trust some provider to do that for you 
+
+570
+00:37:56,025 --> 00:37:59,619
+当然,在某些情况下,
+Now that said,  in some cases 
+
+571
+00:37:59,619 --> 00:38:02,650
+可能有一个可信赖的机构可以给你你提供VPN网络.
+you might have a trusted institution that provides a VPN network for you 
+
+572
+00:38:02,650 --> 00:38:07,235
+例如,MIT会为所有MIT学生和工作人员提供VPN网络,
+So for example, MIT provides a VPN network for all MIT students and staff
+
+573
+00:38:07,235 --> 00:38:09,091
+你可以注册使用.
+that you can sign up to use.
+
+574
+00:38:09,091 --> 00:38:14,150
+在这种情况下,你可能更信任MIT而不是其他什么网络.
+And in that case you probably trust MIT more than the other networks you might be on.
+
+575
+00:38:14,150 --> 00:38:17,542
+MIT的网络你值得拥有,但你用不用还是要你自己考虑.
+So it might be worth it, but it's something for you to think about
+
+576
+00:38:17,675 --> 00:38:23,800
+(学生)你说你可以用DNS加密它,是什么意思?
+(student) When you say you could encrypt it with, what was it, DNS, how would you do that?
+
+577
+00:38:23,950 --> 00:38:28,358
+(Jon)DNS是用于将域名转换为IP地址的协议,
+(Jon) So, DNS is the way that people turn domain names,
+
+578
+00:38:28,358 --> 00:38:30,750
+当你在计算机上输入域名时,DNS会将该域名解析为相应的IP地址,
+or your computer turns domain names into IP addresses
+
+579
+00:38:30,750 --> 00:38:32,390
+让计算机知道要连接哪台服务器或设备.
+to know what computer to connect to.
+
+580
+00:38:32,390 --> 00:38:35,998
+默认情况下,该协议是明文的,
+And that protocol by default is in plain text,
+
+581
+00:38:35,998 --> 00:38:37,325
+没有任何加密.
+there's nothing encrypted about it.
+
+582
+00:38:37,350 --> 00:38:40,990
+有各种各样的方法可以加密DNS流量.
+There are various ways to encrypt your DNS traffic
+
+583
+00:38:40,990 --> 00:38:43,245
+其中一些是标准化的,而一些不是.
+Some of them are standardized and some of them are not 
+
+584
+00:38:43,245 --> 00:38:46,061
+我不会在这里详细介绍机制,
+I won't go into the exact mechanics here, 
+
+585
+00:38:46,061 --> 00:38:49,625
+但你可以搜一下,查看一些方法.
+but you should google it and look at some of the ways
+
+586
+00:38:49,825 --> 00:38:52,575
+好的,我最后想谈论的一件事是Markdown.
+Okay. The last thing I want to talk about is Markdown 
+
+587
+00:38:52,650 --> 00:38:56,685
+因此,很有可能你们中的一些人
+So there is a high chance that some of you are going to write text
+
+588
+00:38:56,685 --> 00:38:59,425
+逃不过余生都要写文本的命运.
+over the remaining part of your life
+
+589
+00:38:59,425 --> 00:39:03,090
+你们会想以各种简单的方式标记这些文本.
+And you will want to mark up that text in various simple ways
+
+590
+00:39:03,090 --> 00:39:07,361
+你可以用Word或LaTeX等等
+And one thing you could do is start up Word or use LaTeX or something like that
+
+591
+00:39:07,361 --> 00:39:08,975
+来标记你的文档,
+to mark up your documents.
+
+592
+00:39:08,975 --> 00:39:10,650
+但它们相当笨重.
+But that is a pretty heavy-handed approach.
+
+593
+00:39:10,650 --> 00:39:13,300
+相反,如果我们写文本的时候
+Instead it would be nice if we could just sort of
+
+594
+00:39:13,300 --> 00:39:16,372
+只要关注文本本身的内容,那体验将非常好.
+write things the way we feel like they should be.
+
+595
+00:39:16,400 --> 00:39:19,700
+我不知道如何更好地描述它,但是它比较自然.
+I don't know how to describe it in a better way but sort of the natural way 
+
+596
+00:39:19,700 --> 00:39:20,875
+比如你想强调一个词,
+If you want something, 
+
+597
+00:39:20,900 --> 00:39:23,740
+你只需要在它周围放上"*"或其他东西,
+If you want to put emphasis on a word you just put like stars around it or something,
+
+598
+00:39:23,740 --> 00:39:24,875
+然后就可以进行强调了.
+and then it just works
+
+599
+00:39:24,900 --> 00:39:28,964
+Markdown就是这样的工具.
+Markdown is essentially that. It is a way to try to encode the way
+
+600
+00:39:28,964 --> 00:39:31,900
+它试图将我们以较自然的方式书写的文本,
+that we often write text somewhat naturally
+
+601
+00:39:31,900 --> 00:39:37,350
+编码到一种标记语言中,使你可以非常方便地进行加粗,链接,列表等等.
+into a markup language that lets you write things like bold text, links, lists, that sort of stuff.
+
+602
+00:39:37,350 --> 00:39:41,380
+事实上,本课程的所有讲义都是使用Markdown编写的.
+In fact, all of the lecture notes for this class have been written using Markdown 
+
+603
+00:39:41,380 --> 00:39:44,260
+Markdown非常简单明了,
+And Markdown is really very straightforward,
+
+604
+00:39:44,260 --> 00:39:46,475
+它的基本语法在讲义中有,
+the basic rules are in the notes
+
+605
+00:39:46,475 --> 00:39:52,050
+有几个非常基本的东西,在Markdown中,如果你在一个词的周围放上"*",
+But the basic things you need to know is, in Markdown if you put stars
+
+606
+00:39:52,400 --> 00:39:56,228
+那么这个词或者是一些词序列就被强调了.
+Around a word, that word is emphasized or some sequence of words.
+
+607
+00:39:58,600 --> 00:40:00,625
+如果你在一个词的周围放上"**",
+If you put double stars
+
+608
+00:40:00,925 --> 00:40:04,584
+那么这个词就会被加粗.
+That word is emphasized strongly, also known as bold 
+
+609
+00:40:04,584 --> 00:40:07,515
+你还可以做各种其他的事情,
+There are various other things you could do, 
+
+610
+00:40:07,515 --> 00:40:11,250
+例如如果你在一行前加上"-",那么这一行就成了一个列表项.
+like if you put a dash before a line it is now a list
+
+611
+00:40:11,375 --> 00:40:13,915
+然后你就可以添加列表项了.
+And there's one list item and you can amend list items 
+
+612
+00:40:13,915 --> 00:40:18,650
+如果在列表项前加上"1. "或其他数字,它就成为了一个有序列表项.
+If you put "1. " in front, or some other number, it becomes a numbered list
+
+613
+00:40:18,825 --> 00:40:22,182
+如果在内容前面加上"#",
+If you put a pound sign in front of something
+
+614
+00:40:22,182 --> 00:40:25,375
+它就会变成标题.
+it becomes a header, like some kind of title header
+
+615
+00:40:25,375 --> 00:40:28,198
+如果加多个"#",它们就变成了子标题,
+If you put multiple of them, they become subheadings 
+
+616
+00:40:28,198 --> 00:40:30,400
+你可以继续添加更多"#".
+and you can keep adding more to these
+
+617
+00:40:30,950 --> 00:40:34,278
+如果你想编写代码,
+If you want to write code you can put a single backtick,
+
+618
+00:40:34,278 --> 00:40:37,875
+可以在反引号("`")之间输入代码,
+followed by some code, followed by a backtick
+
+619
+00:40:37,875 --> 00:40:41,062
+然后它将以等宽字体呈现.
+And now that is rendered in Monospaced Font
+
+620
+00:40:41,062 --> 00:40:46,850
+如果要多行代码,可以使用三个反引号"```",
+If you want multiple lines of code, you do a triple backtick, and then code,
+
+621
+00:40:46,925 --> 00:40:50,662
+然后是代码blabla,最后再使用三个反引号结束.
+And then maybe some more code and then triple backtick
+
+622
+00:40:50,662 --> 00:40:53,990
+在许多情况下,如果你在GitHub上,
+ And in many cases like if you're on GitHub for example,
+
+623
+00:40:54,025 --> 00:40:58,150
+你甚至可以在反引号之后输入一个语言名称,不需要空格,
+You can even type the name of a language up here after the backticks,  without a space 
+
+624
+00:40:58,150 --> 00:41:01,300
+它会以你选择的语言进行语法高亮显示.
+And it will be syntax highlighted in the language of your choice
+
+625
+00:41:01,300 --> 00:41:03,860
+这非常cool,
+This is a really handy thing
+
+626
+00:41:03,860 --> 00:41:07,950
+很多的网站上都支持Markdown,你甚至可能没有意识到.
+that is supported in so many websites nowadays you might not even realize
+
+627
+00:41:07,950 --> 00:41:11,476
+就像在Facebook Messenger中,你可以使用许多这样的功能.
+Like in Facebook Messenger you can use many of these
+
+628
+00:41:11,476 --> 00:41:14,300
+官方并没有明确表示他们支持Markdown,
+They don't actually officially say they support Markdown anywhere
+
+629
+00:41:14,300 --> 00:41:16,775
+但很多这样的功能都可以实现,
+but many of these things just like sort of happen to work.
+
+630
+00:41:16,775 --> 00:41:19,783
+Markdown非常值得学习,非常推荐你们使用它们.
+And it's worth learning at least the basics and just start using them. 
+
+631
+00:41:19,900 --> 00:41:23,075
+你也可以创建链接,这在笔记中已经提到了.
+You can do links and stuff as well, but that's already in the notes
+
+632
+00:41:23,575 --> 00:41:32,025
+有关Markdown有啥问题吗?好的,亮个像吧!Anish!
+Any questions about Markdown? Right, Anish, you're up!
+
+633
+00:41:34,075 --> 00:41:41,300
+(Anish)我的麦克风是好的吗?这个工作吗?你们能在后面听到我吗?
+(Anish) Is my microphone working? Is this working? Can you guys hear me in the back?
+
+634
+00:41:42,275 --> 00:41:47,075
+灯亮了.哦,我想我能听到.
+The light's green. Oh, I think I can hear it. Okay, great
+
+635
+00:41:48,300 --> 00:41:51,070
+好的,继续我们的随机主题.
+So, continuing with our theme of random topics.
+
+636
+00:41:51,070 --> 00:41:53,511
+这些主题与我们之前讨论的主题都没有关系.
+that are all unrelated to the previous topics we've been talking about,
+
+637
+00:41:53,511 --> 00:41:55,102
+接下来我们要讨论的是
+The next thing we're going to talk about
+
+638
+00:41:55,102 --> 00:41:57,086
+一个叫做"Hammerspoon"的程序,
+ is a program called "Hammerspoon" 
+
+639
+00:41:57,086 --> 00:42:00,700
+它是Mac OS上进行桌面自动化的工具,
+Which is a tool for doing desktop automation on Mac OS
+
+640
+00:42:00,750 --> 00:42:05,000
+我认为Windows和Linux也有类似的工具,很多想法可以继承下来.
+And I think there's similar tools for Windows and Linux, a lot of the ideas can carry over 
+
+641
+00:42:05,000 --> 00:42:08,600
+如果你想知道如何在其他平台上实现这些功能,可以google一下.
+You can google it if you want to figure out how to do these things on other platforms
+
+642
+00:42:08,600 --> 00:42:12,062
+基本上,Hammerspoon是一个程序,它让你编写用Lua编写的脚本,
+But basically Hammerspoon is a program that lets you write Lua scripts,
+
+643
+00:42:12,062 --> 00:42:13,475
+这些脚本
+scripts in a programming language 
+
+644
+00:42:13,500 --> 00:42:16,200
+与各种操作系统功能进行交互.
+that interact with various operating system functionality
+
+645
+00:42:16,200 --> 00:42:18,473
+因此,你可以编写代码来与键盘和鼠标交互,
+So you can write code that interacts with the keyboard and mouse
+
+646
+00:42:18,473 --> 00:42:20,329
+并将其连接到窗口管理,
+ and connects that to window management, 
+
+647
+00:42:20,350 --> 00:42:24,873
+显示管理,文件系统,电池和电源管理,Wi-Fi等等.
+to display management, the file system, battery and power management, Wi-Fi... 
+
+648
+00:42:24,873 --> 00:42:25,897
+基本上,
+All sorts of stuff
+
+649
+00:42:25,900 --> 00:42:28,905
+所有操作系统管理的东西,
+Like basically all the things that your operating system manages, 
+
+650
+00:42:28,905 --> 00:42:30,900
+这个工具都可以让你进行交互.
+this tool lets you hook into those things 
+
+651
+00:42:30,900 --> 00:42:34,729
+因此,你可以通过编写几行代码做很酷的事情.
+And so it can let you do all sorts of neat things by writing just a couple lines of code
+
+652
+00:42:34,729 --> 00:42:37,481
+比如说,一些很酷的例子是:
+Just some examples of cool things you can do with this tool are -
+
+653
+00:42:37,481 --> 00:42:40,631
+你可以绑定热键来移动窗口.
+you can bind hotkeys to move windows to specific locations. 
+
+654
+00:42:40,631 --> 00:42:43,230
+这里有一个演示.我把这个窗口打开.
+ So a demonstration of this is here. I have this window open.
+
+655
+00:42:43,230 --> 00:42:45,342
+我按下,按照我的特定设置,
+ I press, in my particular setup,
+
+656
+00:42:45,375 --> 00:42:47,774
+"Option+Command+Right",这个窗口就会向右移动.
+"Option+Command+Right" and this window moves to the right. 
+
+657
+00:42:47,774 --> 00:42:49,950
+"Option+Command+Left",这个窗口就会向左移动.
+"Option+Command+Left", this window moves to the left.
+
+658
+00:42:50,000 --> 00:42:52,700
+我还有一些其他的快捷键可以将窗口移动到不同的位置.
+And I have a couple other shortcuts for moving things to various places
+
+659
+00:42:52,850 --> 00:42:55,262
+这样我就可以达到类似于
+And so I can kind of have an effect similar to 
+
+660
+00:42:55,262 --> 00:42:57,825
+Jon之前谈到的平铺窗口管理器的效果,
+tiling window managers that Jon was talking about earlier
+
+661
+00:42:57,825 --> 00:43:01,086
+将窗口移动到屏幕的不同部分,以特定的方式设置东西,
+I can move windows to different parts of my screen to set things up in a particular way
+
+662
+00:43:01,086 --> 00:43:05,114
+而不必使用鼠标将东西拖拽到我想要的位置,
+rather than have to use the mouse to position things where I want them to be 
+
+663
+00:43:05,114 --> 00:43:08,186
+然后还要点击和拖动来调整窗口的大小.
+and then like click and drag to resize windows to the right shape  
+
+664
+00:43:08,186 --> 00:43:10,200
+只需要一个键盘快捷键就可以搞定.
+Just a keyboard shortcut can do the trick
+
+665
+00:43:10,350 --> 00:43:12,866
+但是这个工具不仅限于移动窗口,
+But this tool is not limited to just moving windows around 
+
+666
+00:43:12,866 --> 00:43:15,375
+并将其绑定到一些键盘快捷键上.
+and binding that to particularly keyboard shortcuts 
+
+667
+00:43:15,375 --> 00:43:19,150
+你还可以做其他的事情,比如创建一个菜单栏按钮,里面有很多不同的选项,
+You can do other things like create a menu bar button with a bunch of different options
+
+668
+00:43:19,150 --> 00:43:21,774
+你可以将这些不同的选项绑定到不同的操作.
+And you can bind those different options to do different things. 
+
+669
+00:43:21,774 --> 00:43:23,900
+所以对我来说,我创建了这个小菜单,
+So in my particular case I've created this little menu 
+
+670
+00:43:23,900 --> 00:43:27,214
+然后我有很多不同的操作,我会相当频繁地做这些操作,
+and then I have a bunch of different things that I do reasonably frequently.
+
+671
+00:43:27,214 --> 00:43:28,775
+点击这些按钮,
+and clicking on these things
+
+672
+00:43:28,775 --> 00:43:32,526
+会调用我写的相应的Lua函数,与这个库进行交互.
+Invokes a particular Lua function that I've written that interacts with this library.
+
+673
+00:43:32,526 --> 00:43:33,806
+例如,
+So for example
+
+674
+00:43:33,806 --> 00:43:36,100
+这个"Rescue windows"是
+Here, this "Rescue windows" thing 
+
+675
+00:43:36,100 --> 00:43:38,700
+一个我经常使用多个显示器的会出现的问题.
+is a particular thing where I often work with multiple displays.
+
+676
+00:43:38,725 --> 00:43:41,028
+有时我的操作系统会很傻,
+And sometimes my operating system gets confused
+
+677
+00:43:41,028 --> 00:43:44,800
+比如有一些窗口出现在我的屏幕之外,
+and I have some window that ends up off of my display and
+
+678
+00:43:44,800 --> 00:43:47,250
+我该如何将这个东西拿回来呢?
+How do I how do I get this thing back?
+
+679
+00:43:47,250 --> 00:43:51,800
+emmmmmm
+Well, that's what this... Whoops, not that
+
+680
+00:43:52,000 --> 00:43:54,610
+这就是这个"Rescue windows"所做的事情.
+That's what this "Rescue windows" thing does. 
+
+681
+00:43:54,610 --> 00:43:57,175
+它将那些超出屏幕的窗口重新放回屏幕上.
+It brings windows that are off the screen back onto the screen
+
+682
+00:43:57,175 --> 00:44:01,906
+这里设置的另一个很酷的东西是一个特定的布局,我已经命名了它们.
+Another neat thing I have setup here is I have particular layouts that I've named 
+
+683
+00:44:01,906 --> 00:44:03,890
+比如宿舍布局,实验室布局和笔记本电脑布局.
+So like a dorm, and a Lab and a Laptop layout
+
+684
+00:44:03,900 --> 00:44:06,819
+所以比如在我的实验室里,我有这个屏幕
+So for example in my Lab I have this screen and I have another screen
+
+685
+00:44:06,819 --> 00:44:09,315
+那一个屏幕,另外还有个屏幕,它们位置不同.
+and have another screen besides that in a different orientation
+
+686
+00:44:09,315 --> 00:44:11,811
+我有了这个特定的设置,
+And I have this particular setup that I want where I want
+
+687
+00:44:11,811 --> 00:44:15,150
+我想在这个屏幕我的终端全屏显示,在这里显示我的聊天程序,
+Maybe my terminal full screen on here, and my chat program over here and
+
+688
+00:44:15,150 --> 00:44:18,975
+这个屏幕分成五个不同的部分,有不同的程序放在不同的地方.
+This screen split up into five segments with different programs in different places 
+
+689
+00:44:18,975 --> 00:44:22,819
+在我到实验室的时候,我可以点击"实验室布局",
+Here I can, when I show up to Lab I can just go here and click "Layout Lab"
+
+690
+00:44:22,819 --> 00:44:26,150
+它将调用一些代码,
+and it will invoke some code
+
+691
+00:44:26,450 --> 00:44:32,500
+描述了一个特定的布局,并不是很复杂,只有十来行代码.
+which is not all that complicated like 10 lines of code describes a particular layout.
+
+692
+00:44:32,500 --> 00:44:36,200
+它会实例化这个布局,并把所有东西放到相应的地方.
+And it will instantiate that layout and put all the things where they need to go 
+
+693
+00:44:36,200 --> 00:44:38,563
+在理论上,我甚至可以自动化其中的一些过程,
+I could even in theory automate some of these things 
+
+694
+00:44:38,563 --> 00:44:42,350
+让我的电脑可以自己识别,比如我插上一个显示器,我的电脑就知道:
+where my computer could figure out like I plug in a display and my computer knows
+
+695
+00:44:42,350 --> 00:44:44,318
+"哦,这是你实验室里的显示器.
+Oh, this is the display that you have in your lab. 
+
+696
+00:44:44,318 --> 00:44:46,550
+让我自动创建这个布局给你."
+Let me automatically instantiate this layout for you."
+
+697
+00:44:46,550 --> 00:44:48,286
+这是 Hammerspoon 工具的另一种例子.
+That's another thing you can do with Hammerspoon. 
+
+698
+00:44:48,286 --> 00:44:51,400
+还有其他一些有趣的事情,
+And also other wacky things you can do like you can do things like
+
+699
+00:44:51,400 --> 00:44:53,982
+比如可以检测你所在的 Wi-Fi 网络,
+It can detect your Wi-Fi network that you're on
+
+700
+00:44:53,982 --> 00:44:55,288
+这样就可以知道你所在的位置.
+so it knows kind of where you are 
+
+701
+00:44:55,288 --> 00:44:58,104
+也许我在家里和在实验室的 Wi-Fi 网络名称不同,
+Maybe I have a different Wi-Fi network name at home versus in lab 
+
+702
+00:44:58,104 --> 00:45:00,275
+那么我可以做一些事情,比如当我到实验室时
+and I can do things like when I show up to lab
+
+703
+00:45:00,275 --> 00:45:01,875
+自动将扬声器静音,
+Automatically mute my speakers. 
+
+704
+00:45:01,875 --> 00:45:04,755
+这样我就不会在实验室里尴尬地播放音乐了.
+So I don't have like embarrassing music play out loud in my lab 
+
+705
+00:45:04,755 --> 00:45:07,330
+另一个很酷的例子是,
+Another kind of cool example is
+
+706
+00:45:07,550 --> 00:45:10,898
+我有一台 Mac 电脑,它有一个高级电源适配器,
+So I have a Mac It has a fancy power supply 
+
+707
+00:45:10,898 --> 00:45:13,198
+我的很多朋友的电脑看起来都和我的一样,
+and a lot of my friends have Computers that look the same as this
+
+708
+00:45:13,198 --> 00:45:15,600
+他们的电源适配器看起来也和我的一样,
+ and their power supply bricks look the same as mine 
+
+709
+00:45:15,600 --> 00:45:19,148
+有时候我会用他们的电源适配器,因为我把我的忘在家里了或者其他原因.
+Sometimes I use their power brick because I forgot mine at home or something  
+
+710
+00:45:19,148 --> 00:45:22,150
+这个工具实际上可以使用三到四行代码做一些好玩的事情,
+This tool can actually with like three or four lines of code
+
+711
+00:45:22,150 --> 00:45:24,911
+当你意外拿了朋友的电源适配器并插到电脑上时,
+Do neat things like show you a warning like it'll pop up a warning
+
+712
+00:45:24,911 --> 00:45:28,132
+比如弹出一个警告,告知你这件事儿.
+if you've accidentally taken your friend's power supply and plugged it Into your computer instead of using your own.
+
+713
+00:45:29,575 --> 00:45:32,327
+总的来说,这个工具允许你运行任意 Lua 代码,
+So at a high level this tool lets you run arbitrary Lua code,
+
+714
+00:45:32,327 --> 00:45:35,143
+并将其绑定到菜单按钮或按键上.
+and do things like bind it to menu buttons or key presses.
+
+715
+00:45:35,143 --> 00:45:39,600
+它可以与操作系统的大部分部件交互,以执行各种有趣的事情.
+It interacts with a large part of the operating system in order to do all sorts of cool stuff 
+
+716
+00:45:39,600 --> 00:45:43,350
+这就是 Hammerspoon,对此还有什么问题吗?
+So that is Hammerspoon, any questions about that?
+
+717
+00:45:44,600 --> 00:45:47,150
+好的,接下来讲另一个话题,
+Cool. Moving on to the next topic
+
+718
+00:45:47,550 --> 00:45:51,550
+和之前没有任何关系,就是启动和使用 Live USB.
+Completely unrelated to the previous one, it's booting and live USBs
+
+719
+00:45:52,200 --> 00:45:56,494
+你的计算机上的操作系统,比如 Windows 或 Mac OS 或其他你习惯的操作系统,
+So the operating system on your computer, Windows or Mac OS or whatever you're used to 
+
+720
+00:45:56,494 --> 00:45:59,832
+实际上不是在开机时第一个运行的东西.
+is not exactly the first thing that runs on your machine when it turns on. 
+
+721
+00:45:59,832 --> 00:46:02,345
+在操作系统加载之前,
+There's something else that happens in the boot process
+
+722
+00:46:02,345 --> 00:46:04,073
+启动过程中会发生其他一些事情.
+before your operating system is loaded 
+
+723
+00:46:04,073 --> 00:46:07,075
+有些有趣的东西可以在这里配置.
+and There's some interesting stuff that you can do there.  
+
+724
+00:46:07,075 --> 00:46:08,725
+你可能已经看到,当你打开计算机时,
+So you might have seen when you turn on your computer
+
+725
+00:46:08,800 --> 00:46:11,690
+它会显示类似"按 F9 键配置 BIOS"
+It says something like press F9 to configure the BIOS 
+
+726
+00:46:11,690 --> 00:46:13,800
+或"按 F12 进入启动菜单"的消息.
+or press F12 to enter the boot menu
+
+727
+00:46:13,800 --> 00:46:16,746
+具体的按键可能会因你的机器和具体配置而有所不同,
+The particular key sequences may depend on your machine and specific configuration
+
+728
+00:46:16,746 --> 00:46:19,626
+但这是一个通用的模式
+But this is a general pattern, 
+
+729
+00:46:19,626 --> 00:46:23,000
+你可以在这里配置各种有趣的硬件相关的内容.
+and you can configure all sorts of interesting Hardware related stuff here
+
+730
+00:46:23,000 --> 00:46:24,450
+因此,这值得一试.
+So it's worth checking out
+
+731
+00:46:24,450 --> 00:46:27,010
+在这个启动菜单中,
+And another thing you can do in this boot menu is you can
+
+732
+00:46:27,010 --> 00:46:29,800
+你可以让计算机从备用启动设备开始启动.
+have your computer start off from an alternate boot device
+
+733
+00:46:29,800 --> 00:46:33,474
+例如,默认情况下,我的笔记本有一个固态硬盘,开机时会从这个硬盘启动 Mac OS,
+so by default like my laptop here has a solid-state drive and it boots Mac OS when it turns on 
+
+734
+00:46:33,474 --> 00:46:36,216
+但是我也可以插入
+but I can also say plug in a USB flash drive 
+
+735
+00:46:36,216 --> 00:46:38,495
+一个安装有操作系统的 USB 闪存,
+that has an operating system installed on the flash drive
+
+736
+00:46:38,495 --> 00:46:41,687
+然后在开机时告诉计算机从那个闪存
+and then at boot tell my computer to boot from that flash drive 
+
+737
+00:46:41,687 --> 00:46:43,415
+而不是内置的固态硬盘开始启动.
+instead of the built-in solid-state disk.
+
+738
+00:46:43,415 --> 00:46:47,700
+假如我破坏了操作系统安装,
+and this is useful for example If I've broken my operating system install  
+
+739
+00:46:47,700 --> 00:46:50,726
+需要做一些事情,比如获取计算机上的数据,
+and I want to do something like get the data off my computer
+
+740
+00:46:50,726 --> 00:46:52,275
+或者修复操作系统,这就有用了.
+or maybe want to fix the operating system
+
+741
+00:46:52,275 --> 00:46:54,478
+比如可能有些关键文件被删除了,
+Like maybe there's some critical files somewhere that I've deleted 
+
+742
+00:46:54,478 --> 00:46:57,806
+或者我忘记了密码,
+or I forgot my password I need to go like tweak some files in order to reset it
+
+743
+00:46:57,806 --> 00:47:00,125
+需要去调整一些文件来重置.
+booting from a live USB
+
+744
+00:47:00,125 --> 00:47:02,798
+从闪存上的操作系统进行引导启动,
+Booting from the separate operating system that's installed on a flash drive
+
+745
+00:47:02,798 --> 00:47:04,782
+我可以这样做:启动我的操作系统,
+can let me do that like boot up my operating system.
+
+746
+00:47:04,782 --> 00:47:07,889
+挂载当前机器上的硬盘,
+mount the hard disk that's on my current machine I'm working on,
+
+747
+00:47:07,889 --> 00:47:10,500
+然后进行一些调整或者将数据复制出来.
+and then go make some tweaks or copy data off of that.
+
+748
+00:47:10,550 --> 00:47:13,713
+因此,live USB非常有用,在课堂笔记中,
+And so live USBs are really useful and in the lecture notes, 
+
+749
+00:47:13,713 --> 00:47:16,450
+我们提供了一个工具,可以帮助你轻松创建live USB.
+we've linked to a tool that can help you create them really easily
+
+750
+00:47:16,825 --> 00:47:20,475
+有关启动过程或live USB,有啥问题吗?
+Any questions about the boot process or live USBs?
+
+751
+00:47:22,600 --> 00:47:28,825
+好的,下一个话题是虚拟机,Vagrant,Docker,云计算和OpenStack.
+All right, next topic is virtual machines, Vagrant, Docker, the cloud and OpenStack
+
+752
+00:47:28,825 --> 00:47:31,036
+去年我们整整用一节课来探讨这个话题,
+I think last year we had an entire lecture on this topic 
+
+753
+00:47:31,036 --> 00:47:34,225
+今年我们将把它压缩到一分钟内.
+this year We're going to condense it into like one minute
+
+754
+00:47:34,225 --> 00:47:38,332
+总的来说,虚拟机和类似的工具,如容器,
+So at a high level virtual machines and similar tools like containers
+
+755
+00:47:38,332 --> 00:47:41,550
+可以让你在当前计算机系统内模拟整个计算机系统,
+let you emulate a whole computer system within your current machine
+
+756
+00:47:41,550 --> 00:47:43,099
+例如,我正在运行Mac OS,
+so like I'm running Mac OS here, 
+
+757
+00:47:43,099 --> 00:47:47,643
+但在我的Mac OS环境内,
+but within my Mac OS environment I can simulate a machine
+
+758
+00:47:47,643 --> 00:47:49,900
+我可以模拟运行Ubuntu或其他操作系统.
+that's running say Ubuntu or some other operating system  
+
+759
+00:47:49,950 --> 00:47:52,635
+这是创建用于测试,开发或探索的隔离环境的好方法,
+And this is a nice way of creating an isolated environment for testing or for development or for exploration
+
+760
+00:47:55,875 --> 00:47:58,579
+例如运行一些潜在的恶意代码,
+For example doing things like running potentially malicious code
+
+761
+00:47:58,579 --> 00:48:00,975
+应该与我的当前环境隔离.
+that should be isolated from my current environment. 
+
+762
+00:48:01,350 --> 00:48:04,300
+我认为程序员最常见的例子是,
+I think the most common use case for programmers is to use 
+
+763
+00:48:04,300 --> 00:48:07,100
+使用虚拟机或容器创建开发环境.
+virtual machines are containers to create development environments
+
+764
+00:48:07,100 --> 00:48:10,316
+我使用Mac OS,并在我的当前计算机上
+So I'm using Mac OS and I have some of services and stuff
+
+765
+00:48:10,316 --> 00:48:12,172
+安装了一些服务,库等,
+ and libraries installed in my current machine
+
+766
+00:48:12,172 --> 00:48:15,756
+但我可能想要在Debian机器上运行某些Web项目,
+But I might want for example I'm working on some web programming project
+
+767
+00:48:15,756 --> 00:48:20,475
+并需要安装Postgres等数据库服务器,
+and I want it to run on an Debian machine and I need Postgres, 
+
+768
+00:48:20,475 --> 00:48:24,425
+而不是在我的Mac OS机器上安装所有这些东西.
+like a database server installed rather than install that all on my Mac OS machine 
+
+769
+00:48:24,425 --> 00:48:29,925
+我可以实例化一个新机器.
+I can instantiate this new machine just for the development purposes
+
+770
+00:48:29,950 --> 00:48:32,951
+虚拟机是一个比较宽泛的概念.
+Now virtual machines, like that's a general concept.
+
+771
+00:48:32,951 --> 00:48:35,100
+有许多称为虚拟机监视器的程序,
+There are a bunch of programs that are called virtual machine hypervisors that 
+
+772
+00:48:38,100 --> 00:48:40,162
+它们支持在你的计算机上运行虚拟机.
+support this functionality on your machine.
+
+773
+00:48:40,162 --> 00:48:43,042
+还有一些工具,让你可以脚本化这些监视程序,
+And then there are tools that let you script these hypervisors
+
+774
+00:48:43,042 --> 00:48:45,965
+以指定虚拟机的配置,
+in order to specify machine configurations like 
+
+775
+00:48:45,965 --> 00:48:48,338
+例如操作系统版本,想要安装的软件包
+operating system and like what packages you want installed
+
+776
+00:48:48,338 --> 00:48:51,175
+以及所需的服务等等.
+and what services you want installed in plain text 
+
+777
+00:48:51,175 --> 00:48:53,450
+屏幕上是个示例.
+And so this is an example on the screen right here. 
+
+778
+00:48:53,450 --> 00:48:57,250
+这是使用Vagrant完成的.
+And this is done using a system called Vagrant.
+
+779
+00:48:57,250 --> 00:49:00,950
+在课程笔记中有链接,如果你感兴趣可以了解一下.
+It's linked in the lecture notes. You can look into this if you're curious. 
+
+780
+00:49:00,950 --> 00:49:03,811
+因此,在这个简短的纯文本配置文件中,
+So basically and the short plain text file I can specify 
+
+781
+00:49:03,811 --> 00:49:05,700
+我可以指定一个正在运行Debian的机器,
+okay. I want a machine that's running Debian
+
+782
+00:49:05,700 --> 00:49:09,450
+它应该安装了Postgres,Redis和Python等软件.
+It should have "postgres" and Redis and Python and stuff installed on it. 
+
+783
+00:49:09,450 --> 00:49:11,425
+然后,一旦我有了这个配置,
+And then, once I have this configuration,
+
+784
+00:49:11,425 --> 00:49:14,434
+我只需要输入`vagrant up`,
+I can just type in "vagrant up",  and what it does is, 
+
+785
+00:49:14,434 --> 00:49:17,860
+它会读取这个文本文件,并根据这个配置实例化一个虚拟机.
+it reads this file and instantiates a new machine based on this configuration.  
+
+786
+00:49:17,860 --> 00:49:22,626
+然后,在我这样做后,我可以通过"vagrant ssh"来ssh进入这个虚拟机.
+And then, after I've done that I can do "vagrant ssh" to ssh into this virtual machine. 
+
+787
+00:49:22,626 --> 00:49:25,549
+它不是的远程服务器,
+So it's not a remote machine running on some other piece of hardware somewhere,
+
+788
+00:49:25,549 --> 00:49:27,149
+它只是在我的本地上模拟.
+It's just simulated on my own machine.
+
+789
+00:49:27,149 --> 00:49:30,964
+但现在我有一个Ubuntu的工作环境,现在我运行`lsb_release -a`
+but now here I have an Ubuntu box like I do "lsb_release -a",
+
+790
+00:49:30,975 --> 00:49:33,396
+Sorry,不是Ubunut,是debian.
+It's like or sorry not Ubuntu, debian here
+
+791
+00:49:33,396 --> 00:49:35,606
+这里有我想要安装的所有东西,
+with all the things I want installed in here
+
+792
+00:49:35,606 --> 00:49:38,225
+我可以在这个隔离的环境中进行开发,
+and I can do my development inside this isolated environment,
+
+793
+00:49:38,250 --> 00:49:41,825
+而不是在我的MacOS机器上安装所有这些垃圾.
+and not, kind of, install all this junk on my MacOS machine. 
+
+794
+00:49:42,275 --> 00:49:46,806
+这是vagrant,还有一些类似的工具如Docker,
+Now so that's vagrant there's similar tools like docker 
+
+795
+00:49:46,806 --> 00:49:50,400
+它们在理念上相似,但是docker使用容器而不是虚拟机.
+that are conceptually similar but use containers instead of virtual machines
+
+796
+00:49:50,400 --> 00:49:53,675
+这是一个区别,我们现在不会详细讨论.
+It's a distinction that we're not going to talk about in too much detail right now.
+
+797
+00:49:54,000 --> 00:49:55,894
+因此,你可以在自己的计算机上运行虚拟机,
+And so you can run VMs on your own computer,
+
+798
+00:49:56,000 --> 00:49:58,518
+但你也可以在云上租用虚拟机,
+but you can also rent virtual machines on the cloud.
+
+799
+00:49:58,518 --> 00:50:01,206
+这是一个获得即时访问的好方法,
+And so It's a nice way to get instant access to 
+
+800
+00:50:01,206 --> 00:50:02,575
+比如有时候你可能需要立即获得一台计算机.
+like one example is you might want a computer
+
+801
+00:50:02,575 --> 00:50:06,390
+比如你可能想要一个始终开着,始终连接到互联网并具有公共IP地址的计算机.
+That's always on always connected to the internet and has a public IP address.
+
+802
+00:50:06,390 --> 00:50:07,734
+比如你想运行一个始终可用的Web服务器,
+Like maybe you want to run a web server 
+
+803
+00:50:07,734 --> 00:50:10,166
+或者你想运行一些其他的服务,
+That's always available or you want to run some other service like
+
+804
+00:50:10,166 --> 00:50:12,470
+比如一个slack机器人之类的东西.
+say a slack bot or something like that.
+
+805
+00:50:12,500 --> 00:50:15,542
+在云上租用虚拟机是一个不错的选择,
+Well a virtual machine rented on the cloud is one nice way to get that
+
+806
+00:50:15,542 --> 00:50:19,023
+租一个低容量,小型CPU和少量的磁盘空间的机器是很便宜的.
+and these are pretty cheap for like a low capacity machine with a small CP and small amount of disk space.
+
+807
+00:50:21,510 --> 00:50:23,849
+你可能想要一个非常牛杯的机器,
+and you might want to do is get access to a machine 
+
+808
+00:50:23,849 --> 00:50:27,490
+比如有很多CPU核心或者有很多内存或者有大量的GPU,
+that's really powerful like with a lot of CPU cores  or with a lot  of RAM  
+
+809
+00:50:27,490 --> 00:50:30,414
+用于某些特定的目的,
+or with a whole bunch of GPUs for some specific purpose like
+
+810
+00:50:30,414 --> 00:50:31,394
+比如说你正在进行深度学习,
+say you're doing deep learning 
+
+811
+00:50:31,394 --> 00:50:33,634
+或者一些敏感的计算.
+or so you're doing some other sorts of sensitive computation 
+
+812
+00:50:33,650 --> 00:50:35,700
+那么,使用云上的虚拟机也可以做到.
+Well, that's another thing you can do with VMs on the cloud 
+
+813
+00:50:35,700 --> 00:50:39,732
+最后,你可以获得比你实际可以访问的机器更多的机器.
+And finally, you can get access to many more machines than you have physical access to. 
+
+814
+00:50:39,732 --> 00:50:41,460
+比如,如果我需要一千台机器,
+Like if I need a thousand machines
+
+815
+00:50:41,460 --> 00:50:44,148
+但只需要两分钟来完成一些并行要求很高的任务,
+But only for two minutes to do some very parallel tasks. 
+
+816
+00:50:44,148 --> 00:50:46,500
+那么我可以很容易地使用虚拟机来完成.
+That's something I can easily do with virtual machines 
+
+817
+00:50:46,925 --> 00:50:51,325
+提供云服务器租售的厂家有包括Amazon AWS或Google Cloud.
+Popular services for doing this are things like Amazon AWS or Google cloud 
+
+818
+00:50:51,325 --> 00:50:54,942
+如果你是MIT CSAIL的成员,你也可以使用CSAIL OpenStack,
+And if you're a member of MIT CSAIL, you can also get free VMs 
+
+819
+00:50:54,942 --> 00:50:57,150
+你可以获得免费的虚拟机进行研究.
+for research purposes using the CSAIL OpenStack.
+
+820
+00:50:57,200 --> 00:50:59,038
+这个在课堂笔记中有链接,
+And so this is also linked in the lecture notes 
+
+821
+00:50:59,038 --> 00:51:03,850
+所以,关于虚拟机,Vagrant,Docker或其他类似的东西,有问题吗?
+So any questions about virtual machines, or Vagrant, Docker, or anything like that?
+
+822
+00:51:12,275 --> 00:51:18,050
+问题是,当我说我在运行Ubuntu时,实际上在这种情况下,我运行的是Debian,
+So the question is when I say I'm running Ubuntu, or, actually, in this case, it's Debian
+
+823
+00:51:18,050 --> 00:51:22,208
+那么我是否真的在我的电脑上安装了Ubuntu呢?
+when I'm running Ubuntu here, do I have, like, Ubuntu installed on my machine, 
+
+824
+00:51:22,208 --> 00:51:24,384
+还是发生了什么情况?
+or What exactly is going on here? 
+
+825
+00:51:24,384 --> 00:51:28,950
+基本上,当我键入"vagrant up"时,Vagrant为我做的是,
+So, basically, what Vagrant did for me when I type "vagrant up" is,
+
+826
+00:51:28,950 --> 00:51:31,163
+因为我指定我想要Debian,
+because I've specified I want Debian here, 
+
+827
+00:51:31,163 --> 00:51:33,275
+它会从网上下载Debian,
+it downloaded Debian from the internet, 
+
+828
+00:51:33,275 --> 00:51:35,515
+为这台虚拟机设置了一个磁盘映像,
+like, set up a disk image for this new machine,
+
+829
+00:51:35,650 --> 00:51:39,291
+将Debian安装到该磁盘映像中,然后安装了这些程序.
+installed Debian into that disk image, then went to install these programs
+
+830
+00:51:39,291 --> 00:51:41,339
+所以,是的,这都在我的电脑上.
+ So, like, yes, this is on my computer. 
+
+831
+00:51:41,339 --> 00:51:44,425
+但是,所有这些都只是在一个特定的磁盘映像文件中.
+But, all of this is just in a particular file that's a disk image.
+
+832
+00:51:44,450 --> 00:51:48,635
+然后,我正在模拟一台与我的电脑完全隔离的机器.
+And then, I'm emulating a machine that is basically completely isolated from my current machine. 
+
+833
+00:51:48,635 --> 00:51:51,387
+这是在我的电脑上作为一个进程运行的.
+This is being run as a process on my current machine. 
+
+834
+00:51:51,387 --> 00:51:55,800
+这回答了你的问题吗?还有其他关于虚拟机的问题吗?
+Does that answer the question? Any other questions about VMs?
+
+835
+00:51:56,950 --> 00:52:00,475
+好的,下一个话题也是简短的提一下.
+Great. Next topic is also going to be a quick mention -
+
+836
+00:52:00,475 --> 00:52:04,450
+很多人是程序员,你们习惯使用像Vim这样的工具编写程序,
+ So, a lot of you are programmers, and you're used to writing programs
+
+837
+00:52:04,450 --> 00:52:08,027
+或者使用其他你们熟悉的编辑器.
+in a tool like Vim, or some other editor that you're comfortable with. 
+
+838
+00:52:08,027 --> 00:52:10,715
+但是,另一件非常实用的东西是,
+Another thing that can be really neat to use for particular tasks,
+
+839
+00:52:10,715 --> 00:52:13,100
+可以为特定任务使用笔记本编程环境.
+is something called a notebook programming environment.
+
+840
+00:52:13,125 --> 00:52:15,925
+这是一种交互式更强的编程方式.
+And this is a more interactive way of writing programs. 
+
+841
+00:52:15,925 --> 00:52:17,650
+在屏幕上,我有一个演示.
+Here on the screen, I have a demo.
+
+842
+00:52:17,650 --> 00:52:19,314
+这就是所谓的Jupyter notebook,
+This is something called Jupiter notebook 
+
+843
+00:52:19,314 --> 00:52:21,362
+它可以用于编写Python程序.
+and it can be used for writing Python programs.
+
+844
+00:52:21,362 --> 00:52:23,625
+我认为它们也支持其他一些语言.
+I think they also support some other languages.
+
+845
+00:52:23,625 --> 00:52:26,675
+基本上,这是一个很好的交互式编程方式.
+And, basically, this is a nice way of doing interactive programming. 
+
+846
+00:52:26,675 --> 00:52:30,100
+通常,你们习惯在一个文件或一组文件中编写一个大程序,
+So, normally, you're used to writing a big program in a file, or a collection of files,
+
+847
+00:52:30,100 --> 00:52:32,850
+一旦完成,就可以运行整个程序.
+and once you're done writing it, you can just run the whole program. 
+
+848
+00:52:32,850 --> 00:52:37,169
+但是,这让你更加灵活,并逐段运行代码.
+But, this lets you be a little bit more flexible and run little snippets of code at a time. 
+
+849
+00:52:37,169 --> 00:52:40,325
+例如,我可以将我的程序分成这些小段,
+ Like, for example, I can break my program into these little pieces. 
+
+850
+00:52:40,325 --> 00:52:41,860
+这只是我随便写的一些代码.
+It's just some random code I wrote.
+
+851
+00:52:41,860 --> 00:52:43,700
+然后,我可以说,"执行这个单元格",
+And, I can say, "execute this cell", 
+
+852
+00:52:43,700 --> 00:52:46,260
+然后按下特定的组合键来执行该单元格.
+and I press a particular key combination to execute the cell.
+
+853
+00:52:46,350 --> 00:52:48,756
+但是,我可以回去稍微修改我的程序,
+But then, I can go back, and tweak my program a little bit. 
+
+854
+00:52:48,756 --> 00:52:50,676
+例如,我想要将它变成小写.
+Like, say I want to have this be lowercase instead. 
+
+855
+00:52:50,700 --> 00:52:54,650
+然后,我可以执行这个单元格,然后去评估这个东西,
+Then, I can execute this cell, and then go and evaluate this thing,
+
+856
+00:52:54,650 --> 00:53:00,925
+这样我就可以在Python环境中运行一些小段的代码.
+ and this way I can, kind of, run little snippets of code, within a Python environment.
+
+857
+00:53:01,050 --> 00:53:04,019
+这是一个很好的逐步构建程序的方式,
+And, it's a nice way of building up programs, piece by piece, 
+
+858
+00:53:04,019 --> 00:53:05,850
+而不是一次性编写所有代码.
+rather than having to write everything at once. 
+
+859
+00:53:05,850 --> 00:53:07,923
+这对某些特定的研究目的非常有用.
+This is really useful for particular research purposes.
+
+860
+00:53:07,923 --> 00:53:11,175
+例如,我认为很多人会用它来进行机器学习工作.
+like I think a lot of people use these for doing machine learning work, for example.
+
+861
+00:53:13,050 --> 00:53:16,051
+对于笔记本编程环境的概念,有什么问题吗?
+Any questions about the idea of notebook programming environments? 
+
+862
+00:53:16,051 --> 00:53:18,050
+这里有很多问题值得一问.
+They're worth checking out.
+
+863
+00:53:23,650 --> 00:53:25,491
+哦,问题是,
+Oh, so the question is, 
+
+864
+00:53:25,491 --> 00:53:28,150
+"这看起来像是在线的,有没有Jupyter笔记本的离线版本?"
+"This looks like it's online, is there an offline version of Jupiter notebooks?" 
+
+865
+00:53:28,150 --> 00:53:32,659
+实际上,这是在浏览器中运行的东西,但它是本地运行的...
+So, actually, this is the thing that runs in the browser, but it's running locally...
+
+866
+00:53:32,659 --> 00:53:35,155
+所以,我不知道你能否在屏幕上看到,因为它有点小,
+So, I don't know if you can see it on the screen, because it's kind of small,
+
+867
+00:53:35,155 --> 00:53:37,525
+但在这里,
+but up here it says, "localhost:8888".
+
+868
+00:53:37,650 --> 00:53:42,718
+我在自己的本地上运行一个Jupyter笔记本.
+Here, I have running on my own local machine, a Jupiter notebook. 
+
+869
+00:53:42,718 --> 00:53:45,700
+他们只是建立了它,让它在Web浏览器中运行.
+And, they've just built it so it runs within the web browser. 
+
+870
+00:53:45,700 --> 00:53:49,175
+话虽如此,
+That being said, there are also online 
+
+871
+00:53:49,175 --> 00:53:50,831
+也有在线Jupyter notebook可供使用,
+Jupiter notebooks that you can use, 
+
+872
+00:53:50,831 --> 00:53:53,711
+其中Python内核实际上在一些远程服务器上运行.
+where the Python kernel is actually running on some remote machine. 
+
+873
+00:53:53,711 --> 00:53:56,013
+你可能会想这样做,例如,在我的笔记本电脑上,
+You might want to do this for example, like on my laptop, 
+
+874
+00:53:56,013 --> 00:53:59,408
+我没有一个高级的GPU,但在我的房间里,我有一台装有高级GPU的机器.
+I don't have a fancy GPU, but in my room,I have a machine with a fancy GPU.
+
+875
+00:53:59,408 --> 00:54:00,680
+所以,当我做机器学习的工作时,
+ And so, when I'm doing machine learning  work,
+
+876
+00:54:00,680 --> 00:54:04,200
+我要通过ssh登录到那台机器,运行Jupyter notebook,
+I often ssh into that machine, run a Jupyter notebook on there, 
+
+877
+00:54:04,200 --> 00:54:07,400
+然后在本地的Web浏览器中打开界面,
+and then open up the interface, in my local web browser, 
+
+878
+00:54:07,400 --> 00:54:10,088
+以便访问那台另一台机器上的强大GPU.
+so I have access to that powerful GPU running on my different machine. 
+
+879
+00:54:10,838 --> 00:54:13,650
+还有其他问题吗?
+Any other questions?
+
+880
+00:54:16,100 --> 00:54:20,919
+好的.今天我们要讨论的最后一件事是Github.
+Great. The final thing we're going to talk about today is Github. 
+
+881
+00:54:20,919 --> 00:54:24,631
+我们在版本控制讲座中已经提到了一点.
+So, we touched on this a little bit during the version control lecture.
+
+882
+00:54:24,631 --> 00:54:28,663
+但是,Github是最受欢迎的开源软件开发平台之一.
+But, Github is one of the most popular platforms for open-source software development.
+
+883
+00:54:28,663 --> 00:54:30,780
+它托管源代码和git仓库.
+It hosts source code. It hosts git repositories. 
+
+884
+00:54:32,350 --> 00:54:35,200
+但是,他们还有其他工具可以来管理项目.
+But, they also have other tools for managing a project.
+
+885
+00:54:35,200 --> 00:54:41,438
+而且,我们在这门课程中讲过的许多工具,它们都托管在Github上.
+And, like, a lot of the tools we've talked about in this class are hosted on Github.
+
+886
+00:54:41,438 --> 00:54:45,534
+例如,像我们刚刚谈论的Hammerspoon就是在Github上开发的.
+For example, like, Hammerspoon, the thing we just talked about, is developed on Github 
+
+887
+00:54:45,534 --> 00:54:51,528
+在Github上为开源项目做贡献很简单,
+It's really easy to get started  contributing to open-source projects on Github
+
+888
+00:54:51,528 --> 00:54:54,075
+这可以帮你改进你每天使用的工具.
+to help improve the tools that you use every day. 
+
+889
+00:54:54,075 --> 00:54:58,150
+主要有两种方式可以为Github上的项目做贡献.
+There are two primary ways you can contribute to projects on Github.
+
+890
+00:54:58,450 --> 00:55:02,216
+让我们打开一些仓库.
+Let's open up some repository. 
+
+891
+00:55:02,216 --> 00:55:06,575
+我们实际上可以进入课程网站的Github仓库.
+We can actually go to the Github repository for the class website.
+
+892
+00:55:06,575 --> 00:55:08,850
+这是一个开源软件项目.
+So, this is an open-source software project. 
+
+893
+00:55:09,850 --> 00:55:12,328
+让我们放大一点.
+And... Let's zoom in a little bit.
+
+894
+00:55:12,328 --> 00:55:15,016
+因此,你可以通过issue和pr(pull request)这两种方式
+So the two ways you can contribute to projects on Github -
+
+895
+00:55:15,016 --> 00:55:17,384
+为Github上的项目做出贡献.
+The two main ways are through issues and pull requests
+
+896
+00:55:17,384 --> 00:55:20,200
+实际上,对于开发人员来说,这是一件非常有用的事情,
+One thing that's actually really helpful to developers, 
+
+897
+00:55:20,200 --> 00:55:24,780
+对用户来说也相对轻松和简单,就是报告软件项目的问题.
+and also pretty lightweight and easy for users to do, is to report issues with a software project. 
+
+898
+00:55:24,780 --> 00:55:27,825
+比如说,你正在使用某个程序,遇到了一些错误...
+Like, say you're using somebody's program and you encounter some bug...  
+
+899
+00:55:27,825 --> 00:55:30,476
+编写高质量的问题对开发人员非常有帮助,
+Writing a high quality issue is actually super helpful to developers 
+
+900
+00:55:30,476 --> 00:55:32,300
+希望不会花费太多时间.
+and hopefully doesn't take you too much time.
+
+901
+00:55:32,375 --> 00:55:35,788
+因此,你可以前往Github上找到项目,进入问题页面,
+And so, you can go to here, like find the project on GitHub, go to the issues page, 
+
+902
+00:55:35,788 --> 00:55:38,876
+然后单击新问题,并编写一些高质量的错误报告.
+and click on new issue, and then write some high quality bug report.  
+
+903
+00:55:38,876 --> 00:55:42,268
+然后,希望开发人员会回复并为你修复问题.
+And then, hopefully the developer will respond and fix the issue for you.
+
+904
+00:55:42,268 --> 00:55:43,548
+例如,在这门课程中,
+ So, for example, for this class,
+
+905
+00:55:43,550 --> 00:55:47,452
+一个学生指出了我们的讲座笔记中的问题,
+like, one of the students in this class pointed out an issue with our lecture notes,
+
+906
+00:55:47,452 --> 00:55:49,425
+当她指出后
+ and after she pointed it out,
+
+907
+00:55:49,425 --> 00:55:52,124
+我说,好的,看起来是一个合理的问题.让我们来解决它.
+I said, okay, like, that looks like a reasonable thing. Let's fix it. 
+
+908
+00:55:52,125 --> 00:55:55,132
+在这种情况下,
+And in this particular case, instead of fixing it myself,
+
+909
+00:55:55,132 --> 00:55:57,775
+我实际上询问了这个人,"他们想不想为我解决问题?"
+I actually asked this person, "Do they just want to fix it for me?" 
+
+910
+00:55:57,775 --> 00:56:02,300
+因此,我想谈论另一件事:issues和pr.
+And so, that leads into the other thing I want to talk about: issues and pull requests.
+
+911
+00:56:02,300 --> 00:56:06,200
+pr是在Github上为项目做出贡献的第二种方法.
+So, pull requests are the second way to contribute to projects on Github. 
+
+912
+00:56:06,200 --> 00:56:09,900
+这涉及实际向项目贡献代码.
+And, this involves actually contributing code back to the project. 
+
+913
+00:56:09,925 --> 00:56:13,756
+如果我们查看此项目的拉取请求,
+And so if we look at the pull request for this particular project,
+
+914
+00:56:13,756 --> 00:56:17,425
+你会看到许多人提交了代码更改.
+ you'll see that a bunch of people have submitted code changes.
+
+915
+00:56:18,450 --> 00:56:22,972
+而且,这样做的过程 - 
+And, the process for doing so - so this is showing the difference, the patch, 
+
+916
+00:56:22,972 --> 00:56:24,875
+所以这显示了这个人提交的区别,补丁.
+that this person submitted.
+
+917
+00:56:24,900 --> 00:56:29,116
+基本上,创建拉取请求的过程比提交问题要复杂一些.
+Basically, the process for creating pull requests is a little bit more involved than submitting issues.
+
+918
+00:56:29,116 --> 00:56:32,442
+你不只是提交文本:你要实际修改他们的源代码.
+Like you're not just submitting text: you're actually going to modify their source code.  
+
+919
+00:56:32,442 --> 00:56:36,666
+我们提供了一些解释该过程的链接.
+And so, we've linked to some guides that explain the process in a little bit more detail.
+
+920
+00:56:36,666 --> 00:56:40,378
+但总体来说,你需要在Github上"fork(分叉)"仓库,
+But, at a high level, what you do is, you take the repository on Github, 
+
+921
+00:56:40,378 --> 00:56:43,214
+然后将其下载到本地,这样就有了自己的本地副本.
+"fork" it, and then download it locally, so now have your own, local copy.  
+
+922
+00:56:43,214 --> 00:56:45,594
+然后,你可以开始工作,进行一些开发工作,
+Then, you can go and work on it, do some development work,
+
+923
+00:56:45,594 --> 00:56:48,040
+修复错误或添加功能,
+and fix a bug or add a feature, and then, eventually,
+
+924
+00:56:48,040 --> 00:56:50,816
+最终将所做的更改发送回原始开发人员,称为"拉取请求".
+ you send what's called a "pull request" back to the original developer.
+
+925
+00:56:50,816 --> 00:56:52,350
+所以,你说,在这里.我做了一些更改. 
+So, you say, Here. I've made some changes.  
+
+926
+00:56:52,350 --> 00:56:54,675
+你能把它们重新纳入原始项目中吗?
+Can you please incorporate them back into the original project?'
+
+927
+00:56:54,675 --> 00:56:57,419
+然后,通常情况下,
+And, after that point, what usually happens with these projects,
+
+928
+00:56:57,419 --> 00:56:59,294
+项目维护者将与你交流,
+is that the maintainer will go back and forth with you,
+
+929
+00:56:59,294 --> 00:57:01,675
+对你所提出的更改进行反馈.
+giving you feedback on the changes you've proposed.  
+
+930
+00:57:01,675 --> 00:57:04,350
+最终,一旦大家都满意,他们会合并你的更改,
+And, eventually, once everybody's happy, they will "merge" in your changes, 
+
+931
+00:57:04,350 --> 00:57:06,800
+这些更改将对使用该项目的所有人都可用.
+and they'll be available to everybody who uses the project.
+
+932
+00:57:07,125 --> 00:57:09,639
+这就是如何在Github上为项目做出贡献,
+So, that is how you can contribute to projects on GitHub 
+
+933
+00:57:09,639 --> 00:57:11,198
+使软件更适用于每个人.
+and make software better for everybody. 
+
+934
+00:57:11,673 --> 00:57:15,225
+对于Github有任何问题吗?
+And, so any questions about GitHub?
+
+935
+00:57:18,800 --> 00:57:22,501
+明白了,好的.所以,今天的话题就到这里.
+Cool, okay. So, that is it for the topics for today. 
+
+936
+00:57:22,501 --> 00:57:24,875
+对于整个讲座有任何问题吗?
+Any questions about the lecture overall?
+
+937
+00:57:25,700 --> 00:57:29,050
+很好,那么在结束之前,
+Great, okay, so before - before we finish, 
+
+938
+00:57:29,050 --> 00:57:31,418
+让我简单介绍一下明天的讲座:
+a quick description about tomorrow's lecture:
+
+939
+00:57:31,418 --> 00:57:34,282
+今天是我们认为有趣的和我们觉得应该讨论的所有主题.
+ so, today was all the topics we thought are interesting, we should talk about,
+
+940
+00:57:34,282 --> 00:57:37,898
+明天的讲座则是讨论你们觉得有趣的和你们觉得应该要讨论的主题
+ tomorrow's lecture is gonna be about all the topics you think are interesting and that we should talk about. 
+
+941
+00:57:37,898 --> 00:57:39,950
+明天的讲座将是一个问答环节.
+So, tomorrow is going to be  a Q&A lecture.
+
+942
+00:57:39,950 --> 00:57:42,450
+在今天的讲座之后,我们将通过电子邮件发送一个链接,
+ And, after today, uh, after the lecture, we'll submit,
+
+943
+00:57:42,450 --> 00:57:46,975
+你可以通过该链接提交问题供我们回答.
+ we'll email out a link where you can submit questions for us to answer.  
+
+944
+00:57:46,975 --> 00:57:48,043
+请务必填写,
+And so, please go and fill that out, 
+
+945
+00:57:48,043 --> 00:57:50,085
+否则,我们明天将没有太多可谈的内容.
+otherwise, we won't have too much to talk about tomorrow.
+
+946
+00:57:50,085 --> 00:57:54,025
+好的,希望明天在我们的问答讲座中见到你们.
+Great, so hopefully, see you tomorrow in our Q&A lecture. 
+

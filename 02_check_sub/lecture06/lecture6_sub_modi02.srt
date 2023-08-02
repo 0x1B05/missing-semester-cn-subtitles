@@ -1,0 +1,6325 @@
+﻿1
+00:00:01,750 --> 00:00:04,850
+好的,让我们开始今天的讲座吧.
+All right, let's get started with today's lecture.
+
+2
+00:00:04,850 --> 00:00:08,800
+在开始之前我有一个关于办公时间的小提示.
+So actually, before we get started, one quick note about office hours. 
+
+3
+00:00:08,800 --> 00:00:11,315
+根据问卷调查有些人误认为
+It seemed from the poll that some people were under the impression 
+
+4
+00:00:11,315 --> 00:00:16,725
+每次讲座后的办公时间只是针对当天的主题
+that the office hours that follows each lecture is just about that day's lectures topics, 
+
+5
+00:00:16,725 --> 00:00:17,900
+但实际上不是这样的.
+and this is not the case. 
+
+6
+00:00:17,900 --> 00:00:20,350
+你可以在办公时间来问我们任何问题
+You can come to office hours and ask us questions about any lecture, 
+
+7
+00:00:20,350 --> 00:00:22,775
+无论是关于前一天还是前一周的讲座
+whether it's the previous day or from the previous week, 
+
+8
+00:00:22,775 --> 00:00:26,100
+甚至是这门课程没有讲到,但你感到好奇的内容.
+or even things not exactly covered in this class that you're just curious about. 
+
+9
+00:00:26,100 --> 00:00:30,750
+因此如果你有任何事情的问题都可以来办公时间问我们.
+So yeah, come to office hours with questions about anything. 
+
+10
+00:00:31,525 --> 00:00:36,750
+办公时间在 32 号楼 9 层,
+Office hours are in the 32 g 9 lounge, , 
+
+11
+00:00:36,750 --> 00:00:40,500
+32号楼就是 Stata Center (史塔特科技中心),它有两座塔楼 G塔和D塔.
+so building 32 also known as the Stata Center, has two towers, the G tower and the D tower. 
+
+12
+00:00:40,500 --> 00:00:42,850
+我们在Gates Tower的第九层
+So we're in the Gates tower on the ninth floor. 
+
+13
+00:00:42,850 --> 00:00:46,450
+如果你乘电梯上去休息室就在你面前.
+So if you take the elevator all the way up, there's the lounge right in front of you. 
+
+14
+00:00:46,450 --> 00:00:49,325
+芜湖~
+Okay, cool. 
+
+15
+00:00:49,325 --> 00:00:52,550
+今天我们将谈论版本控制系统.
+So today, we're going to be talking about version control systems. 
+
+16
+00:00:52,550 --> 00:00:57,500
+我想先了解一下你们是否有使用过版本控制系统.
+So I just want to get a sense of whether you guys have used version control systems before. 
+
+17
+00:00:57,500 --> 00:01:02,500
+所以如果你有使用过git或任何其他版本控制系统
+So could you raise your hand if you have any experience with git or any other version control system, 
+
+18
+00:01:02,500 --> 00:01:04,800
+如subversion或mercurial等能否举一下手?
+like subversion or mercurial or anything else? 
+
+19
+00:01:04,800 --> 00:01:07,300
+哦,太好了,有很多人.
+Oh great, so that's a good number of you. 
+
+20
+00:01:07,300 --> 00:01:12,200
+我就不会过多地按通常地方式来讲版本控制系统了
+So I won't talk about version control systems in general way too much, 
+
+21
+00:01:12,200 --> 00:01:17,625
+而是会很快地进入git及其数据模型和内部实现的细节的讨论.
+then we'll pretty quickly get into the details of git and like its data model and its internals. 
+
+22
+00:01:17,625 --> 00:01:21,200
+但是先简单地概括一下版本控制系统是用于
+But just as a quick summary, version control systems are tools 
+
+23
+00:01:21,200 --> 00:01:25,850
+跟踪源代码,文件,文件夹的改动的工具.
+that are used to keep track of changes to source code or other collections of files or folders. 
+
+24
+00:01:25,850 --> 00:01:32,725
+见名知意,这些工具可以帮忙跟踪某些文档的更改历史.
+And as the name implies, these tools help track the history of changes to some set of documents. 
+
+25
+00:01:32,725 --> 00:01:36,075
+除了这些它们还有助于多人协作
+And in addition to doing that, they facilitate collaboration, 
+
+26
+00:01:36,075 --> 00:01:41,125
+因此它们在软件项目团队中非常有用.
+so they're really useful for working with a group of people on a software project. 
+
+27
+00:01:41,125 --> 00:01:47,250
+版本控制系统通过一系列快照跟踪文件夹及其内容的更改.
+Version control systems track changes to a folder and its contents in a series of snapshots. 
+
+28
+00:01:47,250 --> 00:01:51,350
+因此你可以捕捉文件夹和其中的所有内容(例如一整个软件项目)
+So you capture the entire state of a folder and everything inside, like a software project, 
+
+29
+00:01:51,350 --> 00:01:54,375
+并在一系列快照中拥有多个版本.
+and you have multiple of these in a series of snapshots. 
+
+30
+00:01:54,500 --> 00:01:59,900
+每个快照都封装了某个最高层目录中包含的所有文件和文件夹的完整状态.
+Each snapshot encapsulates the entire set of files and folders contained within some top-level directory. 
+
+31
+00:01:59,900 --> 00:02:05,575
+版本控制系统还会保存一些元数据
+And then version control systems also maintain a bunch of metadata along with the actual changes to the content, 
+
+32
+00:02:05,575 --> 00:02:08,650
+以及实际内容的更改.
+and this is to make it possible to figure things out, 
+
+33
+00:02:08,650 --> 00:02:13,600
+这是为了方便确定哪个人对特定文件进行了更改或者何时进行了更改.
+like who authored a particular change to a particular file, or when was a particular change made. 
+
+34
+00:02:13,600 --> 00:02:18,700
+因此版本控制系统也维护作者和提交时间戳等元数据,
+And so version control systems maintain metadata like authors and commit timestamps, 
+
+35
+00:02:18,725 --> 00:02:22,575
+你也可以附加一些额外的消息到这些快照上.
+and you can also attach extra messages to these snapshots and things like that. 
+
+36
+00:02:22,575 --> 00:02:25,525
+那么为什么版本控制很有用呢?
+And so why is version control useful? 
+
+37
+00:02:25,525 --> 00:02:28,125
+即使你在独自完成项目它的用处也很大.
+Well, it's useful even when you're working on projects by yourself. 
+
+38
+00:02:28,125 --> 00:02:32,000
+因为你可以使用它查看你编写的旧版本代码
+So you can use it to look at old versions of code you've written, 
+
+39
+00:02:32,000 --> 00:02:35,350
+通过查看提交信息找出某些内容为什么被更改了
+figure out why something was changed by looking at commit messages, 
+
+40
+00:02:35,350 --> 00:02:40,700
+使用不同的分支并行处理不同的事情而不会发生冲突
+work on different things in parallel without conflicts by using different branches of development, 
+
+41
+00:02:40,700 --> 00:02:45,650
+或者能够在保持不同功能独立的情况下修复错误等等.
+or be able to work on bug fixes while keeping work on different features independent, things like that. 
+
+42
+00:02:45,650 --> 00:02:50,350
+因此即使你只是在小规模项目上工作它也是一种非常有用的工具.
+And so it's an invaluable tool even if you're working just by yourself, even on a small scale project. 
+
+43
+00:02:50,350 --> 00:02:56,600
+就像我认为这门课的讲师们
+Like I think the instructors of this course use git even on things 
+
+44
+00:02:56,600 --> 00:02:59,475
+即使在作业或班级项目等小规模事物上也会使用git一样.
+like homework assignments or class projects, even small scale things. 
+
+45
+00:02:59,475 --> 00:03:02,575
+除了我们自己研究较大的软件项目外
+In addition to our research or larger software projects. 
+
+46
+00:03:02,575 --> 00:03:07,825
+版本控制还是一个非常强大的多人协作的工具.
+And then of course, version control is a really powerful tool for working with other people. 
+
+47
+00:03:07,825 --> 00:03:12,175
+它对于传递代码补丁,
+So it's useful for sending patches of code around,  
+
+48
+00:03:12,175 --> 00:03:16,800
+解决不同人同时在同一代码块上工作时的冲突等方面非常有用.
+resolving conflicts when different people are working on the same piece of code at the same time, things like that. 
+
+49
+00:03:16,800 --> 00:03:21,650
+因此无论是独自工作还是与他人合作它都是一个非常强大的工具.
+And so it's a really powerful tool for working by yourself or with others.
+
+50
+00:03:21,650 --> 00:03:25,875
+此外它还具有一些非常实用的功能
+And it also has a neat functionality to let you answer questions 
+
+51
+00:03:25,875 --> 00:03:27,600
+可以帮助回答某些比较困难的问题
+that would otherwise be kind of hard to answer, 
+
+52
+00:03:27,600 --> 00:03:30,950
+例如软件项目中编写了特定模块的人是谁
+like who wrote a particular module in a software project 
+
+53
+00:03:30,950 --> 00:03:34,100
+或者编辑了特定行的人是谁
+or who edited a particular line in a particular software project, 
+
+54
+00:03:34,100 --> 00:03:39,000
+为什么更改了这个特定的行,它是什么时候更改的,由谁更改的等等.
+why was this particular line change, when was it changed, by whom, things like that. 
+
+55
+00:03:39,000 --> 00:03:42,550
+版本控制系统还具有一些非常强大的功能
+And version control systems also have some really powerful functionality 
+
+56
+00:03:42,550 --> 00:03:44,700
+我们可能会在今天的讲座结束时介绍,
+that we might cover at the end of today's lecture, 
+
+57
+00:03:44,700 --> 00:03:46,900
+或者你可以在讲座笔记中找到.
+or you can find the lecture notes if we don't have time.
+
+58
+00:03:46,900 --> 00:03:50,700
+举个例子,假设你已经在某个项目上工作了几年,
+To do things like, suppose you have some project you've been working on for a couple years, 
+
+59
+00:03:50,700 --> 00:03:53,450
+然后注意到项目有些奇怪的地方已经损坏了,
+and then you notice that some funny thing about the project was broken, 
+
+60
+00:03:53,450 --> 00:03:55,525
+比如你有一些单元测试不再通过,
+like you have some unit test that doesn't pass anymore, 
+
+61
+00:03:55,525 --> 00:03:58,875
+而这不是刚刚才坏了,而是在一段时间前损坏了,
+and it wasn't broken just now, it was broken some time ago, 
+
+62
+00:03:58,875 --> 00:04:02,250
+你不知道这个问题是什么时候出现的.
+and you don't know exactly when this regression was introduced. 
+
+63
+00:04:02,250 --> 00:04:06,075
+但是版本控制系统有一种自动识别这种情况的方式,
+Well, version control systems have a way of automatically identifying this, 
+
+64
+00:04:06,075 --> 00:04:09,575
+比如你可以给它一个目前失败的那个单元测试,
+like you can take it and give it a unit test that's currently failing 
+
+65
+00:04:09,575 --> 00:04:12,050
+但你知道在过去的某个时候它是通过的
+but you know was passing at some point in the past, 
+
+66
+00:04:12,050 --> 00:04:13,900
+它可以二分搜索你的历史记录,
+and it can binary search your history 
+
+67
+00:04:13,900 --> 00:04:17,050
+并确定到底是哪个代码更改导致了它的失败.   
+and figure out exactly what change to your code made it break. 
+
+68
+00:04:17,050 --> 00:04:22,800
+因此如果你知道如何正确使用这些工具就非常nice,它们有很多非常强大和高级的功能.
+So lots of really powerful, fancy features if you know how to use these tools properly.
+
+69
+00:04:26,500 --> 00:04:28,675
+市面上有许多版本控制系统
+There are a number of version control systems out there, 
+
+70
+00:04:28,675 --> 00:04:32,500
+git已成为版本控制的行业标杆,
+and git has become kind of the de facto standard for version control, 
+
+71
+00:04:32,500 --> 00:04:35,325
+因此我们将在今天的讲座中介绍它.
+so that's what we're going to be covering in today's lecture. 
+
+72
+00:04:36,650 --> 00:04:42,825
+之前在屏幕展示出了一个漫画,现在不显示了,让我把它再调出来.
+One comic I want to show you, which was on the screen before hand, let me bring it back up. 
+
+73
+00:04:45,425 --> 00:04:49,850
+这是一部xkcd漫画说明了git的声誉.
+So this is an xkcd comic that illustrates git's reputation. 
+
+74
+00:04:49,850 --> 00:04:51,550
+让我我大声念给你们听.
+Let me read it out loud for you. 
+
+75
+00:04:52,500 --> 00:04:58,650
+"git通过漂亮的分布式图论树模型来进行协同工作.
+"This is git.It tries collaborative work on projects through a beautiful distributed graph theory tree model. 
+
+76
+00:04:58,650 --> 00:04:59,524
+很酷.
+Cool. 
+
+77
+00:04:59,524 --> 00:05:00,275
+那我们如何使用它?
+How do we use it?
+
+78
+00:05:00,275 --> 00:05:01,050
+不知道.
+no idea.
+
+79
+00:05:01,050 --> 00:05:03,450
+只需记住这些shell命令并输入它们就可以使用git进行协同.
+Just memorize these shell commands and type them to sync up. 
+
+80
+00:05:03,600 --> 00:05:08,250
+如果出现错误,把你的工作保存好,删除项目并下载一个新的副本."
+If you get errors, save your work elsewhere, delete the project and download a fresh copy."
+
+81
+00:05:09,475 --> 00:05:13,350
+如果你以前做过这件事请举手,
+So maybe some people may not want to raise their hands for this, 
+
+82
+00:05:13,350 --> 00:05:15,375
+也许有些人可能不想举手.
+but raise your hand if you've ever done this before. 
+
+83
+00:05:15,375 --> 00:05:18,100
+我学习这个工具的时候也曾经这样做过
+I certainly have, when I was learning this tool, 
+
+84
+00:05:18,100 --> 00:05:21,350
+我想你们中的许多人也尝试过.
+so a good number of you here have done this before.
+
+85
+00:05:21,575 --> 00:05:25,400
+所以本讲座的目标是让你们不必再这样做.
+So, the goal of this lecture is to make it so you don't have to do this anymore. 
+
+86
+00:05:25,675 --> 00:05:34,225
+不幸的是,正如这个漫画所说,git的界面设计相当糟糕.
+Unfortunately, as this comic illustrates, git's interface is a pretty terribly designed interface. 
+
+87
+00:05:34,225 --> 00:05:35,725
+它是一个不良的抽象层,
+It's a leaky abstraction, 
+
+88
+00:05:35,725 --> 00:05:38,900
+因此我们认为自上而下地学习git,
+and so for this reason, we believe that learning git top-down, 
+
+89
+00:05:38,900 --> 00:05:41,925
+即从界面开始学习可能不是一个很好的方式,
+starting with the interface, is maybe not the best way to go, 
+
+90
+00:05:41,925 --> 00:05:43,850
+它会导致一些困惑.
+and it can lead to some confusion. 
+
+91
+00:05:43,850 --> 00:05:47,700
+就像这个漫画所示你可以记住几个命令,
+It's possible, like this comic shows, to memorize a handful of commands,
+
+92
+00:05:47,700 --> 00:05:49,600
+并将它们视为魔法咒语.
+and think of them as magic incantations. 
+
+93
+00:05:49,600 --> 00:05:51,650
+当一切都正常工作,这样做还马马虎虎.
+And when everything is working all right, it kind of works out all right. 
+
+94
+00:05:51,650 --> 00:05:56,975
+不过一旦出了问题你就必须像这个漫画中描述的那样去处理.
+But then you have to follow the approach of this comic whenever things go wrong.
+
+95
+00:05:57,625 --> 00:06:04,700
+虽然git的用户界面很丑陋,但它的底层的设计思想实际上非常优美.
+So while git has an ugly interface, its underlying design and ideas are actually pretty beautiful. 
+
+96
+00:06:04,700 --> 00:06:07,355
+一个丑陋的界面(git命令)需要被记忆,
+An ugly interface has to be memorized, 
+
+97
+00:06:07,355 --> 00:06:10,680
+但是git底层美妙的思想却可以被真正理解.
+but the beautiful ideas underlying git can actually be understood. 
+
+98
+00:06:10,750 --> 00:06:16,100
+一旦你理解了git的内部结构和数据模型,它们实际上并不那么复杂,
+And once you understand git's internals, its data model, which is actually not that complicated, 
+
+99
+00:06:16,100 --> 00:06:18,850
+你就能学会git的界面.
+then you can learn the interface to git. 
+
+100
+00:06:18,850 --> 00:06:22,125
+你需要记忆一些东西,但是通过理解它们是如何操纵底层数据模型的,
+You'll have to memorize some things, but you can understand 
+
+101
+00:06:22,125 --> 00:06:27,175
+你可以理解某些命令真正干了些啥.
+what exactly certain commands do by understanding how they manipulate the underlying data model. 
+
+102
+00:06:27,175 --> 00:06:32,800
+所以我们今天教授git的方式是:首先讲述git的抽象数据模型,
+And so the way we're going to teach git today is first talk about the data model, almost in abstract, 
+
+103
+00:06:32,800 --> 00:06:37,000
+讨论如何对文件和文件夹进行建模,历史快照是啥玩意儿,
+talk about how we might model files and folders, snapshots of history, 
+
+104
+00:06:37,000 --> 00:06:38,450
+以及它们之间存在着什么不可告人的秘密.
+and how they relate to each other. 
+
+105
+00:06:38,450 --> 00:06:41,150
+然后我们将介绍一些git命令
+Then after that, we'll walk you through some git commands, 
+
+106
+00:06:41,150 --> 00:06:46,200
+我们会在资源和练习中放上教程的链接,让你学会所有具体的命令,
+and then finally, in the resources and exercises, we'll link you to tutorials that'll teach you all the specifics, 
+
+107
+00:06:46,275 --> 00:06:49,700
+因为你最终需要学习很多不同的命令.
+Because there are lots of different commands that you will need to learn eventually. 
+
+108
+00:06:49,700 --> 00:06:55,975
+关于我们今天的教学方法你们有什么问题吗?
+Any questions so far about our teaching approach for today? Cool, great. 
+
+109
+00:06:55,975 --> 00:06:57,675
+好的那我们开始吧.
+So let's get started. 
+
+110
+00:06:58,500 --> 00:07:03,250
+可能有很多临时方法可以用于版本控制,
+There are probably many ad hoc approaches you could take to version control, 
+
+111
+00:07:03,250 --> 00:07:05,850
+我猜你们中的一些人可能以前就这样做过.
+and I'm guessing some of you may have done this before. 
+
+112
+00:07:05,850 --> 00:07:07,350
+比如说你有一些文件或文件夹
+Like say you have some file or folder, 
+
+113
+00:07:07,350 --> 00:07:10,800
+对应于一个系统软件项目
+we have a bunch of different files corresponding to a system software project, 
+
+114
+00:07:10,800 --> 00:07:12,000
+你想追踪变化.
+and you want to track changes. 
+
+115
+00:07:12,000 --> 00:07:16,775
+你可以每天复制整个文件夹并给它加上一个时间戳.
+You could just say every day, make a copy of that entire folder and give that folder a timestamp. 
+
+116
+00:07:16,775 --> 00:07:19,200
+当你想与其他人合作时,
+When you want to do things like collaborate with other people, 
+
+117
+00:07:19,200 --> 00:07:22,125
+你可以将整个文件夹转换成一个zip压缩文件,
+you could take the entire folder, turn it into a zip archive, 
+
+118
+00:07:22,125 --> 00:07:23,200
+并将其发送给某个人.
+and email it to somebody. 
+
+119
+00:07:23,200 --> 00:07:25,850
+然后当你和你的朋友
+And then, whenever you and your buddy are working on 
+
+120
+00:07:25,850 --> 00:07:28,775
+在软件项目的两个不同特性上工作时你们可以并行地工作.
+two different features of a software project, you can work on them in parallel. 
+
+121
+00:07:28,775 --> 00:07:30,975
+然后其中一个人将zip文件发送给另一个人
+Then, one of you emails the zip file to the other person, 
+
+122
+00:07:30,975 --> 00:07:34,975
+然后你手动复制粘贴适当的代码片段到你的代码中,
+and then you manually copy and paste the appropriate segments from their code into your code 
+
+123
+00:07:34,975 --> 00:07:40,000
+以便最终得到一个具有你们两个特性的代码.
+so that eventually you end up with one piece of code that has both of your features in it. 
+
+124
+00:07:40,000 --> 00:07:42,175
+这种方法也是有效的.
+This kind of sort of works. 
+
+125
+00:07:42,175 --> 00:07:44,550
+如果你曾经这样做过请举手.
+Raise your hand if you've done this before. 
+
+126
+00:07:44,550 --> 00:07:45,500
+我肯定做过.
+I certainly have. 
+
+127
+00:07:46,400 --> 00:07:52,475
+当然,git可以让我们不用这么做.
+Still, a decent number of you, git let's us not do this sort of thing. 
+
+128
+00:07:52,475 --> 00:07:57,400
+git是一个深思熟虑过的模型,可以改善这些交互,
+It is a well-thought-out model that kind of facilitates these sorts of interactions, 
+
+129
+00:07:57,400 --> 00:07:59,200
+比如说你想跟踪你项目的历史记录,
+things that you might want to do like tracking your own history on your project
+
+130
+00:07:59,200 --> 00:08:02,725
+与别人进行协同工作等等.
+or collaboration or things like that. 
+
+131
+00:08:02,725 --> 00:08:06,550
+因此,git的模型考虑很周全,它允许分支和协作,
+So git has a well-thought-out model that enables things like 
+
+132
+00:08:06,550 --> 00:08:11,500
+可以合并来自其他人的更改,有各种各样的优雅的功能.
+branches and collaboration and merging changes from other people, all sorts of neat stuff. 
+
+133
+00:08:11,500 --> 00:08:16,450
+Git 将历史记录建模为某个顶级目录中的文件和文件夹的集合.
+Git models history as a collection of files and folders within some top-level directory. 
+
+134
+00:08:16,450 --> 00:08:20,800
+你可能已经从自己计算机上的文件和文件夹的抽象概念中熟悉了这种建模方法.
+So you're probably familiar with this abstraction just from files and folders on your own computer. 
+
+135
+00:08:20,800 --> 00:08:24,450
+这里是一个例子:你可能有一个顶层目录,
+And so here's one example: you might have some top-level directory, 
+
+136
+00:08:24,450 --> 00:08:26,450
+我就叫它根目录,
+I'll just call this like root in parentheses, 
+
+137
+00:08:27,325 --> 00:08:31,000
+这个目录中有一个名为"foo"的文件夹
+and this directory might have, say, a folder in it called "foo", 
+
+138
+00:08:31,000 --> 00:08:35,025
+"foo"文件夹中有一个名为"bar.txt"的文件
+and this folder inside of it might have a file called "bar.txt", 
+
+139
+00:08:35,025 --> 00:08:39,975
+"bar.txt"里有比如"hello world"!
+and this might have some contents in it like say, "hello world!" 
+
+140
+00:08:42,450 --> 00:08:44,725
+这个根目录下也许还有另一个一个文件夹
+And then maybe this top-level directory, it has one folder in it, 
+
+141
+00:08:44,725 --> 00:08:47,250
+它也可以有另一个文件.
+it can also have another file in it. 
+
+142
+00:08:47,250 --> 00:08:49,450
+这里比如说还有个"baz.txt"
+So say there's some other file, 
+
+143
+00:08:49,450 --> 00:08:52,850
+这个文件也有一些内容.
+and this file also has some contents in it. 
+
+144
+00:08:58,400 --> 00:09:00,150
+很简单吧.
+Alright, simple enough. 
+
+145
+00:09:00,150 --> 00:09:07,000
+git用于这些不同内容的术语是这样的:
+The terminology git uses for these different things, for files and folders, is this: 
+
+146
+00:09:07,000 --> 00:09:10,250
+这里的`foo`和`(root)`被称为树.
+and the top-level thing are called trees. 
+
+147
+00:09:12,225 --> 00:09:14,200
+所以树是一个文件夹
+So this is a folder, 
+
+148
+00:09:15,725 --> 00:09:21,475
+然后这些我们通常称为文件的东西,在git里被叫作"blob".
+and then these things what we normally call files are called blobs. 
+
+149
+00:09:26,100 --> 00:09:27,125
+好的.
+Alright, okay. 
+
+150
+00:09:27,125 --> 00:09:29,700
+现在我们有了一个文件和文件夹的模型,
+So now we have a model of files and folders, 
+
+151
+00:09:29,700 --> 00:09:33,200
+这是一个递归数据结构.
+and this is a recursive data structure. 
+
+152
+00:09:33,200 --> 00:09:34,900
+树可以包含其他树,
+Trees can contain other trees, 
+
+153
+00:09:34,900 --> 00:09:37,775
+然后树可以包含树和文件.
+and then trees can contain both trees and files. 
+
+154
+00:09:37,775 --> 00:09:39,575
+不过显然文件不能包含树.
+Obviously, files can't contain trees. 
+
+155
+00:09:40,675 --> 00:09:44,650
+好的现在我们有了一个文件和文件夹的模型,
+Alright, so now we have a model of files and folders, 
+
+156
+00:09:44,650 --> 00:09:52,300
+最高级目录,就是我刚刚标记的`(root)`,是正在被跟踪的目录.
+and the kind of top-level of this thing, the thing I've just labeled "root," is the directory being tracked. 
+
+157
+00:09:52,300 --> 00:09:55,750
+就像你在计算机上有一些文件夹对应于软件项目一样.
+Like you might have some folder on your computer corresponding to a software project. 
+
+158
+00:09:57,025 --> 00:09:59,150
+现在如何建立历史模型呢?
+Now, how do you model history? 
+
+159
+00:09:59,150 --> 00:10:00,850
+一旦你有了文件和文件夹的模型,
+Once you have a model of files and folders,  
+
+160
+00:10:00,850 --> 00:10:04,450
+你可以想象一种方法就是你对整个东西做个快照,
+well, you can imagine one way of doing it, which is you take a snapshot of this entire thing, 
+
+161
+00:10:04,450 --> 00:10:07,850
+然后历史就是一系列的快照.
+and then history is just a linear sequence of snapshots. 
+
+162
+00:10:07,850 --> 00:10:09,875
+就像你可以想象它是...
+Like you might imagine that it's, 
+
+163
+00:10:09,875 --> 00:10:14,500
+你可以认为你有携带时间戳的文件夹副本.
+you can almost think of it like you have copies of the folder which are dated and time-stamped. 
+
+164
+00:10:14,525 --> 00:10:18,050
+git使用的不是这样简单的线性模型.
+Well, git doesn't use a simple linear model like that. 
+
+165
+00:10:18,050 --> 00:10:20,025
+它的模型更加炫酷一些.
+It uses something a little bit fancier. 
+
+166
+00:10:20,025 --> 00:10:25,075
+你也许已经听过这个术语,git使用有向无环图来模拟历史.
+You might have heard this terminology before, but git uses a directed acyclic graph to model history. 
+
+167
+00:10:25,075 --> 00:10:29,750
+这听起来一个花哨的数学名词,但实际上并不是很复杂.
+And this might sound like a bunch of fancy math words, but it's actually not all that complicated. 
+
+168
+00:10:29,875 --> 00:10:34,075
+在git中每个快照都有一些父节点,
+So in git, each snapshot has some number of parents, 
+
+169
+00:10:34,075 --> 00:10:37,575
+我们想知道哪个更改先于另一个更改.
+and basically, we want to know what change preceded what other change. 
+
+170
+00:10:37,575 --> 00:10:42,075
+所以假设这里我将使用圆圈来表示一个单独的快照.
+So suppose here, I'm going to use circles to refer to individual snapshots. 
+
+171
+00:10:42,075 --> 00:10:48,325
+这是这棵树中的所有内容,即我项目中的所有文件和文件夹.
+This is the entire contents within this tree, so all the files and folders in my project. 
+
+172
+00:10:48,350 --> 00:10:51,000
+我的整个项目可能处于某种状态,
+My entire project may be in some state, 
+
+173
+00:10:51,000 --> 00:10:52,708
+然后我编辑了一些文件
+and then I edit some files, 
+
+174
+00:10:52,708 --> 00:10:54,275
+现在它处于另一个状态.
+and now it's in some other state. 
+
+175
+00:10:54,275 --> 00:10:55,977
+然后我添加了一些文件,
+And then I add some more files, 
+
+176
+00:10:55,977 --> 00:10:56,975
+它又处于另一种状态.
+and that's in some other state. 
+
+177
+00:10:56,975 --> 00:11:00,300
+每个状态都指向先前的状态.
+And every state points back to which state preceded it. 
+
+178
+00:11:00,725 --> 00:11:06,225
+到目前为止这是一个线性历史,但让我们来整点活儿.
+This so far is a linear history, but it lets us do something a little bit fancier than this. 
+
+179
+00:11:06,225 --> 00:11:12,650
+你还可以从某个快照分叉你的历史,比如说:
+You can also from a certain snapshot fork your history and say, 
+
+180
+00:11:12,650 --> 00:11:19,725
+"我想基于这个版本做出一些更改并创建一个新的快照."
+"I want to base changes off of this version and create a new snapshot like this." 
+
+181
+00:11:19,725 --> 00:11:25,525
+这种建立历史的方式允许你做一些像"好的,我正在开发我的项目.
+So this way of modeling history allows you to do things like, "Okay, I'm working on my project. 
+
+182
+00:11:25,525 --> 00:11:26,900
+这是我的主要开发线路.
+This is my main line of development. 
+
+183
+00:11:26,900 --> 00:11:27,850
+我到这里了,
+I go up to here, 
+
+184
+00:11:27,850 --> 00:11:30,575
+现在我有两个不同的任务要完成.
+and now I have two different tasks I want to work on.
+
+185
+00:11:30,575 --> 00:11:34,000
+假设一方面我有一些想要添加到我的项目中的新特性,
+Suppose on one hand, I have some fancy new feature I want to add to my project, 
+
+186
+00:11:34,000 --> 00:11:36,075
+所以我要花几天的时间去完成这个新特性.
+and so I'm going to be working on that for a couple of days. 
+
+187
+00:11:36,075 --> 00:11:38,700
+但另一方面有人向我报告了一个 bug,
+But separately from that, somebody's reported a bug to me, 
+
+188
+00:11:38,700 --> 00:11:40,600
+我需要去找出这个 bug 并修复它."
+and I need to go chase down that bug and fix it."
+
+189
+00:11:40,600 --> 00:11:43,775
+那么与其同时在同一条开发线上,
+Well, instead of working on all that stuff kind of concurrently 
+
+190
+00:11:43,775 --> 00:11:46,100
+并发地工作在所有这些事情上,
+at the same time in the same line of development, 
+
+191
+00:11:46,100 --> 00:11:50,025
+git 可以将历史记录分支成两个独立的分支,
+git has its way of branching the history into two separate forks 
+
+192
+00:11:50,025 --> 00:11:55,050
+并以一种互不干涉的方式同时处理不同的事情.
+and working on different things in parallel temporarily in a way that are unrelated to each other. 
+
+193
+00:11:55,050 --> 00:11:59,400
+因此我可以以这个快照为基础,这时我的项目处于一种可工作的状态,
+So I could take this base snapshot like my project is in some state where it works, 
+
+194
+00:11:59,400 --> 00:12:04,025
+然后从这里开始实现一个新的特性来创建一个新的快照.
+and then from here, I could implement a new feature that creates a new snapshot. 
+
+195
+00:12:04,025 --> 00:12:06,800
+因此这个快照包括基本项目和一个新的特性.
+So this has the base project plus a new feature. 
+
+196
+00:12:06,800 --> 00:12:11,025
+所以我会添加功能。
+so I'll do like plus feature.
+
+197
+00:12:11,025 --> 00:12:15,000
+同样地与此同时我可以回到这个原始快照
+And then, similarly, separately from this, I could go back to this original snapshot 
+
+198
+00:12:15,000 --> 00:12:18,725
+因为我不想在实现新特性时进行 bug 修复,所以我可以回到这里,
+because I don't want to do bug fixing while implementing my new feature, go here, 
+
+199
+00:12:18,725 --> 00:12:21,650
+然后进行 bug 修复并创建一个不同的快照.
+and then work on my bug fix and create a different snapshot. 
+
+200
+00:12:21,650 --> 00:12:28,120
+因此这个快照只有 bug 修复而没有新特性.
+So this has only the bug fix but not the feature. 
+
+201
+00:12:28,120 --> 00:12:31,300
+最后一旦我并行地完成了这两件不同的事情
+And then finally, once I've done these two separate things in parallel,  
+
+202
+00:12:31,300 --> 00:12:36,250
+最终我想将它们全部合并到我的源代码中,既要包括新特性也包括 bug 修复.
+eventually I want to incorporate them all into my common source code that has both the feature and the bug fix. 
+
+203
+00:12:36,250 --> 00:12:42,450
+因此最终我可以通过合并这两个不同快照中存在的更改来创建一个新的快照.
+So eventually, I might author a new snapshot by merging the changes present in these two different snapshots. 
+
+204
+00:12:42,450 --> 00:12:46,125
+因此这个新的快照将把这两个快照作为父节点
+And so this one, I'll have both of these snapshots as parents, 
+
+205
+00:12:46,125 --> 00:12:56,475
+这个版本将同时包括新特性和 bug 修复.
+and this version here will have both the feature and my bug fix. 
+
+206
+00:12:56,475 --> 00:12:57,964
+所以现在是否清楚了，
+So does it make sense 
+
+207
+00:12:57,964 --> 00:13:04,175
+git为啥要使用花哨的图结构对历史记录进行建模？
+why git models history in a way \N that's a little bit fancier than just a sequence of snapshots of my files and folders?  
+
+208
+00:13:04,175 --> 00:13:07,650
+引入分支来并行工作,
+Why I want to be able to support branching to work on things in parallel 
+
+209
+00:13:07,650 --> 00:13:12,025
+然后再合并来自不同并行开发分支的更改的原因应该也已经清楚了?
+and then also merging to combine changes from different parallel branches of development?
+
+210
+00:13:12,025 --> 00:13:20,375
+问题:是的,这是一个很好的问题.
+Question: Yeah, so that's an excellent point. 
+
+211
+00:13:20,375 --> 00:13:24,225
+似乎当你合并时可能会出现意外的错误.
+It seems that when you merge things, you could create errors that weren't anticipated. 
+
+212
+00:13:24,225 --> 00:13:29,550
+你可以想象这里的特性实际上更改了某些使这个 bug 修复变得无关紧要的东西,
+You could imagine here that this feature actually changes something that makes this bug-fix redundant, 
+
+213
+00:13:29,550 --> 00:13:32,525
+或者你可以想象这个 bug 修复破坏了这个特性或其他类似的情况.
+or you could imagine this bug fix breaking this feature or something like that.
+
+214
+00:13:32,525 --> 00:13:33,863
+答案:哦这是一个非常好的点.
+Answer: Oh, that's a really good point. 
+
+215
+00:13:33,900 --> 00:13:36,325
+这就是所谓的合并冲突,
+That's something known as merge conflicts, 
+
+216
+00:13:36,325 --> 00:13:41,475
+git 在合并分支时,
+and this is something that git will try to do when you merge your parallel branches of development. 
+
+217
+00:13:41,475 --> 00:13:46,175
+会尝试自动将更改合并在一起,以保留所有重要的更改.
+It will try to automatically combine the changes in a way such that it retains all the important changes. 
+
+218
+00:13:46,175 --> 00:13:48,125
+但如果它变得混乱了,
+But if it gets confused
+
+219
+00:13:48,125 --> 00:13:51,225
+它会报告一个合并冲突然后让程序员自己决定,
+it will report a merge conflict and then leave it up to you, the programmer, 
+
+220
+00:13:51,225 --> 00:13:55,975
+如何将并发的更改组合到同一文件或其他地方.
+to figure out how to combine kind of concurrent changes to the same files or things like that. 
+
+221
+00:13:55,975 --> 00:13:58,650
+然后git有一些工具来帮助解决这个问题.
+And then git has some tools for facilitating this. 
+
+222
+00:13:59,625 --> 00:14:04,600
+还有其他问题吗?好的.
+Any other questions? Great. 
+
+223
+00:14:04,600 --> 00:14:07,900
+现在我们有了文件和文件夹的模型,
+Ok, so now we have a model of files and folders, 
+
+224
+00:14:07,900 --> 00:14:11,900
+还有一个关于历史的模型,它描述了代码的不同快照之间的关系.
+and then we have a model of history, how different snapshots of our code relate to each other. 
+
+225
+00:14:11,900 --> 00:14:16,350
+这里有一个小细节,每个圆圈都对应一个快照
+One little detail here is that each of these circles, 
+
+226
+00:14:16,350 --> 00:14:21,075
+就像一个带有文件和文件夹的树一样,
+so they kind of correspond to a snapshot like a tree with files and folders, 
+
+227
+00:14:21,075 --> 00:14:23,125
+但它们还有一些元数据.
+but they also have a little bit of metadata. 
+
+228
+00:14:23,125 --> 00:14:30,775
+例如在这里我们可能会看到提交的作者是Anish
+So like inside here we might have like the author of this commit is Anish, 
+
+229
+00:14:30,775 --> 00:14:37,000
+还有其他与此提交相关的消息的元数据.
+and we might have other metadata like some message associated with this commit. 
+
+230
+00:14:37,000 --> 00:14:39,931
+我可以描述我所做的更改类型,
+I might describe what kinds of changes I've made 
+
+231
+00:14:39,931 --> 00:14:42,756
+这些更改在这个快照中存在但在上一个快照中不存在.
+that are present in this snapshot but not the previous one. 
+
+232
+00:14:48,800 --> 00:14:51,300
+这不是椅子类,
+That is not really the chair class, 
+
+233
+00:14:58,672 --> 00:15:03,055
+所以下一步我们要谈论比这更底层的内容,
+so next we're going to talk about kind of one level lower than this,
+
+234
+00:15:03,055 --> 00:15:09,200
+即git内部如何表示这个数据结构.
+like how exactly is this represented as a data structure inside git. 
+
+235
+00:15:09,200 --> 00:15:11,210
+我将写下伪代码
+And so I'm actually going to write down pseudocode 
+
+236
+00:15:11,210 --> 00:15:13,785
+我认为这是最容易理解的方式.
+because I think it's actually easiest to understand this way. 
+
+237
+00:15:13,825 --> 00:15:16,125
+首先我们有文件.
+So first we have files. 
+
+238
+00:15:16,125 --> 00:15:23,425
+因为一个blob只是一堆字节,我会说这是一个字节数组.
+So a blob is just a bunch of bytes, so I'll say this is an array of bytes. 
+
+239
+00:15:26,350 --> 00:15:28,875
+好的那么什么是tree?
+Okay, then what is a tree? 
+
+240
+00:15:31,250 --> 00:15:34,625
+记住这只是一个文件夹,那么文件夹是什么?
+Remember that this is just a folder, so what are folders? 
+
+241
+00:15:34,625 --> 00:15:42,775
+它们是从文件名或目录名到实际内容的映射,
+They're mappings from the filename or directory name to the actual contents, 
+
+242
+00:15:42,775 --> 00:15:50,450
+而内容可以是另一个tree如子树或者是文件.
+and the contents are either another tree, like a subtree, or the file. 
+
+243
+00:15:51,800 --> 00:15:57,900
+最后我们有最后一个东西,到目前为止我一直称之为快照,
+And then finally we have the last thing there, what I've been calling snapshots so far, 
+
+244
+00:15:57,900 --> 00:16:00,475
+在git术语中它们被称为提交("commit").
+and in git terminology those are called commits. 
+
+245
+00:16:00,725 --> 00:16:08,675
+那么提交做了哪些事儿?它有一堆属性.
+And so what does a commit do? It's a bunch of stuff. 
+
+246
+00:16:08,675 --> 00:16:14,475
+提交有描述它们之前的父项,
+Commits have parents that describe what preceded them, 
+
+247
+00:16:14,475 --> 00:16:17,050
+因此在大多数普通提交的情况下,
+so in the case of most normal commits, 
+
+248
+00:16:17,050 --> 00:16:18,625
+它们有一个父项,说明他们来自哪里.
+they have one parent like what they came from. 
+
+249
+00:16:18,625 --> 00:16:25,800
+合并提交可以有多个父项,因此父项是一个提交的数组.
+What merge commits can have multiple parents, so parents are an array of commits, 
+
+250
+00:16:29,850 --> 00:16:38,075
+然后我有一些元数据如作者和提交信息.
+and then I have some metadata like the author and maybe a message, 
+
+251
+00:16:42,850 --> 00:16:49,075
+最后是实际内容的快照,
+and then finally the actual contents, the snapshot, 
+
+252
+00:16:49,075 --> 00:16:55,000
+这是一个树形结构,它是与特定提交相对应的顶层树形结构.
+which is a tree that's the top-level tree corresponding to a particular commitment. 
+
+253
+00:16:55,000 --> 00:16:58,275
+这是一个非常优雅的历史模型,
+So this is a really clean simple model of history, 
+
+254
+00:16:58,275 --> 00:17:02,300
+这基本上就是git历史模型的全部内容.
+and this is basically all there is to how git models history. 
+
+255
+00:17:03,125 --> 00:17:05,125
+关于这个有问题吗?
+Any questions about that? 
+
+256
+00:17:07,301 --> 00:17:11,951
+好的现在我们深入一些.
+All right, so now we have that going a little bit deeper. 
+
+257
+00:17:11,951 --> 00:17:16,325
+让我们谈谈它实际上是如何存储和寻址这些实际数据的.
+Let's talk about how git actually stores and addresses this actual data. 
+
+258
+00:17:16,325 --> 00:17:19,575
+他们实际上必须转换为磁盘上的数据,对吧?
+Like at some point, this actually has to turn to data on disk, right? 
+
+259
+00:17:19,575 --> 00:17:24,350
+因此git定义了一个object,
+So git defines an object, 
+
+260
+00:17:25,425 --> 00:17:29,500
+对象这个说法有些模糊,具体来说object可以是其中三个的任意一个,
+kind of a big standing term, but an object is any one of those three things, 
+
+261
+00:17:29,500 --> 00:17:36,475
+因此它可以是blob,tree或commit.
+so it's a blob, a tree, or a commit. 
+
+262
+00:17:38,700 --> 00:17:43,450
+然后在git中,所有object都是内容寻址的.
+And then in git, all objects are content addressed, 
+
+263
+00:17:43,450 --> 00:17:45,525
+所以git在磁盘上维护的是一组对象,
+So what git maintains on disk, 
+
+264
+00:17:45,525 --> 00:17:47,634
+等会你都能看到,
+and you can actually look at this later, 
+
+265
+00:17:47,634 --> 00:18:02,175
+这些对象被保存在一个内容地址仓库(这里是个map)中.
+is a set of objects maintained as this content address store. 
+
+266
+00:18:02,175 --> 00:18:10,825
+因此如果你有其中的任何一个对象,你存储它的方式就是把它的键(对象的哈希值)放入到这个map中.
+So if you have any one of these objects, the way you put it into this store is its key is the hash of the object. 
+
+267
+00:18:10,825 --> 00:18:17,700
+例如在伪代码中我可能会说为了存储特定的对象o
+So like in pseudocode, I might say that to store a particular object o, 
+
+268
+00:18:17,700 --> 00:18:23,225
+我通过对o进行SHA-1哈希,来计算它的ID,
+what I do is I compute its ID by taking the SHA-1 hash of o, 
+
+269
+00:18:23,225 --> 00:18:31,950
+然后将计算出来的ID放入我的map中,从而存储到磁盘上.
+and then I put it into my objects map, store it to disk. 
+
+270
+00:18:33,625 --> 00:18:38,100
+谁知道哈希函数是什么?知道的人速速举起手来.
+A quick show of hands, who here knows what a hash function is?
+
+271
+00:18:38,931 --> 00:18:41,581
+好的,我来快速讲解一下吧.
+Alright, so I'll quickly summarize. 
+
+272
+00:18:41,581 --> 00:18:45,375
+你可以把哈希函数看作是这个神奇的函数,
+Basically, a hash function is, you can think of it as like this magical function 
+
+273
+00:18:45,375 --> 00:18:48,850
+它将一坨数据转换为一个短字符串.
+that takes a big piece of data and turns it into a short string. 
+
+274
+00:18:49,775 --> 00:18:55,475
+在高层次上这些被用来....也许这个解释也够用了.
+At a high level, these are used to, or maybe that's like a sufficient explanation, 
+
+275
+00:18:55,475 --> 00:18:59,950
+我不会在这里深入讨论太多细节,但是如果你感兴趣可以在之后问我.
+I won't go into too much more detail here, but you can ask me afterwards if you're curious. 
+
+276
+00:18:59,950 --> 00:19:04,250
+基本上哈希函数给了我们一种基于所输入的内容
+So basically, they give you a way to name a thing in a way 
+
+277
+00:19:04,250 --> 00:19:06,550
+从而以一种确定性的方式为其命名的方法
+that's kind of deterministic based on the contents of the thing 
+
+278
+00:19:06,550 --> 00:19:09,900
+并为其提供一个简短的名称.
+it takes into thing as input and gives you a short name for it. 
+
+279
+00:19:09,900 --> 00:19:15,975
+然后与存储相反,我们可以通过ID来查找
+And then the opposite of stores, load, the way we can load things from the store, 
+
+280
+00:19:15,975 --> 00:19:19,425
+和加载存储在仓库中的内容.
+you might have just guessed, you can look them up by their ID. 
+
+281
+00:19:19,425 --> 00:19:32,975
+我们只需要通过 ID 从 Git 的对象仓库中检索对象,就可以获取到该对象的内容..
+And this is just, we retrieve it from the object store by ID and it gives us back the contents. 
+
+282
+00:19:35,975 --> 00:19:38,175
+目前为止有任何问题吗?
+Any questions about this so far? 
+
+283
+00:19:38,175 --> 00:19:41,615
+好问题.
+Question, that's a good question. 
+
+284
+00:19:41,615 --> 00:19:44,575
+那么它用的是哪种语言编写的?我刚刚是用的伪代码.
+What language is it all written in? It's written in the language I just made up. 
+
+285
+00:19:44,575 --> 00:19:46,175
+所以这是伪代码
+So it's pseudocode. 
+
+286
+00:19:46,175 --> 00:19:50,925
+git的实现主要是用C编写的
+The git implementation itself is a mix of C, it's mostly C, 
+
+287
+00:19:50,925 --> 00:19:53,125
+我想也许也包括一些Bash和Perl脚本.
+and then some Bash and Perl scripts, I think. 
+
+288
+00:19:53,975 --> 00:19:58,350
+还有其他问题吗?这个伪代码是否足够清晰?
+Any other questions? Is this made-up language clear enough 
+
+289
+00:19:58,350 --> 00:20:04,650
+还需要解释其中的某些方面吗?很棒.
+or do I need to explain any aspects of it? Great.  
+
+290
+00:20:04,650 --> 00:20:09,625
+好的.blobs,tree和commit在git中是以这种方式联合在一起的.
+Okay, So blobs, trees, and commits in git are unified in this way. 
+
+291
+00:20:09,625 --> 00:20:10,675
+它们都是对象.
+They're all objects. 
+
+292
+00:20:10,675 --> 00:20:16,625
+而且正如你在这里描述的那样,
+And also, as you might think, given my description here, 
+
+293
+00:20:16,625 --> 00:20:20,625
+看起来一个提交包含了许多其他提交
+it looks like commits contain a whole bunch of other commits 
+
+294
+00:20:20,625 --> 00:20:22,950
+和快照等内容.
+and contain a snapshot and things like that. 
+
+295
+00:20:22,950 --> 00:20:25,950
+实际上并不是这样.
+In practice, it doesn't actually work that way. 
+
+296
+00:20:25,950 --> 00:20:27,925
+所有这些都是指针.
+Instead, all these are pointers. 
+
+297
+00:20:27,925 --> 00:20:33,550
+因此提交将能够通过它们的ID引用许多父对象.
+So a commit will be able to reference a bunch of parents by their IDs. 
+
+298
+00:20:33,550 --> 00:20:37,500
+所以这实际上不是提交本身的数组而是ID的数组.
+So this is actually not an array of commits themselves, but IDs. 
+
+299
+00:20:37,500 --> 00:20:42,075
+同样提交中的快照不是实际的树对象,
+And similarly, the snapshot inside a commit is not the actual tree object. 
+
+300
+00:20:42,075 --> 00:20:43,475
+而是树的ID.
+It's the ID of the tree. 
+
+301
+00:20:43,475 --> 00:20:47,175
+因此所有这些对象都存储在这个对象存储中
+And so all these objects are kind of stored on their own in this object store. 
+
+302
+00:20:47,175 --> 00:20:52,350
+所以git中不同对象之间的引用都是通过它们的 ID,也就是 SHA-1 哈希值来实现的.
+And then all the references to different objects are just by their ID, by their SHA-1 hash. 
+
+303
+00:20:52,350 --> 00:20:56,175
+我讲清楚了吗?你甚至可以将其想象为
+Does that make sense? You can almost in your head map it to like 
+
+304
+00:20:56,175 --> 00:20:59,125
+编程语言里的对象,比如说Java中的对象,
+these are objects in a programming language like Java, 
+
+305
+00:20:59,125 --> 00:21:01,600
+这是对树的引用.
+and then this is a reference to a tree. 
+
+306
+00:21:01,600 --> 00:21:02,650
+因此它就像一个指针
+So it's like a pointer, 
+
+307
+00:21:02,650 --> 00:21:04,450
+而map里存储的对象则是具体的内容.
+and then that is your realm. 
+
+308
+00:21:04,450 --> 00:21:06,750
+也许这对你有所帮助也许没有.
+Maybe this not he helps, maybe it doesn't. 
+
+309
+00:21:09,450 --> 00:21:18,975
+是的,确切地说就是这样.
+Yeah, yeah, exactly. 
+
+310
+00:21:18,975 --> 00:21:21,700
+我再来强调一遍.
+So I'll just repeat that for everybody to hear on the microphone. 
+
+311
+00:21:21,700 --> 00:21:24,200
+这是Git的磁盘数据存储.
+This is git's on-disk data store. 
+
+312
+00:21:24,200 --> 00:21:27,950
+它是一个内容寻址的存储,对象根据其哈希地址进行定位.
+It's a content address store where objects are addressed by their hash. 
+
+313
+00:21:36,050 --> 00:21:42,800
+对此有任何问题吗?好的现在我们有一种识别的方法.
+Alright. Any questions about that so far? Ok, so now we have a way of identifying. 
+
+314
+00:21:44,225 --> 00:21:49,700
+我们将所有不同类型的对象统称为对象,
+We've unified all the different types of objects into one type of thing we call object, 
+
+315
+00:21:49,700 --> 00:21:53,100
+并通过它们的SHA-1哈希来标识对象.
+and we have a way of identifying objects by their sha-1 hash. 
+
+316
+00:21:53,100 --> 00:21:55,700
+那这些SHA-1哈希实际长啥样?
+What do these actual sha-1 hashes look like? 
+
+317
+00:21:55,750 --> 00:21:59,075
+它们是40个字符长的十六进制字符串.
+Well, they're hexadecimal strings that are 40 characters long. 
+
+318
+00:21:59,075 --> 00:22:01,100
+就像SHA-1是一个160位的哈希函数,
+Like sha-1 is a 160-bit hash, 
+
+319
+00:22:01,100 --> 00:22:09,150
+因此由该SHA-1函数返回的实际ID将是一个非常长的字符串.
+and so one of the actual IDs returned by that sha-1 function is going to be a really long string. 
+
+320
+00:22:09,150 --> 00:22:13,700
+因此,我们就可以识别这些不同的对象了.
+And so given that, we'll have ways of identifying these different things. 
+
+321
+00:22:13,700 --> 00:22:22,325
+我们会有相应的ID例如"4af32cb...".
+Like this, we'll have corresponding to it an ID, like for a "4af32cb..." or something, something. 
+
+322
+00:22:26,150 --> 00:22:29,250
+因此,我们现在有一种方式来为提交图中的所有内容命名.
+So now we have a way of naming everything in this commit graph, 
+
+323
+00:22:29,250 --> 00:22:34,650
+但这些名称非常不方便因为它们非常长而且像文本字符串一样
+but these names are really inconvenient because they're super long and they're like text strings. 
+
+324
+00:22:34,650 --> 00:22:37,075
+对人类来说没有任何意义.
+They're not meaningful to humans in any way. 
+
+325
+00:22:37,075 --> 00:22:40,975
+git是如何解决这个问题的呢?
+So its solution to this problem is one other thing. 
+
+326
+00:22:40,975 --> 00:22:42,650
+git维护一组对象,
+So git maintains a set of objects, 
+
+327
+00:22:42,650 --> 00:22:45,175
+然后维护一组引用.
+and then it maintains a set of references. 
+
+328
+00:22:45,175 --> 00:22:49,375
+引用是什么?我来擦掉左边的一部分.
+What are references? Here, I'll erase this bit on the left. 
+
+329
+00:22:49,375 --> 00:22:56,825
+这部分很有逻辑.
+This part's pretty logical. 
+
+330
+00:22:56,825 --> 00:23:03,900
+引用在这里.
+So references are here.
+
+331
+00:23:07,425 --> 00:23:15,375
+引用是一个字符串到字符串的映射.
+References are a map from string to string, 
+
+332
+00:23:15,375 --> 00:23:19,650
+你可以将其看作是将人类可读的名称
+and you can think of this as mapping human-readable names. 
+
+333
+00:23:19,650 --> 00:23:29,625
+例如我有一个可读的名称叫做"fix encoding bug".
+Like I might have a name like "fix encoding bug"."fix-encoding-bug" is a human-readable name, 
+
+334
+00:23:29,625 --> 00:23:34,250
+这个名称会被映射到那个长的十六进制字符串
+and this would be mapped to that long hexadecimal string there. 
+
+335
+00:23:34,250 --> 00:23:42,258
+有了这些,你就可以想象如何创建新引用,
+And so with these references, you can imagine how we might have ways of creating new references 
+
+336
+00:23:42,258 --> 00:23:44,825
+更新引用之类操作的.
+and updating references and things like that. 
+
+337
+00:23:44,825 --> 00:23:50,200
+有了这个,我现在可以用名称来引用我的提交图中的内容.
+With this, I can now refer to things in my commit graph by name, 
+
+338
+00:23:50,200 --> 00:23:55,100
+因此我可能会将其命名为"fix-bug"
+so I might have the same be called like "fix-bug" 
+
+339
+00:23:55,125 --> 00:23:59,025
+或者我可能会为此处的内容命名等等.
+or I might have a name for something over here, things like that. 
+
+340
+00:23:59,025 --> 00:24:04,975
+有了这个玩意儿,git可以使用人类可读的名称来引用历史中特定的快照,
+And so, yeah, with this, git can use human-readable names to refer to particular snapshots in the history, 
+
+341
+00:24:04,975 --> 00:24:07,350
+而不是使用这些长长的十六进制字符串.
+instead of these long hexadecimal strings. 
+
+342
+00:24:08,975 --> 00:24:17,925
+还有一件需要注意的事情是,鉴于Git的历史模型设计,整个图实际上是不可变的.
+One other thing to be aware of here is that given Git's design for history, this entire graph is actually immutable. 
+
+343
+00:24:17,925 --> 00:24:21,625
+你可以添加新的内容,但你实际上无法操作这里的任何东西.
+You can add new stuff to it, but you can't actually manipulate anything in here. 
+
+344
+00:24:22,500 --> 00:24:27,050
+我不会详细解释为什么或如何,但是事实就是这样.
+I won't go into the details of exactly how or why, but just assume that that's the case. 
+
+345
+00:24:27,075 --> 00:24:29,225
+然而,引用是不可变的.
+However, references are immutable. 
+
+346
+00:24:29,225 --> 00:24:33,050
+因此,假设你继续在这个软件项目上工作,在更新历史记录时,
+So as you're updating the history, like suppose you keep working on this piece of software, 
+
+347
+00:24:33,050 --> 00:24:34,500
+你创建了一个新的提交,
+you create a new commit, 
+
+348
+00:24:34,500 --> 00:24:36,350
+我用圆圈表示它.
+so I'm representing that by the circle. 
+
+349
+00:24:36,350 --> 00:24:38,150
+这个提交指向前一个提交.
+This points to the previous commit. 
+
+350
+00:24:38,150 --> 00:24:41,850
+我实际上可以将我的"fix-bug"引用指向这里.
+I can actually have, say my 'fix-bug' reference is pointing here. 
+
+351
+00:24:41,850 --> 00:24:44,475
+我可以更新此引用以现在指向这里.
+I can update this reference to now point over here. 
+
+352
+00:24:47,750 --> 00:24:51,600
+但是,例如,我不能使其指向这里.
+However, I can't, for example, make this point over here. 
+
+353
+00:24:51,600 --> 00:24:55,772
+那没有意义,因为这只是这个对象的哈希值.
+That's not even a meaningful thing to say because this is just the hash of this object. 
+
+354
+00:24:55,772 --> 00:25:02,197
+要更改此哈希值,我需要更改对象的内容,这并不现实.
+To change this hash, I'd need to change the contents of the object, which doesn't really make sense. 
+
+355
+00:25:02,925 --> 00:25:06,900
+好的,有关此方面的任何问题吗?这基本上就是Git的数据模型.
+All right, any questions about that so far? That's basically it for Git's data model, 
+
+356
+00:25:06,900 --> 00:25:10,500
+然后我们将讲解通过命令行与 Git 进行交互,
+And then we'll go into actually interacting with Git via the command line, 
+
+357
+00:25:10,500 --> 00:25:15,725
+并看到 Git 命令如何与图的操作相对应.
+and we'll see how Git commands correspond with manipulations of a graph data structure. 
+
+358
+00:25:15,725 --> 00:25:22,700
+我们讲了将历史记录建模为树,子树和快照,
+So, any questions about modeling history as trees of trees and blobs, and then snapshots,
+
+359
+00:25:22,700 --> 00:25:25,650
+提交如何链接在一起,
+these things called commits being chained together, 
+
+360
+00:25:25,650 --> 00:25:28,950
+以及如何使用引用指向该图中的特定节点等方面.你们有问题吗,请提出来.
+and you have references that can point to particular nodes in this graph. 
+
+361
+00:25:32,350 --> 00:25:41,275
+好的,没有问题了?所以基本上,一旦我们拥有了对象和引用,
+Cool, no questions? So basically, once we have objects and references, 
+
+362
+00:25:41,275 --> 00:25:44,750
+这些基本上就是 Git 仓库涵盖的全部内容了.
+that's basically all there is to a Git repository. 
+
+363
+00:25:44,750 --> 00:25:47,950
+对象和引用是Git存储的两个数据部分.
+Those are the two pieces of data that it stores, 
+
+364
+00:25:48,825 --> 00:25:58,175
+在更高一层,所有的 Git 命令
+And at a high level, all Git command line commands are just manipulations of 
+
+365
+00:25:58,175 --> 00:26:01,525
+只是对引用或对象的操作.
+either the references data or the objects data. 
+
+366
+00:26:10,100 --> 00:26:14,425
+所以,接下来,我将介绍一些 Git 命令.
+Okay, so for the rest of this lecture, I'm going to go through some Git commands. 
+
+367
+00:26:14,425 --> 00:26:17,750
+将是一个交互式演示,类似于 Vim 的那个讲座,
+It's basically going to be an interactive demo, similar to the Vim lecture, 
+
+368
+00:26:17,750 --> 00:26:20,775
+然后你可以参考课程笔记以获取有关这些命令的完整信息.
+and then you can refer to the notes for full information on these commands. 
+
+369
+00:26:20,775 --> 00:26:25,475
+当然,它是一个非常强大的工具,我们无法在20分钟内讲完所有内容.
+Look, of course, it's a really powerful tool, we can't cover everything in what 20 minutes. 
+
+370
+00:26:26,825 --> 00:26:31,000
+好的,那么我在一个名为"playground"的文件夹,
+All right, so I'm going to go over to this folder called playground, 
+
+371
+00:26:31,000 --> 00:26:33,075
+并创建一个名为"demo"的新目录.
+and I'm going to make a new directory called demo. 
+
+372
+00:26:33,075 --> 00:26:34,325
+进入"demo",
+CD into demo, 
+
+373
+00:26:34,325 --> 00:26:37,450
+该目录将代表我的项目的最高层.
+and this directory is going to represent the top level of my project. 
+
+374
+00:26:38,200 --> 00:26:40,825
+它当前是空的,因为我刚刚创建它.
+It's currently empty because I just created it. 
+
+375
+00:26:41,500 --> 00:26:47,000
+如果我想将其转换为 Git 仓库,则使用 `git init` 命令.
+If I want to turn this into a Git repository, I use the "git init" command. 
+
+376
+00:26:47,000 --> 00:26:49,500
+`git init` 代表 Git 仓库初始化,
+"git init" stands for Git initialize, 
+
+377
+00:26:49,500 --> 00:26:55,200
+我们看到它说 "Initialized empty Git repository in ../.git".
+and we see that it says "Initialized empty Git repository in ../.git". 
+
+378
+00:26:55,200 --> 00:27:02,750
+如果我输入 `ls`,我仍然什么也看不到,但是如果我输入 `ls -a`,可以看到有一个名为 ".git" 的隐藏文件.
+If I do "ls", I still see nothing, but if I do "ls -a", there's a hidden file in this directory called ".git". 
+
+379
+00:27:02,750 --> 00:27:05,650
+如果我输入 `ls .git`,则会有一些东西显示在这里.
+If I do "ls .git", there's a bunch of stuff in here. 
+
+380
+00:27:05,650 --> 00:27:09,325
+这是磁盘上 Git 存储其所有内部数据的目录,
+This is the directory on disk where Git stores all of its internal data, 
+
+381
+00:27:09,325 --> 00:27:11,325
+即对象和引用,
+namely the objects and the references, 
+
+382
+00:27:11,325 --> 00:27:14,875
+实际上在这里,"objects"和"refs"是两个目录,
+and you actually see here "objects" and "refs" as two directories in here, 
+
+383
+00:27:14,875 --> 00:27:19,275
+所有仓库数据将存储在这两个目录的下面.
+and all the repository data will be stored underneath those two directories. 
+
+384
+00:27:21,300 --> 00:27:25,500
+还有一个命令需要记住,那就是称为 `git help` 的命令.
+One another command to keep in mind as we're going through these is something called "git help". 
+
+385
+00:27:25,500 --> 00:27:28,925
+`git help` 将子命令作为参数,然后会提供有关该命令的帮助.
+"git help" takes a sub-command as an argument, it gives you some help on it. 
+
+386
+00:27:28,925 --> 00:27:33,250
+例如,如果我输入 `git help init`,它将告诉我有关 `git init` 命令的信息.
+So, if I do "git help init", for example, it'll tell me about the "git init" command.
+
+387
+00:27:34,625 --> 00:27:40,750
+现在有一些命令可以用于查明 Git 仓库的情况,例如 `git status`.
+So now there are some commands for figuring out what's going on with a Git repository, like "git status". 
+
+388
+00:27:40,750 --> 00:27:43,325
+它会站在最高层的视角,说明目前是什么情况,
+At a high level, it says what is going on right now, 
+
+389
+00:27:44,125 --> 00:27:48,675
+我们在这里看到(现在先忽略第一行),第二行说 "还没有提交".
+and we see here (let's ignore the first line for now), the second line says "no commits yet"'. 
+
+390
+00:27:48,750 --> 00:27:51,175
+这是因为我们刚刚初始化了一个全新的仓库,
+That's because we just initialized a fresh repository, 
+
+391
+00:27:51,175 --> 00:27:53,175
+所以还没有历史记录.
+and so there is no history yet. 
+
+392
+00:27:53,275 --> 00:27:55,275
+我现在要......
+I'm actually going to... 
+
+393
+00:27:56,650 --> 00:27:59,875
+还有人需要吗?我准备擦掉这一部分.
+Does anybody still want this? I gonna kind of clear this part of the board?
+
+394
+00:28:00,000 --> 00:28:02,700
+随着我们进行Git命令的输入,
+I'm going to, as we go along,  
+
+395
+00:28:02,700 --> 00:28:08,725
+我会画出底层的对象和引用变化的图示.
+draw how the underlying objects and references data is changing when I type in certain Git commands. 
+
+396
+00:28:08,725 --> 00:28:13,075
+因此,现在这个或者说空白代表着我们仓库的当前状态.
+So right now, this picture or lack of picture represents the current state of our repository. 
+
+397
+00:28:13,075 --> 00:28:13,675
+它是空的.
+It's empty. 
+
+398
+00:28:13,675 --> 00:28:15,375
+没有快照.
+There are no snapshots. 
+
+399
+00:28:15,775 --> 00:28:17,600
+那么让我们做一些操作.
+So let's fix that. 
+
+400
+00:28:17,600 --> 00:28:19,125
+让我们添加一些内容到我们的历史记录中.
+Let's add something to our history. 
+
+401
+00:28:19,125 --> 00:28:26,225
+在这里我们没有文件,所以让我来创建一个文件"hello.txt",内容为"hello world".
+Here we have no files, so let me just go ahead and create a file "hello.txt" with the content "hello world". 
+
+402
+00:28:26,225 --> 00:28:29,725
+通常情况下,文件中是实际有用的源代码.
+Normally you'd have your source code with actually useful stuff in it. 
+
+403
+00:28:30,700 --> 00:28:34,700
+现在我要做的是获取这个目录的当前内容,
+Now what I want to do is I want to take the current contents of this directory 
+
+404
+00:28:34,700 --> 00:28:40,200
+并将其转换为一个新的快照来表示我的仓库的第一个状态.
+and turn it into a new snapshot to represent say the first state my project was in. 
+
+405
+00:28:40,200 --> 00:28:45,350
+你可以想象一个用于此的界面,其中有一个git快照命令
+You might imagine an interface for doing this where there is like a git snapshot command 
+
+406
+00:28:45,350 --> 00:28:49,475
+或其他命令,它将获取当前目录的整个状态的快照.
+or git something else command which takes a snapshot of the entire state of the current directory. 
+
+407
+00:28:49,475 --> 00:28:53,350
+由于许多原因,Git没有一个完全像那样的命令,
+For a number of reasons, Git doesn't have a command that works exactly like that 
+
+408
+00:28:53,350 --> 00:28:59,375
+Git 提供了更多灵活性,让用户在创建快照时能够自由选择需要上传哪些更改.
+because Git wants to give you a little bit of flexibility as to what changes to include in the next snapshot you take. 
+
+409
+00:28:59,375 --> 00:29:03,875
+这对初学者来说可能有些困惑,我来解释一下.
+This is something that's kind of confusing to beginners sometimes, so I'll try to explain it right now. 
+
+410
+00:29:03,875 --> 00:29:06,719
+Git有一个称为staging area(暂存区)的东西,
+Git has a concept of something called a staging area, 
+
+411
+00:29:06,719 --> 00:29:14,375
+从高层次上讲,它告诉 Git 在下一次创建快照时应该包含哪些更改.
+and at a high level, it's where you tell Git what changes should be included in the next snapshot you take. 
+
+412
+00:29:14,875 --> 00:29:19,775
+如果我们在这里执行`git status`,我们会看到Git就像之前一样说"尚未提交任何更改",
+If we do "git status" here, we'll see that Git says "No commits yet" like it said before, 
+
+413
+00:29:19,775 --> 00:29:22,775
+并且它说"未跟踪文件hello.txt".
+and it says "untracked files hello.txt". 
+
+414
+00:29:22,775 --> 00:29:26,750
+这意味着Git注意到当前目录中有一个新文件,
+So, this is saying that Git notices that  there's a new file in the current directory,  
+
+415
+00:29:26,775 --> 00:29:29,650
+但是它目前没有在下一个快照中.
+but it is not going to be included in the next snapshot. 
+
+416
+00:29:29,650 --> 00:29:31,375
+Git忽略了它.
+Git's kind of ignoring it for now. 
+
+417
+00:29:31,375 --> 00:29:36,225
+但是,如果我执行`git add hello.txt`并再次执行`git status`,
+But if I do "git add hello.txt" and if I do "git status" again, 
+
+418
+00:29:36,225 --> 00:29:40,900
+它会说"现在提交的更改:新文件hello.txt",
+it says now "Changes to be committed: new file hello.txt", 
+
+419
+00:29:40,900 --> 00:29:45,175
+因此,如果我执行git快照命令(`git commit`),
+and so now if I do the git snapshot command which is actually "git commit", 
+
+420
+00:29:45,175 --> 00:29:48,250
+它会在那边画的那些圆圈里创建一个新圆圈,
+which creates a new one of those circles I drew on the board over there, 
+
+421
+00:29:48,250 --> 00:29:52,175
+即将要进行的快照中就会有该文件的存在了.
+this file will be included in that snapshot I'm about to take. 
+
+422
+00:29:52,175 --> 00:29:54,525
+所以运行这个`git commit`.
+So let me go ahead and run "git commit". 
+
+423
+00:29:54,525 --> 00:29:57,350
+它弹出我的文本编辑器,
+What this does is it pops up my text editor 
+
+424
+00:29:57,350 --> 00:30:00,600
+让我输入与此提交相关的消息.
+and it lets me type in a message that will be associated with this commit. 
+
+425
+00:30:00,600 --> 00:30:03,400
+编写高质量的提交消息真的很重要,
+And it's really good to write high-quality commit messages 
+
+426
+00:30:03,400 --> 00:30:05,775
+因为以后当你查看项目的版本历史记录时,
+because then later when you're looking back at your project's version history, 
+
+427
+00:30:05,775 --> 00:30:07,725
+你会知道为什么进行了某些更改.
+you'll know why you made certain changes. 
+
+428
+00:30:07,725 --> 00:30:13,175
+不过这里我将添加一个没啥用的提交消息,
+I'm going to add this relatively useless commit message, 
+
+429
+00:30:13,175 --> 00:30:18,825
+但是我们在讲义中有一个指南,告诉你如何编写高质量的提交消息.
+but we have a link in the lecture notes for a guide on how to write high-quality commit messages. 
+
+430
+00:30:18,825 --> 00:30:22,375
+现在我已经这样做了,Git输出了一些东西.
+So now that I've done that, Git prints out some output. 
+
+431
+00:30:22,375 --> 00:30:24,975
+暂时忽略"master".
+Master, ignore that bit for now. 
+
+432
+00:30:24,975 --> 00:30:28,575
+这个玩意儿是我刚刚那个提交的哈希值.
+This thing is the hash of the commit I just created. 
+
+433
+00:30:28,575 --> 00:30:32,050
+现在在我的历史记录中有一个的节点.
+So now I have in my history a single node. 
+
+434
+00:30:32,050 --> 00:30:38,850
+这个节点里有一个树形结构,其中包含一个单独的 blob,也就是一个文件 "hello.txt",内容是"hello world".
+This has in it a tree that has a single blob, a single file "hello.txt" with the contents "hello world". 
+
+435
+00:30:38,850 --> 00:30:48,000
+然后这个节点有一个 SHA-1 哈希值:"42fb....".
+And then this has the SHA-1 hash:"42fb" something something something ....
+
+436
+00:30:48,000 --> 00:30:50,525
+其实在这里它也没显示完整的哈希值.
+it's actually truncated in the Git interface as well. 
+
+437
+00:30:51,450 --> 00:30:54,000
+这里只是再次输出我的提交消息,
+This is just printing out my commit message again 
+
+438
+00:30:54,000 --> 00:30:57,750
+并提醒我刚刚添加了"hello.txt"文件.
+and it says, as a reminder, I just added "hello.txt". 
+
+439
+00:30:57,750 --> 00:31:00,575
+如果我现在执行`git log`,
+And so now if I use the "git log" command, 
+
+440
+00:31:00,575 --> 00:31:06,900
+它非常有用,因为它可以帮助你可视化历史记录,提交图形,如果我做... 有啥问题?
+which is really useful in that it helps you visualize the history, the commit graph, if I do... Question?
+
+441
+00:31:16,525 --> 00:31:17,875
+这是一个很好的问题.
+That's a great question. 
+
+442
+00:31:17,875 --> 00:31:21,175
+那么这个哈希值到底对应什么?
+So, the question is, what exactly does this hash correspond to? 
+
+443
+00:31:21,175 --> 00:31:23,825
+这是提交的哈希值.
+So, this is the hash of the commit. 
+
+444
+00:31:23,875 --> 00:31:30,400
+提交内部包含树的哈希值,以及一些其他信息.
+The commit contains inside of it the hash of the tree, along with whatever other information. 
+
+445
+00:31:30,400 --> 00:31:35,175
+所以我可以使用`git cat-file -p 42fb7a2`.
+So I can actually use git cat-file -p this number. 
+
+446
+00:31:35,175 --> 00:31:38,725
+这像是一个Git的内部命令,
+This is kind of like a Git internals command 
+
+447
+00:31:38,825 --> 00:31:41,075
+可以输出这个提交的内容,
+that will print out the contents of this commit, 
+
+448
+00:31:41,075 --> 00:31:44,225
+可以看到它显示出我在那边画的图结构.
+so you can see this kind of maps to the data structure I drew on the board over there. 
+
+449
+00:31:44,225 --> 00:31:47,967
+所以这个提交里面有这个树,然后我是作者,
+So this commit has inside of it this tree and then I'm the author 
+
+450
+00:31:47,967 --> 00:31:49,425
+这是提交的消息等等,
+and this is the commit message and so on, 
+
+451
+00:31:49,425 --> 00:31:50,949
+我可以继续往下挖信息.
+and I can continue digging down here. 
+
+452
+00:31:50,949 --> 00:31:55,225
+你可以取这个树的哈希值,并执行"git cat-file -p"这里的哈希值.
+So, you can take this hash of this tree and do "git cat-file -p" this hash .
+
+453
+00:31:55,225 --> 00:32:00,650
+它说这个树里面有一个名为"hello.txt"的文件,
+Here it says that this tree has inside of it a single entry "hello.txt", 
+
+454
+00:32:00,650 --> 00:32:03,450
+那个文件有一个blob,
+and that file has its a blob, 
+
+455
+00:32:03,450 --> 00:32:04,900
+并且有这个哈希值.
+and it has this hash. 
+
+456
+00:32:04,900 --> 00:32:11,350
+我可以做`git cat-file -p `,它会显示我那个文件的实际内容.
+I can do "git cat-file -p " and it will show me the actual contents of that file.
+
+457
+00:32:11,350 --> 00:32:15,875
+这些都是查看存储中的对象的内部Git命令.
+So, these are like internal Git commands to explore objects in the object store.
+
+458
+00:32:15,875 --> 00:32:17,373
+问题?
+Question?
+
+459
+00:32:17,373 --> 00:32:22,800
+这是一个好问题.
+ That's a great question. 
+
+460
+00:32:22,800 --> 00:32:25,200
+那么问题是,为什么我必须使用"git add"?
+So the question is, why did I have to use "git add"? 
+
+461
+00:32:25,250 --> 00:32:27,150
+为什么不能直接提交所有更改?
+Why can't you just commit all changes? 
+
+462
+00:32:27,150 --> 00:32:28,450
+答案是,
+And the answer is, 
+
+463
+00:32:28,450 --> 00:32:30,450
+其实有一种方法可以提交所有更改.
+well, there kind of is a way to commit all changes. 
+
+464
+00:32:30,450 --> 00:32:35,275
+如果你执行`git commit -a`,
+If you do "git commit -a", this commits all the changes 
+
+465
+00:32:35,275 --> 00:32:38,000
+这会提交所有被Git跟踪的文件所做的更改.
+that were made to files that are already being tracked by Git. 
+
+466
+00:32:38,000 --> 00:32:40,200
+因此,这会提交先前快照里所包含所有的内容,
+So anything that was included in the previous snapshot 
+
+467
+00:32:40,200 --> 00:32:43,625
+但是要是添加了新的文件,并不会进行提交.
+but has been modified since then, it doesn't include new things.
+
+468
+00:32:43,625 --> 00:32:46,350
+还有一些与"git add"相关的命令.
+There are also variants of "git add". 
+
+469
+00:32:46,375 --> 00:32:52,100
+例如,如果你执行`git add :/`,这将添加仓库顶部自上而下的所有内容.
+Like, if you do "git add :/", this will add everything in the top from the top level down of your repository. 
+
+470
+00:32:52,125 --> 00:32:56,650
+但是在更高的层面上,我们之所以有"git add"和"git commit"的这种区分,
+But at a higher level, the reason we have this separation between "git add" and "git commit" 
+
+471
+00:32:56,675 --> 00:33:00,325
+而不是直接给整个目录快照,
+and why git commit doesn't just snapshot the entire directory is that 
+
+472
+00:33:00,325 --> 00:33:04,625
+是因为经常有情况你不希望在当前的快照中包含所有内容.
+there are often situations where you don't want to include everything in the current snapshot.
+
+473
+00:33:04,625 --> 00:33:06,225
+例如,以下是一些示例.
+Like, here's a couple of examples. 
+
+474
+00:33:06,225 --> 00:33:10,550
+其中之一是,我可能正在做我的项目,然后实现了两个功能.
+One is that I might be working on my project and I go ahead and implement two features. 
+
+475
+00:33:10,550 --> 00:33:16,525
+也许我不想有一个"我实现了功能A和功能B"的单独的快照
+Maybe I don't want to have a single snapshot that comes after this one that's like, \N "I implemented feature A and feature B." 
+
+476
+00:33:16,525 --> 00:33:18,800
+也许我想在历史记录中创建两个单独的节点,
+Maybe I want to create two separate nodes in the history 
+
+477
+00:33:18,800 --> 00:33:22,383
+以便它看起来像我先实现了功能A,
+so that it looks like first I implemented feature A and then after that, 
+
+478
+00:33:22,400 --> 00:33:23,450
+然后在此基础上实现了功能B.
+I implemented feature B. 
+
+479
+00:33:23,450 --> 00:33:25,225
+因此,我想有一个仅包含A的快照,
+So, I have one snapshot that only includes A, 
+
+480
+00:33:25,225 --> 00:33:27,225
+然后再有一个快照同时包含A和B.
+and then the next one includes both A and B. 
+
+481
+00:33:27,225 --> 00:33:31,000
+"git add"像暂存区一样是一个工具,
+"git add" is a tool and like the staging area in general is a tool 
+
+482
+00:33:31,000 --> 00:33:32,975
+它能让我做到这种事.
+that will allow me to do that sort of thing.
+
+483
+00:33:32,975 --> 00:33:36,550
+另一个例子是,假设我正在修复一个 bug,
+Another example is, suppose I'm working on a bug fix 
+
+484
+00:33:36,550 --> 00:33:39,300
+我在我的代码中放置了 "printf" 语句,
+and I have "printf" statements I've put all over my code, 
+
+485
+00:33:39,300 --> 00:33:43,024
+最终我找到了 bug,发现在某个地方有一个 "+1",而那里不应该有 "+1".
+and then finally I find the bug and there's a "+1" somewhere where there shouldn't be a "+1". 
+
+486
+00:33:43,024 --> 00:33:43,550
+所以,我去修复了那个问题,
+So, I go fix that, 
+
+487
+00:33:43,550 --> 00:33:46,425
+然后想要给修复好的程序创建一个新的快照,
+and then I want to take a new snapshot with my fix, 
+
+488
+00:33:46,425 --> 00:33:49,600
+但是这个快照不应该包含我为了调试的打印语句.
+but the snapshot probably shouldn't include all of my print statements. 
+
+489
+00:33:49,600 --> 00:33:52,400
+它只需要包含去掉那个 "+1" 的代码文件.
+It just needs to include the fix of removing that "+1". 
+
+490
+00:33:52,400 --> 00:33:55,053
+所以,我可以手动删除所有的打印语句,
+So, one way I could solve that issue is I can go in 
+
+491
+00:33:55,053 --> 00:33:58,975
+但 Git 有更好的解决方法.
+and manually remove all the print statements, but Git has a much better way of doing that. 
+
+492
+00:33:58,975 --> 00:34:00,825
+它有一种方法
+There's actually a way to specify 
+
+493
+00:34:00,825 --> 00:34:04,525
+可以指定只添加那个删除 "+1" 的更改,
+that I only want to add the change of removing that "+1", 
+
+494
+00:34:04,525 --> 00:34:06,975
+然后我就可以提交它,创建新快照,
+then I can commit that, take the new snapshot, 
+
+495
+00:34:06,975 --> 00:34:09,550
+然后可以丢弃所有其他更改.
+and then I can throw away all the other changes. 
+
+496
+00:34:09,550 --> 00:34:10,825
+有一些命令可以做到这一点,
+There are commands for doing that, 
+
+497
+00:34:10,825 --> 00:34:11,850
+其中一些在课程笔记中放了链接.
+and some of them are linked in the lecture notes.
+
+498
+00:34:11,850 --> 00:34:15,275
+这些是使用暂存区的两种方式,
+So, those are two ways in which you can use the staging area to 
+
+499
+00:34:15,275 --> 00:34:19,125
+也是没有像"快照全部"这样的命令的原因.
+help you and why there isn't just like a "snapshot everything" command. 
+
+500
+00:34:21,725 --> 00:34:29,000
+是的,John说了另一个例子,你可能在当前目录中有日志文件,
+Yeah, John points out yet another example is you might have log files in your current directory
+
+501
+00:34:29,000 --> 00:34:30,325
+在运行程序时,这些日志文件会有所改动,
+that your program runs when you run it, 
+
+502
+00:34:30,350 --> 00:34:34,300
+你可能不想在创建快照时包含它们.
+and you probably don't want to include those when you take a snapshot. 
+
+503
+00:34:34,300 --> 00:34:37,175
+还可能有其他一些东西,比如如果编译你的项目,
+There's probably other things like if you compile your project, 
+
+504
+00:34:37,175 --> 00:34:39,625
+你最终会得到一堆.o和 .ELF 文件.
+you end up with a bunch of .o and like .ELF files. 
+
+505
+00:34:39,625 --> 00:34:42,125
+你可能不想让这些在你的历史显示.
+You probably don't want those to be part of your history.
+
+506
+00:34:45,275 --> 00:34:48,300
+所以,回到之前我给你们展示的内容,
+So, going back to what I was showing you before, 
+
+507
+00:34:48,300 --> 00:34:52,550
+我先清除终端屏幕,然后给你们看看 `git log` 命令.
+I'm going to clear the terminal screen and then show you the "git log" command. 
+
+508
+00:34:52,550 --> 00:34:55,250
+"git log" 可以查看版本历史记录,
+So, git log lets you visualize the version history, 
+
+509
+00:34:55,250 --> 00:34:57,775
+这是一个非常有用的命令.
+and this is an incredibly helpful command. 
+
+510
+00:34:57,775 --> 00:35:02,350
+默认情况下,`git log` 显示版本历史记录的一个展平的线性版本.
+By default, "git log" shows you a flattened version of the version history. 
+
+511
+00:35:02,350 --> 00:35:06,125
+所以,即使版本历史记录是一个图,这也会将其线性化,并按顺序显示事物.
+So even though the version history is a graph, this will linearize it and just show things in order. 
+
+512
+00:35:06,125 --> 00:35:09,275
+我个人觉得这很令人困惑,所以我几乎从不使用 `git log`.
+I personally find that confusing, so I almost never use "git log". 
+
+513
+00:35:09,275 --> 00:35:13,775
+不过"git log"可以接受一些参数,将历史记录显示为一个图.
+And instead, "git log" takes some arguments that actually show the history as a graph. 
+
+514
+00:35:13,775 --> 00:35:19,825
+你现在可以把它看作是一个魔法咒语,
+So you can treat this as a magic incantation for now, 
+
+515
+00:35:19,825 --> 00:35:23,475
+如果你想弄清楚每个标志的确切作用,你可以阅读文档.
+and you can read the documentation if you want to figure out exactly what each of those flags does. 
+
+516
+00:35:23,475 --> 00:35:28,225
+但现在,这看起来和之前没啥不同,因为我们只有一个节点.
+But for now, this doesn't look all that different because we only have one node in our graph. 
+
+517
+00:35:28,225 --> 00:35:32,200
+所以,线性的日志和一个图的日志并没有太大的区别.
+So visualizing it as a flattened thing versus a graph doesn't look all that different.
+
+518
+00:35:32,825 --> 00:35:36,425
+让我再创建一个新的快照,
+Let me go ahead and create a new snapshot, 
+
+519
+00:35:36,425 --> 00:35:39,925
+然后我们可以再次运行这个命令,看看它到底做了什么.
+and then we can run this command again and see exactly what it does. 
+
+520
+00:35:39,925 --> 00:35:47,575
+那我将在"hello.txt"中加入另一行,
+So I will put another line into "hello.txt", 
+
+521
+00:35:47,575 --> 00:35:51,775
+如果我执行`cat hello.txt`命令,它将显示之前的内容再加上新加的内容.
+and if I "cat hello.txt", it has the thing it had before plus this. 
+
+522
+00:35:51,775 --> 00:35:55,850
+我可以使用`git commit"命令,但会发现似乎什么都没有发生.
+I can do "git commit" and notice this doesn't do anything. 
+
+523
+00:35:55,850 --> 00:35:59,675
+它只会显示 "no changes added to commit." 
+It just says "no changes added to commit." 
+
+524
+00:35:59,675 --> 00:36:02,975
+为什么呢?因为我没有将新加的内容加入到staging area(暂存区).
+Why is that? It's because I didn't add this to the staging area. 
+
+525
+00:36:02,975 --> 00:36:06,375
+我没有告诉git,"这是应该包含在下一次快照中的内容".
+I didn't tell git, like, "this is something that should be included in the next snapshot."
+
+526
+00:36:06,375 --> 00:36:10,941
+因此,如果我运行`git add hello.txt`命令,`git status`
+So if I do "git add hello.txt", "git status"
+
+527
+00:36:10,941 --> 00:36:15,375
+将显示"好的,这个修改已准备好被提交了."
+ says "Okay, this change is ready to be committed, this modification to this file." 
+
+528
+00:36:16,046 --> 00:36:18,046
+现在我可以运行`git commit`命令了.
+And now I can do "git commit". 
+
+529
+00:36:19,000 --> 00:36:22,100
+我会输入一个无用的提交消息,
+I'm gonna put in a useless commit message, 
+
+530
+00:36:22,100 --> 00:36:24,925
+然后新的更改就完成了.
+and the new changes have been made. 
+
+531
+00:36:24,925 --> 00:36:29,000
+这样,我的历史记录中就有了另一个节点,
+And so now my history has another node in it, 
+
+532
+00:36:29,000 --> 00:36:32,500
+这个节点有一个哈希值.
+and then this node has some hash that's shown on the screen. 
+
+533
+00:36:33,850 --> 00:36:36,700
+如果我重新运行之前那个带有很多参数的"git log"命令,
+And now if I rerun that command from earlier, the "git log" with all these arguments,
+
+534
+00:36:36,700 --> 00:36:41,150
+它现在看起来更像一个图.
+it actually starts looking more like a graph.
+
+535
+00:36:41,150 --> 00:36:45,250
+在这里,你会注意到这就像那个图被旋转了90度一样.
+Here, notice that this is like that graph turned this way. 
+
+536
+00:36:45,250 --> 00:36:53,550
+更近期的提交在顶部竖直显示,不是像黑板上水平那样,
+The more recent, so it's shown vertically, not horizontally. \N And the more recent commits are shown at the top. 
+
+537
+00:36:53,550 --> 00:36:55,450
+这里显示了一个提交,
+This is showing one commit. 
+
+538
+00:36:55,450 --> 00:36:59,450
+包括提交哈希值,一些元数据和提交消息.
+It shows a commit hash, shows a bunch of metadata including the commit message. 
+
+539
+00:36:59,450 --> 00:37:02,425
+下面我要谈论的是这一部分.
+And then this is the part I want to talk about next. 
+
+540
+00:37:02,425 --> 00:37:06,425
+你记得我们之前讲了对象,就是git仓库中的实际内容,
+So remember, we talked about objects like the actual contents of your repository, 
+
+541
+00:37:06,425 --> 00:37:12,100
+然后讲了引用,就是使用人类可读名称命名仓库中的内容.
+and then we talked about references, ways of naming things in the repository with human-readable names.
+
+542
+00:37:12,150 --> 00:37:18,125
+当你初始化一个git仓库时,默认情况下会创建一个名为"master"的引用.
+So "master" is one reference that's created by default when you initialize a git repository. 
+
+543
+00:37:18,125 --> 00:37:22,750
+根据规定,它通常表示代码中的主开发分支.
+And by convention, it generally refers to the main branch of development in your code. 
+
+544
+00:37:22,750 --> 00:37:27,150
+所以"master"通常代表项目的最新版本.
+So "master" will represent like the most up-to-date version of your project. 
+
+545
+00:37:27,200 --> 00:37:31,625
+在这里,你可以将"master"视为指向这个提交的指针.
+So here, you can think of "master" as a pointer to this commit. 
+
+546
+00:37:31,625 --> 00:37:36,200
+随着我们添加更多的提交,这个指针将被改变,指向后面的提交.
+And as we add more commits, this pointer will be mutated to point to later commits. 
+
+547
+00:37:36,200 --> 00:37:40,450
+我们还看到"HEAD".这是git中的一个特殊引用.
+Then we also see here "HEAD." This is a special reference in git.
+
+548
+00:37:40,450 --> 00:37:42,925
+它类似于"master"引用,但它具有一些特殊的作用.
+It's a reference like "master," but it's special in some way. 
+
+549
+00:37:42,925 --> 00:37:48,250
+"HEAD"基本上用于指向你当前正在查看的内容.
+And "HEAD" basically is used to refer to where you are currently looking right now. 
+
+550
+00:37:48,250 --> 00:37:53,800
+有问题吗?好的,请提问.
+Any questions so far? Yeah, question. 
+
+551
+00:38:04,175 --> 00:38:06,000
+问题很好.
+That's an excellent question. 
+
+552
+00:38:06,000 --> 00:38:10,525
+问题是,"我曾经注册过GitHub来做类似的版本控制,
+So the question is, "Work with GitHub before, and create an account to do that. 
+
+553
+00:38:10,525 --> 00:38:14,850
+GitHub和git有什么关系?"
+How does GitHub relate to git?"  
+
+554
+00:38:14,850 --> 00:38:19,275
+答案是,"GitHub是Git的一个仓库托管平台.
+And the answer to that question is,"GitHub is a repository host for git.
+
+555
+00:38:19,300 --> 00:38:22,200
+你可以在GitHub上创建一个账户,
+So you can create an account on GitHub 
+
+556
+00:38:22,200 --> 00:38:25,250
+并将Git仓库托管在那,以便与其他人进行协作.
+and store a git repository there and use that to collaborate with other people. 
+
+557
+00:38:25,250 --> 00:38:28,675
+但作为命令行工具的Git与GitHub是互相独立的.
+But git as a command-line tool is just independent from github.
+
+558
+00:38:28,675 --> 00:38:30,700
+使用 Git 不一定需要使用 Github,
+So you don't have to use Github to use Git. 
+
+559
+00:38:30,700 --> 00:38:33,125
+也不一定需要在 Git 中声明 Github,因为还有其他提供 Git 仓库的服务商,
+You don't have to use Github,  declare it with Git either like  
+
+560
+00:38:33,125 --> 00:38:37,600
+例如Bitbucket或GitLab之类的,
+there are other providers of Git repositories like Bitbucket or GitLab or things like that, 
+
+561
+00:38:37,600 --> 00:38:41,525
+因此,Github 只是 Github 仓库的托管服务器.
+and so yeah Github is a host for Github repositories. 
+
+562
+00:38:41,600 --> 00:38:43,675
+还有其他问题吗?
+Any other questions? 
+
+563
+00:39:03,200 --> 00:39:08,050
+是的,问题是如果你想要将此仓库放在Github上,该怎么做?
+Yeah, so the question is if you want this repository to end up on Github, how do you do that?
+
+564
+00:39:08,050 --> 00:39:11,200
+是的,有一组单独的命令来完成这个任务.
+Yeah, there's a separate set of commands for doing that. 
+
+565
+00:39:11,250 --> 00:39:17,050
+有一个概念是让你的本地版本历史与其他副本进行交互,
+There's a concept of having your local copy of version history interact with another copy, 
+
+566
+00:39:17,050 --> 00:39:18,550
+这些其他副本被称为“远程”,
+so the other copy is called remote, 
+
+567
+00:39:18,550 --> 00:39:20,850
+然后有一组命令用来与Git进行远程交互,
+and then there are set of commands for interacting with Git remotes 
+
+568
+00:39:20,850 --> 00:39:24,750
+将数据从你的本地副本发送到Git远程副本,
+and sending data from your remote or from your copy to Git remotes 
+
+569
+00:39:24,750 --> 00:39:27,625
+将数据从Git远程副本获取到你的本地副本等等,
+and getting data from Git remotes into your local copy, 
+
+570
+00:39:27,625 --> 00:39:31,600
+我们稍后在本讲座或讲义中介绍.
+and we'll cover that later in this lecture or maybe in the lecture notes. 
+
+571
+00:39:31,600 --> 00:39:34,150
+John可能会为这次的开课制作一个补充视频.
+John might make a supplemental video to go along with this lecture. 
+
+572
+00:39:34,450 --> 00:39:42,775
+还有其他问题吗?好的,还有几个基本命令要向你展示.
+Any other questions? Okay, a couple of other basic commands to show you. 
+
+573
+00:39:42,775 --> 00:39:47,825
+到目前为止,我向你展示了版本历史记录,并且我们已经创建了一个文件并进行了修改,
+So, so far I've shown you a version history and we've taken a file and modified it, 
+
+574
+00:39:47,825 --> 00:39:52,250
+但我们除了阅读消息之外还没有真正利用历史记录.
+but we haven't really made use of the history in any way besides reading the messages. 
+
+575
+00:39:52,250 --> 00:39:55,075
+一个有用的Git命令是`git checkout`,
+One useful Git command is something called `git checkout`, 
+
+576
+00:39:55,075 --> 00:39:56,650
+这是一个有点奇怪的命令.
+and this is a kind of wacky command. 
+
+577
+00:39:56,650 --> 00:39:57,975
+它让你做很多不同的事情,
+It lets you do a bunch of different things, 
+
+578
+00:39:57,975 --> 00:40:00,850
+但其中一个作用是让你在你的历史记录中移动.
+but one thing it lets you do is move around in your version history. 
+
+579
+00:40:00,850 --> 00:40:05,050
+因此,我可以给"git checkout"之前commit的哈希值,
+So, one thing I can do is give "git checkout" the commit hash of a previous commit, 
+
+580
+00:40:05,050 --> 00:40:06,525
+我不需要输入整个哈希值,
+and I don't need to type the whole thing. 
+
+581
+00:40:06,525 --> 00:40:09,700
+我只需要前几个字母,它就可以知道我指定的是哪个提交.
+I can give it a prefix and it's to figure out what I'm talking about. 
+
+582
+00:40:09,700 --> 00:40:17,525
+这将改变我的当前工作目录的状态,使其与刚刚指定的哪个提交的状态相同.
+And what this will do is it will change the state of my working directory to how it was at that commit. 
+
+583
+00:40:17,525 --> 00:40:22,800
+因此,在这里,如果我运行`cat hello.txt`,回想一下,我之前只有一个行,
+So, here if I do "cat hello.txt", recall that I had only one line in here before at the first commit, 
+
+584
+00:40:22,800 --> 00:40:25,125
+而现在我添加了第二行.
+and later I added that second line. 
+
+585
+00:40:25,125 --> 00:40:27,600
+现在,如果我运行"git log"命令
+Now, if I do that "git log" command, 
+
+586
+00:40:27,600 --> 00:40:30,800
+该命令非常有用,可以显示所有内容,
+and this command is super helpful, like it shows you all the things, 
+
+587
+00:40:30,800 --> 00:40:35,175
+不过这次的输出与之前看起来有些不同.
+if I do this command, notice that this output looks a little bit different than before. 
+
+588
+00:40:35,175 --> 00:40:38,802
+我的实际历史内容,提交本身
+Like my actual history contents, the commits themselves, 
+
+589
+00:40:38,802 --> 00:40:43,775
+以及它们之间的关系等方面都没有改变,但是引用的位置改变了.
+and the way they relate to each other and all that have not changed, but the references have. 
+
+590
+00:40:43,775 --> 00:40:47,625
+我们可以看到,HEAD在这里,但是master依然没动.
+So, notice that HEAD is down here, even the master is still up here. 
+
+591
+00:40:47,625 --> 00:40:51,800
+因此,在高层次上,这告诉我这个是我现在正在查看的提交.
+So, at high level, what this is telling me is this is what I'm looking at right now. 
+
+592
+00:40:51,800 --> 00:40:57,025
+如果我想回到这里,我可以键入"git checkout",加上这个提交哈希值.
+If I want to go back here, I could type "git checkout" and this commit hash. 
+
+593
+00:40:57,025 --> 00:40:59,550
+有没有人知道我如果想返回到这个提交还可以输入什么的东西,
+Does anybody know a different thing I could type here 
+
+594
+00:40:59,550 --> 00:41:03,075
+而不是这个长哈希值?
+instead of this long hash in order to go back to this commit? 
+
+595
+00:41:03,075 --> 00:41:08,250
+是的,你还可以输入这里这个绿色的分支名,
+Yeah, you can give it the name of this branch colored in green here, 
+
+596
+00:41:08,250 --> 00:41:09,850
+这个名字也是这个提交的引用.
+and it refers to this commit. 
+
+597
+00:41:09,850 --> 00:41:12,475
+所以我可以给它一个短名称或可读性更强的名称,
+So, I can give it the short name or the human-readable name instead, 
+
+598
+00:41:12,475 --> 00:41:16,525
+现在如果我运行`cat hello.txt`,注意到它现在有了第二行内容.
+and now if I do "cat hello.txt", notice that it has that second line. 
+
+599
+00:41:37,500 --> 00:41:44,475
+是的,我重复一遍,"git checkout"实际上会改变你当前的工作目录的内容,
+Yeah, yeah, so to repeat that, "git checkout" actually changes the contents of your working directory, 
+
+600
+00:41:44,550 --> 00:41:48,350
+因此如果你误用了它,它可能就是一个有些危险的命令.
+and so in that way, it can be a somewhat dangerous command if you misuse it. 
+
+601
+00:41:48,350 --> 00:41:51,600
+例如,你可以看到如果我修改"hello.txt"
+For example, you can see if I modify "hello.txt"
+
+602
+00:41:53,700 --> 00:41:59,175
+然后执行之前哪个"git checkout"命令,这里它报错了.
+and then try that "git checkout" command from earlier, actually notice here that it says error. 
+
+603
+00:41:59,175 --> 00:42:01,275
+它说有一个文件已经被修改了,
+It says there's a file that's been modified, 
+
+604
+00:42:01,275 --> 00:42:03,925
+"git checkout" 将会销毁你的修改.
+and the "git checkout" would destroy your modification. 
+
+605
+00:42:03,925 --> 00:42:07,275
+你可能想对此做些什么,但是有一些标志,
+You probably want to do something about that, but there are flags like, for example, 
+
+606
+00:42:07,275 --> 00:42:09,200
+例如"git checkout -f",这样可以强制执行,
+"git checkout -f", does this forcibly, 
+
+607
+00:42:09,200 --> 00:42:10,825
+现在它丢弃了我刚刚的更改.
+and now it's throwing away my changes. 
+
+608
+00:42:10,825 --> 00:42:13,000
+所以是的,"git checkout" 有可能...
+So yeah, "git checkout" has the potential to, 
+
+609
+00:42:13,000 --> 00:42:15,342
+它确实会修改你的工作目录,
+well, it certainly does modify things in your working directory
+
+610
+00:42:15,342 --> 00:42:18,242
+并且如果你不小心,它可能会销毁你的更改.
+and it can actually destroy changes if you're not careful. 
+
+611
+00:42:18,850 --> 00:42:28,075
+问题?没错,是的,这正是我想让你们思考的,
+Question? Exactly, yeah, this is exactly what I want you to be thinking about, 
+
+612
+00:42:28,075 --> 00:42:32,588
+这些复杂的 git 命令
+how these like the crazy git interface commands correspond to 
+
+613
+00:42:32,588 --> 00:42:39,700
+和底层图以及引用的变化是如何对应的,
+mutations to this graph and mutations to the reference \N or like additions to the graph in mutations to the references map. 
+
+614
+00:42:39,700 --> 00:42:43,700
+所以没错,"git checkout" 移动了head指针,
+So yeah, exactly, "git checkout" moves the head pointer 
+
+615
+00:42:43,700 --> 00:42:49,150
+然后还根据现在头指针指向的内容改变了当前工作目录的内容.
+and then also mutates the contents of your working directory with the contents \N that the head pointer now points to. 
+
+616
+00:42:49,150 --> 00:42:50,950
+当然,这是我对该提交的名称.
+Of course, my name for that commit. 
+
+617
+00:42:53,450 --> 00:42:55,275
+还有其他问题吗?
+Any other questions?
+
+618
+00:42:59,000 --> 00:43:04,200
+好的,接下来要展示的另一个基本命令是 "git diff".
+All right, so one other basic command I want to show you is the "git diff" command. 
+
+619
+00:43:04,200 --> 00:43:08,250
+我要先对这个文件进行一些改动.
+So I'm going to modify this file and put some changes in it. 
+
+620
+00:43:08,250 --> 00:43:13,100
+"git diff" 命令可以显示当前目录自上次快照以来发生了什么变化.
+The "git diff" command can show you what's changed since the last snapshot. 
+
+621
+00:43:13,100 --> 00:43:16,225
+这对于了解你的项目正在干啥很有用.
+It's just helpful for like knowing what's going on with your project. 
+
+622
+00:43:16,225 --> 00:43:23,550
+"git diff" 还可以传入参数,例如你可以进行 `git diff 42fb7a29 hello.txt` 
+"git diff" can also take extra arguments like, you can do "git diff 42fb7a29 hello.txt" 
+
+623
+00:43:23,550 --> 00:43:27,900
+这个命令是"hello.txt"相对于"42fb7a29"的时候的差异,
+and say compute a diff not with respect to the last snapshot, the last commit, 
+
+624
+00:43:27,900 --> 00:43:29,850
+而不是和最后一个快照的差异,
+but with respect to this and say, 
+
+625
+00:43:29,850 --> 00:43:33,675
+好的,自此时(42fb7a29)起已添加了两行到 "hello.txt".
+Okay, two lines have been added since this point to "hello.txt". 
+
+626
+00:43:41,175 --> 00:43:54,575
+问题?所以,你的问题是如果没有此处的额外参数,该命令会做什么?
+Question? So, your question is what does this command do without this extra argument here?  
+
+627
+00:43:54,575 --> 00:43:56,125
+这是个好问题.
+That's a good question.
+
+628
+00:43:56,125 --> 00:44:01,450
+它是计算"hello.txt"与head的差异.
+What this does is it computes a diff with respect to head.
+
+629
+00:44:01,450 --> 00:44:07,050
+先来看看我的 git 日志head指向的是什么.
+And looking at my git log hat is pointing to here.
+
+630
+00:44:07,050 --> 00:44:11,175
+所以它正在相对于此提交进行 "git diff",
+So it's doing a "git diff" with respect to this commit. 
+
+631
+00:44:11,175 --> 00:44:13,350
+你可以明确指定出来,可以使用`git diff head hello.txt`.
+And you can actually specify that explicitly, you can do `git diff head hello.txt`. 
+
+632
+00:44:13,350 --> 00:44:14,825
+好的,是的,
+Okay, yes, uh-huh. 
+
+633
+00:44:31,750 --> 00:44:33,550
+这是一个好问题.
+So that's a good question. 
+
+634
+00:44:33,550 --> 00:44:37,175
+问题是,head是指向当前目录的话,
+It's like how can hello.txt be different than head 
+
+635
+00:44:37,175 --> 00:44:39,050
+那 hello.txt 文件的变化怎么会和head所指向有所不同呢.
+because head refers to where you currently are. 
+
+636
+00:44:39,050 --> 00:44:43,000
+为了澄清,head是指向最后一个快照的(不是当前目录),
+So, to clarify, head refers to the last snapshot, 
+
+637
+00:44:43,000 --> 00:44:51,675
+就像我这里画的图一样,head和master分支都在这里,
+so like in my picture here, head and master are both here 
+
+638
+00:44:51,675 --> 00:44:55,825
+但是当前工作目录独立于他们存在.
+and the current working directory is kind of independent of this. 
+
+639
+00:44:55,825 --> 00:44:57,500
+如果你在此处删除了所有文件,
+If you're going to delete all the files in here, 
+
+640
+00:44:57,500 --> 00:44:59,725
+并不会更改历史记录图或引用,
+it doesn't change the history graph or the references, 
+
+641
+00:44:59,725 --> 00:45:02,652
+所以这里和这里之间可以存在差异,
+and so yeah, you can have differences between here and here  
+
+642
+00:45:02,652 --> 00:45:04,350
+从顶层目录来看,这个差异就是你在这个项目上正在做的事.
+And at a high level this is how you work on a project. 
+
+643
+00:45:04,350 --> 00:45:07,125
+例如,你在此处进行了一些更改,将其添加到暂存区,
+Like, you make some changes here, you git add them to stage them, 
+
+644
+00:45:07,125 --> 00:45:08,100
+然后提交,
+and then you git commit, 
+
+645
+00:45:08,100 --> 00:45:09,975
+这将在此处创建一个新的快照.
+and that creates a new snapshot here. 
+
+646
+00:45:11,675 --> 00:45:12,725
+这是很好的问题
+Good question. 
+
+647
+00:45:12,725 --> 00:45:13,800
+还有其他问题吗?
+Any other questions?
+
+648
+00:45:26,100 --> 00:45:30,800
+问题是,Git 是否确实以显而易见的方式保存所有这些东西,
+So the question is, does git actually save all this stuff kind of in the obvious way 
+
+649
+00:45:30,800 --> 00:45:32,050
+还是做了一些花哨的事情?
+or is it doing something fancier? 
+
+650
+00:45:32,050 --> 00:45:32,900
+答案是,它确实做了一些更高级的事情,
+The answer is, it is doing something a little bit fancier, 
+
+651
+00:45:35,000 --> 00:45:40,025
+他有接口可以让你知道它是以哪种方式存储的.
+it has an interface that lets you think of it like it's stored that way. 
+
+652
+00:45:40,025 --> 00:45:41,775
+实际上,Git 使用 Delta 压缩,
+In practice, git uses Delta compression, 
+
+653
+00:45:41,775 --> 00:45:43,625
+还进行了一些其他操作,
+it also does some other stuff, 
+
+654
+00:45:43,625 --> 00:45:47,150
+这使得数据在磁盘上存储实际上是相当高效的.
+but yeah, the on-disk representation is actually reasonably efficient. 
+
+655
+00:45:47,200 --> 00:45:59,750
+问题?这是一个好问题.
+Question? That's a good question. 
+
+656
+00:45:59,750 --> 00:46:00,925
+所以问题是,
+So the question is, 
+
+657
+00:46:00,925 --> 00:46:06,175
+我们正在将当前工作目录与过去的某个特定快照进行比较.
+here we were comparing the current working directory with a particular snapshot in the past. 
+
+658
+00:46:06,175 --> 00:46:08,550
+我们能否比较在历史上的两个不同时间的快照?
+Can we compare two snapshots with each other, like at two different points in the history? 
+
+659
+00:46:10,325 --> 00:46:12,800
+是的,"git diff"可以在此处再传入另一个参数.
+And yeah, "git diff" can take yet another argument here. 
+
+660
+00:46:12,800 --> 00:46:17,300
+例如,我可以将head与这里进行比较.我把顺序搞错了...
+So I can, for example, compare head with. I did in the wrong order...
+
+661
+00:46:17,300 --> 00:46:22,525
+我可以比较从这里到head,"hello.txt"有什么变化,
+I can compare what change from here to head in hello.txt, 
+
+662
+00:46:22,525 --> 00:46:25,400
+它会显示我在其中添加了第二行.
+and it shows me that I added the second line in there. 
+
+663
+00:46:26,350 --> 00:46:28,000
+还有其他问题吗?
+Any other questions?"
+
+664
+00:46:40,850 --> 00:46:44,900
+是的,问题是,你正在一个Dropbox文件夹中共同开发一个项目,
+Yeah, so the question is, you're working on a shared project in a Dropbox folder, 
+
+665
+00:46:44,900 --> 00:46:46,100
+任何人都可以迁移到Git.
+and anyone can migrate to Git. 
+
+666
+00:46:46,100 --> 00:46:51,600
+将Dropbox文件夹变成Git仓库是否有意义?不要在Dropbox内部使用Git.
+Does it make sense to turn the Dropbox folder into a Git repo? Do not use Git inside Dropbox. 
+
+667
+00:46:51,600 --> 00:46:53,200
+Dropbox会破坏你的Git仓库.
+Dropbox will corrupt your Git repo. 
+
+668
+00:46:53,200 --> 00:46:55,000
+我们有很好的解决方案.
+There are good solutions to doing that. 
+
+669
+00:46:55,000 --> 00:46:56,250
+一个是只使用Github,不用Dropbox.
+One is just use Github. 
+
+670
+00:46:56,250 --> 00:46:57,875
+其他的方法,可以在课后与我交流.
+Otherwise, talk to me after class.
+
+671
+00:46:57,875 --> 00:47:01,050
+我知道一些安全使用Dropbox作为Git远程的方法.
+There are ways of using Dropbox as a Git remote safely. 
+
+672
+00:47:03,300 --> 00:47:10,175
+还有其他问题吗?接下来,我们将讨论Git的另一个强大功能:
+Any other questions? Next, we're going to talk about branching and merging, 
+
+673
+00:47:10,200 --> 00:47:12,500
+分支和合并.
+which is another powerful feature of Git 
+
+674
+00:47:12,500 --> 00:47:15,232
+你在自己的项目上工作或与他人合作时,
+that you almost certainly use both when working on your own projects 
+
+675
+00:47:15,300 --> 00:47:17,300
+几乎肯定会使用它.
+and when collaborating with others. 
+
+676
+00:47:17,300 --> 00:47:20,875
+在接下来一系列演示中,
+For this series of demos,  
+
+677
+00:47:20,950 --> 00:47:23,325
+我们将不是使用简单的文本文件,
+we're going to rather than work with a simple text file, 
+
+678
+00:47:23,325 --> 00:47:26,150
+而是编写一个简单的计算机程序,
+actually write a simple computer program 
+
+679
+00:47:26,150 --> 00:47:29,025
+因为它能更好地说明分支和合并的概念.
+because it'll better illustrate the concepts of branching and merging. 
+
+680
+00:47:29,025 --> 00:47:32,000
+当我们进行演示时,
+And as we go through this demonstration,  
+
+681
+00:47:32,000 --> 00:47:36,050
+我们需要牢记Git界面命令与底层数据模型之间的连接,
+we'll keep in mind how the Git interface commands connect to the underlying data model, 
+
+682
+00:47:36,050 --> 00:47:38,750
+与对象和引用的连接,
+connect to objects and references, 
+
+683
+00:47:38,750 --> 00:47:42,600
+以及这些命令如何修改这些数据结构的.
+and how these commands modify those two data structures. 
+
+684
+00:47:43,550 --> 00:47:47,175
+让我执行`git status`来查看我的仓库的当前状态.
+Let me do a `git status` to see the current state of my repository. 
+
+685
+00:47:47,175 --> 00:47:49,000
+在这里,我修改了"hello.txt".
+Here, I've modified "hello.txt". 
+
+686
+00:47:49,000 --> 00:47:51,825
+实际上,我不再关心这个修改.
+I actually don't really care about this modification anymore. 
+
+687
+00:47:51,825 --> 00:47:53,375
+这是我随便创建的文件.
+This is some random file. 
+
+688
+00:47:53,375 --> 00:47:59,250
+如果我执行`git checkout hello.txt`,这是'checkout'命令的另一种不同用法,
+If I do "git checkout hello.txt", this is another different use of the 'checkout' command, 
+
+689
+00:47:59,250 --> 00:48:01,850
+它基本上会丢弃我在工作目录中所做的更改,
+which basically throws away the changes that I've made in the working directory 
+
+690
+00:48:01,850 --> 00:48:06,182
+并将"hello.txt"的内容设置回HEAD指向的快照的状态.
+and sets the contents of "hello.txt" back to the way  it was in the snapshot that HEAD points to.  
+
+691
+00:48:10,175 --> 00:48:18,225
+如果我想,`git log --all --graph --decorate`将显示我在这里添加了初始的"hello.txt",
+If I like, "git log --all --graph --decorate" will show me that here I added the initial "hello.txt", 
+
+692
+00:48:18,225 --> 00:48:20,075
+并在这里添加了单行.
+and it added that single line here. 
+
+693
+00:48:20,075 --> 00:48:23,825
+现在,"hello.txt"没有我添加的第三行.
+And so now, "hello.txt" doesn't have that third line I'd added. 
+
+694
+00:48:23,825 --> 00:48:26,200
+它只有原来的两行.
+It just has the original two. 
+
+695
+00:48:26,625 --> 00:48:29,100
+接下来,我们应该编写一个非常简单的程序.
+Next time, we should write a very simple program. 
+
+696
+00:48:29,100 --> 00:48:34,550
+我们将称这个程序为"animal.py",
+We'll call this program "animal.py",  
+
+697
+00:48:34,550 --> 00:48:37,825
+让我继续些,我想当我运行它时,它会输出一点内容.
+and let me just go ahead and write a program that it prints a little bit of output when I run it. 
+
+698
+00:48:40,600 --> 00:48:42,250
+让我们想想.
+Let's see. 
+
+699
+00:48:48,225 --> 00:48:51,100
+所以当我运行这个程序时,它运行main(),调用default(),
+So when I run this program, it runs main(), calls default(), 
+
+700
+00:48:51,100 --> 00:48:55,100
+然后让我继续定义default().
+and then let me go ahead and define default().
+
+701
+00:48:55,100 --> 00:49:00,000
+default()只会打印"Hello".所以这是一个向用户打招呼的程序.
+And default() is going to just print "Hello". So this is a program that greets its user. 
+
+702
+00:49:00,000 --> 00:49:03,800
+如果我运行"animal.py",我会看到它只是打印"hello".
+And so if I run "animal.py," I'll see that it just prints "hello". 
+
+703
+00:49:03,800 --> 00:49:05,400
+那么这将是我们的一开始的状态.
+So that'll be our starting point. 
+
+704
+00:49:05,400 --> 00:49:11,725
+如果我执行 "git status",它会告诉我 "animal.py" 是一个未被跟踪的文件.
+If I do 'git status,' it shows me that 'animal.py' is an untracked file. 
+
+705
+00:49:11,725 --> 00:49:16,300
+现在,我想让它成为我的快照的一部分,
+To begin with, I want this to be part of my snapshot, 
+
+706
+00:49:16,300 --> 00:49:22,550
+所以我要执行 `git add animal.py` 将其添加到暂存区,然后执行 `git commit`.
+so I'm going to 'git add animal.py' to add it to the staging area and then do a 'git commit.'
+
+707
+00:49:25,250 --> 00:49:28,100
+这里,我将写另一个没啥用的提交信息.
+Here, I'm going to write yet another useless commit message. 
+
+708
+00:49:28,100 --> 00:49:31,875
+实际项目中不要写这样的提交信息,但是现在这样做还可以.
+Don't actually write commit messages like this in real projects, but for now, this is fine. 
+
+709
+00:49:31,875 --> 00:49:37,150
+所以现在我有了这个基本的 "animal.py",如果我查看 git 日志,
+So now I have this basic 'animal.py,' and if I look at my git history, 
+
+710
+00:49:37,150 --> 00:49:40,075
+现在我有了这个最新的快照.
+now I have this latest snapshot. 
+
+711
+00:49:40,125 --> 00:49:41,650
+这是提交哈希,
+This is the commit hash, 
+
+712
+00:49:41,650 --> 00:49:44,775
+这是master分支指向的地方.
+and this is where the master branch is pointing. 
+
+713
+00:49:44,775 --> 00:49:51,350
+我们马上要演示如何使用 Git 分支来实现平行的开发线路.
+Now we're actually way to demonstrate how to use Git branches to have parallel lines of development. 
+
+714
+00:49:51,350 --> 00:49:56,900
+"git branch" 命令或其他分支命令用于访问与分支相关的功能.
+The "git branch" command or the branch sub-command is used to access functionality related to branching. 
+
+715
+00:49:56,900 --> 00:50:01,950
+仅运行 `git branch`会列出本地仓库中存在的所有分支.
+Just running "git branch" by itself lists all the branches that are present in the local repository. 
+
+716
+00:50:01,950 --> 00:50:07,400
+它还可以接收一个 "-vv" 参数,打印一些更详细的额外信息.
+It can also take an extra argument "-vv" to be extra verbose and print some extra information. 
+
+717
+00:50:08,275 --> 00:50:12,250
+如果我们执行 "git branch",然后指定新分支的名称,
+If we do "git branch" and then specify the name for a new branch, 
+
+718
+00:50:12,250 --> 00:50:15,025
+Git 将创建一个新的分支"cat",
+Git will create a new branch which is just a reference 
+
+719
+00:50:15,025 --> 00:50:17,725
+"cat"目前只是一个指向我们当前所在位置的引用.
+that points to the same place where we're currently looking. 
+
+720
+00:50:17,725 --> 00:50:26,125
+所以现在有一个新的引用叫做 "cat",它指向 HEAD 指向的地方.
+So now there's a new reference called "cat" which points to wherever HEAD was pointing. 
+
+721
+00:50:26,125 --> 00:50:31,875
+如果我再次查看 git日志,我会看到 HEAD 指向master分支,master分支在这里,
+If I look at the git log again, I'll see that HEAD points to master, master's over here, 
+
+722
+00:50:31,875 --> 00:50:33,850
+这也是cat分支的位置.
+and this is also where the cat branches. 
+
+723
+00:50:33,850 --> 00:50:38,100
+所以现在我有了两个分支,两个引用指向同一次提交.
+So now I have two branches, two references that resolve to the same commit. 
+
+724
+00:50:38,850 --> 00:50:43,275
+Git 不仅知道我们当前正在查看哪个快照
+Git is actually aware of not only which snapshot in the history we're currently looking at 
+
+725
+00:50:43,275 --> 00:50:44,775
+(所以 HEAD 指向这个提交),
+(so HEAD points to this commit), 
+
+726
+00:50:44,825 --> 00:50:48,825
+而且还知道 HEAD 与哪个分支关联.
+but it's also aware of HEAD kind of being associated with a branch. 
+
+727
+00:50:48,825 --> 00:50:50,950
+在这里,HEAD 与master分支关联,
+Here, HEAD is associated with master, 
+
+728
+00:50:50,950 --> 00:50:52,925
+如果我创建一个新的快照,
+and it's the case that if I create a new snapshot 
+
+729
+00:50:52,925 --> 00:50:57,363
+(如果此时键入 `git commit`),将创建下一个快照,
+(if I type "git commit" at this point), the next snapshot will be created 
+
+730
+00:50:57,363 --> 00:50:59,150
+并且master将指向该新快照.
+and that master will point to that new snapshot. 
+
+731
+00:50:59,175 --> 00:51:01,350
+master分支将随着 HEAD 更新.
+master will be updated along with HEAD.
+
+732
+00:51:01,350 --> 00:51:07,125
+如果我执行 `git checkout cat`,它会切换到 cat 分支.
+If I do "git checkout cat", what this does is it switches to the branch cat. 
+
+733
+00:51:07,125 --> 00:51:11,125
+然后工作目录的内容会替换为 cat 所指向的内容,
+It replaces the contents of the working directory with whatever cat's pointing to, 
+
+734
+00:51:11,125 --> 00:51:13,775
+这种情况下与之前的内容没啥变化.
+which in this case is the same as the contents before. 
+
+735
+00:51:13,775 --> 00:51:19,325
+但现在,如果我再次查看 git日志,现在 HEAD 指向 cat 而不是master分支,
+But now, if I look at the git log again, now  I have HEAD point to cat instead of master, 
+
+736
+00:51:19,325 --> 00:51:23,600
+不过master分支也指向与cat同一位置,同一次提交.
+and then master also points to the same place, the same underlying commit. 
+
+737
+00:51:23,650 --> 00:51:27,675
+现在,如果我对当前的工作目录进行更改
+And now at this point, if I make changes to my current working directory 
+
+738
+00:51:27,675 --> 00:51:29,825
+并进行新的提交,
+and make a new commit,  
+
+739
+00:51:29,825 --> 00:51:32,450
+cat 分支指针将被更新以指向新的提交,
+the cat branch,the cat pointer will be updated to point to the new commit, 
+
+740
+00:51:32,450 --> 00:51:35,700
+而master分支将继续指向之前原来的位置.
+whereas master will continue pointing wherever it pointed before.
+
+741
+00:51:35,700 --> 00:51:40,650
+所以让我修改一下"animal.py",添加一些与cat相关的功能.
+So let me go ahead and modify animal.py to add some cat-related functionality. 
+
+742
+00:51:40,650 --> 00:51:46,550
+那么我将会这样说,如果"sys.argv[1]"是"cat",那么就运行cat(),
+So I'm going to say that if "sys.argv[1]" is "cat", then run the cat() function, 
+
+743
+00:51:46,550 --> 00:51:48,150
+否则运行default().
+otherwise run the default function. 
+
+744
+00:51:48,150 --> 00:51:51,400
+然后让我定义cat()函数.
+And then let me go ahead and define the cat() function. 
+
+745
+00:51:51,475 --> 00:51:54,400
+所以猫不说"Hello",他们说"Meow!"
+So cats don't say "Hello", they say "Meow!" 
+
+746
+00:51:54,414 --> 00:51:58,300
+是的,会打印"Meow!"——非常简单.
+so cats prints "Meow!"--straightforward enough.
+
+747
+00:51:58,300 --> 00:52:02,900
+现在,如果我运行"animal.py"并给它"cat"参数,它会输出"Meow!".
+So now if I run animal.py and give it the cat argument, it says "Meow!". 
+
+748
+00:52:02,950 --> 00:52:06,650
+如果我给它其他的参数,它就会默认输出"Hello".
+If I give it some other argument, it defaults back to "Hello".
+
+749
+00:52:06,650 --> 00:52:08,325
+所以,我做了一个简单的改动.
+All right, so simple change I made. 
+
+750
+00:52:08,325 --> 00:52:11,725
+如果我运行`git status`,它会显示"animal.py"已经被修改了.
+If I do a "git status", that says that animal.py has been modified. 
+
+751
+00:52:11,725 --> 00:52:15,575
+`git diff`会显示自上次提交以来的改变.
+"git diff" will show me what's changed since the last commit. 
+
+752
+00:52:15,575 --> 00:52:18,425
+这里,我添加了这个绿色高亮的cat()函数,
+So here I've added this cat() function, highlighted in green, 
+
+753
+00:52:18,425 --> 00:52:20,825
+然后稍微改变了main()函数.
+then also changed the main() function a little bit. 
+
+754
+00:52:20,875 --> 00:52:27,000
+现在,如果我运行`git add animal.py`,`git commit`
+Now here, if I do "git add animal.py", "git commit"
+
+755
+00:52:28,225 --> 00:52:31,625
+实际上,这里你应该写一个稍微更有用的提交消息,
+Actually you should write a slightly more useful commit message this time, 
+
+756
+00:52:31,625 --> 00:52:33,675
+比如"添加cat函数",
+like "Add cat functionality", 
+
+757
+00:52:33,850 --> 00:52:39,025
+现在如果我查看git日志,我看到了更多的内容.
+and now if I look at the git log, I see a little more stuff. 
+
+758
+00:52:39,025 --> 00:52:41,675
+现在我要展示这个git log命令的一个参数"--oneline,".
+I'm going to show you one more argument to this git log command.There's an argument --oneline .
+
+759
+00:52:43,975 --> 00:52:46,950
+(oneline,要正确拼写)
+(oneline, spelled correctly) 
+
+760
+00:52:46,950 --> 00:52:49,675
+它会显示一个更紧凑的图结构.
+which shows a more compact representation of the graph. 
+
+761
+00:52:49,675 --> 00:52:51,750
+这应该是一个更有用的东西,
+This should be a more useful thing to use 
+
+762
+00:52:51,750 --> 00:52:53,600
+因为我们现在屏幕不大,
+because we're super zoomed into the screen 
+
+763
+00:52:53,600 --> 00:52:56,675
+没有足够的空间显示一个很长的提交历史.
+and there isn't that much space to show a long commit history.
+
+764
+00:52:57,025 --> 00:53:00,300
+所以在这里,我们看到提交的顺序仍然是线性的,
+So here we see the sequence of commits is still linear, 
+
+765
+00:53:00,300 --> 00:53:03,625
+而且我们的master分支仍然指向它之前指向的位置.
+and we have master still pointing wherever it pointed before. 
+
+766
+00:53:03,625 --> 00:53:07,025
+在这里,我们只有default(),
+Where we just had the basic underlying animal top high functionality, 
+
+767
+00:53:07,025 --> 00:53:10,575
+但现在我们有了这个cat分支,它添加了cat()函数.
+but now we have this cat branch which adds the cat functionality. 
+
+768
+00:53:10,575 --> 00:53:16,350
+例如,我们可以使用`git checkout master`来回到master分支,
+We could, for example, "git checkout master" to go back to the master branch, 
+
+769
+00:53:16,350 --> 00:53:21,375
+然后在这里查看"animal.py",它没有cat()函数.
+and then here if we look at animal.py, it doesn't have the cat functionality anymore. 
+
+770
+00:53:21,375 --> 00:53:24,300
+如果我们查看git日志,我们会看到HEAD指向master分支,
+If we look at the git log, we'll see that HEAD is pointing to master,
+
+771
+00:53:24,300 --> 00:53:27,925
+因此我们可以在不同的开发分支之间来回跳转.
+ so we can jump back and forth between parallel lines of development. 
+
+772
+00:53:28,325 --> 00:53:30,275
+现在我们有了cat()函数,
+So now that we have the cat functionality, 
+
+773
+00:53:30,275 --> 00:53:33,425
+假设我们想并行添加dog()函数.
+suppose that we want to work on adding dog functionality in parallel. 
+
+774
+00:53:33,425 --> 00:53:35,075
+假设在这种情况下,
+And suppose that in this case, 
+
+775
+00:53:35,075 --> 00:53:38,475
+像cat()一样,dog()也在开发中,可能有其他人正在项目上工作,
+like the cat functionality is under development or maybe somebody else is working on it, 
+
+776
+00:53:38,475 --> 00:53:41,325
+所以我们只想从起初一开始的master分支提交开始,
+so we just want to start from the base master commit 
+
+777
+00:53:41,325 --> 00:53:43,900
+从那里开始构建dog().
+and build the dog functionality starting from there. 
+
+778
+00:53:44,075 --> 00:53:47,200
+那么我现在想做什么?
+So now what do I want to do?  
+
+779
+00:53:47,200 --> 00:53:49,075
+我想为添加狗相关功能创建一个新的分支,称为dog,
+I want to create a new branch, dog, for adding the dog-related functionality, 
+
+780
+00:53:49,075 --> 00:53:51,100
+然后稍后将其合并.
+and I'll eventually merge it in later. 
+
+781
+00:53:51,100 --> 00:53:53,866
+所以我可以使用`git branch dog`命令,
+So I can use the "git branch dog" command followed by 
+
+782
+00:53:53,866 --> 00:53:58,250
+然后使用`git checkout dog`命令,创建一个新的dog分支,
+the "git checkout dog" command to create a new dog branch 
+
+783
+00:53:58,250 --> 00:53:59,250
+然后切换到dog分支.
+and then check it out. 
+
+784
+00:53:59,250 --> 00:54:03,600
+实际上,这有一个简短的命令,`git checkout -b dog`.
+There's actually a short form for this, `git checkout -b dog`. 
+
+785
+00:54:03,625 --> 00:54:06,275
+这个命令的作用就是,创建新分支并切换到该分支.
+So this does "git branch dog", "git checkout dog", 
+
+786
+00:54:06,275 --> 00:54:10,475
+如果我现在查看我的历史记录图,就会看到cat分支依然在原来的位置,
+and now if I look at my graph, I have cat where it was before, 
+
+787
+00:54:10,475 --> 00:54:14,650
+master分支也在原来的位置,但现在HEAD不再指向master分支,
+master where it was before, but now head instead of pointing to master as it did before, 
+
+788
+00:54:14,650 --> 00:54:19,850
+而是指向这个新创建的"dog"引用,该引用也和master指向同一个基础提交点.
+now head points to this newly created dog reference, which is also at the same commit,so at this base commit.
+
+789
+00:54:21,250 --> 00:54:24,800
+我将添加我的dog()函数.
+And now I'll go ahead and add my dog functionality. 
+
+790
+00:54:24,800 --> 00:54:30,425
+现在,让我来写一下dog()函数,狗不说"Hello",它们说"Woof!".
+So let me go and define my dog function, dogs don't say Hello, they say woof!. 
+
+791
+00:54:30,500 --> 00:54:35,575
+然后,我将添加一些相似的功能,以决定是运行default()函数还是dog()函数.
+And then I'll add some similar functionality here to decide whether to run default or dog. 
+
+792
+00:54:35,575 --> 00:54:40,525
+因此,如果第一个参数是"dog",那么我要运行dog()函数,
+So if the first argument is dog, then I want to run the dog function,
+
+793
+00:54:40,525 --> 00:54:46,150
+否则,哎呀,否则我要运行default()函数.
+otherwise, whoops, otherwise, I want to run the default function. 
+
+794
+00:54:47,750 --> 00:54:52,450
+这是我对master指向的提交所做的更改.
+So here's what I've changed with respect to the base commit wherever master is pointing. 
+
+795
+00:54:52,450 --> 00:54:53,900
+因此,我已经添加了dog()函数,并且稍微修改了main()函数.
+So I've added the dog function, and I've changed main a little bit.
+
+796
+00:54:53,900 --> 00:54:58,875
+这和我之前我在 cat 分支上所做属于是并行修改.
+So a kind of parallel modification to what I did in the cat branch. 
+
+797
+00:54:58,875 --> 00:55:03,850
+让我去执行`git add animal.py`命令,将其添加到暂存区中.
+Let me go ahead and get add animal Titus add up to the staging area. 
+
+798
+00:55:03,850 --> 00:55:08,625
+如果我运行 "git status",它会提示下一次提交时,这个修改会被提交.
+If I do "git status", I'll see that this change will be committed when I make the next commit. 
+
+799
+00:55:08,650 --> 00:55:13,775
+现在我执行`git commit`,提交消息写"Add dog functionality".
+And then I do "git commit", "Add dog functionality". 
+
+800
+00:55:14,775 --> 00:55:17,228
+现在,我查看 Git 历史记录,
+Now when I look at the git graph, 
+
+801
+00:55:17,228 --> 00:55:20,678
+它比我们之前看到图来说,明显更有趣.
+it actually looks kind of interesting compared to the ones we've looked at before. 
+
+802
+00:55:20,700 --> 00:55:26,050
+这个图表明,这仨提交是一块儿的,
+This shows that these three commits are in common with the ones that come after, 
+
+803
+00:55:26,050 --> 00:55:28,650
+但是在此之后,历史记录分叉了,
+but then the history is actually forked after this point, 
+
+804
+00:55:28,650 --> 00:55:32,875
+在这条开发线上添加了cat()函数的一个提交,
+and I have this one commit that adds cat functionality in one line of development, 
+
+805
+00:55:32,875 --> 00:55:37,575
+以及在这条开发线上添加了dog()函数的另一个提交.
+and then I have this other commit that adds dog functionality in this other line of development. 
+
+806
+00:55:37,575 --> 00:55:39,400
+然后,使用 "git checkout" 命令,
+And then using the git checkout command, 
+
+807
+00:55:39,400 --> 00:55:43,075
+我可以在dog,cat和master之间来回切换.
+I can switch back and forth between dog and cat and master. 
+
+808
+00:55:43,600 --> 00:55:47,250
+这很棒,我可以并行开发不同的功能,
+So this is great, I can do development in parallel on different features, 
+
+809
+00:55:47,250 --> 00:55:52,450
+但只有当我最终将这些内容都合并回我的原始开发线时,也就是将两个功能合并成单个版本,才真正有用,
+but this is only really useful if I can eventually combine those things back into my original line of development to have both features in a single version of my source code. 
+
+810
+00:55:55,850 --> 00:55:59,775
+用于合并的命令是 "git merge".
+So the command that's used to do that is "git merge". 
+
+811
+00:55:59,775 --> 00:56:03,800
+所以可以认为 "git branch" 和 "git merge" 是相反的.
+So like "git branch" and "git merge" can kind of be thought of as opposites. 
+
+812
+00:56:04,750 --> 00:56:10,525
+让我先 "git checkout master",切换到master分支
+Let me "git checkout master", let me check out my master branch.
+
+813
+00:56:10,525 --> 00:56:12,300
+你看,HEAD指向了master分支
+So now you see, HEAD points to master, 
+
+814
+00:56:12,300 --> 00:56:16,500
+然后我要将cat()函数和dog()函数合并到master上.
+and then I want to merge the cat functionality and the dog functionality into master. 
+
+815
+00:56:16,500 --> 00:56:19,175
+为了做到这一点,我可以使用 "get merge".
+And to do that, I can use the "git merge" command. 
+
+816
+00:56:19,175 --> 00:56:20,700
+"git merge"实际上相当高级,
+"git merge" is actually pretty fancy, 
+
+817
+00:56:20,700 --> 00:56:23,325
+我可以同时合并cat分支和dog分支(`git merge cat dog`).
+and I can actually merge cat and dog at the same time. 
+
+818
+00:56:23,325 --> 00:56:26,500
+但是为了演示,我们一次只合并一个分支.
+But for this demonstration, we're going to only merge one thing at a time.
+
+819
+00:56:26,500 --> 00:56:28,950
+所以首先,我将输入 "git merge cat",
+So first, I'll type "git merge cat", 
+
+820
+00:56:28,950 --> 00:56:30,700
+然后它输出了些东西.
+and it gets us some stuff. 
+
+821
+00:56:30,700 --> 00:56:34,100
+这里它说"Fast-forward".那这里发生了什么?
+Here It says "Fast-forward." So what is going on here? 
+
+822
+00:56:34,100 --> 00:56:36,675
+实际上这是 Git 做的一件有趣的事.
+Well, this is one interesting thing that git can do. 
+
+823
+00:56:36,675 --> 00:56:40,650
+当你在一个特定的提交上,
+When you're at a particular commit,  
+
+824
+00:56:40,650 --> 00:56:45,300
+并有一个其他分支是以此提交状态为基础进行修改的,那么在将这个分支合并回主分支时,
+and you merge some other branch in where that other branch has the current commit as a predecessor, 
+
+825
+00:56:45,300 --> 00:56:49,500
+不需要创建任何新的快照或做任何其他操作.
+it's not necessary to create any new snapshots or do any other fancy stuff. 
+
+826
+00:56:49,500 --> 00:56:53,400
+基本上,这个master分支,现在指向这个提交,
+Basically, this master branch here, this pointer to this commit, 
+
+827
+00:56:53,400 --> 00:56:57,900
+可以直接移动到这里,和cat分支合并.
+can just be moved to point here instead to incorporate that cat functionality. 
+
+828
+00:56:57,900 --> 00:57:00,425
+所以如果我们再次查看 Git 日志,
+And so if we look at the git log again, 
+
+829
+00:57:00,425 --> 00:57:05,550
+我们可以看到master指向与cat相同的提交.
+we see that master is basically pointing to the same place as wherever cat was pointing. 
+
+830
+00:57:05,550 --> 00:57:09,275
+好了,现在我们在master分支上,并且它有了cat().
+All right, so now we're on the master branch,  and it has the cat functionality.  
+
+831
+00:57:09,275 --> 00:57:10,850
+很好,我们完成了一半.
+Great, we're halfway there. 
+
+832
+00:57:10,950 --> 00:57:17,900
+如果我们查看 "animal.py" 文件,它具有cat()函数,但缺少dog()函数.
+If we look at animal.py, it has the cat functionality, but it's missing the dog stuff. 
+
+833
+00:57:17,900 --> 00:57:21,150
+所以接下来让我们试试 `get merge dog` 命令.
+So let's try "git merge dog" next. 
+
+834
+00:57:21,150 --> 00:57:23,925
+这次发生了一些更有趣的事情.
+Something a little bit more interesting happens this time. 
+
+835
+00:57:23,925 --> 00:57:28,350
+所以这一次,无法像之前那样"Fast-forward".
+So this time, the branch can't be fast-forwarded like it was before. 
+
+836
+00:57:28,350 --> 00:57:31,966
+dog分支不是一个旧的东西.
+It's not that one thing which is strictly older than the other thing. 
+
+837
+00:57:31,966 --> 00:57:36,175
+这是说存在一种并行开发方式,可能与当前的一系列变化不兼容.
+There's been parallel development that may be kind of incompatible with the current set of changes. 
+
+838
+00:57:36,175 --> 00:57:41,425
+Git会尽力自行合并来自另一个分支的更改,
+And git does its best job at automatically merging the changes from this other branch. 
+
+839
+00:57:41,425 --> 00:57:47,400
+因此它会显示"Auto-merging animal.py".但在这种情况下,存在所谓的合并冲突.
+So it says "Auto-merging animal.py." But in this particular case, there's what's called a merge conflict. 
+
+840
+00:57:47,400 --> 00:57:50,975
+因此,它无法自行解决
+So it wasn't able to automatically resolve all the conflicts 
+
+841
+00:57:50,975 --> 00:57:53,000
+这两个并行开发分支之间的冲突.
+between these two parallel branches of development. 
+
+842
+00:57:53,000 --> 00:57:56,500
+当你在实际的软件项目中工作时,你也会看到这种情况,
+And this is something you'll see in practice when you're working on real software projects, 
+
+843
+00:57:56,500 --> 00:58:00,700
+因为很可能会出现一些比较复杂的,略有不兼容的并行变化.
+and they're complicated, slightly incompatible changes happening in parallel. 
+
+844
+00:58:00,700 --> 00:58:04,800
+这时候,就需要由开发人员来解决此问题.
+So at this point, it's left up to the developer to fix this issue. 
+
+845
+00:58:04,800 --> 00:58:09,800
+Git提供了一些功能来解决合并冲突.
+And Git offers some functionality in order to help resolve merge conflicts. 
+
+846
+00:58:09,800 --> 00:58:12,850
+有一个叫做"git mergetool"的程序,
+There's a program called "git mergetool", 
+
+847
+00:58:12,850 --> 00:58:15,900
+在我的个人配置中,这将启动vimdiff.
+and in my particular setup, this will launch vimdiff. 
+
+848
+00:58:15,900 --> 00:58:18,000
+实际上,这还没配置好.
+Actually, this is not configured. 
+
+849
+00:58:18,000 --> 00:58:23,275
+我觉得能成功启动vimdiff.
+"vimdiff", I think, will start the right program. 
+
+850
+00:58:24,775 --> 00:58:34,875
+让我配置一下我的Git来启动正确的工具.
+Let me set up my Git to launch the correct tool . 
+
+851
+00:58:36,675 --> 00:58:40,300
+算了,还是先跳过这个,我们来手动看看vimdiff程序是啥样的.
+Actually let's skip that part,  and let's just manually look at this vimdiff.  
+
+852
+00:58:40,300 --> 00:58:45,500
+我们可以在键入`git mergetool`时启动vimdiff程序,
+So there's a program called vimdiff, which can be set up to be launched when you type in "git mergetool", 
+
+853
+00:58:45,550 --> 00:58:49,050
+这是出现合并冲突时使用的工具.
+which is a tool that you use when you try "git merge" and there are merge conflicts. 
+
+854
+00:58:49,050 --> 00:58:52,650
+现在,我们将手动解决这些冲突.
+But in this particular case, we'll just manually resolve them. 
+
+855
+00:58:52,650 --> 00:58:58,475
+因此,我执行了`git merge --abort`,这将回到我"git merge"之前的状态.
+So let me, I did "git merge --abort," so it put me back in the state I was before I tried that git merge. 
+
+856
+00:58:58,550 --> 00:58:59,895
+这是我仓库的当前状态.
+So this is the current state of my repository. 
+
+857
+00:58:59,895 --> 00:59:03,325
+我回到了这个位置,master与cat指向相同提交,
+I'm back to the case where master is at the same place as cat, 
+
+858
+00:59:03,350 --> 00:59:05,375
+现在想要将dog分支合并到master分支中.
+and I'm about to merge in dog. 
+
+859
+00:59:05,375 --> 00:59:07,250
+我执行了`git merge dog`命令,
+So I do "git merge dog", 
+
+860
+00:59:07,250 --> 00:59:13,400
+它显示"在animal.py中发生合并冲突".
+and it says "Merge conflict in animal.py."  
+
+861
+00:59:13,400 --> 00:59:17,700
+因此,让我们直接查看animal.py文件.
+So let's just look at animal.py directly. 
+
+862
+00:59:17,775 --> 00:59:21,900
+看起来顶部部分看起来很不错,它有我想要的cat()和dog()函数.
+So it looks like this top part looks pretty reasonable.It has both the cat function and the dog function, which is exactly what I want. 
+
+863
+00:59:21,900 --> 00:59:23,800
+但现在我在main函数中看到一些奇怪的东西,
+But now I see some weird stuff in main, 
+
+864
+00:59:23,800 --> 00:59:26,425
+这就是有合并冲突的的更改.
+and this is where I added slightly incompatible changes. 
+
+865
+00:59:26,425 --> 00:59:34,150
+这里,它会显示在当前分支上,你有这些内容.
+So here it says that in one thing, like basically the branch you were on, you had this content. 
+
+866
+00:59:34,150 --> 00:59:37,150
+而在你尝试合并的分支上,它是这些内容.
+And then the branch you're trying to merge had this content. 
+
+867
+00:59:37,150 --> 00:59:42,100
+这些"<<<",">>>"和"==="是冲突标记.
+And then these things here, the angle brackets and the equals, are conflict markers. 
+
+868
+00:59:42,100 --> 00:59:44,875
+因此,这就是你所在的位置和你正在尝试合并的内容,
+So this is where you were,  and this is the thing you're trying to merge in,  
+
+869
+00:59:44,875 --> 00:59:48,650
+它基本上是在一个情况下是这个,另一个情况下是那个,
+and it's basically saying that it was this on one case, this in the other case, 
+
+870
+00:59:48,750 --> 00:59:50,700
+Git不知道如何处理这两个内容.
+and git doesn't really know how to resolve these two. 
+
+871
+00:59:50,700 --> 00:59:53,225
+这就需要程序员来解决这个问题.
+And it's left up to the programmer to fix this problem. 
+
+872
+00:59:53,250 --> 00:59:57,275
+在这种情况下,我们可以先删除冲突标记,
+So in this particular case, we can go ahead and delete the conflict markers. 
+
+873
+00:59:57,275 --> 01:00:02,675
+然后发现,我们实际上直接将这段代码连接在一起就快要能得到正确结果了.
+And then, turns out that we can actually concatenate this code together and does the right thing. 
+
+874
+01:00:02,675 --> 01:00:07,000
+不过还是要做一个小改变,比如这里应该是"if",这里应该是"elif",
+Maybe we want to make a small change like this should be an if, this should be an else-if, 
+
+875
+01:00:07,000 --> 01:00:08,600
+这个应该是"else".
+and this should be an else. 
+
+876
+01:00:08,600 --> 01:00:12,075
+这样可能更有意义,
+That might make a little bit more sense. 
+
+877
+01:00:12,075 --> 01:00:14,350
+我认为这实际上是必要的修改.
+Actually,I think it's necessary for correctness here. 
+
+878
+01:00:14,350 --> 01:00:17,502
+因此,程序员在合并后需要稍微修改一下代码,
+So the programmer needed to modify the code a little bit
+
+879
+01:00:17,502 --> 01:00:19,950
+以使其在合并后变得有意义.
+in order to make it sensible when it's merged together. 
+
+880
+01:00:19,950 --> 01:00:23,350
+但是一旦程序员解决了合并冲突,
+But once the programmer has fixed the merge conflicts,
+
+881
+01:00:23,350 --> 01:00:26,275
+解决了冲突标记之间的问题,
+fixed the stuff between the conflict markers, 
+
+882
+01:00:26,275 --> 01:00:32,600
+就可以保存这个文件,然后我们可以执行`git merge --continue`来告诉git我们已经解决了合并冲突.
+you can save this file and we can do "git merge --continue" to tell git that we fixed the issues. 
+
+883
+01:00:32,625 --> 01:00:39,900
+需要重新添加animal.py文件以告诉git我们已经解决了这些问题.
+It's necessary to re-add animal.py to tell git that we've actually fixed these issues. 
+
+884
+01:00:39,950 --> 01:00:42,300
+然后我们需要`git merge --continue`.
+And then we need to "git merge --continue". 
+
+885
+01:00:42,300 --> 01:00:46,200
+它会弹出编辑器,然后为这个新提交写一个提交消息.
+It pops up an editor and we can give a commit message for this new commit that we're about to create. 
+
+886
+01:00:46,200 --> 01:00:51,325
+现在,如果我们查看git历史记录,我们有一个新提交来表示我们刚刚那个的合并操作,
+And now if we look at the git history, we have the single commit 
+
+887
+01:00:51,325 --> 01:00:57,225
+这个提交里包括dog()函数.
+that represents our merge commit that we just made, which merges in the dog functionality. 
+
+888
+01:00:57,225 --> 01:01:04,050
+这里,它的父节点是dog提交和cat提交.
+And here, this has as parents both the dog commit and the cat commit. 
+
+889
+01:01:04,050 --> 01:01:07,250
+因此,这个提交之前的历史记录中都包含这dog和cat这两个分支,
+So both these branches appear in our history from this point backwards, 
+
+890
+01:01:07,250 --> 01:01:12,225
+并且当前提交包含了这些分支中开发的所有功能.
+and this current commit that we're on incorporates the functionality from both of these branches. 
+
+891
+01:01:12,225 --> 01:01:16,950
+因此,如果我们运行`python animal.py cat`,它会执行cat().
+So if we run animal.py with cat, it does the cat thing. 
+
+892
+01:01:16,950 --> 01:01:18,900
+如果我们传递"dog"参数,则会执行dog().
+If we run it with dog, it does the dog thing. 
+
+893
+01:01:18,900 --> 01:01:22,725
+如果我们传递其他字符串作为参数,则会回到default().
+And if we run it with anything else, it falls back to the default implementation. 
+
+894
+01:01:22,725 --> 01:01:26,918
+我现在演示了如何在 Git 中使用分支来并行开发不同的功能,
+So this is a demonstration of how you branch and git to do development on different things in parallel, 
+
+895
+01:01:29,125 --> 01:01:31,550
+然后使用merge命令将这些并行开发分支合并为单一快照,
+and then how you can use the merge command and git to resolve those different branches and combine them together into a single snapshot 
+
+896
+01:01:35,700 --> 01:01:40,100
+其中这个快照可以包含所有并行开发的功能.
+that includes all the functionality that was developed in parallel with each other. 
+
+897
+01:01:41,425 --> 01:01:43,200
+在进行git分支和合并时,
+And then one thing that can happen 
+
+898
+01:01:43,200 --> 01:01:47,525
+可能会出现合并冲突,
+when you're doing git branching and merging is you run into merge conflicts, 
+
+899
+01:01:47,525 --> 01:01:51,150
+这些冲突会以冲突标记的形式在文本文件呈现出来.
+and these conflicts show up as conflict markers and text files. 
+
+900
+01:01:51,150 --> 01:01:52,500
+你可以手动解决它们,
+You can manually resolve them, 
+
+901
+01:01:52,500 --> 01:01:54,986
+git也有一些工具可以帮助解决这个问题,
+and git also has some tools that can help with this, 
+
+902
+01:01:54,986 --> 01:01:56,375
+尽管这些工具有点高级,
+though these tools are kind of advanced 
+
+903
+01:01:56,375 --> 01:02:00,675
+课程笔记中会提到它们,但是我不会再为这些工具做实机演示了.
+and will only refer to them in the lecture notes and not actually demonstrate them for you. 
+
+904
+01:02:00,675 --> 01:02:03,275
+所以这就是git分支和合并.
+So that's git branching and merging. 
+
+905
+01:02:03,275 --> 01:02:07,350
+还有什么问题吗?没有吗?好的.
+Any questions? No? Great. 
+
+906
+01:02:07,350 --> 01:02:13,700
+那么接下来,我们将探讨git中的远程仓库.
+So moving on to the next topic of this lecture, we will talk about git remotes. 
+
+907
+01:02:13,700 --> 01:02:17,125
+这是实现与他人协作的基本方式.
+So this is basically how you collaborate with other people using git. 
+
+908
+01:02:17,125 --> 01:02:24,950
+git仓库即".git"文件夹中包含的内容,就是历史的完整副本.
+A git repository, the stuff contained in this .git folder, represents kind of an entire copy of the history. 
+
+909
+01:02:24,950 --> 01:02:28,850
+它包含对象和引用,包含了所有之前的快照.
+It has the objects and the references and contains all the previous snapshots. 
+
+910
+01:02:28,850 --> 01:02:32,752
+使用Git与其他人协作的方式是
+And the way you collaborate with other people using git is that 
+
+911
+01:02:32,752 --> 01:02:36,050
+其他人也可以拥有整个Git仓库的副本.
+other people can also have copies of the entire git repository.
+
+912
+01:02:36,150 --> 01:02:42,339
+然后,你的本地仓库可以知道
+And then your git copy, your local instantiation of the repository, 
+
+913
+01:02:42,350 --> 01:02:47,075
+其他克隆副本的存在,
+can be aware of the existence of other clones of the same repository. 
+
+914
+01:02:47,075 --> 01:02:49,275
+这就是远程仓库的概念.
+And this is a concept known as remotes. 
+
+915
+01:02:49,275 --> 01:02:55,450
+使用`git remote`命令可以列出当前仓库所知道的所有远程仓库.
+So, the "git remote" command will list all the remotes that git is aware of for the current repository. 
+
+916
+01:02:55,450 --> 01:03:01,500
+在我们现在这个仓库中,由于我们还没有配置任何远程仓库,
+And in our case with this repository right here, this command get remote just doesn't print anything 
+
+917
+01:03:01,500 --> 01:03:03,500
+所以这个命令什么也不会输出.
+because we haven't configured any remotes. 
+
+918
+01:03:03,500 --> 01:03:08,350
+它只能感知我们当前正在使用的本地仓库副本,而不知道其他副本的存在.
+It is only aware of the single local copy of the repository that we're working with here. 
+
+919
+01:03:08,375 --> 01:03:11,300
+但是实际上,如果你与其他人合作,
+But in practice, if you're collaborating with other people, 
+
+920
+01:03:11,300 --> 01:03:15,100
+你的Git可能会比如说知道GitHub上的代码副本的存在.
+your git might be aware of the copy of the code that is on github. 
+
+921
+01:03:15,150 --> 01:03:17,810
+然后有一系列的命令
+And then there's a set of commands to send changes from 
+
+922
+01:03:17,810 --> 01:03:22,050
+将你本地仓库的更改同步到Git所感知到的远程仓库,
+your local copy of the repository to a remote that your git is aware of. 
+
+923
+01:03:22,050 --> 01:03:24,925
+比如将东西从你的电脑传送到GitHub上去.
+So, sending stuff from your computer to github, for example. 
+
+924
+01:03:24,925 --> 01:03:27,700
+此外,还有一组用于将 GitHub 上的更改获取到本地副本中的命令,
+And there's another set of commands for fetching changes 
+
+925
+01:03:27,700 --> 01:03:32,750
+以使本地仓库中的内容得到更新.
+made in a local repository to get changes from github into your own local copy. 
+
+926
+01:03:33,475 --> 01:03:38,230
+在这个演示中,我们不会配置GitHub账户,
+In this demonstration here, we actually won't go and configure a github account 
+
+927
+01:03:38,325 --> 01:03:40,475
+登录并在那里创建新仓库.
+and log in and create a new repository on there. 
+
+928
+01:03:40,475 --> 01:03:42,265
+你可以找到其他的教程来完成这个任务.
+You can find other tutorials for doing that. 
+
+929
+01:03:42,265 --> 01:03:48,025
+我们这里就把这个电脑上的另一个文件夹视为Git远程仓库.
+We'll actually just use a separate folder on the same computer and treat it like a git remote. 
+
+930
+01:03:48,025 --> 01:03:50,600
+我现在还在demo文件夹中,
+So let me, I'm in the demo folder here. 
+
+931
+01:03:50,600 --> 01:03:53,250
+让我先回到上一级目录,
+Let me go up one directory. 
+
+932
+01:03:53,250 --> 01:03:56,375
+这里有一个"playground"的目录,里面包含了"demo"文件夹
+I have a directory called playground that has this demo folder. 
+
+933
+01:03:56,375 --> 01:04:00,300
+接下来进入"playground",创建一个新的目录
+And I'll go ahead and create a new directory in here, 
+
+934
+01:04:00,300 --> 01:04:02,150
+我称它为"remote".
+and I'll call it remote. 
+
+935
+01:04:02,150 --> 01:04:07,000
+然后使用`git init --bare`在这里建立仓库.
+And then do "git init --bare" in here. 
+
+936
+01:04:07,000 --> 01:04:10,075
+这些命令在日常使用中可能不经常用.
+Those are the command that you'll probably never need to use in regular usage. 
+
+937
+01:04:10,075 --> 01:04:16,500
+但现在,我已经将"remote"文件夹设置为适合用作Git远程仓库的文件夹.
+But now what I've done is made remote into a folder that's appropriate to use as a git remote. 
+
+938
+01:04:16,500 --> 01:04:21,175
+现在回到我的"demo"文件夹,我的Git仓库,
+So now going back into my demo folder here, my git repository, 
+
+939
+01:04:21,175 --> 01:04:23,670
+我可以使用`git remote`命令列出远程仓库.
+I can do "git remote" to list the remotes. 
+
+940
+01:04:23,670 --> 01:04:28,325
+还是没有任何内容,但是我可以使用"git remote add"
+There's nothing yet, but I can use the "git remote add" functionality to 
+
+941
+01:04:28,400 --> 01:04:34,000
+让我的本地仓库知道远程仓库的存在.
+make my local repository aware of the existence of a remote. 
+
+942
+01:04:34,000 --> 01:04:35,725
+因此,我可以使用"git remote add"命令,
+So, I can do "git remote add", 
+
+943
+01:04:35,725 --> 01:04:40,775
+然后远程仓库具有名称和URL.
+and then the format for this is that remotes have names and then they have a URL. 
+
+944
+01:04:40,800 --> 01:04:43,664
+在这种情况下,我将使用名称origin,
+So in this case, I'll use the name origin, 
+
+945
+01:04:43,664 --> 01:04:48,000
+如果你只使用一个仓库,这是一个约定俗成的远程仓库名称.
+which is often used by convention as the name of the remote if you're only using one. 
+
+946
+01:04:48,000 --> 01:04:50,900
+然后对于URL,通常这将类似于Github URL
+And then for the URL, normally this will be like a github URL 
+
+947
+01:04:50,900 --> 01:04:54,350
+或Bitbucket URL或Gitlab URL,
+or something like that or bitbucket URL or gitlab URL
+
+948
+01:04:54,350 --> 01:04:57,150
+如果你使用在线仓库托管服务的话.
+if you're using an online repository hosting service. 
+
+949
+01:04:57,150 --> 01:05:01,175
+但在这种情况下,它只是指向我本地的一个文件夹的路径.
+But in this case, it's just a path to a folder on my local machine. 
+
+950
+01:05:01,175 --> 01:05:03,625
+在父目录中有一个名为remote的文件夹,
+There's a folder in the parent directory called remote 
+
+951
+01:05:03,625 --> 01:05:07,000
+它将作为此仓库的git远程仓库.
+that will act as the git remote for this repository. 
+
+952
+01:05:07,000 --> 01:05:12,550
+所以现在,一旦我完成这个步骤,就有一组与此远程仓库进行交互的命令.
+So now, once I've done that, there's a set of commands for interacting with this remote. 
+
+953
+01:05:12,550 --> 01:05:15,825
+其中一个有用的命令是"git push"命令.
+One command that's useful is the "git push" command. 
+
+954
+01:05:15,875 --> 01:05:20,350
+此命令可以将更改从本地发送到远程仓库.
+This command can send the changes from your computer to the remote. 
+
+955
+01:05:20,350 --> 01:05:24,525
+该命令的格式是git push加上远程仓库的名称,
+And the format for this command is that git push takes in the name of a remote 
+
+956
+01:05:24,525 --> 01:05:28,700
+然后本地分支名称,远程分支名称.
+and then it takes in a local branch name, a remote branch name. 
+
+957
+01:05:28,700 --> 01:05:34,950
+它会在远程仓库创建一个新分支或更新上面的一个分支,
+And what it does is it creates a new branch or updates a branch on the remote with the name specified here 
+
+958
+01:05:34,950 --> 01:05:39,675
+并将其改为本地这个分支的内容.
+and sets it to the contents of the branch specified here. 
+
+959
+01:05:39,700 --> 01:05:43,600
+所以一个具体的例子比如git push...
+So a concrete use of this might look like git push. 
+
+960
+01:05:43,600 --> 01:05:45,800
+我只有一个名为origin的远程,
+I've only one remote called origin, 
+
+961
+01:05:45,800 --> 01:05:48,375
+那我应该推送什么呢?
+and then what should I push?
+
+962
+01:05:48,375 --> 01:05:51,400
+让我看看我的历史记录图.
+Let me look at my history graph. 
+
+963
+01:05:51,400 --> 01:05:53,095
+我有一堆东西可以推送.
+I have a bunch of things I could push. 
+
+964
+01:05:53,100 --> 01:05:59,450
+让我把我的本地的master推送到origin仓库.
+Let me get pushed to origin, the master branch from my local machine: master. 
+
+965
+01:05:59,450 --> 01:06:04,250
+所以,这里是说我想在远程仓库上创建一个名为master的分支,
+So, I want to create a branch on the remote machine with the name master 
+
+966
+01:06:04,250 --> 01:06:08,150
+它将与我的本地仓库上的master分支相同.
+that is going to be the same as the master branch on my local machine. 
+
+967
+01:06:08,150 --> 01:06:09,770
+所以,让我继续运行这个命令.
+So, let me go ahead and run that command. 
+
+968
+01:06:09,770 --> 01:06:11,750
+它会打印一些东西,并说:
+It prints out some stuff,  and it says,  
+
+969
+01:06:11,750 --> 01:06:13,887
+"在远程上,我创建了一个名为远程master的新分支."
+"On the remote, I created a new branch."
+
+970
+01:06:13,887 --> 01:06:18,250
+它和我的本地仓库上的master指向相同位置.
+Remote master points to the same branch as master on my local machine.
+
+971
+01:06:18,250 --> 01:06:21,825
+现在,如果我执行`git log`,我们可以看到...
+And now, if I do a git log, it shows me..
+
+972
+01:06:21,825 --> 01:06:25,025
+蓝色是HEAD,是我当前所在的位置.
+So, in blue is HEAD, where I currently am. 
+
+973
+01:06:25,025 --> 01:06:28,325
+绿色是我本地git仓库中的所有分支.
+In green, are all the branches in my local git repository. 
+
+974
+01:06:28,325 --> 01:06:31,225
+现在,我们看到了之前没有见过的一种新颜色.
+And now, we see one new color here that we had not seen before. 
+
+975
+01:06:31,225 --> 01:06:37,100
+红色是git显示的我本地副本所知道的远程引用.
+So, in red, git shows references that are present on the remotes that my local copy is aware of. 
+
+976
+01:06:37,100 --> 01:06:42,100
+所以,在remote origin上,还有一个名为master的分支,
+So, on the remote origin, there's also a branch that happens to have the name master 
+
+977
+01:06:42,100 --> 01:06:46,200
+它恰好与master分支指向相同的位置.
+that points to the same place as my local branch master points. 
+
+978
+01:06:46,200 --> 01:06:49,825
+因此,现在,如果我对我的本地副本进行更新,
+And so, now, if I make updates to my local copies, 
+
+979
+01:06:49,825 --> 01:06:54,825
+比如说我在这里更改了这些内容的大写,
+like suppose here I go in and change the capitalization of these things, 
+
+980
+01:06:55,775 --> 01:06:59,175
+然后运行`git add animal.py`,`git commit....`,
+and then "git add animal.py", "git commit...", 
+
+981
+01:06:59,250 --> 01:07:02,200
+这里可以直接写一个短的提交消息,所以它不会弹出编辑器.
+here's a short form for commit with a message so it doesn't pop the editor. 
+
+982
+01:07:02,200 --> 01:07:04,475
+我随便给它一个提交消息.
+I'll give it a commit message. 
+
+983
+01:07:04,475 --> 01:07:07,100
+现在,如果我查看历史记录图,
+And now, if I look at the git graph, 
+
+984
+01:07:07,200 --> 01:07:11,900
+现在我看到我创建了这个新的快照,我把那些大写字母改成了小写,
+now I see that I've created this new snapshot here that has this lower casing stuff in it, 
+
+985
+01:07:11,900 --> 01:07:14,800
+但是"origin/master"仍然停在这里.
+but "origin/master" is still back here. 
+
+986
+01:07:14,800 --> 01:07:20,675
+所以,如果其他人查看远程仓库,他们只能看到到此为止的更改,
+So, if somebody else looks at the remote, they will only see the changes up to here, 
+
+987
+01:07:20,675 --> 01:07:22,775
+我们可以实际演示这个功能.
+and we can actually demonstrate this functionality. 
+
+988
+01:07:22,775 --> 01:07:28,900
+好的,让我打开一个新标签页,进入我的 "playground" 目录.
+So, let me go ahead and open up a new tab here and go into my playground directory. 
+
+989
+01:07:28,900 --> 01:07:33,685
+"git clone" 命令可以让克隆一个仓库到我们的本地,
+The "git clone" command is a command that somebody can use to start 
+
+990
+01:07:33,685 --> 01:07:37,675
+创建自己的本地副本.
+from some copy of a repository somewhere and make their own local copy. 
+
+991
+01:07:37,675 --> 01:07:40,225
+因此,这个命令很常用.
+So, this is often a command to use when starting out with a git repo. 
+
+992
+01:07:40,225 --> 01:07:42,000
+例如,在 Github 上有不少开源的项目,
+Like there might be something available on github, 
+
+993
+01:07:42,050 --> 01:07:46,325
+你想把它全部克隆到本地以阅读学习或进行二次开发.
+and you want to copy it all in your machine in order to look at it or start doing development. 
+
+994
+01:07:46,325 --> 01:07:49,850
+使用“git clone”命令时,需要提供一个 URL,
+And so, the format for git clone is that it takes in a URL, 
+
+995
+01:07:49,850 --> 01:07:54,825
+还要指定一个目录名称,以便将其克隆到本地存储中.
+and then it takes in a name for a folder for where to clone it. 
+
+996
+01:07:54,825 --> 01:07:59,125
+在我们这里,我们只是克隆这个remote目录.
+So, in our case here, we're just going to clone from this remote directory. 
+
+997
+01:07:59,125 --> 01:08:02,225
+我们假装这个remote文件夹实际上是一个远程机器,
+We're pretending that this remote folder is actually a remote machine, 
+
+998
+01:08:02,225 --> 01:08:05,900
+然后我们把remote克隆到叫做 "demo2" 的文件夹里.
+and then we're all clone it into the folder called demo2. 
+
+999
+01:08:05,900 --> 01:08:09,275
+克隆完成后,
+Cloning into demo2 done, 
+
+1000
+01:08:09,275 --> 01:08:12,375
+我要切换到demo2.
+and I'm going to CD into that directory. 
+
+1001
+01:08:12,400 --> 01:08:15,575
+然后现在,我重命名一下底部的tab标签.
+And then now here, I'm going to rename these tabs at the bottom. 
+
+1002
+01:08:15,575 --> 01:08:21,100
+我会说这个是 machine 1,这个是 machine 2.
+I will say this one's machine 1,  and this one's machine 2.  
+
+1003
+01:08:21,100 --> 01:08:27,450
+你可以将这看作是两个在不同机器上使用各自的本地副本的人,
+So, you can think of these as two different people on different machines with their own copy of the repository, 
+
+1004
+01:08:27,450 --> 01:08:30,050
+同时与一个相同的远程仓库进行交互.
+and they're both interacting with the single remote. 
+
+1005
+01:08:30,050 --> 01:08:33,525
+如果我在 machine 2上执行 "git log" 命令,
+So, if I do my "git log" command that I've been doing on machine1, 
+
+1006
+01:08:33,525 --> 01:08:37,150
+我会在 machine 2上看到这部分的历史记录图.
+I see on Machine 2, I see this portion of the history. 
+
+1007
+01:08:37,150 --> 01:08:44,000
+因此,machine 2 上的 master 指向的是与 "origin/master" 相同的位置,
+So, master on machine 2 is pointing to the same places "origin/master", 
+
+1008
+01:08:44,000 --> 01:08:49,525
+并且它说:"合并分支 dog".因此,如果我在这里查看"animal.py",
+and it says, "merge branch dog." So, if I look at "animal.py" here, 
+
+1009
+01:08:49,525 --> 01:08:52,225
+在 machine 2上它没有machine 1上我所做的更改.
+it doesn't have the changes that I made on machine 2. Oh, sorry.On machine 1.
+
+1010
+01:08:55,200 --> 01:08:59,875
+这个提交只存在于machine 1上,
+where I have this new commit that is only present on this machine  
+
+1011
+01:08:59,875 --> 01:09:01,800
+remote文件夹和 machine 2上是没有的,
+but not on the remote and not on machine2.
+
+1012
+01:09:01,800 --> 01:09:05,925
+因此,如果我想解决这个问题,就是我想将这些更改更新到远程仓库,
+So if I want to fix that, if I want to send these changes up to the remote, 
+
+1013
+01:09:05,950 --> 01:09:07,150
+例如将其发送到 GitHub 
+like think of it as sending it up to GitHub, 
+
+1014
+01:09:07,175 --> 01:09:11,525
+或持有或维护源代码的机器上,
+or up to the machine that's holding or maintaining the source code, 
+
+1015
+01:09:11,525 --> 01:09:13,400
+我可以使用 "git push" 命令.
+I can use the "git push" command again.
+
+1016
+01:09:13,400 --> 01:09:19,500
+`git push origin/master:master` 就可以了,
+"git push origin/master:master" and this will work, 
+
+1017
+01:09:19,500 --> 01:09:21,975
+但是这个命令有点长,每次都要输入的话有些麻烦.
+but this is kind of annoying to type every time you want to do this. 
+
+1018
+01:09:21,975 --> 01:09:27,375
+因为像这样的操作非常常见, Git 有一种方法使它变得更简单.
+Like, this is a really common operation, so git has a way of making this a little bit simpler. 
+
+1019
+01:09:27,400 --> 01:09:32,700
+它有一种方法来维护你自己本地仓库的分支
+It has a way of maintaining relationships between branches on your own local machine 
+
+1020
+01:09:32,700 --> 01:09:35,050
+和远程仓库的分支之间的关系.
+and branches on remote machines. 
+
+1021
+01:09:35,050 --> 01:09:40,700
+它有一种方法来知道本地分支对应的远程分支,
+It is a way of knowing what branch on a remote machine a local branch corresponds to 
+
+1022
+01:09:40,700 --> 01:09:43,225
+这样"git push"命令就可以简化输入了,
+so that you can type in a shortened version of "git push", 
+
+1023
+01:09:43,225 --> 01:09:47,325
+它会自动扩展所有的参数.
+and it'll know what all the arguments to the expanded form would have been. 
+
+1024
+01:09:47,325 --> 01:09:50,125
+有几种不同的语法来做到这一点.
+And there are a couple of different syntaxes for doing this. 
+
+1025
+01:09:50,125 --> 01:09:55,250
+一种方法是使用 "git branch --set-upstream-to=" 命令,
+One way is to use the "git branch --set-upstream-to=" command, 
+
+1026
+01:09:55,250 --> 01:09:58,125
+它为当前所在的分支(这里即 master)
+and what this does is for the branch that's currently checked out, which is master,
+
+1027
+01:09:58,125 --> 01:10:03,025
+对于"set-upstream-to",我将输入 "origin/master".
+it will "set-upstream-to",  and I'll type in "origin/master".  
+
+1028
+01:10:03,025 --> 01:10:07,975
+现在可以看到,它说"分支'master'已经设置好了,可以跟踪来自'origin'的'master'分支了."
+And see, now it says "Branch 'master' set up to track remote branch 'master' from 'origin'." 
+
+1029
+01:10:07,975 --> 01:10:10,294
+现在,如果我输入 `git branch -vv`
+Now, if I type in "git branch -vv"
+
+1030
+01:10:10,294 --> 01:10:15,144
+记住,这会详细地告诉我所有分支的信息,
+Remember, this is telling me about all the branches that I know about in a very verbose way, 
+
+1031
+01:10:15,144 --> 01:10:16,575
+这就是 "-vv" 的含义,
+that's what the "-vv" means, 
+
+1032
+01:10:16,575 --> 01:10:19,623
+我在machine 1(即本地)上有三个分支.
+I have three branches on my local machine, on machine1. 
+
+1033
+01:10:19,623 --> 01:10:21,600
+我有 cat,dog 和 master,
+I have cat, dog, and master,
+
+1034
+01:10:21,650 --> 01:10:26,750
+我的本地的 master 关联了 "origin/master".
+and master on my local machine corresponds to "origin/master". 
+
+1035
+01:10:26,750 --> 01:10:31,175
+所以现在我只需要输入 `git push`,而不需要其他的参数.
+So now I can type in just "git push" without all the extra arguments. 
+
+1036
+01:10:31,175 --> 01:10:35,765
+我本来需要用 "git push origin/master:master",但这是不必要的.
+I could have done this as  "git push origin/master:master", but it wasn't necessary. 
+
+1037
+01:10:35,765 --> 01:10:40,456
+它知道我想要推送到 "origin/master",并进行相应的更改.
+It'll know that I want to push to "origin/master",  and it will make that change.  
+
+1038
+01:10:40,554 --> 01:10:43,518
+远程仓库已经被更改了.
+So now these changes are present on the remote. 
+
+1039
+01:10:43,518 --> 01:10:47,264
+我们现在转到machine 2,假装我们是其他人,正在与此仓库进行交互,
+We can go over to machine2, pretend we're the other guy interacting with this repository, 
+
+1040
+01:10:47,264 --> 01:10:52,020
+如果我执行 "git log" 命令,还是没有更改.
+and if I do my git log command, I still don't see the changes. 
+
+1041
+01:10:52,020 --> 01:10:57,003
+那么这里是咋回事儿?嗯,我们还必须要单独在machine 2上执行一个命令.
+So what's going on here? Well, it's necessary in order to run a separate command. 
+
+1042
+01:10:57,003 --> 01:11:01,107
+或者说,为了使那些更改生效,必须再单独执行一个命令.
+Or it's necessary to run a separate command in order to have these changes present here. 
+
+1043
+01:11:01,107 --> 01:11:04,951
+默认情况下,所有 git 命令不会联网.
+By default, all the git commands don't talk to the internet. 
+
+1044
+01:11:04,951 --> 01:11:09,479
+所有这些操作都是在本地完成的,因此速度非常快,
+It all works locally, which means it works very fast,  
+
+1045
+01:11:09,479 --> 01:11:12,443
+但是为了同步其他地方所做的更改,需要使用一些特殊的命令.
+but then there are special commands for saying that you want to retrieve changes that have made somewhere else. 
+
+1046
+01:11:12,476 --> 01:11:16,254
+这里执行此操作的命令称为 "git fetch".
+And the command that's used for doing that is a command called "git fetch". 
+
+1047
+01:11:16,254 --> 01:11:22,671
+"git fetch" 需要将远程仓库名称作为参数,但如果只有一个远程仓库,则会默认直接使用.
+"git fetch" takes the name of the remote as an argument, but if there's only one, it'll just use that. 
+
+1048
+01:11:22,671 --> 01:11:24,821
+所以这里可以直接输入 "git fetch",
+So you can type in "git fetch", 
+
+1049
+01:11:24,821 --> 01:11:28,762
+然后它将与此远程仓库通信,
+and then it's talked to this remote repository, 
+
+1050
+01:11:28,762 --> 01:11:33,355
+并表示远程有一些更新,
+and it says that there's some update on the remote, 
+
+1051
+01:11:33,355 --> 01:11:36,124
+我们可以通过运行 "git log" 来看看.
+and we can visualize it by running git log. 
+
+1052
+01:11:36,124 --> 01:11:39,218
+现在出现了一种以前没有见过的情况.
+And now we see here another situation that we hadn't seen before. 
+
+1053
+01:11:39,218 --> 01:11:41,661
+我们在本地上有 master.
+We have master on our local machine. 
+
+1054
+01:11:41,661 --> 01:11:43,225
+master分支没有改变.
+The master branch doesn't change. 
+
+1055
+01:11:43,225 --> 01:11:48,632
+"git fetch" 命令不会更改任何本地历史记录,本地引用(例如分支等).
+The "git fetch" command doesn't change any of our local history, our local references like our branches. 
+
+1056
+01:11:48,632 --> 01:11:54,430
+但它知道现在"origin/master"已指向这个新提交,
+But now it's aware that "origin/master" has been updated to point to this new commit, 
+
+1057
+01:11:54,495 --> 01:12:01,270
+现在又要输入一个单独的命令,我们可以使用 "git merge" 来将 master 向上移动到此处.
+and there's a separate command we can do, "git merge", in order to move master up to here. 
+
+1058
+01:12:01,336 --> 01:12:08,306
+或者还有一个叫 "git pull" 的命令,它相当于先执行 "git fetch",然后执行 "git merge".
+Or there's another command called git pull, which is the same as doing git fetch and then git merge. 
+
+1059
+01:12:08,306 --> 01:12:10,912
+因此,如果我们在此处只执行 "git pull",
+So if we just do git pull here, for example, 
+
+1060
+01:12:10,912 --> 01:12:15,896
+它将说它正在将 "origin/master" 合并到我们的 master 中,
+it will say it's fast-forwarding, it's merging in "origin/master" into our master, 
+
+1061
+01:12:16,000 --> 01:12:21,900
+现在,如果我们查看 git 历史记录图,我们目前已经切换到 master.
+And now, if we look at the Git history graph, we've currently checked out master. 
+
+1062
+01:12:21,900 --> 01:12:25,100
+master指向了和 "origin/master" 相同的位置,
+Master points to the same place as the "origin/master" that we're aware of, 
+
+1063
+01:12:25,100 --> 01:12:28,800
+现在 machine 2 和 machine 1 之间的所有更改都已同步.
+and all the changes between machine 2 and machine 1 are in sync. 
+
+1064
+01:12:28,800 --> 01:12:32,400
+这些是与 Git 进行远程交互的基本命令.
+So those are the basic commands for interacting with Git remotes. 
+
+1065
+01:12:32,400 --> 01:12:37,909
+例如,`git remote`用于列出远程主机,还有一些并添加和删除远程仓库等的 Git 命令.
+So there's the Git remote command for listing remotes and adding and removing them and things like that. 
+
+1066
+01:12:37,909 --> 01:12:44,600
+然后有 "git push" 命令用于将本地仓库的更改发送到远程仓库.
+And then there's the "git push" command for sending changes from your local copy of the repository to the remote. 
+
+1067
+01:12:44,600 --> 01:12:49,200
+然后有 "git fetch" 命令,用于检索在远程仓库上的更改,
+And then there's the "git fetch" command, which is for retrieving changes to a repository 
+
+1068
+01:12:49,200 --> 01:12:53,000
+并在本地上获取这些更改.
+that are present on a remote and getting the changes on your local machine. 
+
+1069
+01:12:53,100 --> 01:12:56,070
+一旦检索到更改,
+And once you retrieve those changes, 
+
+1070
+01:12:56,070 --> 01:13:00,400
+你可以使用 "git merge" 将本地分支更新到与远程分支指向相同位置,
+you can use "git merge" to update your local branch to point to the same place where the remote branch does, 
+
+1071
+01:13:01,900 --> 01:13:08,100
+或者你可以使用 "git pull" 命令,它就是 "git fetch" 和 "git merge" 的组合.
+or you can use the "git pull" command, which does basically the same thing as "git fetch" plus "git merge". 
+
+1072
+01:13:08,100 --> 01:13:10,400
+除了以上这些命令,
+And then of course, separate from all these commands 
+
+1073
+01:13:10,400 --> 01:13:13,800
+还有一个单独的命令——克隆命令.
+is the clone command that we talked about a little while ago, 
+
+1074
+01:13:13,800 --> 01:13:21,300
+该命令用于获取远程仓库的副本,并使用该副本来初始化本地仓库.
+which is for taking a copy of a remote repository and initializing the local repository from that copy. 
+
+1075
+01:13:21,300 --> 01:13:26,700
+这就是Git远程交互所需命令的概述.
+So that's a quick overview of the different commands used to interact with Git remotes. 
+
+1076
+01:13:26,700 --> 01:13:28,600
+这些命令有点复杂,
+And now these are kind of complicated, 
+
+1077
+01:13:28,600 --> 01:13:31,900
+需要一些时间来掌握所有形式,
+and it takes a while to master all the different variations of this 
+
+1078
+01:13:31,900 --> 01:13:33,400
+还要并理解它们实际的使用方式.
+and understand how they're actually used in practice.
+
+1079
+01:13:33,400 --> 01:13:35,486
+但希望这节课能帮你们快速入门,
+But hopefully, this acts as a quick introduction, 
+
+1080
+01:13:35,486 --> 01:13:38,949
+你可以看到不同的命令与底层数据模型的关系.
+and you can see how the different commands relate to the underlying data model. 
+
+1081
+01:13:38,949 --> 01:13:43,179
+所有这些命令都只是从其他地方获取新对象,
+All these commands, all they do is fetch new objects from other places 
+
+1082
+01:13:43,179 --> 01:13:45,876
+或将对象从本地发送到其他地方,
+or send objects from the local mission to other places, 
+
+1083
+01:13:45,876 --> 01:13:48,502
+或者会改变引用.
+and these commands mutate references. 
+
+1084
+01:13:49,787 --> 01:13:54,331
+因此,将Git的这些丑陋的命令
+So relating the interface of Git and some of these kind of badly designed commands
+
+1085
+01:13:54,331 --> 01:14:00,818
+和底层数据模型联系起来,可以更好地理解运行原理.
+to the underlying data model can help it make a lot more sense. 
+
+1086
+01:14:03,166 --> 01:14:09,577
+最后一个要讲的是Git其他方面的工作,
+The final topic we're going to cover today is a kind of overview of other things that Git can do 
+
+1087
+01:14:09,577 --> 01:14:13,219
+我们不会详细介绍如何执行这些操作,
+that we're not going to go into detail in teaching you how to do, 
+
+1088
+01:14:13,219 --> 01:14:17,572
+我们只是想告诉你这些功能的存在,以便在需要时你可以自行执行这些操作.
+but we just want to tell you that these functionalities exist in case you need to do these things yourself. 
+
+1089
+01:14:17,572 --> 01:14:20,712
+你可以读文档找出如何执行它们.
+You can look up the documentation and find out exactly how to do it. 
+
+1090
+01:14:20,712 --> 01:14:23,746
+其中一个是"git config"命令.
+One thing is the "git config" command. 
+
+1091
+01:14:23,746 --> 01:14:29,683
+像之前看过的很多工具一样,例如shell,Tmux等,Git的自定义程度也是很高的,
+Like a lot of tools we've looked at, like the shell and Tmux and things like that, Git is highly configurable, 
+
+1092
+01:14:29,709 --> 01:14:34,802
+可以使用纯文本文件进行配置,该文件可以通过命令行界面进行编辑.
+and it's configured using a plain text file which can be edited either through the command-line interface. 
+
+1093
+01:14:34,802 --> 01:14:37,414
+因此,"git config"可以使用标志来修改文本配置文件,
+So "git config" can take in flags that will modify this text file, 
+
+1094
+01:14:37,414 --> 01:14:45,224
+或者可以使用文本编辑器编辑"~/.gitconfig".
+or you can edit the .gitconfig file in the home folder with plain text configuration. 
+
+1095
+01:14:45,250 --> 01:14:49,287
+为了本课程,我删除了我的大部分git配置,
+And so for this lecture, I've actually cut out most of my Git config 
+
+1096
+01:14:49,287 --> 01:14:55,593
+只留下了我的用户名和电子邮件,这将用于git提交.
+and only left in my username and email for what will go into Git commits. 
+
+1097
+01:14:55,593 --> 01:14:57,176
+但是,你可以在这里配置很多东西,
+But there's a lot of stuff you can put in here 
+
+1098
+01:14:57,176 --> 01:15:00,870
+以使git更好地为你工作.
+which will make it behave nicer, behave the way you want it to.
+
+1099
+01:15:00,976 --> 01:15:04,775
+你还可以在线查找其他人的git配置文件.
+And you can look online for different ways people have configured their Git configs. 
+
+1100
+01:15:04,775 --> 01:15:09,498
+通常,人们都为自己的git配置写了文档,可以在GitHub上找到.
+Oftentimes, people have documentation in their Git configs, which can be found on GitHub. 
+
+1101
+01:15:12,612 --> 01:15:15,356
+还有几个其他可能有用的命令.
+There's a couple of other random commands that could be useful. 
+
+1102
+01:15:15,356 --> 01:15:20,316
+其中之一是当你想要使用"git clone"来克隆一个超大的仓库时.
+One is for when you want to clone a repository with "git clone" that's really gigantic.
+
+1103
+01:15:20,316 --> 01:15:25,171
+默认情况下,"git clone"会复制
+"git clone" by default copies the entire version history for the remote
+
+1104
+01:15:25,171 --> 01:15:28,944
+远程仓库的整个版本历史记录,但是你可以传递一个参数,
+it's downloading the repository from, but there's an argument you can pass it, 
+
+1105
+01:15:28,944 --> 01:15:32,348
+即"--shallow",这将不会克隆整个版本记录.
+which is "--shallow", which will avoid doing that. 
+
+1106
+01:15:32,348 --> 01:15:34,168
+因此,如果在Github上有一些代码的副本,
+So if there's some copy of some code on Github say 
+
+1107
+01:15:34,168 --> 01:15:36,965
+你想在本地计算机上获取这些副本,
+that you want to get a copy of on your local machine, 
+
+1108
+01:15:36,965 --> 01:15:42,638
+但该仓库巨大,比如说有10亿次提交,那么执行"git clone --shallow"将更快.
+but that repository is really gigantic and has a billion commits, doing "git clone --shallow" will be much faster. 
+
+1109
+01:15:42,691 --> 01:15:45,488
+但是,你将不会在本地拥有完整的版本历史记录,
+But then of course, you won't have the version history on your local machine; 
+
+1110
+01:15:45,488 --> 01:15:47,387
+你只会有最新的快照.
+you'll just have the latest snapshot.
+
+1111
+01:15:49,023 --> 01:15:51,161
+我们在实际软件项目开发中
+Another command that we find really useful 
+
+1112
+01:15:51,161 --> 01:15:57,361
+另一个非常有用的命令是"git add"的交互式版本.
+when doing development on real software projects is an interactive version of the "git add" command. 
+
+1113
+01:15:57,361 --> 01:16:01,873
+为了演示,我将对 "animal.py" 做一些更改.
+So to demonstrate this, I'm going to go ahead and make a couple different changes to my "animal.py". 
+
+1114
+01:16:01,926 --> 01:16:06,279
+我会在这里进行一些更改,更改一些文本,
+One change I'll make here, I'll change some text here, 
+
+1115
+01:16:06,306 --> 01:16:09,023
+并在这里放一个新的打印语句.
+and then I'll put a new print statement here. 
+
+1116
+01:16:09,076 --> 01:16:13,905
+假设这个更改是我想要进行的真正更改,比如说是一个bug修复,
+So let's pretend that this first change was some real change I wanted to make, say it's a bug fix, 
+
+1117
+01:16:13,905 --> 01:16:17,810
+而这里的另一个更改是我添加的用于调试的 "printf",
+and this other change here was a "printf" that I added for debugging, 
+
+1118
+01:16:17,810 --> 01:16:20,316
+但实际上我不想在下一个快照中提交这个"printf".
+but I don't actually want to commit in the next snapshot.
+
+1119
+01:16:20,316 --> 01:16:23,825
+如果我执行 "git diff",它会显示我已经进行了这两个更改,
+If I do a "git diff", it'll show me that yes, I've made these two changes, 
+
+1120
+01:16:23,825 --> 01:16:29,868
+如果我执行 `git add animal.py`,它暂存这两个更改,
+and if I do "git add animal.py", it will stage both of those changes for a commit, 
+
+1121
+01:16:29,868 --> 01:16:31,161
+而这不是我想要的.
+and that's not what I want. 
+
+1122
+01:16:31,161 --> 01:16:36,516
+我可以手动删除这个调试打印,然后执行 `git add animal.py`,
+I could go manually remove this debug print and then do "git add animal.py", 
+
+1123
+01:16:36,516 --> 01:16:38,337
+但有一种更简单的方法.
+but there's an easier way to do it. 
+
+1124
+01:16:38,337 --> 01:16:44,089
+有一个 "git add -p" 命令,它允许我交互式地暂存文件的片段,
+There's this "git add -p" command which lets me interactively stage pieces of files for a commit, 
+
+1125
+01:16:44,089 --> 01:16:46,411
+因此这里弹出一个界面可以指定片段.
+and so there's some interface for working with this.
+
+1126
+01:16:46,411 --> 01:16:49,155
+这里它问我是否要暂存这两个更改,而我不想.
+Here it's saying, do I want to stage both of these changes,  and no, I don't.  
+
+1127
+01:16:49,182 --> 01:16:51,319
+所以我将它分成两个较小的更改.
+But I'm going to split it into two smaller changes. 
+
+1128
+01:16:51,319 --> 01:16:54,380
+这一个我想保留,所以我选择"y"表示是,
+This one I do want to keep, so I say y for yes, 
+
+1129
+01:16:54,380 --> 01:16:56,913
+而这一个我不想要,所以我选择"n"表示否.
+and this one I don't want to keep, so I say n for no. 
+
+1130
+01:16:56,913 --> 01:17:03,984
+然后如果我执行 `git diff --cached`,这将显示暂存区里的更改.
+And then if I do "git diff --cached", this will show me what changes are staged for commit. 
+
+1131
+01:17:03,984 --> 01:17:06,886
+现在它只显示我想要保留的实际更改.
+So now it shows only the actual change I wanted to keep. 
+
+1132
+01:17:06,886 --> 01:17:13,430
+如果我执行 `git diff`,它仍然会显示我不想要保留的其他更改,
+If I do "git diff", it'll still show me the other change that is not going to be part of the next commit, 
+
+1133
+01:17:13,430 --> 01:17:14,960
+这是我不想要的更改.
+which is the change I didn't want to keep. 
+
+1134
+01:17:14,960 --> 01:17:20,448
+然后,我可以使用 `git commit` 命令指定一些提交信息,现在我只剩下这个更改,
+And then with this, I can do "git commit", specify some commit message, now I only have this change left, 
+
+1135
+01:17:20,448 --> 01:17:24,723
+然后我可以使用 `git checkout animal.py` 来丢弃这个更改.
+and then I can do "git checkout animal.py" to throw away this change. 
+
+1136
+01:17:24,723 --> 01:17:29,498
+因此,交互式暂存的 "git add -p" 是一个有用的命令.
+So "git add -p" for interactive staging is a useful thing.
+
+1137
+01:17:29,868 --> 01:17:34,986
+你可以自己查找其他的命令,比如`git blame`命令,
+A couple of other commands that you can look up on your own are the "git blame" command, 
+
+1138
+01:17:34,986 --> 01:17:36,701
+因此该命令听起来有点不好,
+so this command is kind of ominous, 
+
+1139
+01:17:36,701 --> 01:17:40,422
+但可以用于确定谁编辑了文件的哪一行,
+but it can be used to figure who edited what line of a file, 
+
+1140
+01:17:40,422 --> 01:17:42,269
+你还可以找到
+and you can also find the corresponding commit 
+
+1141
+01:17:42,269 --> 01:17:45,435
+修改特定行的相应提交,
+that was responsible for modifying that particular line of that file, 
+
+1142
+01:17:45,435 --> 01:17:48,469
+然后你可以查找与其相关的提交消息等等.
+and then you can look up commit messages associated with that and whatnot. 
+
+1143
+01:17:48,469 --> 01:17:51,583
+因此,在我们当前的演示仓库中执行此操作并不那么有趣,
+So this is not that interesting to do in our current toy repository, 
+
+1144
+01:17:51,583 --> 01:17:54,591
+我可以转到班级网站的仓库,
+but I'll go over to the repository for the class website, 
+
+1145
+01:17:54,591 --> 01:17:57,440
+我们可以在此查看某个文件.
+and we can look at some particular file here. 
+
+1146
+01:17:57,440 --> 01:18:02,058
+然后我可以看看这行,
+And let me go to some particular line here, and I can be looking at this like, 
+
+1147
+01:18:02,058 --> 01:18:04,511
+为什么要添加这一行?它是什么意思?
+Oh, why was this particular line added?  What does it mean?  
+
+1148
+01:18:04,564 --> 01:18:06,622
+我可以 "git blame"来看看.
+And I can look at the "git blame" for this.
+
+1149
+01:18:06,622 --> 01:18:13,588
+如果我执行 `git blame config.yml`,它将打印出所有行,右侧就是行号
+If I do "git blame config.yml", it'll print out all the lines kind of in the right column, 
+
+1150
+01:18:13,588 --> 01:18:18,364
+然后在左侧,它将显示该更改对应的提交和作者.
+and then in the left side, it'll show me what commits that change was made in and by whom. 
+
+1151
+01:18:18,364 --> 01:18:26,701
+然后查看此信息,如我可以查看到 "collections" 行,它是在此提交中进行的,
+And then looking at this, like I can go down to this "collections" line, it was made in this commit,
+
+1152
+01:18:26,701 --> 01:18:29,181
+这是最后一个修改该行的提交,
+That's the last commit that modified that line, 
+
+1153
+01:18:29,181 --> 01:18:34,203
+现在我可以使用 "git show" 命令获取有关该特定提交的信息.
+and now I can use the "git show" command to get information for that particular commit. 
+
+1154
+01:18:34,221 --> 01:18:37,308
+哦,这很有用.提交信息是"Redo lectures is a collection".
+Oh, and this is kind of useful. "Redo lectures is a collection"
+
+1155
+01:18:37,308 --> 01:18:40,606
+那可能与"collection"行有关.
+That's probably what was related to that "collections" line. 
+
+1156
+01:18:40,606 --> 01:18:45,092
+除了显示提交和提交消息之外,
+And then, beyond just showing the commit and the commit message, 
+
+1157
+01:18:45,092 --> 01:18:48,416
+它还向我显示了在该特定提交中引入的实际更改,
+it also shows me the actual changes introduced in that particular commit, 
+
+1158
+01:18:48,416 --> 01:18:51,240
+我可以浏览它们并理解发生了什么.
+and I can go look through them and understand what's going on. 
+
+1159
+01:18:51,240 --> 01:18:55,039
+另一个很酷的命令是一个叫 `git stash` 的命令.
+Another kind of cool command is a command called "git stash". 
+
+1160
+01:18:55,039 --> 01:18:58,100
+因此,让我们回到我们的demo仓库并在这里进行演示.
+So let's go back to our demo repository and demonstrate that here. 
+
+1161
+01:18:58,100 --> 01:19:05,752
+假设有些更改在此处,我想暂时不管它们,
+Say if there are some changes here and I temporarily want to put them away, 
+
+1162
+01:19:05,752 --> 01:19:11,794
+如果我执行 `git stash`,它会把我的工作目录恢复到上一次提交的状态.
+if I do "git stash", it will revert my working directory to the state it was in at the last commit. 
+
+1163
+01:19:11,794 --> 01:19:17,836
+因此,如果我执行 `cat hello.txt`,该更改已经消失,但它不是被删除了,而是被保存在某个地方.
+So if I do "cat hello.txt", that change is gone, but it's not just deleted, it's saved somewhere. 
+
+1164
+01:19:17,836 --> 01:19:21,371
+如果我执行 `git stash pop`,它将重新展示这个更改.
+And if I do "git stash pop", it will undo the stash. 
+
+1165
+01:19:21,371 --> 01:19:25,620
+现在如果我查看 "hello.txt" 文件,它就会又包含我刚刚所做的更改.
+So now if I look at "hello.txt", it has the changes I made. 
+
+1166
+01:19:25,620 --> 01:19:27,968
+这是另一个有用的命令！
+Yet another useful command!
+
+1167
+01:19:27,968 --> 01:19:31,266
+还有个非常好用的命令是 "git bisect",
+Another really neat command is something called "git bisect", 
+
+1168
+01:19:31,266 --> 01:19:34,564
+这个命令的界面比较复杂,我们不会详细演示.
+and this has a complicated interface that we're not going to demonstrate in detail. 
+
+1169
+01:19:34,564 --> 01:19:37,422
+但基本上,这是一个可以用来解决
+But basically, this is a tool that can be used to solve a bunch of problems 
+
+1170
+01:19:37,440 --> 01:19:40,211
+手动搜索历史记录这个问题的工具.
+where you need to manually search history for something. 
+
+1171
+01:19:40,290 --> 01:19:44,037
+假设你在一个长期的项目中工作.
+Suppose you're in a scenario where you've been working on a project for a long time. 
+
+1172
+01:19:44,037 --> 01:19:47,361
+你有很多快照,比如说你已经有了一千个提交,
+You have lots and lots of snapshots, you're a thousand commits in 
+
+1173
+01:19:47,361 --> 01:19:50,000
+然后你发现某个单元测试突然不再通过.
+and then you notice that some unit test doesn't pass anymore. 
+
+1174
+01:19:50,000 --> 01:19:53,008
+但你知道这个单元测试一年前是通过的,
+But you know that this was passing, like, a year ago, 
+
+1175
+01:19:53,008 --> 01:19:56,385
+而现在你想找出什么时候出了问题,
+and you're trying to figure out at what point did it break - like, 
+
+1176
+01:19:56,385 --> 01:19:58,443
+也就是你的代码中什么地方出现了回归.
+at what point was this regression in your code introduced? 
+
+1177
+01:19:58,443 --> 01:20:01,873
+你可以手动检查,比如说,回退到前一个提交,
+So one thing you could do is manually check out, like, go back one commit 
+
+1178
+01:20:01,873 --> 01:20:04,881
+看看单元测试是否仍然失败,回退到前一个提交,再看看是否仍然失败,
+and see if the unit test is still failing, go back one commit, see if it's still failing, 
+
+1179
+01:20:04,881 --> 01:20:08,865
+最终你会找到第一个测试不再通过的提交,
+and eventually, you'll find the first commit where the test stopped working, 
+
+1180
+01:20:08,865 --> 01:20:11,187
+它可能会告诉你哪里出了问题.
+and it'll probably tell you what broke. 
+
+1181
+01:20:11,187 --> 01:20:16,015
+但这样手动做有点烦人."git bisect"可以自动化这个过程,
+But that's kind of annoying to do manually.  "git bisect" automates that process,  
+
+1182
+01:20:16,015 --> 01:20:21,002
+它实际上是对你的历史进行二分查找,因此它的查找效率非常高.
+and it actually binary searches your history, so it does this in the most efficient way possible. 
+
+1183
+01:20:21,108 --> 01:20:24,010
+而且,"git bisect"可以接收脚本
+And not only that, "git bisect" can take in scripts 
+
+1184
+01:20:24,010 --> 01:20:27,546
+来确定它正在查看的提交是好的还是坏的.
+that it uses to try to figure out whether a commit it's looking at is good or bad. 
+
+1185
+01:20:27,546 --> 01:20:29,863
+因此它可以是一个完全自动化的过程.
+So it can be a fully automated process. 
+
+1186
+01:20:29,863 --> 01:20:33,008
+比如说,你可以给"git bisect"一个单元测试,然后说,
+Like, you can give "git bisect" a unit test and say,
+
+1187
+01:20:33,008 --> 01:20:36,227
+"找到这个单元测试不再通过的第一个提交."
+"find the first commit where this unit test stopped passing."
+
+1188
+01:20:36,227 --> 01:20:38,469
+这是一个非常强大的工具.
+It's a really powerful tool.
+
+1189
+01:20:40,158 --> 01:20:44,749
+另一个有用的东西是gitignore文件.
+Another random thing that's kind of useful is something called a gitignore file. 
+
+1190
+01:20:44,749 --> 01:20:49,050
+默认情况下,如果在一个目录中有一些杂的文件,
+So by default, if you have random files in a directory, like,
+
+1191
+01:20:49,050 --> 01:20:58,338
+比如说,让我创建".DS_Store"文件.
+let me create the ".DS_Store" file. Whoops, create the ".DS_Store" file, 
+
+1192
+01:20:58,338 --> 01:21:00,976
+然后执行`git status`.
+and then do "git status". 
+
+1193
+01:21:00,976 --> 01:21:03,641
+".DS_Store"是Mac OS自主创建的讨厌的文件.
+So ".DS_Store" is like some nuisance file that Mac OS creates. 
+
+1194
+01:21:03,641 --> 01:21:08,390
+我不知道里面具体有什么内容,一旦这个文件在这个目录中,
+I don't know exactly what goes in here, but basically, once this file is in this directory, 
+
+1195
+01:21:08,390 --> 01:21:10,237
+每当我执行`git status`时,它会说,
+now whenever I do "git status", it says, 
+
+1196
+01:21:10,237 --> 01:21:12,533
+"噢,这里有一个我从未跟踪
+'oh, there's this new file that I've never heard of before, 
+
+1197
+01:21:12,533 --> 01:21:14,828
+但在又存在在这里的新文件,你要添加它吗?"
+but it apparently here, do you want to add it?' 
+
+1198
+01:21:14,828 --> 01:21:17,414
+这样的东西会让人感到烦恼.
+And this sort of stuff gets annoying. 
+
+1199
+01:21:17,414 --> 01:21:21,661
+除了特定操作系统的垃圾文件之外,可能还有许多其他没用的东西存在于一个目录中.
+And there's a lot of other stuff beyond OS-specific garbage that might be in a directory. 
+
+1200
+01:21:21,661 --> 01:21:24,037
+例如,如果你正在处理C代码,
+Like, for example, if you're working with C code, 
+
+1201
+01:21:24,037 --> 01:21:27,994
+你可能会编译它并生成.o文件或可执行文件等等,
+you might compile it and produce .o files or executable files or things like that, 
+
+1202
+01:21:27,994 --> 01:21:31,002
+你可能不希望二进制文件成为你提交历史的一部分,
+and you probably don't want binaries to be part of your commit history. 
+
+1203
+01:21:31,002 --> 01:21:32,744
+你只需要提交源代码.
+You only want the source code. 
+
+1204
+01:21:32,744 --> 01:21:37,061
+因此,Git有一种方法让你告诉工具
+And so git has a way of you being able to tell the tool
+
+1205
+01:21:37,061 --> 01:21:40,448
+你不关心特定的一组文件,忽略它们,
+that you don't care about a particular set of files and to ignore them, 
+
+1206
+01:21:40,448 --> 01:21:43,060
+这就是所谓的gitignore文件.
+and that's something called a gitignore file. 
+
+1207
+01:21:43,060 --> 01:21:47,203
+因此,如果我修改当前目录中名为gitignore的文件,
+So, if I go and modify the file called gitignore in the current directory, 
+
+1208
+01:21:47,203 --> 01:21:51,345
+我可以指定特定的文件名或文件名模式,
+I can specify particular file names or patterns of file names. 
+
+1209
+01:21:51,345 --> 01:21:57,018
+比如说,我可以指定任何以".o"结尾的文件,以及".DS_Store".
+Like say, I can specify star dot o so any file ending in ".o", along with da store. 
+
+1210
+01:21:57,018 --> 01:22:03,285
+现在,如果我执行`touch foo.o`,然后执行`git status`,
+And now if I "touch foo.o" and now do a "git status",  
+
+1211
+01:22:03,324 --> 01:22:06,886
+我会确保 git 命令显示为"OK",我已经对"hello.txt"做了修改,并且我已经在 gitignore 中添加了文件.
+I'll see that git says okay, "hello.txt" which I've modified sure and and I have gitignore. 
+
+1212
+01:22:06,886 --> 01:22:09,683
+所以,你应该使用git来跟踪你的 gitignore 文件.
+So you should track your gitignore file using it. 
+
+1213
+01:22:09,683 --> 01:22:13,852
+但是请注意,它没有提到当前目录中的".DS_Store"文件
+But notice that it doesn't mention my ".DS_Store" file 
+
+1214
+01:22:13,852 --> 01:22:17,071
+或 "foo.o" 文件,
+or "foo.o" file that's present in the current directory 
+
+1215
+01:22:17,071 --> 01:22:19,340
+因为它们已经被忽略了.
+because that has been gitignored. 
+
+1216
+01:22:19,604 --> 01:22:24,089
+这是关于一些高级 git 功能的简要概述,
+So that's a quick overview of a little bit of advanced git functionality, 
+
+1217
+01:22:24,089 --> 01:22:27,704
+只是为了让你了解这个工具可以做哪些酷炫的事情.
+just to give you a flavor of what sorts of cool things this tool can do. 
+
+1218
+01:22:28,971 --> 01:22:32,401
+最后,我们还有一些其他主题
+And then finally, we have a couple of other topics 
+
+1219
+01:22:32,401 --> 01:22:35,277
+在讲义中有更详细的介绍.
+that are covered in the lecture notes in more detail. 
+
+1220
+01:22:35,277 --> 01:22:38,100
+我会在这里快速列出它们,以便你知道要查找什么.
+I'll just quickly list them here so you know what to look for. 
+
+1221
+01:22:38,100 --> 01:22:41,161
+其中一个是有许多git图形化客户端.
+One is that there are many graphical clients for git. 
+
+1222
+01:22:41,161 --> 01:22:45,145
+我们个人不使用它们;我们喜欢 git 命令行工具,
+We don't personally use them; we like the git command-line tool, 
+
+1223
+01:22:45,145 --> 01:22:46,649
+但其中一些还不错,
+but some of them are kind of okay, 
+
+1224
+01:22:46,649 --> 01:22:49,630
+你可能想尝试一下,看看你是否更喜欢使用它们.
+and you might want to check them out just to see if you prefer using those. 
+
+1225
+01:22:49,630 --> 01:22:53,403
+另一个是 shell 集成.
+Another thing is shell integration. 
+
+1226
+01:22:53,456 --> 01:22:55,356
+你已经注意到在这节课
+So, you've noticed that in this tutorial 
+
+1227
+01:22:55,356 --> 01:22:59,604
+我一直在使用 `git status` 命令来查看仓库的情况.
+I've done "git status" a whole bunch to see kind of what's going on with my repository. 
+
+1228
+01:22:59,604 --> 01:23:01,372
+好吧,这有点烦人,
+Well, that's kind of annoying to do, 
+
+1229
+01:23:01,372 --> 01:23:03,799
+很多人都会设置他们的 shell 提示符,
+and a lot of people have their shell prompts set up 
+
+1230
+01:23:03,799 --> 01:23:06,860
+以便在每一行中,
+so that just within this shell prompt itself, like on every line, 
+
+1231
+01:23:06,860 --> 01:23:11,266
+它将向我显示一个非常简洁的仓库情况摘要.
+it will show me a very succinct summary of what's going on with my repository. 
+
+1232
+01:23:11,266 --> 01:23:14,511
+因此,它可能会向我显示我当前正在位于哪个分支,
+So, it might show me a summary of what branch I have currently checked out, 
+
+1233
+01:23:14,511 --> 01:23:17,519
+以及我是否修改了文件或存在未跟踪的文件.
+along with maybe if I've modified files or untracked files. 
+
+1234
+01:23:17,519 --> 01:23:19,129
+因此,我们在讲义中提供了一个链接,
+And so, we have a link in the lecture notes on 
+
+1235
+01:23:19,129 --> 01:23:26,675
+介绍了如何获取漂亮的 shell 集成,以便在 shell 提示符中显示与 git 相关的信息.
+how to get some nice shell integration for displaying kind of git-related information in your shell prompt. 
+
+1236
+01:23:26,833 --> 01:23:30,237
+与此类似,你可以获得git与你的文本编辑器的集成.
+Similar to that, you can git integrations with your text editor. 
+
+1237
+01:23:30,237 --> 01:23:32,084
+例如,我使用 vim,
+So, for example, I use vim, 
+
+1238
+01:23:32,084 --> 01:23:37,414
+我有一个 vim 插件,可以做与 git 相关的工作.
+and I have a plugin for vim that does all sorts of interesting git-related stuff. 
+
+1239
+01:23:37,414 --> 01:23:40,686
+我可以使用这个插件查看 "git blame" 信息.
+One thing I can do with this plugin is look at "git blame" information. 
+
+1240
+01:23:40,686 --> 01:23:42,796
+我们刚刚通过命令行查看了这个信息.
+Remember, we just looked at this through the command line. 
+
+1241
+01:23:42,796 --> 01:23:44,353
+现在,我可以使用这个插件查看它,
+Instead, I can look at it with this plug-in, 
+
+1242
+01:23:44,353 --> 01:23:47,150
+并且这个插件可以让我更快地工作.
+and it lets me work with it a lot faster. 
+
+1243
+01:23:47,150 --> 01:23:50,105
+当我在悬停在特定提交上时按回车键,我可以查看 "git blame",
+I can look at "git blame", press enter when hovering over a specific commit, 
+
+1244
+01:23:50,105 --> 01:23:53,509
+它会在我的文本编辑器中显示那个特定的提交.
+and it shows me that particular commit in my text editor. 
+
+1245
+01:23:53,509 --> 01:23:57,467
+它甚至会隐藏所有其他文件,只显示我正在查看的哪个我关心的文件,
+It even hides all the other files and shows me just the one file I was looking at, which is presumably what I care about. 
+
+1246
+01:23:58,918 --> 01:24:01,556
+因此,我们在讲义中也提供了链接.
+So, we have links to that in the lecture notes as well. 
+
+1247
+01:24:03,799 --> 01:24:07,889
+如果你感兴趣,还有其他一些有趣的东西可以在讲义里找到.
+And there are a couple of other interesting things you could look at there if you're interested. 
+
+1248
+01:24:07,889 --> 01:24:13,957
+最后,单单通过这节课不足以教会你所有需要了解的关于 git 的内容.
+Finally, this lecture by itself is probably not enough to teach you everything you need to know about git. 
+
+1249
+01:24:13,957 --> 01:24:15,540
+这只能是一个良好的开端.
+It's a good start. 
+
+1250
+01:24:15,540 --> 01:24:17,745
+我们认为学习 Git 的正确方式
+We think that the right way of learning git was to 
+
+1251
+01:24:17,745 --> 01:24:22,045
+是先了解底层的数据模型,包括对象和引用,以及 Git 是如何模拟历史的.
+learn about the underlying data model, the whole objects and references, and how git models history. 
+
+1252
+01:24:22,045 --> 01:24:25,469
+然后我们向你介绍了使用 Git 命令的基础知识.
+And then we gave you an introduction to using the git commands. 
+
+1253
+01:24:25,469 --> 01:24:28,475
+如果你想真正熟练地掌握这个工具,
+And if you want to become really proficient at this tool, 
+
+1254
+01:24:28,475 --> 01:24:31,482
+在今天的讲义资源部分中,
+in the resources section in the lecture notes for today, 
+
+1255
+01:24:31,482 --> 01:24:33,653
+我们放了一个链接在课程笔记中,是一本叫做{\rcode2}Pro Git{\r}的书籍.
+we have a link to a book called Pro Git. 
+
+1256
+01:24:33,653 --> 01:24:34,947
+这是一本免费的书,
+So, this is a free book. 
+
+1257
+01:24:34,947 --> 01:24:36,200
+写得很好,
+It's nicely written. 
+
+1258
+01:24:36,200 --> 01:24:36,993
+篇幅也不长.
+It's pretty short, 
+
+1259
+01:24:36,993 --> 01:24:39,874
+我认为,阅读该书的前几章,
+and I think going through the first couple of chapters of that book 
+
+1260
+01:24:39,874 --> 01:24:42,212
+你基本上就能掌握
+should teach you basically everything you need to know 
+
+1261
+01:24:42,212 --> 01:24:45,761
+使用 Git 管理真正的软件项目和进行代码贡献的所有知识,
+in order to use git proficiently for real software projects and for contributing.
+
+1262
+01:24:45,761 --> 01:24:48,726
+包括在 GitHub 上进行项目开发等等.
+It's a project on GitHub and things like that. 
+
+1263
+01:24:48,726 --> 01:24:51,315
+最后,就像所有其他讲座一样,
+And then finally, just like all the other lectures, 
+
+1264
+01:24:51,315 --> 01:24:53,986
+如果你想找一些有趣而具有挑战性的问题,
+we have a number of exercises you can go through 
+
+1265
+01:24:53,986 --> 01:24:58,914
+可以尝试一下我们提供的一些练习.
+if you want some interesting and challenging problems that you can figure out how to do.
+

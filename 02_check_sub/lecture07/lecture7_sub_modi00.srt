@@ -1,0 +1,3660 @@
+﻿1
+00:00:00,800 --> 00:00:02,275
+欢迎回来。
+So welcome back. 
+
+2
+00:00:02,275 --> 00:00:05,000
+今天我们将涵盖调试和分析。
+Today we are gonna cover debugging and profiling. 
+
+3
+00:00:05,000 --> 00:00:09,975
+在我开始之前，我们将再次提醒您填写调查问卷。
+Before I get into it we're gonna make another reminder to fill in the survey.
+
+4
+00:00:09,975 --> 00:00:14,375
+我们想从您那里得到的主要问题之一是：
+Just one of the main things we want to get from you is questions, 
+
+5
+00:00:14,375 --> 00:00:17,575
+在最后一天，我们会回答来自您们的问题，
+because the last day is gonna be questions from you guys: 
+
+6
+00:00:17,575 --> 00:00:22,275
+包括我们没有涉及到的问题或者您希望我们深入讨论的问题。
+about things that we haven't covered, or like you want us to kind of talk more in depth.
+
+7
+00:00:22,275 --> 00:00:27,375
+我们获得的问题越多，我们就可以让这一部分更加有趣，
+The more questions we get, the more interesting we can make that section, 
+
+8
+00:00:27,375 --> 00:00:29,150
+请您填写调查问卷。
+so please go on and fill in the survey.
+
+9
+00:00:29,150 --> 00:00:33,200
+今天的讲座将涵盖很多主题。
+So today's lecture is gonna be a lot of topics. 
+
+10
+00:00:33,200 --> 00:00:36,075
+所有主题都围绕着一个概念展开：
+All the topics revolve around the concept of 
+
+11
+00:00:36,075 --> 00:00:39,650
+当您的程序存在错误时，您应该怎么做。
+what do you do when you have a program that has some bugs. 
+
+12
+00:00:39,650 --> 00:00:42,000
+在编程时，
+Which is most of the time, like when you are programming, 
+
+13
+00:00:42,000 --> 00:00:44,075
+您大部分时间都在考虑如何实现某些功能，
+you're kind of thinking about how you implement something 
+
+14
+00:00:44,075 --> 00:00:49,225
+但是修复程序中的所有问题需要花费很长时间。
+and there's like a half life of fixing all the issues that that program has. 
+
+15
+00:00:49,225 --> 00:00:51,500
+即使您的程序按照您的预期运行，
+And even if your program behaves like you want, 
+
+16
+00:00:51,500 --> 00:00:55,975
+它可能也会非常缓慢，或者占用很多资源。
+it might be that it's really slow, or it's taking a lot of resources in the process. 
+
+17
+00:00:55,975 --> 00:01:01,450
+今天我们将看到许多不同的解决这些问题的方法。
+So today we're gonna see a lot of different approaches of dealing with these problems.
+
+18
+00:01:01,450 --> 00:01:05,250
+首先，第一部分是关于调试的。
+So first, the first section is on debugging. 
+
+19
+00:01:05,250 --> 00:01:10,550
+调试可以有许多不同的方法，有各种各样的方式...
+Debugging can be done in many different ways, there are all kinds of... 
+
+20
+00:01:10,550 --> 00:01:15,675
+几乎所有计算机科学学生都将使用的最简单的方法就是：
+The most simple approach that, pretty much, all CS students will go through, will be just: 
+
+21
+00:01:15,675 --> 00:01:18,075
+您有一些代码，它的行为不符合您的预期，
+you have some code, and it's not behaving like you want, 
+
+22
+00:01:18,075 --> 00:01:21,325
+所以您通过添加打印语句来探索代码。
+so you probe the code by addingmprint statements. 
+
+23
+00:01:21,325 --> 00:01:23,250
+这被称为“printf调试”，它运行得非常好。
+This is called "printf debugging" and it works pretty well. 
+
+24
+00:01:23,250 --> 00:01:29,250
+老实说，我经常使用它，
+Like, I have to be honest, I use it a lot of the time 
+
+25
+00:01:29,250 --> 00:01:33,350
+因为设置简单，反馈快。
+because of how simple to set up and how quick the feedback can be.
+
+26
+00:01:33,350 --> 00:01:39,386
+printf调试的一个问题是您可能会获得大量输出，
+One of the issues with printf debugging is that you can get a lot of output 
+
+27
+00:01:39,425 --> 00:01:43,575
+而您可能并不希望获得这么多输出。
+and maybe you don't want to get as much output as you're getting. 
+
+28
+00:01:43,575 --> 00:01:49,725
+人们已经考虑了稍微复杂一些的printf调试方法之一，
+There has... people have thought of slightly more complex ways of doing printf debugging 
+
+29
+00:01:49,725 --> 00:01:58,750
+即通常称为“日志记录”。
+and one of these ways is what is usually referred to as "logging". 
+
+30
+00:01:58,750 --> 00:02:05,275
+与printf调试相比，使用日志记录的优点在于，当您创建日志记录时，
+So the advantage of doing logging versus doing printf debugging is that,  when you're creating logs, 
+
+31
+00:02:05,275 --> 00:02:10,075
+您并不一定是因为要修复特定的问题，
+you're not necessarily creating the logs because there's a specific issue you want to fix; 
+
+32
+00:02:10,075 --> 00:02:14,350
+而是因为您构建了一个更复杂的软件系统，
+it's mostly because you have built a more complex software system 
+
+33
+00:02:14,350 --> 00:02:17,225
+并且想在某些事件发生时记录下来。
+and you want to log when some events happen. 
+
+34
+00:02:17,425 --> 00:02:21,450
+使用日志记录库的一个核心优点是您可以定义严重性级别，
+One of the core advantages of using a logging library is 
+
+35
+00:02:21,450 --> 00:02:27,250
+并且可以根据这些级别进行过滤。
+that you can can define severity levels, and you can filter based on those.
+
+36
+00:02:27,250 --> 00:02:31,800
+让我们看一个如何实现这样一个示例。
+Let's see an example of how we can do something like that. 
+
+37
+00:02:32,175 --> 00:02:34,475
+是的，一切都符合预期。
+Yeah, everything fits here. 
+
+38
+00:02:34,475 --> 00:02:36,550
+这是一个非常愚蠢的例子：
+This is a really silly example:
+
+39
+00:02:36,550 --> 00:02:41,275
+我们将随机抽取一些数字，并根据数字的值记录数字的值，
+We're just gonna sample random numbers and,  depending on the value of the number,  
+
+40
+00:02:41,300 --> 00:02:45,175
+（可以解释为“错误程度”）
+that we can interpret as a kind of "how wrong things are going".
+
+41
+00:02:45,175 --> 00:02:51,950
+然后我们可以看看发生了什么。
+We're going to log the value of the number and then we can see what is going on.
+
+42
+00:02:51,950 --> 00:02:59,125
+我需要禁用这些格式化程序...
+I need to disable these formatters...
+
+43
+00:02:59,500 --> 00:03:04,175
+如果我们按原样执行代码，
+And if we were just to execute the code as it is, 
+
+44
+00:03:04,600 --> 00:03:08,325
+我们只会得到输出并且不断获得更多的输出。
+we just get the output and we just keep getting more and more output.
+
+45
+00:03:08,325 --> 00:03:13,275
+但是你必须盯着它看，并理解正在发生的事情。
+But you have to kind of stare at it and make sense of what is going on, 
+
+46
+00:03:13,275 --> 00:03:16,775
+我们不知道printf之间的相对时间，
+and we don't know what is the relative timing between printfs, 
+
+47
+00:03:16,775 --> 00:03:20,375
+也不知道这是仅仅是一条信息消息
+we don't really know whether this is just an information message
+
+48
+00:03:20,375 --> 00:03:23,225
+还是有错误发生的消息。
+or a message of whether something went wrong. 
+
+49
+00:03:23,225 --> 00:03:29,550
+如果我们进去，然后撤销，不是那个...
+If we just go in, and undo, not that one...
+
+50
+00:03:29,750 --> 00:03:37,825
+就是那个，我们可以设置格式化程序。
+That one, we can set that formatter. 
+
+51
+00:03:38,075 --> 00:03:42,150
+现在输出看起来更像是这样：
+Now the output looks something more like this
+
+52
+00:03:42,175 --> 00:03:45,382
+例如，如果你正在使用多个不同的模块进行编程，
+So for example, if you have several different modules that you are programming with, 
+
+53
+00:03:45,382 --> 00:03:47,400
+你可以使用不同的级别来标识它们。
+you can identify them with like different levels.
+
+54
+00:03:47,400 --> 00:03:53,350
+这里，我们有调试级别、关键信息、不同级别。
+Here, we have, we have debug levels, we have critical info, different levels. 
+
+55
+00:03:53,350 --> 00:03:58,375
+这可能很方便，因为我们可能只关心错误消息。
+And it might be handy because here we might only care about the error messages.
+
+56
+00:03:58,375 --> 00:03:59,325
+就像那些...
+Like those are like, the... 
+
+57
+00:03:59,325 --> 00:04:04,350
+我们一直在编写代码，到目前为止一切顺利，突然出现了一些错误。
+We have been working on our code, so far so good, and suddenly we get some error.
+
+58
+00:04:04,350 --> 00:04:06,925
+我们可以记录下来以确定它发生在哪里。
+We can log that to identify where it's happening. 
+
+59
+00:04:06,925 --> 00:04:09,075
+但是也许有很多信息消息，
+But maybe there's a lot of information messages, 
+
+60
+00:04:09,275 --> 00:04:17,350
+但我们可以通过将级别更改为错误级别来处理它们。
+but we can deal with that by just changing the level to error level. 
+
+61
+00:04:17,450 --> 00:04:24,975
+现在，如果我们再次运行它，我们只会在输出中得到那些错误，
+And now if we were to run this again, we are only going to get those errors in the output, 
+
+62
+00:04:24,975 --> 00:04:29,025
+我们只需浏览它们以理解正在发生的事情。
+and we can just look through those to make sense of what is going on.
+
+63
+00:04:29,025 --> 00:04:34,875
+当你处理日志时，另一个非常有用的工具是......
+Another really useful tool when you're dealing with logs is...
+
+64
+00:04:34,875 --> 00:04:38,650
+随着你的观察，它变得更容易了，
+As you kind of look at this, it has become easier 
+
+65
+00:04:38,650 --> 00:04:43,575
+因为现在我们有了可以快速识别的关键和错误级别。
+because now we have this critical and error levels that we can quickly identify.
+
+66
+00:04:43,575 --> 00:04:47,500
+但由于人类是相当视觉化的生物，
+But since humans are fairly visual creatures,
+
+67
+00:04:47,500 --> 00:04:55,500
+你可以使用终端中的颜色来识别这些内容。
+one thing that you can do is use colors from your terminal to identify these things. 
+
+68
+00:04:55,500 --> 00:05:03,025
+所以现在，改变格式化程序，我稍微改变了输出的格式。
+So now, changing the formatter, what I've done is slightly change how the output is formatted. 
+
+69
+00:05:03,025 --> 00:05:09,500
+当我这样做时，现在每当我收到一个警告消息时，它是用黄色编码的；
+When I do that, now whenever I get a warning message, it's color coded by yellow;
+
+70
+00:05:09,500 --> 00:05:12,200
+每当我收到像错误一样的消息时，它是模糊的红色；
+whenever I get like an error, faded red; 
+
+71
+00:05:12,200 --> 00:05:16,425
+当它是关键的时候，我有一个加粗的红色，表示有错误发生了。
+and when it's critical, I have a bold red indicating something went wrong.
+
+72
+00:05:16,425 --> 00:05:19,125
+在这里，输出非常短，
+And here it's a really short output, 
+
+73
+00:05:19,125 --> 00:05:23,275
+但是当你开始有成千上万行的日志时，
+but when you start having thousands and thousands of lines of log,
+
+74
+00:05:23,275 --> 00:05:27,125
+这并不是不切实际的，而且在许多应用程序中每天都会发生，
+which is not unrealistic and happens every single day in a lot of apps, 
+
+75
+00:05:27,125 --> 00:05:35,025
+快速浏览并确定错误或红色区域的位置可以非常有用。
+quickly browsing through them and identifying where the error or the red patches are can be really useful. 
+
+76
+00:05:35,025 --> 00:05:41,750
+一个快速的旁注是，你可能会好奇终端是如何显示这些颜色的。
+A quick aside is, you might be curious about how the terminal is displaying these colors.
+
+77
+00:05:41,750 --> 00:05:45,250
+归根结底，终端只输出字符。
+At the end of the day, the terminal is only outputting characters.
+
+78
+00:05:45,250 --> 00:05:52,850
+这个程序，还有像LS这样的其他程序，它们都有很多花哨的颜色，
+Like, how is this program or how are other programs, like LS,  that has all these fancy colors.  
+
+79
+00:05:52,850 --> 00:05:56,700
+那么它们是如何告诉终端使用这些不同的颜色的呢？
+How are they telling the terminal that it should use these different colors?
+
+80
+00:05:56,700 --> 00:06:03,725
+其实这些工具所做的事情并不是非常复杂，大致上是这样的。
+This is nothing extremely fancy, what these tools are doing, is something along these lines.
+
+81
+00:06:03,725 --> 00:06:08,600
+这里有……我可以清除其余的输出，这样我们就可以专注于这个问题。
+Here we have... I can clear the rest of the output, so we can focus on this. 
+
+82
+00:06:08,600 --> 00:06:14,650
+这里有一些特殊字符，一些转义字符，
+There's some special characters, some escape characters here,
+
+83
+00:06:14,650 --> 00:06:18,550
+然后是一些文本，最后是一些其他特殊字符。
+then we have some text and then we have some other special characters. 
+
+84
+00:06:18,550 --> 00:06:22,625
+如果我们执行这行代码，我们就会得到一个红色的"This is red"。
+And if we execute this line ,we get a red "This is red". 
+
+85
+00:06:22,625 --> 00:06:27,600
+你可能已经注意到了，我们这里有一个"255;0;0"，
+And you might have picked up on the fact that we have a "255;0;0" here,
+
+86
+00:06:27,600 --> 00:06:31,625
+这只是告诉终端我们想要的颜色的RGB值。
+this is just telling the RGB values of the color we want in the terminal. 
+
+87
+00:06:31,625 --> 00:06:35,525
+你几乎可以在你任何的代码中做到这一点，
+And you pretty much can do this in any piece of code that you have, 
+
+88
+00:06:35,525 --> 00:06:38,225
+这样你就可以给输出编码颜色了。
+and like that you can color code the output.
+
+89
+00:06:38,225 --> 00:06:42,975
+你的终端相当花哨，并支持输出许多不同的颜色。
+Your terminal is fairly fancy and supports a lot of different colors in the output. 
+
+90
+00:06:42,975 --> 00:06:45,575
+这还不是全部，只有十六分之一。
+This is not even all of them, this is like a sixteenth of them.
+
+91
+00:06:45,575 --> 00:06:49,750
+我认为了解这个可能非常有用。
+I think it can be fairly useful to know about that.
+
+92
+00:06:49,750 --> 00:06:58,900
+另一个问题是，也许你不喜欢或者觉得日志不适合你。
+Another thing is maybe you don't enjoy or you don't think logs are really fit for you.
+
+93
+00:06:58,900 --> 00:07:02,925
+但问题是，许多其他系统可能会使用日志。
+The thing is a lot of other systems that you might start using will use logs. 
+
+94
+00:07:02,925 --> 00:07:07,750
+随着你构建越来越大的系统，你可能会依赖于其他依赖项。
+As you start building larger and larger systems,you might rely on other dependencies. 
+
+95
+00:07:07,750 --> 00:07:12,125
+常见的依赖项可能是Web服务器或数据库，这是非常常见的。
+Common dependencies might be web servers or databases, it's a really common one.
+
+96
+00:07:12,125 --> 00:07:18,075
+它们会在自己的日志中记录它们的错误或异常。
+And those will be logging their errors or exceptions in their own logs.
+
+97
+00:07:18,075 --> 00:07:20,600
+当然，你会收到一些客户端错误，
+Of course, you will get some client-side error, 
+
+98
+00:07:20,600 --> 00:07:26,000
+但有时候这些错误信息并不足以让你弄清楚发生了什么。
+but those sometimes are not informative enough for you to figure out what is going on.
+
+99
+00:07:26,000 --> 00:07:34,250
+在大多数UNIX系统中，日志通常放在一个名为"/var/log"的文件夹下，
+In most UNIX systems, the logs are usually placed under a folder called "/var/log"
+
+100
+00:07:34,250 --> 00:07:43,425
+如果我们列出它，我们就可以看到这里有很多日志。
+and if we list it, we can see there's a bunch of logs in here.
+
+101
+00:07:43,425 --> 00:07:48,275
+所以我们有像关机监视器日志或一些周报告，
+So we have like the shutdown monitor log, or some weekly logs.
+
+102
+00:07:48,275 --> 00:07:53,175
+例如与Wi-Fi相关的事情。
+Things related to the Wi-Fi, for example. 
+
+103
+00:07:53,175 --> 00:08:01,425
+如果我们输出系统日志，其中包含了很多关于系统的信息，
+And if we output the System log, which contains a lot of information about the system, 
+
+104
+00:08:01,425 --> 00:08:04,275
+我们就可以得到关于正在发生的事情的信息。
+we can get information about what's going on.
+
+105
+00:08:04,275 --> 00:08:10,725
+同样，有一些工具可以让你更好地查看这个输出。
+Similarly, there are tools that will let you more sanely go through this output. 
+
+106
+00:08:10,725 --> 00:08:15,650
+但是在这里，我可以查看系统日志，并说：
+But here, looking at the system log,I can look at this and say: 
+
+107
+00:08:15,650 --> 00:08:23,000
+哦，有一些服务以异常代码退出了，基于这些信息，
+oh there's some service that is exiting with some abnormal codeand based on that information, 
+
+108
+00:08:23,000 --> 00:08:27,025
+我可以去尝试弄清楚发生了什么，发生了什么错误。
+I can go and try to figure out what's going on,like what's going wrong. 
+
+109
+00:08:27,025 --> 00:08:32,200
+当你使用日志时需要知道的一件事是，
+One thing to know when you're working with logs is that
+
+110
+00:08:32,200 --> 00:08:36,700
+更传统的是，每个软件都有自己的日志，
+more traditionally, every software had their own log, 
+
+111
+00:08:36,700 --> 00:08:42,900
+比起过去，现在越来越流行将所有日志放入统一的系统日志中。
+but it has been increasingly more popular to have a unified system log where everything is placed.
+
+112
+00:08:42,900 --> 00:08:47,525
+几乎任何应用程序都可以记录进系统日志，
+Pretty much any application can log into the system log, 
+
+113
+00:08:47,525 --> 00:08:49,950
+但它们不是以普通文本格式存储，
+but instead of being in a plain text format,
+
+114
+00:08:49,950 --> 00:08:52,625
+而是以某种特殊格式进行压缩。
+it will be compressed in some special format. 
+
+115
+00:08:52,625 --> 00:08:56,675
+我们在数据整理讲座中就讲到过一个例子，
+An example of this, it was what we covered in the data wrangling lecture.
+
+116
+00:08:56,675 --> 00:09:00,075
+那就是我们使用的 "journalctl"，
+In the data wrangling lecture we were using the "journalctl", 
+
+117
+00:09:00,075 --> 00:09:04,275
+它可以访问日志并输出所有输出。
+which is accessing the log and outputting all that output.
+
+118
+00:09:04,275 --> 00:09:10,125
+在Mac上，现在使用的命令是 "log show"，它会显示大量信息。
+Here in Mac, now the command is "log show", which will display a lot of information.
+
+119
+00:09:10,125 --> 00:09:16,175
+我只会显示最近的十秒钟，因为日志非常冗长，
+I'm gonna just display the last ten seconds, because logs are really, really verbose and
+
+120
+00:09:16,175 --> 00:09:23,900
+仅仅显示最近10秒钟仍然会输出相当大量的行。
+just displaying the last 10 seconds is still gonna output a fairly large amount of lines.
+
+121
+00:09:23,900 --> 00:09:28,425
+如果我们回顾一下正在发生的事情，
+So if we go back through what's going on, 
+
+122
+00:09:28,425 --> 00:09:32,850
+我们会发现有很多苹果产品正在运行，因为这是一台MacBook。
+we here see that a lot of Apple things are going on, since this is a macbook.
+
+123
+00:09:32,850 --> 00:09:38,875
+也许我们能在这里找到一些关于系统问题的错误。
+Maybe we could find errors about like some system issue here.
+
+124
+00:09:38,875 --> 00:09:47,025
+再说一遍，它们相当冗长，所以你可能需要练习你的数据整理技巧，
+Again they're fairly verbose, so you might want to practice your data wrangling techniques here,
+
+125
+00:09:47,025 --> 00:09:49,875
+例如10秒钟相当于大约500行日志，
+like 10 seconds equal to like 500 lines of logs, 
+
+126
+00:09:49,875 --> 00:09:55,350
+所以你可以大概知道每秒钟有多少行。
+so you can kind of get an idea of how many lines per second you're getting.
+
+127
+00:09:55,350 --> 00:10:03,150
+它们不仅可以用于解析其他程序的输出，
+They're not only useful for figuring out some other programs' output, they're also useful for you, 
+
+128
+00:10:03,150 --> 00:10:06,200
+也可以用于您自己的日志记录。(是否有问题？)
+if you want to log there instead of into your own file.
+
+129
+00:10:06,200 --> 00:10:12,050
+因此，使用 "logger" 命令，在Linux和Mac中，
+So using the "logger" command, in both linux and mac,
+
+130
+00:10:12,050 --> 00:10:19,350
+您可以说，好的，我要将 "Hello Logs" 记录在此系统日志中。
+You can say okay I'm gonna log this "Hello Logs" into this system log.
+
+131
+00:10:19,350 --> 00:10:28,300
+我们执行该命令，然后可以通过查看最近一分钟的日志来检查，
+We execute the command and then we can check by going through the last minute of logs,
+
+132
+00:10:28,300 --> 00:10:33,850
+因为它会非常近，然后通过grep搜索 "Hello" 来找到我们的条目。
+since it's gonna be fairly recent, and grepping for that "Hello" we find our entry. 
+
+133
+00:10:33,850 --> 00:10:37,575
+我们发现最近创建的条目，显示了 "Hello Logs"。
+Fairly recent entry, that we just created that said "Hello Logs".
+
+134
+00:10:37,575 --> 00:10:43,675
+随着您越来越熟悉这些工具，
+As you become more and more familiar with these tools, 
+
+135
+00:10:43,675 --> 00:10:51,050
+您会发现自己越来越经常使用日志，
+you will find yourself using the logs more and more often, 
+
+136
+00:10:51,050 --> 00:10:54,900
+因为即使您有一些错误，
+since even if you have some bug that you haven't detected, 
+
+137
+00:10:54,900 --> 00:10:56,975
+而且程序已经运行了一段时间，
+and the program has been running for a while,
+
+138
+00:10:56,975 --> 00:10:59,225
+也许信息已经在日志中，
+maybe the information is already in the log 
+
+139
+00:10:59,225 --> 00:11:02,725
+可以告诉您足够的信息来找出问题所在。
+and can tell you enough to figure out what is going on.
+
+140
+00:11:02,725 --> 00:11:06,725
+然而，printf调试并不是万能的。
+However, printf debugging is not everything. 
+
+141
+00:11:06,725 --> 00:11:08,850
+现在我要介绍调试器。
+So now I'm going to be covering debuggers.
+
+142
+00:11:08,850 --> 00:11:11,200
+但首先，有关日志的任何问题吗？
+But first any questions on logs so far? 
+
+143
+00:11:11,200 --> 00:11:15,350
+那么您可以从日志中了解到什么样的信息？
+So what kind of things can you figure out from the logs?
+
+144
+00:11:15,350 --> 00:11:19,000
+像这个 "Hello Logs" 就表明在那个时间你执行了一些关于Hello的操作吗？
+like this Hello Logs says that you did something with Hello at that time? 
+
+145
+00:11:19,000 --> 00:11:25,225
+是的，例如，我可以编写一个Bash脚本来检测... 
+Yeah, like say, for example, I can write a bash script that detects...
+
+146
+00:11:25,225 --> 00:11:29,750
+每次检查我连接到哪个Wi-Fi网络。
+Well, that checks every time what Wi-Fi network I'm connected to. 
+
+147
+00:11:29,750 --> 00:11:32,325
+每次它检测到网络已更改，
+And every time it detects that it has changed,
+
+148
+00:11:32,325 --> 00:11:34,450
+它就会在日志中创建一个条目，并说：
+it makes an entry in the logs and says
+
+149
+00:11:34,450 --> 00:11:37,550
+哦，现在看起来我们已经更换了Wi-Fi网络。
+Oh now it looks like we have changed Wi-Fi networks. 
+
+150
+00:11:37,550 --> 00:11:41,750
+然后你可以回过头来解析日志，比如：
+and then you might go back and parse through the logs and take like, okay
+
+151
+00:11:41,750 --> 00:11:45,175
+“好的，我的电脑是何时从一个Wi-Fi网络切换到另一个网络的？”
+When did my computer change from one Wi-Fi network to another. 
+
+152
+00:11:45,175 --> 00:11:48,375
+这只是一个简单的例子，
+And this is just kind of a simple example
+
+153
+00:11:48,375 --> 00:11:53,875
+但这里有许多许多类型的信息可以被记录。
+But there are many, many ways, many types of information that you could be logging here.
+
+154
+00:11:53,875 --> 00:11:59,450
+更普遍的情况是，
+More commonly, you will probably want to check if your computer, for example, is
+
+155
+00:11:59,450 --> 00:12:05,150
+你可能想要检查你的电脑是否因为某些未知原因进入了睡眠状态，比如它处于休眠模式。
+entering sleep, for example, for some unknown reason. Like it's on hibernation mode.
+
+156
+00:12:05,150 --> 00:12:07,625
+日志中可能有一些信息说明是
+There's probably some information in the logs about 
+
+157
+00:12:07,625 --> 00:12:10,850
+谁要求它进入睡眠状态，或者为什么会发生这种情况。
+who asked that to happen, or why it's that happening.
+
+158
+00:12:12,075 --> 00:12:15,400
+还有其他问题吗？好的。
+Any other questions? Okay. 
+
+159
+00:12:15,400 --> 00:12:18,150
+所以当printf调试不够用时，
+So when printf debugging is not enough,
+
+160
+00:12:18,150 --> 00:12:23,100
+最好的替代方法是使用……
+the best alternative after that is using...
+
+161
+00:12:23,100 --> 00:12:25,675
+（退出）
+[Exit that]
+
+162
+00:12:26,950 --> 00:12:31,300
+使用调试器。
+So, it's using a debugger. 
+
+163
+00:12:31,300 --> 00:12:38,750
+调试器是一种工具，它将包装你的代码并让你运行代码，
+So a debugger is a tool that will wrap around your code and will let you run your code,
+
+164
+00:12:38,750 --> 00:12:40,400
+但它会对其进行控制。
+but it will kind of keep control over it. 
+
+165
+00:12:40,400 --> 00:12:47,275
+因此，它将允许你逐步执行代码并设置断点。
+So it will let you step through the code and execute it and set breakpoints.
+
+166
+00:12:47,275 --> 00:12:49,775
+如果你曾经使用过类似IDE这样的工具，
+You probably have seen debuggers in some way, 
+
+167
+00:12:49,775 --> 00:12:54,500
+你可能已经以某种方式看到过调试器，因为IDE具有这种花哨的功能：
+if you have ever used something like an IDE, because IDEs have this kind of fancy: 
+
+168
+00:12:54,500 --> 00:12:56,150
+在这里设置断点，执行……
+set a breakpoint here, execute, ...
+
+169
+00:12:56,150 --> 00:12:58,750
+但是归根结底，这些工具使用的
+But at the end of the day what these tools are using is 
+
+170
+00:12:58,750 --> 00:13:00,825
+只是命令行调试器，
+just these command line debuggers 
+
+171
+00:13:00,825 --> 00:13:05,200
+并且它们只是以一种非常花哨的格式呈现它们。
+and they're just presenting them in a really fancy format.
+
+172
+00:13:05,200 --> 00:13:10,275
+在这里，我们有一个完全损坏的冒泡排序算法。
+Here we have a completely broken bubble sort, a simple sorting algorithm.
+
+173
+00:13:10,275 --> 00:13:11,550
+不用担心细节，
+Don't worry about the details, 
+
+174
+00:13:11,550 --> 00:13:15,600
+但我们只是想要对这里的数组进行排序。
+but we just want to sort this array that we have here.
+
+175
+00:13:15,600 --> 00:13:23,250
+我们可以尝试通过执行Python bubble.py来做到这一点。
+We can try doing that by just doing Python bubble.py
+
+176
+00:13:23,250 --> 00:13:25,050
+当我们这样做时……
+And when we do that... 
+
+177
+00:13:25,050 --> 00:13:28,525
+哦，出现了一些索引错误，列表索引超出范围。
+Oh there's some index error, list index out of range. 
+
+178
+00:13:28,525 --> 00:13:30,725
+我们可以开始添加打印输出，
+We could start adding prints
+
+179
+00:13:30,725 --> 00:13:34,300
+但如果字符串很长，我们可能会得到很多信息。
+but if have a really long string, we can get a lot of information. 
+
+180
+00:13:34,300 --> 00:13:38,375
+那么，我们如何回到崩溃时刻呢？
+So how about we go up to the moment that we crashed?
+
+181
+00:13:38,375 --> 00:13:43,375
+我们可以回到那个时刻并检查程序的当前状态。
+We can go to that moment and examine what the current state of the program was.
+
+182
+00:13:43,375 --> 00:13:49,350
+所以，为了做到这一点，我将使用Python调试器来运行程序。
+So for doing that I'm gonna run the program using the Python debugger.
+
+183
+00:13:49,350 --> 00:13:52,050
+在这里，我技术上使用的是ipython调试器，
+Here I'm using technically the ipython debugger, 
+
+184
+00:13:52,200 --> 00:13:54,309
+因为它具有漂亮的语法着色，
+just because it has nice coloring syntax 
+
+185
+00:13:54,309 --> 00:14:01,650
+所以对于我们两个来说更容易理解输出中正在发生的事情。
+so it's probably easier for both of us to understand what's going on in the output. 
+
+186
+00:14:01,650 --> 00:14:05,500
+但它们基本上是相同的。
+But they're pretty much identical anyway.
+
+187
+00:14:05,500 --> 00:14:09,275
+我们执行这个，现在我们得到一个提示，
+So we execute this, and now we are given a prompt 
+
+188
+00:14:09,275 --> 00:14:14,700
+告诉我们我们在程序的第一行。
+where we're being told that we are here, at the very first line of our program.
+
+189
+00:14:14,700 --> 00:14:15,975
+我们可以...... 
+And we can... 
+
+190
+00:14:15,975 --> 00:14:21,000
+"L"代表"List"，所以和许多这样的工具一样，
+"L" stands for "List", so as with many of these tools
+
+191
+00:14:21,000 --> 00:14:24,575
+有一种操作语言，
+there's kind of like a language of operations that you can do, 
+
+192
+00:14:24,575 --> 00:14:29,075
+它们通常是助记符，就像VIM或TMUX一样。
+and they are often mnemonic, as it was the case with VIM or TMUX.
+
+193
+00:14:29,075 --> 00:14:33,675
+所以在这里，“L”是为了“列出”代码，我们可以看到整个代码。
+So here, "L" is for "Listing" the code,  and we can see the entire code.
+
+194
+00:14:33,675 --> 00:14:42,775
+ "S"代表"Step"，它可以让我们逐行执行代码。
+"S" is for "Step" and will let us kind of one line at a time, go through the execution.
+
+195
+00:14:42,775 --> 00:14:47,500
+问题是，我们只有在某段时间后才会触发错误。
+The thing is we're only triggering the error some time later.
+
+196
+00:14:47,500 --> 00:14:55,700
+所以我们可以重新启动程序，而不是尝试一步步走到错误处，
+So we can restart the program and instead of trying to step until we get to the issue,
+
+197
+00:14:55,700 --> 00:15:01,250
+我们可以只要求程序继续运行，即“C”命令，然后我们就到了问题所在。
+we can just ask for the program to continue which is the "C" command and
+
+198
+00:15:01,250 --> 00:15:07,750
+我们到达了这一行，一切都崩溃了，
+hey, we reached the issue. We got to this line where everything crashed,
+
+199
+00:15:07,750 --> 00:15:11,450
+我们得到了这个“list index out of range”错误。
+we're getting this list index out of range. 
+
+200
+00:15:11,450 --> 00:15:14,200
+现在我们可以说，嗯？
+And now that we are here we can say, huh?
+
+201
+00:15:14,200 --> 00:15:22,000
+好的，首先，让我们打印数组的值。这是当前数组的值，
+Okay, first, let's print the value of the array. This is the value of the current array
+
+202
+00:15:22,000 --> 00:15:25,000
+所以我们有六个项。好的。
+So we have six items. Okay. 
+
+203
+00:15:25,000 --> 00:15:27,375
+这里“J”的值是多少？
+What is the value of "J" here? 
+
+204
+00:15:27,375 --> 00:15:31,625
+所以我们查看“J”的值。“J”在这里是5，这将是最后一个元素，
+So we look at the value of "J". "J" is 5 here, which will be the last element, 
+
+205
+00:15:31,625 --> 00:15:38,200
+但“J”加1将是6，所以这触发了越界错误。
+but "J" plus 1 is going to be 6, so that's triggering the out of bounds error.
+
+206
+00:15:38,200 --> 00:15:44,075
+所以我们要做的是，这个“N”，不是“N”，而是“N减1”。
+So what we have to do is this "N", instead of "N" has to be "N minus one". 
+
+207
+00:15:44,075 --> 00:15:47,400
+我们已经确定错误出现在这里。
+We have identified that the error lies there.
+
+208
+00:15:47,400 --> 00:15:51,650
+所以我们可以退出，也就是“Q”。
+So we can quit, which is "Q". 
+
+209
+00:15:51,650 --> 00:15:55,225
+再次，因为它是一个事后调试器。
+Again, because it's a post-mortem debugger.
+
+210
+00:15:55,225 --> 00:16:01,075
+我们回到代码并说好的，
+We go back to the code and say okay,
+
+211
+00:16:02,900 --> 00:16:06,500
+我们需要添加这个“N减1”。
+we need to append this "N minus one". 
+
+212
+00:16:06,500 --> 00:16:10,075
+这将防止列表索引超出范围，
+That will prevent the list index out of range and
+
+213
+00:16:10,075 --> 00:16:17,049
+如果我们再次运行此代码而不使用调试器，好的，现在没有错误了。
+if we run this again without the debugger, okay, no errors now. 
+
+214
+00:16:17,049 --> 00:16:19,000
+但是这不是我们排序后的列表。
+But this is not our sorted list.
+
+215
+00:16:19,000 --> 00:16:21,300
+这是排序的，但不是我们的列表。
+This is sorted, but it's not our list. 
+
+216
+00:16:21,300 --> 00:16:23,950
+我们缺少列表中的某些条目，
+We are missing entries from our list, 
+
+217
+00:16:23,950 --> 00:16:27,050
+所以我们在这里遇到了一些行为问题。
+so there is some behavioral issue that we're reaching here.
+
+218
+00:16:27,050 --> 00:16:32,600
+再次，我们可以开始使用printf调试，但现在有一种预感，
+Again, we could start using printf debugging but kind of a hunch now is 
+
+219
+00:16:32,600 --> 00:16:37,300
+但现在有一种预感，可能我们在冒泡排序程序中交换条目的方式是错误的。
+that probably the way we're swapping entries in the bubble sort program is wrong.
+
+220
+00:16:37,300 --> 00:16:40,950
+我们可以使用调试器来解决这个问题。
+We can use the debugger for this. 
+
+221
+00:16:40,950 --> 00:16:44,825
+我们可以逐步进行交换操作，
+We can go through them to the moment we're doing a swap 
+
+222
+00:16:44,825 --> 00:16:48,525
+并检查交换是如何执行的。
+and check how the swap is being performed. 
+
+223
+00:16:48,525 --> 00:16:57,125
+简单概述一下，我们有两个for循环，在最嵌套的循环中，
+So a quick overview, we have two for loops and in the most nested loop,
+
+224
+00:16:57,125 --> 00:17:00,375
+我们检查数组是否大于另一个数组。
+we are checking if the array is larger than the other array. 
+
+225
+00:17:00,375 --> 00:17:04,050
+问题是，如果我们只试图执行到这一行，
+The thing is if we just try to execute until this line,
+
+226
+00:17:04,050 --> 00:17:07,050
+它只会在我们进行交换时触发。
+it's only going to trigger whenever we make a swap. 
+
+227
+00:17:07,050 --> 00:17:12,175
+所以我们可以在第六行设置一个断点。
+So what we can do is we can set a breakpoint in the sixth line.
+
+228
+00:17:12,175 --> 00:17:17,250
+我们可以在这一行创建一个断点，
+We can create a breakpoint in this line and then the program will execute 
+
+229
+00:17:17,250 --> 00:17:21,100
+程序执行到尝试交换变量时，程序就会停止。
+and the moment we try to swap variables is when the program is going to stop.
+
+230
+00:17:21,100 --> 00:17:26,300
+所以我们在那里创建一个断点，然后继续执行程序。
+So we create a breakpoint there and then we continue the execution of the program. 
+
+231
+00:17:26,300 --> 00:17:30,750
+程序停止，并说“嘿，我已经执行并到达这一行了”。
+The program halts and says hey, I have executed and I have reached this line. 
+
+232
+00:17:30,750 --> 00:17:36,950
+现在我们可以使用“locals()”函数，
+Now I can use "locals()", which is a Python function 
+
+233
+00:17:36,950 --> 00:17:41,650
+它返回一个包含所有值的字典，以便快速查看整个上下文。
+that returns a dictionary with all the values to quickly see the entire context. 
+
+234
+00:17:41,650 --> 00:17:48,675
+字符串和数组都没问题，而且数组有6个元素，这只是一个开端。
+The string, the array is fine and is six, again, just the beginning and
+
+235
+00:17:48,675 --> 00:17:54,300
+我继续执行下一行，哦，我找到了问题：
+I step, go to the next line. Oh, and I identify the issue: 
+
+236
+00:17:54,300 --> 00:17:57,450
+我只交换了一个变量，而不是同时交换，
+I'm swapping one item at a time, instead of simultaneously,
+
+237
+00:17:57,450 --> 00:18:02,250
+这就是我们逐渐丢失变量的原因。
+so that's what's triggering the fact that we're losing variables as we go through.
+
+238
+00:18:02,250 --> 00:18:07,325
+这只是一个非常简单的例子，
+That's kind of a very simple example, 
+
+239
+00:18:07,350 --> 00:18:09,458
+但调试器非常强大。
+but debuggers are really powerful.
+
+240
+00:18:09,475 --> 00:18:13,500
+大多数编程语言都提供一些调试器，
+Most programming languages will give you some sort of debugger, 
+
+241
+00:18:13,500 --> 00:18:19,900
+当你进行更低级别的调试时，你可能会遇到像GDB这样的工具。
+and when you go to more low level debugging you might run into tools like...
+
+242
+00:18:19,900 --> 00:18:26,800
+你可能想使用类似于GDB这样的工具。
+You might want to use something like GDB.
+
+243
+00:18:26,800 --> 00:18:38,050
+ GDB非常适用于C/C++和所有这些类似C的语言。
+And GDB has one nice property: GDB works really well with C/C++ and all these C-like languages.
+
+244
+00:18:38,050 --> 00:18:43,050
+但是GDB实际上可以让您使用几乎任何可执行的二进制文件。
+But GDB actually lets you work with pretty much any binary that you can execute. 
+
+245
+00:18:43,050 --> 00:18:44,550
+例如，在这里，我们有一个sleep程序，
+So for example here we have sleep, 
+
+246
+00:18:44,550 --> 00:18:47,725
+它只是一个将休眠20秒的程序。
+which is just a program that's going to sleep for 20 seconds.
+
+247
+00:18:47,725 --> 00:18:52,350
+它被加载，然后我们可以运行它，
+It's loaded and then we can do run, 
+
+248
+00:18:52,350 --> 00:18:55,825
+并通过发送中断信号来中断它。
+and then we can interrupt this sending an interrupt signal.
+
+249
+00:18:55,825 --> 00:19:02,425
+GDB正在为我们显示程序中发生的非常低级别的信息。
+And GDB is displaying for us, here, very low-level information about what's going on in the program.
+
+250
+00:19:02,425 --> 00:19:07,425
+因此，我们正在获取堆栈跟踪，我们可以看到我们在这个nanosleep函数中，
+So we're getting the stack trace, we're seeing we are in this nanosleep function,
+
+251
+00:19:07,425 --> 00:19:12,100
+我们可以看到机器上所有硬件寄存器的值。
+we can see the values of all the hardware registers in your machine. 
+
+252
+00:19:12,100 --> 00:19:17,975
+因此，您可以使用这些工具获取许多低级别的详细信息。
+So you can get a lot of low-level detail using these tools.
+
+253
+00:19:17,975 --> 00:19:26,175
+我想这就是我想介绍调试器的所有内容了。是否有相关的问题？
+I think that's all I want to cover for debuggers. Any questions related to that?
+
+254
+00:19:33,600 --> 00:19:36,925
+调试时另一个有趣的工具是，
+Another interesting tool when you're trying to debug is that 
+
+255
+00:19:36,925 --> 00:19:42,525
+有时您想调试的方式就像您的程序是一个黑盒子。
+sometimes you want to debug as if your program is a black box. 
+
+256
+00:19:42,525 --> 00:19:45,125
+因此，您可能知道程序的内部，
+So you, maybe, know what the internals of the program 
+
+257
+00:19:45,125 --> 00:19:52,500
+但同时，您的计算机也知道程序何时尝试执行某些操作。
+but at the same time your computer knows whenever your program is trying to do some operations.
+
+258
+00:19:52,500 --> 00:19:58,100
+因此，在UNIX系统中，有这样一个概念，即用户级代码和内核级代码。
+So this is in UNIX systems, there's this notion of like user level code and kernel level code.
+
+259
+00:19:58,100 --> 00:20:03,825
+当您尝试执行一些操作，例如读取文件或读取网络连接时，
+And when you try to do some operations like reading a file or like reading the network connection
+
+260
+00:20:03,825 --> 00:20:05,775
+您将不得不执行称为系统调用的操作。
+you will have to do something called system calls. 
+
+261
+00:20:05,775 --> 00:20:11,525
+你可以获取一个程序并查看其操作,
+You can get a program and go through those operations 
+
+262
+00:20:11,525 --> 00:20:18,775
+询问此软件执行了哪些操作？
+and ask what operations did this software do? 
+
+263
+00:20:18,775 --> 00:20:21,600
+例如，如果你有一个只应执行数学运算的Python函数，
+So for example, if you have like a Python function
+
+264
+00:20:21,600 --> 00:20:27,000
+并将其运行通过此程序，
+that is only supposed to do a mathematical operation and you run it through this program,
+
+265
+00:20:27,000 --> 00:20:28,850
+却发现它实际上在读取文件，
+and it's actually reading files, 
+
+266
+00:20:28,850 --> 00:20:30,000
+这是为什么？
+Why is it reading files? 
+
+267
+00:20:30,000 --> 00:20:31,450
+它不应该读取文件。
+It shouldn't be reading files. 
+
+268
+00:20:31,450 --> 00:20:32,950
+那么，
+So, let's see.
+
+269
+00:20:34,225 --> 00:20:37,800
+我们可以使用"strace"这个工具。
+This is "strace". 
+
+270
+00:20:37,800 --> 00:20:39,425
+例如，我们可以这样做。
+So for example, we can do it something like this. 
+
+271
+00:20:39,425 --> 00:20:41,650
+我们将运行"LS - L"命令，
+So here we're gonna run the "LS - L"
+
+272
+00:20:41,650 --> 00:20:45,700
+忽略LS的输出，
+And then we're ignoring the output of LS, 
+
+273
+00:20:45,700 --> 00:20:48,000
+但不忽略STRACE的输出。
+but we are not ignoring the output of STRACE.
+
+274
+00:20:48,000 --> 00:20:50,675
+如果我们执行它，
+So if we execute that... 
+
+275
+00:20:52,425 --> 00:20:54,475
+我们将得到大量输出。
+We're gonna get a lot of output.
+
+276
+00:20:54,475 --> 00:20:58,375
+这是所有不同系统调用，
+This is all the different system calls
+
+277
+00:20:58,375 --> 00:21:03,875
+这个LS命令已执行的调用。
+That this LS has executed. 
+
+278
+00:21:03,875 --> 00:21:07,875
+你会看到很多OPEN调用，你会看到FSTAT。
+You will see a bunch of OPEN, you will see FSTAT.
+
+279
+00:21:07,875 --> 00:21:13,775
+例如，因为它必须列出在此文件夹中的所有文件的属性，
+And for example, since it has to list all the properties of the files that are in this folder, 
+
+280
+00:21:13,775 --> 00:21:17,700
+我们可以检查LSTAT调用。
+we can check for the LSTAT call. 
+
+281
+00:21:17,700 --> 00:21:20,625
+因此，LSTAT调用将检查文件的属性，
+So the LSTAT call will check for the properties of the files 
+
+282
+00:21:20,625 --> 00:21:27,025
+我们可以看到，实际上所有在此目录中的文件和文件夹
+and we can see that, effectively, all the files and folders that are in this directory
+
+283
+00:21:27,025 --> 00:21:32,200
+都是通过LS系统调用进行访问的。
+have been accessed through a system call, through LS.
+
+284
+00:21:33,750 --> 00:21:45,400
+有趣的是，有时你实际上不需要运行代码
+Interestingly, sometimes you actually don't need to run your code to figure out 
+
+285
+00:21:45,400 --> 00:21:47,175
+就可以找出代码中的问题。
+that there is something wrong with your code. 
+
+286
+00:21:47,175 --> 00:21:53,275
+到目前为止，我们已经看到了足够多的通过运行代码来识别问题的方式，
+So far we have seen enough ways of identifying issues by running the code,
+
+287
+00:21:53,275 --> 00:21:54,450
+但如果
+but what if you... 
+
+288
+00:21:54,450 --> 00:21:57,175
+你像这个屏幕上显示的代码一样看着一段代码，
+you can look at a piece of code like this, 
+
+289
+00:21:57,175 --> 00:22:00,600
+你也可以找到一个问题。
+like the one I have shown right now in this screen,and identify an issue. 
+
+290
+00:22:00,600 --> 00:22:04,575
+例如，这里我们有一些非常愚蠢的代码。
+So for example here, we have some really silly piece of code. 
+
+291
+00:22:04,600 --> 00:22:09,120
+它定义了一个函数，打印几个变量，乘以一些变量，
+It defines a function, prints a few variables,multiplies some variables, 
+
+292
+00:22:09,120 --> 00:22:12,075
+然后等待一段时间，然后我们尝试打印BAZ。
+it sleeps for a while and then we try to print BAZ. 
+
+293
+00:22:12,075 --> 00:22:17,100
+你可以试着看这个代码，然后说，“BAZ从未在任何地方定义过。
+And you could try to look at this and say, hey, BAZ has never been defined anywhere. 
+
+294
+00:22:17,100 --> 00:22:18,825
+这是一个新的变量。
+This is a new variable. 
+
+295
+00:22:18,825 --> 00:22:22,650
+你可能想说BAR但你打错了。
+You probably meant to say BAR,but you just mistyped it. 
+
+296
+00:22:22,650 --> 00:22:26,525
+问题是，如果我们尝试运行此程序，
+Thing is,  if we try to run this program, 
+
+297
+00:22:26,525 --> 00:22:34,650
+它将需要60秒，因为我们必须等待time.sleep函数完成。
+it's gonna take 60 seconds, because like we have to wait until this time.sleep function finishes. 
+
+298
+00:22:34,650 --> 00:22:39,125
+这里，time.sleep() 只是为了示例而已，
+Here, sleep is just for motivating the example 
+
+299
+00:22:39,125 --> 00:22:42,975
+但通常你可能会加载一个数据集，
+but in general you may be loading a data set that takes really long 
+
+300
+00:22:42,975 --> 00:22:44,625
+因为需要将所有数据复制到内存中而需要很长时间。
+because you have to copy everything into memory.
+
+301
+00:22:44,625 --> 00:22:49,475
+事实上，有些程序会将源代码作为输入，
+And the thing is, there are programs that will take source code as input, 
+
+302
+00:22:49,475 --> 00:22:54,450
+对其进行处理，并指出代码的哪些部分可能是错误的。
+will process it and will say, oh probably this is wrong about this piece of code. 
+
+303
+00:22:54,450 --> 00:23:00,825
+在Python或一般情况下，这些被称为静态分析工具。
+So in Python,or in general, these are called static analysis tools.
+
+304
+00:23:00,825 --> 00:23:03,225
+在Python中，例如pyflakes。
+In Python we have for example pyflakes. 
+
+305
+00:23:03,225 --> 00:23:07,175
+如果我们将这段代码输入pyflakes中，
+If we get this piece of code and run it through pyflakes,
+
+306
+00:23:07,175 --> 00:23:11,313
+pyflakes会给我们指出两个问题。第一个问题是......
+pyflakes is gonna give us a couple of issues. First one is the one.... 
+
+307
+00:23:11,313 --> 00:23:16,075
+第二个问题是我们已经指出的：这里有一个未定义的变量名叫做BAZ。
+The second one is the one we identified: here's an undefined name called BAZ.
+
+308
+00:23:16,075 --> 00:23:17,975
+你可能需要对此进行处理。
+You probably should be doing something about that. 
+
+309
+00:23:17,975 --> 00:23:27,925
+另一个问题是：你正在重定义那一行中的FOO变量名。
+And the other one is like oh, you're redefining the FOO variable name in that line. 
+
+310
+00:23:27,925 --> 00:23:31,500
+所以，这里我们定义了一个FOO函数，
+So here we have a FOO function and then we are kind of
+
+311
+00:23:31,500 --> 00:23:34,975
+然后我们通过使用一个循环变量来掩盖该函数。
+shadowing that function by using a loop variable here. 
+
+312
+00:23:34,975 --> 00:23:38,725
+现在我们定义的那个FOO函数已经不可访问了，
+So now that FOO function that we defined is not accessible anymore
+
+313
+00:23:38,725 --> 00:23:41,825
+如果我们之后尝试调用它，就会出现错误。
+and then if we try to call it afterwards, we will get into errors.
+
+314
+00:23:43,875 --> 00:23:47,750
+还有其他类型的静态分析工具。
+There are other types of Static Analysis tools. 
+
+315
+00:23:47,750 --> 00:23:49,325
+MYPY是另一个不同的工具。
+MYPY is a different one. 
+
+316
+00:23:49,325 --> 00:23:52,625
+MYPY会报告相同的两个错误，
+MYPY is gonna report the same two errors, 
+
+317
+00:23:52,625 --> 00:23:56,150
+但它也会抱怨类型检查。
+but it's also going to complain about type checking. 
+
+318
+00:23:56,150 --> 00:24:00,975
+它会说，这里你正在将一个整数乘以一个浮点数，
+So it's gonna say, oh here you're multiplying an int by a float and
+
+319
+00:24:00,975 --> 00:24:07,250
+如果你关心代码的类型检查，你不应该混淆它们。
+if you care about the type checking of your code,  you should not be mixing those up. 
+
+320
+00:24:07,250 --> 00:24:10,625
+这可能有点不方便，需要运行这个工具，
+it can be kind of inconvenient, having to run this, 
+
+321
+00:24:10,625 --> 00:24:15,375
+查看出错的行，然后回到你的VIM或编辑器中，
+look at the line, going back to your VIM or like your editor, 
+
+322
+00:24:15,375 --> 00:24:17,600
+找出这个错误的位置。
+and figuring out what the error matches to.
+
+323
+00:24:17,600 --> 00:24:20,675
+已经有解决方案了。
+There are already solutions for that. 
+
+324
+00:24:20,675 --> 00:24:28,050
+一种方法是将大多数编辑器与这些工具集成在一起，这里...
+One way is that you can integrate most editors with these tools and here..
+
+325
+00:24:28,050 --> 00:24:32,000
+你可以看到bash上有一些红色的高亮，
+You can see there is like some red highlighting on the bash, 
+
+326
+00:24:32,000 --> 00:24:34,700
+它会读取这里的最后一行。
+and it will read the last line here.
+
+327
+00:24:34,700 --> 00:24:36,275
+未定义的变量 'baz'。
+So, undefined named 'baz'. 
+
+328
+00:24:36,275 --> 00:24:39,625
+所以，当我编辑这段Python代码时，
+So as I'm editing this piece of Python code,
+
+329
+00:24:39,625 --> 00:24:43,775
+我的编辑器会给我反馈，告诉我这里有什么问题。
+my editor is gonna give me feedback about what's going wrong with this. 
+
+330
+00:24:43,775 --> 00:24:49,650
+或者，这里有另外一个问题，说你正在重新定义未使用的foo。
+Or like here have another one saying the redefinition of unused foo.
+
+331
+00:24:49,650 --> 00:24:55,975
+甚至，有些投诉是关于代码的风格。
+And even, there are some stylistic complaints.
+
+332
+00:24:55,975 --> 00:24:58,375
+例如，我期望有两个空行。
+So, oh, I will expect two empty lines. 
+
+333
+00:24:58,375 --> 00:25:04,975
+在Python中，函数定义之间应该有两行空行。
+So like in Python, you should be having two empty lines between a function definition.
+
+334
+00:25:04,975 --> 00:25:06,950
+emmm.....
+There are... 
+
+335
+00:25:06,950 --> 00:25:09,925
+有一个关于很多
+there is a resource on the lecture notes about 
+
+336
+00:25:09,925 --> 00:25:13,575
+不同编程语言的静态分析工具的课程笔记资源。
+pretty much static analyzers for a lot of different programming languages.
+
+337
+00:25:13,575 --> 00:25:17,700
+甚至还有针对英语的静态分析工具。
+There are even static analyzers for English.
+
+338
+00:25:17,950 --> 00:25:26,625
+我有这门课的笔记，
+So I have my notes for the class here, 
+
+339
+00:25:26,675 --> 00:25:30,800
+在这个英语静态分析工具“writegood”中运行，
+and if I run it through this static analyzer for English, that is "writegood".
+
+340
+00:25:30,800 --> 00:25:33,075
+它会抱怨一些风格上的问题。
+It's going to complain about some stylistic properties. 
+
+341
+00:25:33,075 --> 00:25:37,450
+例如，“very”是一个模糊的词汇，我不应该使用它，
+So like, oh, I'm using "very", which is a weasel word and I shouldn't be using it.
+
+342
+00:25:37,450 --> 00:25:39,425
+“quickly”也会削弱含义。
+Or "quickly" can weaken meaning, 
+
+343
+00:25:39,425 --> 00:25:48,750
+你可以用它来检查拼写错误或进行很多不同类型的风格分析。
+and you can have this for spell checking, or for a lot of different types of stylistic analysis.
+
+344
+00:25:48,750 --> 00:25:51,850
+目前有什么问题吗？
+Any questions so far?
+
+345
+00:25:58,650 --> 00:26:01,750
+哦，我忘了提到......
+Oh, I forgot to mention... 
+
+346
+00:26:01,750 --> 00:26:07,525
+根据你正在执行的任务，将有不同类型的调试器可用。
+Depending on the task that you're performing, there will be different types of debuggers.
+
+347
+00:26:07,525 --> 00:26:09,925
+例如，如果你在进行Web开发，
+For example, if you're doing web development, 
+
+348
+00:26:09,925 --> 00:26:20,975
+Firefox和Chrome都有非常好的用于调试网站的工具集。
+both Firefox and Chrome have a really really good set of tools for doing debugging for websites.
+
+349
+00:26:20,975 --> 00:26:25,850
+所以，我们在这里进行元素检查，我们可以得到......
+So here we go and say inspect element, we can get the... 
+
+350
+00:26:25,850 --> 00:26:26,975
+你知道吗？
+do you know? 
+
+351
+00:26:26,975 --> 00:26:27,875
+如何让这个更大......
+how to make this larger...
+
+352
+00:26:27,875 --> 00:26:33,200
+我们获取了这门课网页的整个源代码。
+We're getting the entire source code for the web page for the class.
+
+353
+00:26:33,200 --> 00:26:38,225
+哦，是的，
+Oh, yeah, here we go. 
+
+354
+00:26:38,225 --> 00:26:39,825
+这个好了吗？
+Is that better?
+
+355
+00:26:39,825 --> 00:26:45,500
+现在我们可以实际上更改有关课程的属性。
+And we can actually go and change properties about the course. 
+
+356
+00:26:45,500 --> 00:26:47,850
+我们可以编辑标题。
+So we can say... we can edit the title.
+
+357
+00:26:47,850 --> 00:26:51,550
+这不是一个关于调试和分析性能的课程。
+Say, this is not a class on debugging and profiling. 
+
+358
+00:26:51,550 --> 00:26:54,525
+现在网站的代码已经改变了。
+And now the code for the website has changed.
+
+359
+00:26:54,525 --> 00:26:58,775
+这就是为什么你永远不应该相信任何网站的截图的原因之一，
+This is one of the reasons why you should never trust any screenshots of websites, 
+
+360
+00:26:58,775 --> 00:27:00,850
+因为它们可能被完全修改。
+because they can be completely modified.
+
+361
+00:27:00,850 --> 00:27:03,800
+你还可以修改这个样式。
+And you can also modify this style. 
+
+362
+00:27:03,800 --> 00:27:12,075
+例如，这里我使用了深色模式首选项，但我们可以改变它。
+Like, here I have things using the dark mode preference, but we can alter that. 
+
+363
+00:27:12,075 --> 00:27:16,900
+因为在最后一天，浏览器是为我们渲染这个网站的。
+Because at the end of the day, the browser is rendering this for us.
+
+364
+00:27:16,900 --> 00:27:22,450
+我们可以检查cookie，但有很多不同的操作。
+We can check the cookies, but there's like a lot of different operations.
+
+365
+00:27:22,450 --> 00:27:28,525
+JavaScript还有一个内置的调试器，因此你可以逐步调试JavaScript代码。
+ There's also a built-in debugger for JavaScript, so you can step through JavaScript code.
+
+366
+00:27:28,525 --> 00:27:31,275
+因此，总结一下，取决于你正在做什么，
+So kind of the takeaway is, depending on what you are doing, 
+
+367
+00:27:31,275 --> 00:27:37,375
+你可能需要搜索程序员为自己构建的工具。
+you will probably want to search for what tools programmers have built for them.
+
+368
+00:27:43,150 --> 00:27:50,200
+现在我要转换话题，不再谈论调试，
+Now I'm gonna switch gears and stop talking about debugging, 
+
+369
+00:27:50,200 --> 00:27:52,255
+也就是找到代码中的问题，
+which is kind of finding issues with the code, right?
+
+370
+00:27:52,255 --> 00:27:53,523
+或者说表现
+kind of more about the behavior, 
+
+371
+00:27:53,523 --> 00:27:57,075
+而是开始谈论如何使用性能分析。
+and then start talking about like how you can use profiling.
+
+372
+00:27:57,075 --> 00:28:00,725
+性能分析可以帮助你优化代码，
+And profiling is how to optimize the code. 
+
+373
+00:28:00,725 --> 00:28:06,600
+可能是因为你想优化CPU、内存、网络等方面的性能。
+It might be because you want to optimize the CPU, the memory, the network, ...
+
+374
+00:28:06,600 --> 00:28:10,125
+有许多不同的原因需要进行优化。
+There are many different reasons that you want to be optimizing it. 
+
+375
+00:28:10,125 --> 00:28:14,525
+就像调试一样，
+As it was the case with debugging, the kind of first-order approach
+
+376
+00:28:14,525 --> 00:28:16,950
+很多人有的第一种方法是使用
+that a lot of people have experience with already is 
+
+377
+00:28:16,950 --> 00:28:22,875
+printf进行性能分析，例如...
+oh, let's use just printf profiling, so to say, like we can just take...
+
+378
+00:28:22,875 --> 00:28:25,025
+我把这个放大点
+Let me make this larger. 
+
+379
+00:28:25,025 --> 00:28:28,325
+我们可以记录当前时间，
+We can take the current time here,
+
+380
+00:28:28,325 --> 00:28:32,425
+然后执行一些操作，
+then we can check, we can do some execution 
+
+381
+00:28:32,475 --> 00:28:37,400
+再记录时间并从原始时间中减去它。
+and then we can take the time again and subtract it from the original time. 
+
+382
+00:28:37,400 --> 00:28:40,625
+这样你就可以缩小范围，
+And by doing this you can kind of narrow down 
+
+383
+00:28:40,625 --> 00:28:42,125
+并屏蔽代码的某些不同部分
+and fence some different parts of your code 
+
+384
+00:28:42,125 --> 00:28:46,450
+分析不同部分代码之间的时间差。
+and try to figure out what is the time taken between those two parts.
+
+385
+00:28:46,450 --> 00:28:50,900
+这很好。但有时结果可能会有点意外。
+And that's good. But sometimes it can be interesting, the results. 
+
+386
+00:28:50,900 --> 00:28:57,000
+例如，这里我们sleep了0.5秒，输出结果显示是
+So here, we're sleeping for 0.5 seconds and the output is saying, 
+
+387
+00:28:57,000 --> 00:29:01,875
+0.5加上一些额外的时间，这很有趣。
+oh it's 0.5 plus some extra time,which is kind of interesting. 
+
+388
+00:29:01,875 --> 00:29:06,400
+如果我们继续运行它，我们会发现一些小的误差。
+And if we keep running it, we see there's like some small error and the thing is
+
+389
+00:29:06,400 --> 00:29:12,075
+事实上，我们正在测量的是通常被称为“实际时间”的时间。
+here, what we're actually measuring is what is usually referred to as the "real time".
+
+390
+00:29:12,075 --> 00:29:16,875
+实际时间就像你拿着一只钟表，
+Real time is as if you get like a clock, 
+
+391
+00:29:16,875 --> 00:29:18,575
+在程序开始时启动，
+and you start it when your program starts, 
+
+392
+00:29:18,575 --> 00:29:19,700
+程序结束时停止。
+and you stop it when your program ends.
+
+393
+00:29:19,700 --> 00:29:23,775
+但问题是，在你的计算机中，不仅仅是你的程序在运行。
+But the thing is, in your computer it is not only your program that is running.
+
+394
+00:29:23,775 --> 00:29:26,525
+还有许多其他程序同时在运行，
+There are many other programs running at the same time 
+
+395
+00:29:26,525 --> 00:29:31,800
+可能是那些正在占用CPU的程序。
+and those might be the ones that are taking the CPU. 
+
+396
+00:29:31,800 --> 00:29:35,350
+因此，为了理解这一点，
+So, to try to make sense of that,
+
+397
+00:29:35,350 --> 00:29:37,775
+有很多，emmm...
+A lot of... 
+
+398
+00:29:37,775 --> 00:29:43,150
+你会发现很多程序使用的术语是
+you'll see a lot of programs using the terminology 
+
+399
+00:29:43,150 --> 00:29:47,125
+实际时间、用户时间和系统时间。
+that is real time, user time and system time. 
+
+400
+00:29:47,125 --> 00:29:51,800
+实际时间就是我解释的整个时间长度，从开始到结束。
+Real time is what I explained, which is kind of the entire length of time from start to finish.
+
+401
+00:29:51,800 --> 00:30:00,425
+然后有用户时间，这是你的程序在CPU上执行用户级别周期所花费的时间。
+Then there is the user time, which is the amount of time your program \N spent on the CPU doing user level cycles.
+
+402
+00:30:00,425 --> 00:30:02,425
+正如我提到的，在UNIX中，
+So as I was mentioning, in UNIX, 
+
+403
+00:30:02,425 --> 00:30:06,225
+你可以运行用户级别代码或内核级别代码。
+you can be running user level code or kernel level code.
+
+404
+00:30:06,225 --> 00:30:10,400
+系统时间则是相反的，它是你的程序在CPU上
+System is kind of the opposite, it's the amount of CPU, 
+
+405
+00:30:10,400 --> 00:30:16,175
+执行内核模式指令所花费的时间。
+like the amount of time that your program spent on the CPU executing kernel mode instructions. 
+
+406
+00:30:16,175 --> 00:30:18,925
+让我们通过一个示例来展示。
+So let's show this with an example.
+
+407
+00:30:18,925 --> 00:30:22,525
+这里我要使用一个名为"time"的命令，
+Here I'm going to "time", which is a command,
+
+408
+00:30:22,525 --> 00:30:27,275
+它将为以下命令获取这三个指标，
+ a shell command that's gonna get these three metrics for the following command, 
+
+409
+00:30:27,275 --> 00:30:32,971
+然后我只是从一个托管在西班牙的网站中获取一个URL。
+and then I'm just grabbing a URL from a website that is hosted in Spain. 
+
+410
+00:30:32,975 --> 00:30:37,375
+因此，这将需要一些额外的时间来去那里并返回。
+So that's gonna take some extra time to go over there and then go back.
+
+411
+00:30:37,375 --> 00:30:38,525
+如果我们看到，这里，
+If we see, here, 
+
+412
+00:30:38,525 --> 00:30:40,100
+如果...
+if we were to just... 
+
+413
+00:30:40,100 --> 00:30:44,000
+在程序的开头和结尾之间有两个打印语句。
+We have two prints, between the beginning and the end of the program.
+
+414
+00:30:44,000 --> 00:30:48,400
+我们可能会认为这个程序需要大约600毫秒才能执行，
+We could think that this program is taking like 600 milliseconds to execute, 
+
+415
+00:30:48,400 --> 00:30:57,175
+但实际上大部分时间都花在等待网络响应上，
+but actually most of that time was spent just waiting for the response on the other side of the network 
+
+416
+00:30:57,175 --> 00:31:01,600
+而我们实际上只花了16毫秒的用户级别
+and we actually only spent 16 milliseconds at the user level 
+
+417
+00:31:01,600 --> 00:31:07,146
+和9秒的总时间，实际上执行了CURL代码的时间只有25毫秒，
+and like 9 seconds, in total 25 milliseconds, actually executing CURL code. 
+
+418
+00:31:07,146 --> 00:31:08,775
+其他都是在等待。
+Everything else was just waiting.
+
+419
+00:31:12,225 --> 00:31:15,175
+有关计时的任何问题吗？
+Any questions related to timing?
+
+420
+00:31:19,775 --> 00:31:27,675
+好的，所以计时可能会变得棘手，这也是一种黑匣子解决方案。
+Ok, so timing can be can become tricky, it's also kind of a black box solution. 
+
+421
+00:31:27,675 --> 00:31:29,425
+或者如果您开始添加打印语句，
+Or if you start adding print statements,
+
+422
+00:31:29,425 --> 00:31:34,025
+那么到处都是打印语句会变得很难。
+it's kind of hard to add print statements, with time everywhere. 
+
+423
+00:31:34,050 --> 00:31:36,500
+所以程序员已经找到了更好的工具。
+So programmers have figured out better tools.
+
+424
+00:31:36,500 --> 00:31:39,800
+这些通常称为"分析器"。
+These are usually referred to as "profilers". 
+
+425
+00:31:39,800 --> 00:31:44,625
+我要快速提醒一下的是，
+One quick note that I'm gonna make, is that
+
+426
+00:31:44,625 --> 00:31:50,300
+分析器通常是指CPU分析器，
+profilers, like usually when people refer to profilers they usually talk about CPU profilers 
+
+427
+00:31:50,300 --> 00:31:55,725
+因为它们是最常见的，可以确定CPU上花费时间的位置。
+because they are the most common, at identifying where like time is being spent on the CPU.
+
+428
+00:31:55,725 --> 00:32:00,125
+分析器通常有两种类型：
+Profilers usually come in kind of two flavors: 
+
+429
+00:32:00,125 --> 00:32:02,650
+跟踪分析器和采样分析器。
+there's tracing profilers and sampling profilers.
+
+430
+00:32:02,650 --> 00:32:06,750
+知道它们之间的区别很好，因为输出可能会不同。
+and it's kind of good to know the difference because the output might be different.
+
+431
+00:32:06,750 --> 00:32:11,000
+跟踪分析器会对您的代码进行插桩。
+Tracing profilers kind of instrument your code. 
+
+432
+00:32:11,000 --> 00:32:16,350
+所以它们会随着您的代码执行，
+So they kind of execute with your code and every time your code enters a function call,
+
+433
+00:32:16,350 --> 00:32:17,550
+并在每次代码进入函数调用时进行记录。
+they kind of take a note of it. 
+
+434
+00:32:17,550 --> 00:32:20,950
+就像这个时刻我们正在进入这个函数调用，
+It's like, oh we're entering this function call at this moment in time and
+
+435
+00:32:20,950 --> 00:32:25,825
+然后继续前进，一旦完成，它们可以报告
+they keep going and, once they finish, they can report oh, 
+
+436
+00:32:25,825 --> 00:32:31,000
+你在这个函数中执行了多少时间，在另一个函数中执行了多少时间，
+you spent this much time executing in this function and this much time in this other function. 
+
+437
+00:32:31,000 --> 00:32:34,675
+以此类推，这就是我们现在将要看到的例子。
+So on, so forth, which is the example that we're gonna see now.
+
+438
+00:32:34,675 --> 00:32:38,650
+另一种类型的工具是跟踪采样分析器。
+Another type of tools are tracing, sorry, sampling profilers. 
+
+439
+00:32:38,650 --> 00:32:41,675
+跟踪分析器的问题在于它们会增加很多开销。
+The issue with tracing profilers is they add a lot of overhead. 
+
+440
+00:32:41,675 --> 00:32:45,550
+就像您可能正在运行您的代码，
+Like you might be running your code and having these kind of
+
+441
+00:32:45,550 --> 00:32:51,780
+并且在您旁边进行这些统计分析，这将影响您程序的性能，
+profiling next to you making all these counts, will hinder the performance of your program, 
+
+442
+00:32:51,780 --> 00:32:54,150
+所以您可能会得到稍微偏差的统计数。
+so you might get counts that are slightly off.
+
+443
+00:32:54,150 --> 00:32:59,050
+采样分析器会执行您的程序，
+A sampling profiler, what it's gonna do is gonna execute your program 
+
+444
+00:32:59,050 --> 00:33:03,375
+并在每100毫秒、10毫秒或其他定义的时间段内停止程序。
+and every 100 milliseconds, 10 milliseconds, like some defined period, 
+
+445
+00:33:03,375 --> 00:33:05,800
+它会停止程序，查看堆栈跟踪
+it's gonna stop your program. It's gonna halt it,
+
+446
+00:33:05,800 --> 00:33:12,425
+并确定当前在层次结构中
+it's gonna look at the stack trace and say, oh, you're right now in this point in the hierarchy, 
+
+447
+00:33:12,425 --> 00:33:15,875
+同时哪个函数正在执行。
+and identify which function is gonna be executing at that point. 
+
+448
+00:33:15,875 --> 00:33:20,250
+理念是只要您足够长时间执行此操作，
+The idea is that as long as you execute this for long enough,
+
+449
+00:33:20,250 --> 00:33:25,275
+就可以获得足够的统计数据，了解大部分时间都花在了哪里。
+you're gonna get enough statistics to know where most of the time is being spent.
+
+450
+00:33:25,275 --> 00:33:28,975
+接下来让我们看一个跟踪分析的例子。
+So, let's see an example of a tracing profiling. 
+
+451
+00:33:28,975 --> 00:33:32,775
+这里有一段代码，
+So here we have a piece of code that is just like a
+
+452
+00:33:32,775 --> 00:33:38,025
+它只是 Python 中 grep 的一个简单重新实现。
+really simple re-implementation of grep done in Python. 
+
+453
+00:33:38,025 --> 00:33:41,450
+我们想要检查程序的瓶颈在哪里。
+What we want to check is what is the bottleneck of this program? 
+
+454
+00:33:41,450 --> 00:33:46,850
+我们只是打开了一堆文件，试图匹配这个模式，
+Like we're just opening a bunch of files,trying to match this pattern, 
+
+455
+00:33:46,850 --> 00:33:49,575
+然后在找到匹配项时打印出来。
+and then printing whenever we find a match. 
+
+456
+00:33:49,575 --> 00:33:52,675
+可能是正则表达式，也可能是打印操作，
+And maybe it's the regex, maybe it's the print...
+
+457
+00:33:52,675 --> 00:33:54,125
+我们不确定。
+We don't really know. 
+
+458
+00:33:54,125 --> 00:34:00,275
+为了在 Python 中执行这个操作，我们使用 "cProfile"。
+So to do this in Python, we have the "cProfile".
+
+459
+00:34:00,300 --> 00:34:03,775
+我调用这个模块，
+And here I'm just calling this module 
+
+460
+00:34:03,775 --> 00:34:06,950
+说我想按总时间排序，
+and saying I want to sort this by the total amount of time, 
+
+461
+00:34:06,950 --> 00:34:08,800
+我们会很快看到这个。
+that we're gonna see briefly. 
+
+462
+00:34:08,800 --> 00:34:14,000
+我调用我们刚才在编辑器中看到的程序。
+I'm calling the program we just saw in the editor.
+
+463
+00:34:14,000 --> 00:34:16,050
+我要执行这个程序一千次，
+I'm gonna execute this a thousand times 
+
+464
+00:34:16,050 --> 00:34:20,300
+然后将 grep 的参数
+and then I want to match the grep Arguments here
+
+465
+00:34:20,300 --> 00:34:25,476
+应用于这里的所有 Python 文件。
+ is I want to match these regex to all the Python files in here. 
+
+466
+00:34:25,476 --> 00:34:28,400
+这将产生一些输出，
+And this is gonna output some...
+
+467
+00:34:28,400 --> 00:34:34,100
+然后我们将查看它。
+This is gonna produce some output, then we're gonna look at it. 
+
+468
+00:34:34,100 --> 00:34:38,385
+首先是所有 grep 的输出，
+First, is all the output from the greps, but at the very end, 
+
+469
+00:34:38,385 --> 00:34:41,800
+但最后，我们得到了分析器本身的输出。
+we're getting output from the profiler itself. 
+
+470
+00:34:41,800 --> 00:34:51,322
+如果我们向上滚动，我们可以看到，通过排序，我们可以看到总调用次数。
+If we go up,we can see that, hey, by sorting we can see that the total number of calls. 
+
+471
+00:34:51,322 --> 00:34:57,375
+因为我们执行了这个程序一千次，所以我们执行了8000次调用，
+So we did 8000 calls, because we executed this 1000 times and
+
+472
+00:34:57,375 --> 00:35:02,500
+这是我们在这个函数中花费的总时间(累计时间)。
+this is the total amount of time we spent in this function (cumulative time). 
+
+473
+00:35:02,500 --> 00:35:06,425
+在这里，
+And here we can start to identify where the bottleneck is. 
+
+474
+00:35:06,425 --> 00:35:09,850
+这个内置方法 IO open 表示
+So here, this built-in method IO open, is saying that 
+
+475
+00:35:09,850 --> 00:35:14,700
+我们花费了大量时间等待从磁盘读取或...
+we're spending a lot of the time just waiting for reading from the disk or... 
+
+476
+00:35:14,700 --> 00:35:20,075
+在这里，我们可以检查，大量时间也花在了尝试匹配正则表达式上，
+There, we can check, hey, a lot of time is also being spent trying to match the regex.
+
+477
+00:35:20,075 --> 00:35:22,400
+这是可以预期的。
+Which is something that you will expect. 
+
+478
+00:35:22,400 --> 00:35:28,125
+使用此追踪分析器的一个警告是，
+One of the caveats of using this tracing profiler is that, 
+
+479
+00:35:28,125 --> 00:35:31,475
+正如您可以看到的那样，我们看到了我们的函数，
+as you can see, here we're seeing our function 
+
+480
+00:35:31,475 --> 00:35:35,850
+但也看到了很多与内置函数对应的函数。
+but we're also seeing a lot of functions that correspond to built-ins.
+
+481
+00:35:35,850 --> 00:35:39,375
+因此，像来自库的第三方函数这样的函数。
+So like, functions that are third party functions from the libraries. 
+
+482
+00:35:39,375 --> 00:35:42,275
+随着您构建越来越复杂的代码，
+And as you start building more and more complex code,
+
+483
+00:35:42,275 --> 00:35:44,125
+这将变得更加困难。
+This is gonna be much harder. 
+
+484
+00:35:44,125 --> 00:35:52,575
+这里是另一个Python代码片段，不要阅读它，
+So here is another piece of Python code that, don't read through it, 
+
+485
+00:35:52,575 --> 00:35:58,525
+它只是获取课程网站，
+what it's doing is just grabbing the course website and then it's printing all the...
+
+486
+00:35:58,525 --> 00:36:01,975
+然后打印出所有的超链接。
+It's parsing it, and then it's printing all the hyperlinks that it has found. 
+
+487
+00:36:01,975 --> 00:36:04,050
+因此有这两个操作：
+So there are like these two operations:
+
+488
+00:36:04,050 --> 00:36:07,875
+前往该网站，获取并解析它，然后打印链接。
+going there, grabbing a website, and then parsing it, printing the links. 
+
+489
+00:36:07,875 --> 00:36:09,800
+我们可能想要了解
+And we might want to get a sense of
+
+490
+00:36:09,800 --> 00:36:12,875
+这两个操作之间的比较。
+how those two operations compare to each other. 
+
+491
+00:36:12,875 --> 00:36:20,775
+如果我们尝试执行cProfiler，我们将执行相同的操作，
+If we just try to execute the cProfiler here and we're gonna do the same, 
+
+492
+00:36:20,775 --> 00:36:22,650
+这不会打印任何内容。
+this is not gonna print anything.
+
+493
+00:36:22,650 --> 00:36:26,275
+我正在使用到目前为止我们没有见过的一个工具，但我认为它很好。
+I'm using a tool we haven't seen so far,but I think it's pretty nice. 
+
+494
+00:36:26,275 --> 00:36:28,400
+它是"TAC"，是"CAT"的反向，
+It's "TAC", which is the opposite of "CAT", 
+
+495
+00:36:28,400 --> 00:36:33,725
+并且会反转输出，因此我不必上下查看。
+and it is going to reverse the output so I don't have to go up and look.
+
+496
+00:36:33,725 --> 00:36:36,225
+我们这样做，
+So we do this and... 
+
+497
+00:36:36,225 --> 00:36:39,650
+嘿，我们得到了一些有趣的输出。
+Hey, we get some interesting output.
+
+498
+00:36:39,650 --> 00:36:44,925
+我们在这个内置方法socket_getaddr_info、_imp_create_dynamic和
+we're spending a bunch of time in this built-in method socket_getaddr_info 
+
+499
+00:36:44,925 --> 00:36:49,125
+method_connect中花费了大量的时间以及posix_stat…，
+and like in _imp_create_dynamic and method_connect and posix_stat... 
+
+500
+00:36:49,200 --> 00:36:53,500
+我的代码中没有直接调用这些函数，
+nothing in my code is directly calling these functions so I don't really know 
+
+501
+00:36:53,500 --> 00:36:58,700
+因此我不知道发出Web请求
+what is the split between the operation of making a web request 
+
+502
+00:36:58,700 --> 00:37:01,575
+和解析该Web请求的输出之间的拆分是什么。
+and parsing the output of that web request. 
+
+503
+00:37:01,600 --> 00:37:04,850
+因此，我们可以
+So, for that, we can use
+
+504
+00:37:04,850 --> 00:37:11,925
+使用不同类型的分析器，即行分析器。
+a different type of profiler which is a line profiler. 
+
+505
+00:37:11,925 --> 00:37:14,575
+行分析器只会以更易读的方式呈现相同的结果，
+And the line profiler is just going to present the same results
+
+506
+00:37:14,575 --> 00:37:16,825
+即对于此代码行，
+but in a more human-readable way, 
+
+507
+00:37:16,825 --> 00:37:21,175
+这是花费的时间。
+which is just, for this line of code, this is the amount of time things took.
+
+508
+00:37:21,175 --> 00:37:32,325
+因此，我们必须向Python函数添加一个装饰器来完成这项工作。
+So it knows it has to do that, we have to add a decorator to the Python function, we do that.
+
+509
+00:37:34,675 --> 00:37:40,025
+当我们这样做时，我们现在获得了略微裁剪的输出，
+And as we do that, we now get slightly cropped output, 
+
+510
+00:37:40,025 --> 00:37:43,125
+但主要思路是我们可以查看时间百分比，
+but the main idea, we can look at the percentage of time 
+
+511
+00:37:43,125 --> 00:37:45,500
+并且我们可以看到进行此请求、
+and we can see that making this request, 
+
+512
+00:37:45,500 --> 00:37:53,175
+获取操作所花费的时间占总时间的88%，而解析响应所花费的时间仅占10.9%。
+get operation, took 88% of the time, whereas parsing the response took only 10.9% of the time.
+
+513
+00:37:53,175 --> 00:37:56,131
+这可能非常有信息量，
+This can be really informative 
+
+514
+00:37:56,131 --> 00:38:01,956
+许多不同的编程语言都将支持这种类型的行分析。
+and a lot of different programming languages will support this type of a line profiling.
+
+515
+00:38:04,350 --> 00:38:07,875
+有时你可能不关心 CPU 的性能，
+Sometimes, you might not care about CPU. 
+
+516
+00:38:07,875 --> 00:38:11,475
+也许你关心内存或其他资源。
+Maybe you care about the memory or like some other resource. 
+
+517
+00:38:11,475 --> 00:38:15,550
+同样地，也有内存分析器：在 Python 中
+Similarly, there are memory profilers: in Python
+
+518
+00:38:15,550 --> 00:38:18,825
+有 "memory_profiler"，在 C 中有 "Valgrind"。
+there is "memory_profiler", for C you will have "Valgrind". 
+
+519
+00:38:18,825 --> 00:38:22,150
+这里是一个相当简单的例子，
+So here is a fairly simple example,
+
+520
+00:38:22,150 --> 00:38:25,475
+我们只是创建了一个包含一百万个元素的列表。
+we just create this list with a million elements. 
+
+521
+00:38:25,475 --> 00:38:29,650
+这将占用大约几兆字节的空间，
+That's going to consume like megabytes of space and
+
+522
+00:38:29,650 --> 00:38:33,175
+并且我们做同样的事情，创建另一个包含两千万个元素的列表。
+we do the same, creating another one with 20 million elements.
+
+523
+00:38:33,175 --> 00:38:38,725
+为了检查内存分配是多少？
+To check, what was the memory allocation? 
+
+524
+00:38:38,725 --> 00:38:42,625
+它将如何发生，消耗量是多少？
+How it's gonna happen, what's the consumption? 
+
+525
+00:38:42,625 --> 00:38:46,500
+我们可以使用一个内存分析器来执行它，
+We can go through one memory profiler and we execute it, 
+
+526
+00:38:46,500 --> 00:38:51,350
+并告诉我们总内存使用量和增量。
+and it's telling us the total memory usage and the increments.
+
+527
+00:38:51,350 --> 00:38:54,225
+我们可以看到一些开销，
+And we can see that we have some overhead, 
+
+528
+00:38:54,225 --> 00:39:01,475
+因为这是一种解释性语言，当我们创建一个包含一百万条条目的列表时，
+because this is an interpreted language and when we create this million,
+
+529
+00:39:01,475 --> 00:39:07,950
+我们将需要这么多兆字节的信息。
+this list with a million entries, we're gonna need this many megabytes of information. 
+
+530
+00:39:07,950 --> 00:39:11,200
+然后我们又得到了另外 150 兆字节。
+Then we were getting another 150 megabytes. 
+
+531
+00:39:11,200 --> 00:39:15,825
+接下来，我们释放了这个条目，总量就减少了。
+Then, we're freeing this entry and that's decreasing the total amount.
+
+532
+00:39:15,825 --> 00:39:19,775
+我们没有因为错误而得到负增量，可能是在分析器中出现了 bug。
+We are not getting a negative increment because of a bug, probably in the profiler. 
+
+533
+00:39:19,775 --> 00:39:23,425
+但是，如果你知道你的程序占用了大量内存，
+But if you know that your program is taking a huge amount of memory 
+
+534
+00:39:23,425 --> 00:39:27,050
+而你不知道为什么，可能是因为你在复制对象，
+and you don't know why, maybe because you're copying
+
+535
+00:39:27,050 --> 00:39:29,875
+而不是应该在原地进行操作，
+objects where you should be doing things in place, 
+
+536
+00:39:29,875 --> 00:39:33,550
+那么使用内存分析器就可以非常有用。
+then using a memory profiler can be really useful.
+
+537
+00:39:33,550 --> 00:39:37,325
+实际上，有一个练习将带领你完成这个操作，
+And in fact there's an exercise that will kind of work you through that, 
+
+538
+00:39:37,325 --> 00:39:41,350
+比较就地排序的版本和不是就地排序的版本，
+comparing an in-place version of quicksort with like a non-inplace, 
+
+539
+00:39:41,350 --> 00:39:42,750
+后者会不断制作新的副本。
+that keeps making new and new copies. 
+
+540
+00:39:42,750 --> 00:39:44,500
+如果你使用内存分析器，
+And if you using the memory profiler 
+
+541
+00:39:44,500 --> 00:39:48,925
+你可以得到两者之间的很好的比较。
+you can get a really good comparison between the two of them
+
+542
+00:39:51,050 --> 00:39:54,275
+有没有关于分析的问题？
+Any questions so far, with profiling? 
+
+543
+00:39:54,275 --> 00:39:58,300
+内存分析器是在运行程序以获得结果吗？
+Is the memory profiler running the program in order to get that?
+
+544
+00:39:58,300 --> 00:40:03,850
+是的……你可能能够通过查看代码来弄清楚。
+Yeah... you might be able to figure out like just looking at the code.
+
+545
+00:40:03,850 --> 00:40:06,375
+但是随着程序越来越复杂，这就不是那么容易了（至少对于这个代码而言）。
+But as you get more and more complex (for this code at least) 
+
+546
+00:40:06,375 --> 00:40:11,000
+这个工具会运行程序，
+But you get more and more complex programs what this is doing is running through the program
+
+547
+00:40:11,000 --> 00:40:16,475
+并在每一行开始时查看堆，然后说
+and for every line, at the very beginning, it's looking at the heap and saying
+
+548
+00:40:16,475 --> 00:40:19,225
+“我现在分配了哪些对象？
+"What are the objects that I have allocated now?"
+
+549
+00:40:19,275 --> 00:40:21,900
+我有七兆字节的对象”，
+ "I have seven megabytes of objects", 
+
+550
+00:40:21,900 --> 00:40:24,150
+然后再到下一行，再次查看，
+and then goes to the next line,looks again, 
+
+551
+00:40:24,150 --> 00:40:28,175
+“噢，现在我有 50 兆字节，所以我现在增加了 43 个”。
+"Oh now I have 50, so I have now added 43 there".
+
+552
+00:40:28,175 --> 00:40:35,025
+你可以在代码中要求这些操作的每一行自己完成这个操作，
+Again, you could do this yourself by asking for those operations in your code, every single line.
+
+553
+00:40:35,025 --> 00:40:37,675
+但这不是你应该做的，
+But that's not how you should be doing things  
+
+554
+00:40:37,675 --> 00:40:40,425
+因为别人已经为你编写了这些工具。
+since people have already written these tools for you to use.
+
+555
+00:40:42,600 --> 00:40:46,525
+正如 strace 的情况一样，
+As it was the case with...
+
+556
+00:40:46,525 --> 00:40:58,500
+你可以在分析中做类似的事情。
+So as in the case with strace, you can do something similar in profiling.
+
+557
+00:40:58,500 --> 00:41:03,600
+也许你不关心具体的代码行，
+You might not care about the specific lines of code that you have,
+
+558
+00:41:03,600 --> 00:41:06,850
+但是你想检查外部事件。
+but maybe you want to check for outside events. 
+
+559
+00:41:06,850 --> 00:41:12,575
+你可能想检查你的计算机程序使用了多少CPU周期，
+Like, you maybe want to check how many CPU cycles your computer program is using, 
+
+560
+00:41:12,575 --> 00:41:14,650
+或者它创建了多少页面错误。
+or how many page faults it's creating.
+
+561
+00:41:14,650 --> 00:41:19,675
+也许你的缓存位置很差，这些问题会以某种方式表现出来。
+Maybe you have like bad cache locality and that's being manifested somehow. 
+
+562
+00:41:19,675 --> 00:41:22,775
+为此，有一个“perf”命令。
+So for that, there is the "perf" command.
+
+563
+00:41:22,775 --> 00:41:26,675
+perf命令会运行你的程序，
+The perf command is gonna do this, where it is gonna run your program 
+
+564
+00:41:26,675 --> 00:41:32,125
+并跟踪所有这些统计数据，并将它们反馈给你。
+and it's gonna keep track of all these statistics and report them back to you. 
+
+565
+00:41:32,125 --> 00:41:35,850
+如果你在低层级工作，这将非常有帮助。
+And this can be really helpful if you are working at a lower level. 
+
+566
+00:41:35,850 --> 00:41:44,075
+我们执行此命令，我将简要解释它在做什么。
+So we execute this command, I'm gonna explain briefly what it's doing.
+
+567
+00:41:48,975 --> 00:41:54,175
+stress程序只是在CPU中运行，
+And this stress program is just running in the CPU, 
+
+568
+00:41:54,175 --> 00:41:58,350
+它只是一个程序，用于独占一个CPU，并测试您是否可以独占CPU。
+and it's just a program to just hog one CPU and like test that you can hog the CPU. 
+
+569
+00:41:58,350 --> 00:42:07,475
+现在，如果我们Ctrl-C，我们可以返回并获取有关页面错误数量
+And now if we Ctrl-C,we can go back and we get some information about the number of page faults 
+
+570
+00:42:07,475 --> 00:42:11,825
+或我们的代码使用的CPU周期的一些信息。
+that we have or the number of CPU cycles that we utilize, 
+
+571
+00:42:11,825 --> 00:42:16,575
+或是其它的有效信息
+and other useful metrics from our code. 
+
+572
+00:42:16,575 --> 00:42:26,950
+对于某些程序，你可以查看正在使用的函数。
+For some programs you can look at what the functions that were being used were. 
+
+573
+00:42:26,950 --> 00:42:31,200
+因此，我们可以记录此程序正在执行的操作，
+So we can record what this program is doing,
+
+574
+00:42:31,200 --> 00:42:35,325
+我们不知道这是因为这是其他人编写的程序。
+which we don't know about because it's a program someone else has written. 
+
+575
+00:42:35,325 --> 00:42:42,850
+我们可以通过查看堆栈跟踪来报告它正在执行的操作，然后说，
+And we can report what it was doing by looking at the stack trace and we can say oh, 
+
+576
+00:42:42,850 --> 00:42:48,175
+哦，它花费了大量时间在这个__random_r标准库函数上。
+It's spending a bunch of time in this __random_r standard library function. 
+
+577
+00:42:48,175 --> 00:42:50,700
+这主要是因为独占CPU的方法是通过
+And it's mainly because the way of hogging a CPU is by 
+
+578
+00:42:50,700 --> 00:42:53,350
+创建越来越多的伪随机数。
+just creating more and more pseudo-random numbers.
+
+579
+00:42:53,350 --> 00:42:58,000
+还有一些未映射的其他函数，
+There are some other functions that have not been mapped, 
+
+580
+00:42:58,000 --> 00:43:00,000
+因为它们属于程序，
+because they belong to the program, 
+
+581
+00:43:00,000 --> 00:43:02,100
+但如果你知道你的程序，
+but if you know about your program
+
+582
+00:43:02,100 --> 00:43:04,925
+你可以使用更多的标志显示有关perf的信息。
+you can display this information using more flags, about perf. 
+
+583
+00:43:04,925 --> 00:43:09,200
+有关如何使用这个工具的非常好的在线教程。
+There are really good tutorials online about how to use this tool.
+
+584
+00:43:14,100 --> 00:43:17,900
+还有一个关于分析器的问题，到目前为止，
+Oh One one more thing regarding profilers is, so far,
+
+585
+00:43:17,900 --> 00:43:22,650
+我们已经看到这些分析器在聚合所有这些信息
+we have seen that these profilers are really good at aggregating all this information 
+
+586
+00:43:22,650 --> 00:43:25,800
+并为你提供大量这些数字方面非常出色，
+and giving you a lot of these numbers 
+
+587
+00:43:25,800 --> 00:43:29,625
+这样你就可以优化你的代码或者你可以理解正在发生的事情，
+so you can optimize your code or you can reason about what is happening, 
+
+588
+00:43:29,625 --> 00:43:35,625
+人类不擅长处理大量数字，
+but the thing is humans are not really good at making sense of lots of numbers 
+
+589
+00:43:35,625 --> 00:43:38,250
+而且由于人类更善于视觉处理，
+and since humans are more visual creatures, 
+
+590
+00:43:38,250 --> 00:43:43,025
+因此使用可视化工具更容易理解。
+it's much easier to kind of have some sort of visualization. 
+
+591
+00:43:43,025 --> 00:43:49,100
+程序员已经想到了解决方法。
+Again, programmers have already thought about this and have come up with solutions.
+
+592
+00:43:49,100 --> 00:43:53,325
+一些流行的可视化工具包括 FlameGraph。
+A couple of popular ones, is a FlameGraph. 
+
+593
+00:43:53,325 --> 00:43:58,325
+FlameGraph 是一种采样分析器，
+A FlameGraph is a sampling profiler. 
+
+594
+00:43:58,325 --> 00:44:01,250
+通过运行代码并采样来收集数据。
+So this is just running your code and taking samples 
+
+595
+00:44:01,250 --> 00:44:03,700
+在 y 轴上，
+And then on the y-axis here
+
+596
+00:44:03,700 --> 00:44:10,225
+我们有堆栈的深度，因此我们知道 bash 函数调用了另一个函数，
+we have the depth of the stack so we know that the bash function called this other function, 
+
+597
+00:44:10,225 --> 00:44:11,625
+然后调用了另一个函数，
+and this called this other function,
+
+598
+00:44:11,625 --> 00:44:13,000
+以此类推。
+so on, so forth. 
+
+599
+00:44:13,000 --> 00:44:17,775
+在 x 轴上，它不是时间戳，
+And on the x-axis it's not time, it's not the timestamps.
+
+600
+00:44:17,775 --> 00:44:21,825
+而是执行时间。
+Like it's not this function run before, but it's just time taken. 
+
+601
+00:44:21,850 --> 00:44:23,800
+因为这是采样分析器：
+Because, again, this is a sampling profiler:
+
+602
+00:44:23,800 --> 00:44:27,600
+我们只能得到程序运行的一些瞬间的样本。
+we're just getting small glimpses of what was it going on in the program. 
+
+603
+00:44:27,600 --> 00:44:29,350
+但我们知道
+But we know that, for example,
+
+604
+00:44:29,350 --> 00:44:35,375
+例如这个主程序需要最长的时间，因为 x 轴与此成比例。
+this main program took the most time because the x-axis is proportional to that.
+
+605
+00:44:35,375 --> 00:44:43,475
+它们是交互式的，并且对于确定程序中的热点非常有用。
+They are interactive and they can be really useful to identify the hot spots in your program.
+
+606
+00:44:43,475 --> 00:44:47,175
+另一种显示信息的方法是
+Another way of displaying information, 
+
+607
+00:44:47,175 --> 00:44:51,025
+使用调用图，也有关于如何使用这种工具的练习。
+and there is also an exercise on how to do this, is using a call graph.
+
+608
+00:44:51,025 --> 00:44:53,600
+调用图将显示信息，
+So a call graph is going to be displaying information, 
+
+609
+00:44:53,600 --> 00:44:58,600
+并创建一个函数调用了哪个其他函数的图。
+and it's gonna create a graph of which function called which other function.
+
+610
+00:44:58,600 --> 00:45:01,250
+然后，您可以获得有关信息，
+And then you get information about, like, 
+
+611
+00:45:01,250 --> 00:45:08,225
+例如我们知道 "main" 调用了这个 "Person" 函数十次并且它花费了这么多时间。
+oh, we know that "__main__" called this "Person" function ten times and it took this much time. 
+
+612
+00:45:08,225 --> 00:45:10,525
+随着程序越来越大，
+And as you have larger and larger programs, 
+
+613
+00:45:10,525 --> 00:45:14,125
+查看其中一个调用图可以帮助确定
+looking at one of these call graphs can be useful to identify
+
+614
+00:45:14,125 --> 00:45:20,600
+您的代码的哪个部分调用了非常昂贵的 IO 操作。
+what piece of your code is calling this really expensive IO operation, for example.
+
+615
+00:45:24,575 --> 00:45:28,483
+最后，我想说的是
+With that I'm gonna cover the last part of the lecture, 
+
+616
+00:45:28,525 --> 00:45:36,825
+有时您甚至可能不知道程序中哪个资源受限。
+which is that sometimes, you might not even know what exact resource is constrained in your program.
+
+617
+00:45:36,825 --> 00:45:41,323
+例如，如何知道我的程序使用了多少 CPU，
+Like how do I know how much CPU my program is using, 
+
+618
+00:45:41,323 --> 00:45:43,925
+(我可以马上在这里看到)，或者多少内存
+(and I can quickly look in there), or how much memory.
+
+619
+00:45:43,925 --> 00:45:51,725
+因此，有许多非常聪明的工具可以做到这一点，其中之一是 HTOP。
+So there are a bunch of really nifty tools for doing that one of them is HTOP. 
+
+620
+00:45:51,725 --> 00:45:55,975
+HTOP 是一个交互式的命令行工具，
+so HTOP is an interactive command-line tool 
+
+621
+00:45:55,975 --> 00:46:01,000
+它显示此机器具有的所有 CPU，即 12 个。
+and here it's displaying all the CPUs this machine has,which is 12. 
+
+622
+00:46:01,000 --> 00:46:03,550
+它显示内存量，
+It's displaying the amount of memory, 
+
+623
+00:46:03,575 --> 00:46:08,259
+并显示我使用了接近 32GB 机器内存中的 1GB。
+it says I'm consuming almost a gigabyte of the 32 gigabytes my machine has.
+
+624
+00:46:08,259 --> 00:46:12,000
+然后我得到了所有不同的进程。
+And then I'm getting all the different processes. 
+
+625
+00:46:12,000 --> 00:46:17,475
+例如我们有zsh、mysql和其他在这台机器上运行的进程，
+So for example we have zsh, mysql and other processes that are running in this machine, 
+
+626
+00:46:17,475 --> 00:46:20,825
+我可以通过它们消耗的CPU数量
+and I can sort through the amount of CPU
+
+627
+00:46:20,825 --> 00:46:25,200
+或它们运行的优先级进行排序。
+they're consuming or through the priority they're running at.
+
+628
+00:46:25,225 --> 00:46:28,100
+我们可以通过运行stress命令来检查。
+We can check this, for example. 
+
+629
+00:46:28,100 --> 00:46:31,550
+在这里，我们再次运行stress命令以占用四个CPU，
+Here we have the stress command again and we're going to
+
+630
+00:46:31,550 --> 00:46:37,425
+并检查我们是否可以在HTOP中看到它们。
+run it to take over four CPUs and check that we can see that in HTOP.
+
+631
+00:46:37,425 --> 00:46:41,900
+我们确实发现了这四个CPU任务，
+So we did spot those four CPU jobs, and now I have seen that
+
+632
+00:46:41,900 --> 00:46:47,550
+现在我发现除了之前我们看到的，现在...
+besides the ones we had before, now I have this...
+
+633
+00:46:50,175 --> 00:46:56,200
+我还有这个“stress -c”命令在运行并占用了我们大量的CPU。
+Like this "stress -c" command running and taking a bunch of our CPU.
+
+634
+00:46:56,200 --> 00:47:00,125
+尽管您可以使用分析器来获取类似于此的信息，
+Even though you could use a profiler to get similar information to this, 
+
+635
+00:47:00,125 --> 00:47:04,300
+但是HTOP以实时交互的方式显示此类信息
+the way HTOP displays this kind of in a live interactive fashion 
+
+636
+00:47:04,300 --> 00:47:07,500
+可能更快速和更易于解析。
+can be much quicker  and much easier to parse. 
+
+637
+00:47:07,500 --> 00:47:14,750
+在笔记中，有一个非常长的列表，列出了用于评估系统不同部分的各种工具。
+In the notes, there's a really long list of different tools for evaluating different parts of your system.
+
+638
+00:47:14,750 --> 00:47:18,825
+那可能是用于分析网络性能的工具，
+So that might be tools for analyzing the network performance, 
+
+639
+00:47:18,825 --> 00:47:22,550
+或者查看IO操作的数量，
+about looking the number of IO operations, 
+
+640
+00:47:22,550 --> 00:47:28,175
+以便您知道是否饱和了从磁盘读取，
+so you know whether you're saturating the reads from your disks, 
+
+641
+00:47:28,175 --> 00:47:32,275
+您还可以查看空间使用情况。
+you can also look at what is the space usage.
+
+642
+00:47:32,275 --> 00:47:35,425
+我想在这里...
+Which, I think, here...
+
+643
+00:47:38,725 --> 00:47:45,300
+NCDU…有一个名为“du”的工具，它代表“磁盘使用”，
+So NCDU... There's a tool called "du" which stands for "disk usage" and
+
+644
+00:47:45,300 --> 00:47:49,825
+我们有“-h”标志用于“人类可读的输出”。
+we have the "-h" flag for "human readable output".
+
+645
+00:47:49,825 --> 00:48:00,825
+我们可以进行视频，然后获得有关此文件夹中所有文件大小的输出。
+We can do videos and we can get output about the size of all the files in this folder.
+
+646
+00:48:01,925 --> 00:48:05,175
+是的，就是这样。
+Yeah, there we go. 
+
+647
+00:48:10,900 --> 00:48:15,675
+还有互动版本，例如HTOP是一个互动版本。
+There are also interactive versions, like HTOP was an interactive version.
+
+648
+00:48:15,675 --> 00:48:17,586
+因此，NCDU是一个互动版本，
+So NCDU is an interactive version 
+
+649
+00:48:17,586 --> 00:48:21,733
+让我可以浏览文件夹，我可以快速看到哦，
+that will let me navigate through the folders and I can see quickly that
+
+650
+00:48:21,733 --> 00:48:22,175
+emmm...
+oh, we have... 
+
+651
+00:48:22,175 --> 00:48:25,350
+这是视频讲座之一的文件夹，
+This is one of the folders for the video lectures,
+
+652
+00:48:25,350 --> 00:48:32,900
+我们可以看到有这四个文件，每个文件大小都接近9 GB，
+and we can see there are these four files that have like almost 9 GB each 
+
+653
+00:48:32,900 --> 00:48:36,950
+我可以通过此界面快速删除它们。
+and I could quickly delete them through this interface.
+
+654
+00:48:37,900 --> 00:48:44,225
+另一个很棒的工具是“LSOF”，它代表“打开文件列表”。
+Another neat tool is "LSOF" which stands for "LIST OF OPEN FILES".
+
+655
+00:48:44,225 --> 00:48:49,950
+您可能遇到的另一种模式是，您知道某个进程正在使用文件，
+Another pattern that you may encounter is you know some process is using a file, 
+
+656
+00:48:49,950 --> 00:48:52,675
+但您不知道确切是哪个进程在使用该文件。
+but you don't know exactly which process is using that file.
+
+657
+00:48:52,675 --> 00:48:56,875
+或者，类似地，某个进程正在侦听端口，
+Or, similarly, some process is listening in a port, 
+
+658
+00:48:56,875 --> 00:48:59,300
+但是，您又如何找出它是哪个进程呢？
+but again, how do you find out which one it is? 
+
+659
+00:48:59,300 --> 00:49:01,375
+那么让我们来举个例子。
+So to set an example.
+
+660
+00:49:01,375 --> 00:49:06,575
+我们在444端口上运行一个Python HTTP服务器。
+We just run a Python HTTP server on port 444 running there. 
+
+661
+00:49:06,600 --> 00:49:10,025
+也许我们不知道它正在运行，
+Maybe we don't know that that's running, 
+
+662
+00:49:10,025 --> 00:49:11,825
+但是我们可以使用……
+but then we can
+
+663
+00:49:11,825 --> 00:49:19,600
+我们可以使用LSOF。
+use... we can use LSOF.
+
+664
+00:49:22,850 --> 00:49:25,850
+是的，我们可以使用LSOF，
+Yeah, we can use LSOF, 
+
+665
+00:49:25,850 --> 00:49:30,250
+而LSOF将打印大量信息。
+and the thing is LSOF is gonna print a lot of information.
+
+666
+00:49:30,250 --> 00:49:39,746
+您需要SUDO权限，因为它将要求谁拥有所有这些项。
+You need SUDO permissions because this is gonna ask for who has all these items.
+
+667
+00:49:39,746 --> 00:49:48,025
+由于我们只关心在此444端口上监听的进程，因此我们可以使用grep查询。
+Since we only care about the one who is listening in this 444 port we can ask grep for that. 
+
+668
+00:49:48,375 --> 00:49:53,600
+然后我们可以看到，有一个Python进程，具有此标识符，
+And we can see, oh, there's like this Python process, with this identifier, 
+
+669
+00:49:53,600 --> 00:49:58,125
+正在使用该端口，然后我们可以将其终止，
+that is using the port and then we can kill it, 
+
+670
+00:49:58,875 --> 00:50:01,150
+从而终止该进程。
+and that terminates that process.
+
+671
+00:50:01,150 --> 00:50:05,350
+同样，有许多不同的工具可供使用。
+Again, there's a lot of different tools. 
+
+672
+00:50:05,350 --> 00:50:10,875
+甚至有用于进行所谓基准测试的工具。
+There's even tools for doing what is called benchmarking. 
+
+673
+00:50:10,875 --> 00:50:14,625
+因此，在Shell工具和脚本讲座中，
+So in the shell tools and scripting lecture, 
+
+674
+00:50:14,625 --> 00:50:19,350
+我说过对于某些任务，“fd”比“find”快得多。
+I said like for some tasks "fd" is much faster than "find"
+
+675
+00:50:19,350 --> 00:50:21,925
+但是，如何检查呢？
+But like how will you check that? 
+
+676
+00:50:21,925 --> 00:50:26,875
+我可以使用“hyperfine”来测试它，这里有两个命令：
+I can test that with "hyperfine" and I have here two commands: 
+
+677
+00:50:26,875 --> 00:50:34,325
+一个使用“fd”仅搜索JPEG文件，另一个使用“find”执行相同的操作。
+one with "fd" that is just searching for JPEG files and the same one with "find".
+
+678
+00:50:34,325 --> 00:50:39,325
+如果我执行它们，它会对这些脚本进行基准测试，
+ If I execute them, it's gonna benchmark these scripts 
+
+679
+00:50:39,325 --> 00:50:46,975
+并向我提供有关“fd”相对于“find”快多少的一些输出。
+and give me some output about how much faster "fd" is compared to "find".
+
+680
+00:50:47,750 --> 00:50:53,075
+因此，我认为这种总览已经讲完了。
+So I think that kind of concludes... yeah, like 23 times for this task.
+
+681
+00:50:53,075 --> 00:50:56,375
+emmm...
+So that kind of concludes the whole overview. 
+
+682
+00:50:56,375 --> 00:50:59,813
+我知道有很多不同的主题
+I know that there's like a lot of different topics 
+
+683
+00:50:59,813 --> 00:51:02,113
+和不同的视角来处理这些事情，
+and there's like a lot of perspectives on doing these things, 
+
+684
+00:51:02,113 --> 00:51:05,375
+但是我想再次强调的是，
+but again I want to reinforce the idea 
+
+685
+00:51:05,375 --> 00:51:09,025
+您不需要成为所有这些主题的专家，
+that you don't need to be a master of all these topics but more...
+
+686
+00:51:09,025 --> 00:51:11,500
+而是要意识到所有这些东西的存在。
+To be aware that all these things exist. 
+
+687
+00:51:11,500 --> 00:51:14,475
+因此，如果您遇到这些问题，您不需要重新发明轮子，
+So if you run into these issues you don't reinvent the wheel, 
+
+688
+00:51:14,475 --> 00:51:17,850
+而是可以重用其他程序员所做的所有工作。
+and you reuse all that other programmers have done.
+
+689
+00:51:18,000 --> 00:51:24,425
+鉴于此，我很乐意回答与本节或讲座中任何内容有关的问题。
+Given that, I'm happy to take any questions related to this last section or anything in the lecture.
+
+690
+00:51:25,800 --> 00:51:30,550
+有没有什么办法来大概估算程序需要多长时间？
+Is there any way to sort of think about how long a program should take? 
+
+691
+00:51:30,550 --> 00:51:32,281
+如果它运行时间较长，
+You know, if it's taking a while to run
+
+692
+00:51:32,281 --> 00:51:34,900
+您是否应该担心？
+you know, should you be worried? 
+
+693
+00:51:34,900 --> 00:51:37,046
+或者根据您的进程，
+Or depending on your process, 
+
+694
+00:51:37,046 --> 00:51:43,200
+您应该再等十分钟再开始查找为什么它运行时间这么长？
+let me wait another ten minutes before I start looking at why it's taking so long.
+
+695
+00:51:43,200 --> 00:51:45,725
+好的，
+Okay, so the... 
+
+696
+00:51:45,725 --> 00:51:51,900
+了解一个程序需要运行多长时间的任务是非常难以确定的，
+The task of knowing how long a program should run is pretty infeasible to figure out. 
+
+697
+00:51:51,900 --> 00:51:54,525
+这将取决于程序的类型。
+It will depend on the type of program.
+
+698
+00:51:54,525 --> 00:51:59,050
+这取决于您是在进行HTTP请求还是在读取数据......
+It depends on whether you're making HTTP requests or you're reading data... 
+
+699
+00:51:59,050 --> 00:52:03,425
+你可以做的一件事是，
+one thing that you can do is if you have for example, 
+
+700
+00:52:03,425 --> 00:52:08,050
+如果你知道你需要从内存或磁盘中读取两个千兆字节的数据，
+if you know you have to read two gigabytes from memory, like from disk, 
+
+701
+00:52:08,050 --> 00:52:13,225
+并将其加载到内存中，你可以进行快速的计算。
+and load that into memory, you can make back-of-the-envelope calculation. 
+
+702
+00:52:13,225 --> 00:52:15,950
+因为事情是这样安排的，
+So like that shouldn't take longer than like X seconds 
+
+703
+00:52:15,950 --> 00:52:19,450
+所以那应该不会超过X秒。
+because this is how things are set up. 
+
+704
+00:52:19,525 --> 00:52:23,075
+或者，如果您从网络读取某些文件，
+Or if you are reading some files from the network 
+
+705
+00:52:23,075 --> 00:52:25,400
+并且知道网络链接是什么，
+and you know kind of what the network link is 
+
+706
+00:52:25,450 --> 00:52:27,909
+并且它们花费的时间比您预期的要长五倍，
+and they are taking say five times longer
+
+707
+00:52:27,909 --> 00:52:31,259
+则可以尝试这样做。
+ than what you would expect then you could try to do that. 
+
+708
+00:52:31,259 --> 00:52:33,400
+否则，如果您不是很确定。
+Otherwise,  if you don't really know. 
+
+709
+00:52:33,400 --> 00:52:37,000
+例如，如果您在代码中尝试进行某些数学操作，
+Say you're trying to do some mathematical operation in your code 
+
+710
+00:52:37,000 --> 00:52:39,700
+并且不确定需要多长时间，
+and you're not really sure about how long that will take 
+
+711
+00:52:39,700 --> 00:52:42,225
+您可以使用类似于日志记录的方式，
+you can use something like logging 
+
+712
+00:52:42,225 --> 00:52:48,018
+并尝试打印中间阶段，
+and try to kind of print intermediate stages to get a sense of like, 
+
+713
+00:52:48,018 --> 00:52:55,475
+以了解需要执行多少次操作以及三次迭代花费了十秒钟，
+oh I need to do a thousand operations of this and three iterations took ten seconds. 
+
+714
+00:52:55,475 --> 00:53:01,275
+那么在我的情况下，这将需要更长时间才能完成。
+Then this is gonna take much longer than I can handle in my case.
+
+715
+00:53:01,275 --> 00:53:05,275
+所以，我认为有很多方法可以解决这个问题，这又将取决于任务，
+So I think there are there are ways, it will again like depend on the task, 
+
+716
+00:53:05,275 --> 00:53:09,625
+但是，鉴于我们看到的所有工具，
+but definitely, given all the tools we've seen really, 
+
+717
+00:53:09,625 --> 00:53:14,150
+我们可能有几种很好的方法来开始解决这个问题。
+we probably have like a couple of really good ways to start tackling that.
+
+718
+00:53:14,800 --> 00:53:16,825
+还有其他问题吗？
+Any other questions? 
+
+719
+00:53:16,875 --> 00:53:21,800
+您还可以运行HTOP并查看是否有任何正在运行的东西。
+You can also do things like run HTOP and see if anything is running.
+
+720
+00:53:21,800 --> 00:53:25,675
+如果您的CPU使用率为0％，那么可能出了问题。
+Like if your CPU is at 0%, something is probably wrong.
+
+721
+00:53:32,125 --> 00:53:38,850
+好的。今天的课程有很多练习，
+Okay. There's a lot of exercises for all the topics that we have covered in today's class,
+
+722
+00:53:38,850 --> 00:53:41,825
+所以请随意选择您感兴趣的练习。
+so feel free to do the ones that are more interesting. 
+
+723
+00:53:41,825 --> 00:53:44,975
+我们今天还将举行办公时间，
+We're gonna be holding office hours again today.
+
+724
+00:53:44,975 --> 00:53:46,950
+只是提醒一下，办公时间。
+Just a reminder, office hours. 
+
+725
+00:53:46,950 --> 00:53:49,350
+您可以来问任何关于任何课程的问题。
+You can come and ask questions about any lecture. 
+
+726
+00:53:49,350 --> 00:53:53,775
+我们不会期望您在几分钟内完成练习。
+Like we're not gonna expect you to kind of do the exercises in a couple of minutes.
+
+727
+00:53:53,775 --> 00:53:57,025
+他们需要很长时间才能完成，
+They take a really long while to get through them, 
+
+728
+00:53:57,025 --> 00:54:01,225
+但是我们将在那里回答关于以前课程的任何问题，
+but we're gonna be there to answer any questions from previous classes, 
+
+729
+00:54:01,225 --> 00:54:02,567
+甚至与练习无关的问题。
+or even not related to exercises. 
+
+730
+00:54:02,700 --> 00:54:04,125
+例如，如果您想了解
+Like if you want to know more about 
+
+731
+00:54:04,125 --> 00:54:08,875
+如何使用TMUX以快速在窗格之间切换，
+how you would use TMUX in a way to kind of quickly switch between panes, 
+
+732
+00:54:08,875 --> 00:54:11,075
+以及任何想到的问题。
+anything that comes to your mind.
+

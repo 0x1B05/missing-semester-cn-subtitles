@@ -1,0 +1,3898 @@
+﻿1
+00:00:00,625 --> 00:00:03,225
+大家好，感谢你们的到来。
+All right everyone.Thanks for coming in.
+
+2
+00:00:03,225 --> 00:00:08,700
+这门课程叫做"计算机教育中缺失的一课"，
+This is the Missing Semester of your CS Education 
+
+3
+00:00:08,750 --> 00:00:10,520
+至少我们是这样称呼这门课的。
+at least that's what we chose to call the class. 
+
+4
+00:00:10,525 --> 00:00:13,200
+如果你不是来上这门课的话，那么你可能来错地方了。
+If you're not here for this class, then you're in the wrong room.   
+
+5
+00:00:13,200 --> 00:00:16,975
+我们将在这里待大约一个小时，来给大家介绍一下这门课的内容。
+We will be here for about an hour, just to set your expectations. 
+
+6
+00:00:16,975 --> 00:00:22,625
+首先我想跟大家聊一下我们为什么要开设这门课。
+And I want to talk to you a little bit first about why we're doing this class.
+
+7
+00:00:22,625 --> 00:00:27,576
+这门课源于我们（Anish、Jose和我）
+So, this class stems out of an observation that Anish and Jose and I
+
+8
+00:00:27,576 --> 00:00:30,675
+在麻省理工学院担任助教时的一个观察，
+have made while TA various classes at MIT,
+
+9
+00:00:30,675 --> 00:00:34,275
+我们发现我们作为计算机科学家都知道,
+which is that basically all of us computer scientists we know 
+
+10
+00:00:34,352 --> 00:00:38,700
+计算机在处理重复任务和自动化方面非常出色。
+that computers are great at doing these repetitive tasks and automating things.   
+
+11
+00:00:38,700 --> 00:00:40,824
+但是我们通常没有意识到，
+But we often fail to realize that 
+
+12
+00:00:40,824 --> 00:00:45,075
+有很多工具可以使我们的开发过程变得更加高效。
+there are lots of tools that can make our own development processes better.  
+
+13
+00:00:45,075 --> 00:00:48,375
+我们可以更好地利用计算机，
+We can be a lot more efficient about how we use our computers 
+
+14
+00:00:48,425 --> 00:00:51,925
+将其作为自己的工具，
+because we can use the computer as a tool for ourselves,
+
+15
+00:00:51,925 --> 00:00:55,525
+而不仅仅是用来搭建网站或开发软件等。
+not just for building websites or software, those sorts of things.  
+
+16
+00:00:55,525 --> 00:01:02,729
+这门课程是为了解决这个问题，尝试向大家展示一些工具，
+And this class is an attempt to address this, is an attempt to show you some of the tools 
+
+17
+00:01:02,750 --> 00:01:08,100
+这些工具可以在你的日常工作、研究和学习中发挥重要的作用。
+that you can use to great effect in your day to day, in your research, and in your studies.    
+
+18
+00:01:08,100 --> 00:01:11,225
+这门课程将教授大家
+And it's going to be a class where 
+
+19
+00:01:11,225 --> 00:01:17,225
+如何充分利用你已经了解的工具，
+we want to teach you both how to make the most of the tools that you already know,
+
+20
+00:01:17,250 --> 00:01:21,150
+同时也会向你介绍一些你之前不知道的工具，
+but also hopefully teach you about some tools you don't know from before  
+
+21
+00:01:21,150 --> 00:01:25,959
+并教你如何将这些工具结合起来，
+and how to combine those tools to produce more powerful things
+
+22
+00:01:25,959 --> 00:01:29,125
+以让你变得更加强大。
+than you think you might be able to do with what you know today.
+
+23
+00:01:29,350 --> 00:01:34,175
+这门课程将分为11个一小时的讲座，
+The class is going to be structured as a series of 11 one-hour lectures
+
+24
+00:01:34,175 --> 00:01:37,925
+每个讲座都会讲一个特定的主题。
+and each one is gonna cover a particular topic. 
+
+25
+00:01:37,975 --> 00:01:40,807
+网站上已经把课程主题都列出来了，
+You can see the website, which is also listed there, 
+
+26
+00:01:40,807 --> 00:01:44,700
+以及每个讲座的日期。
+for the list of lecture topics and what date we'll do each one. 
+
+27
+00:01:44,725 --> 00:01:46,925
+他们大多数会是独立的，
+They will mostly be independent, 
+
+28
+00:01:47,050 --> 00:01:49,725
+所以你可以选择参加你感兴趣的讲座，
+and so you can sort of show up for the ones that you're interested in, 
+
+29
+00:01:49,750 --> 00:01:55,002
+但我们会假定你一直在跟进，这样当我们到后面的讲座时，
+but we will sort of assume that you've been following along so that as we get to later lectures, 
+
+30
+00:01:55,002 --> 00:01:58,275
+我不会再教你例如bash这样的东西。
+I'm not going to be teaching you bash all over again, for example.
+
+31
+00:01:58,275 --> 00:02:06,700
+我们还会在网上发布讲座笔记和讲座录像。
+We are also going to post both the lecture notes and recordings of the lectures online. 
+
+32
+00:02:06,775 --> 00:02:11,300
+我们还没有确定发布时间，但这将是在讲座之后。
+Exactly when we do that we haven't established yet, but it will be after the lectures. 
+
+33
+00:02:11,350 --> 00:02:13,725
+显然，视频必须在讲座之后发布。
+Obviously, the videos have to be posted after.
+
+34
+00:02:13,725 --> 00:02:18,200
+本课程将由我，Jose和Anish一起授课，他们坐在那边，
+The class is going to be run by me, Jose, and Anish, each sitting over there, 
+
+35
+00:02:18,200 --> 00:02:22,450
+Jose目前不在这里，但他将主持明天的讲座。
+and Jose who is not currently here, but we'll be holding tomorrow's lecture.
+
+36
+00:02:22,450 --> 00:02:28,600
+请注意，我们将在仅仅11个讲座中输出大量内容，
+And keep in mind that we're trying to cover a lot of ground over the course of just 11 one-hour lectures, 
+
+37
+00:02:28,600 --> 00:02:32,250
+所以会讲的有点快。
+and so we will be moving relatively rapidly. 
+
+38
+00:02:32,250 --> 00:02:37,050
+但如果有任何地方你感觉跟不上，一定要停止我们。
+But please do stop us if there's anything where you feel like you're not following along. 
+
+39
+00:02:37,075 --> 00:02:39,675
+如果你觉得有些东西希望我们花更多的时间讲解，
+If you feel like there's something you wish we would spend more time on, 
+
+40
+00:02:39,675 --> 00:02:42,150
+请随时中断我们并提问。
+just let us know,please interrupt us with questions.
+
+41
+00:02:42,200 --> 00:02:44,750
+此外，每次讲座之后，
+And also, after each lecture, 
+
+42
+00:02:44,825 --> 00:02:48,825
+我们都在第32栋楼的第9层办公室有办公时间，
+we're going to hold office hours on the ninth floor of Building 32, 
+
+43
+00:02:48,850 --> 00:02:50,750
+即在计算机科学楼的Stata Center。
+the Stata Center of the computer science building. 
+
+44
+00:02:50,800 --> 00:02:55,050
+如果你来Gates Tower的第9层的休息室，
+If you show up in the ninth-floor lounge there and the Gates Tower,
+
+45
+00:02:55,100 --> 00:02:59,350
+那么你可以来做做我们为每次讲座提供的练习，
+then you can come and try some of the exercises that we give for each lecture 
+
+46
+00:02:59,350 --> 00:03:03,675
+或者询问我们关于讲座中讨论的内容
+or just ask us other questions about things we've talked about in the lecture 
+
+47
+00:03:03,700 --> 00:03:06,450
+以及如何更高效地使用你的电脑的其他问题。
+or other things about using your computer efficiently.
+
+48
+00:03:08,500 --> 00:03:12,250
+鉴于我们的时间有限，
+Due to the limited time that we have available, 
+
+49
+00:03:12,325 --> 00:03:15,975
+我们将无法对所有工具进行详细介绍，
+we're not gonna be able to cover all tools in full detail, 
+
+50
+00:03:16,075 --> 00:03:21,475
+所以只会着力讲解有趣的工具以及使用它们的有趣方法。
+and so what we'll try to do is highlight interesting tools and interesting ways to use them.
+
+51
+00:03:21,550 --> 00:03:26,650
+我们不一定会深入探讨所有工具的工作原理或更复杂的用例。
+We won't necessarily dig into the deep details about how all of it works or more elaborate use cases.
+
+52
+00:03:26,650 --> 00:03:29,750
+但如果你有任何相关问题，请随时问我们。
+But if you have questions about them, please come ask us about that too.
+
+53
+00:03:29,750 --> 00:03:32,950
+其中许多工具我们都使用了多年，
+Many of these tools are tools that we have used for years, 
+
+54
+00:03:33,050 --> 00:03:36,825
+我们能教你怎么用这些工具倒腾一些有趣的东西,
+and we might be able to point you to additional interesting things you can do with them, 
+
+55
+00:03:36,900 --> 00:03:39,875
+所以要充分利用好这次上课的机会.
+sort of like take advantage of the fact that we're here.
+
+56
+00:03:40,325 --> 00:03:44,850
+这节课我不想讲的特别快
+This class is going to, I don't wanna say ramped up quickly,
+
+57
+00:03:44,850 --> 00:03:49,265
+会讲一些基础知识
+but what's going to happen over the course of this particular lecture is that
+
+58
+00:03:49,265 --> 00:03:53,200
+在后面的讲座中，我们假定你掌握了这些知识
+we'll cover many of the basics that we assume that you will know for the rest of the semester.
+
+59
+00:03:53,200 --> 00:03:55,463
+比如如何使用你的shell和终端，
+Things like how to use your shell and your terminal,
+
+60
+00:03:55,463 --> 00:03:58,150
+对于那些对这些工具不熟悉的人，我将在讲座中进行解释。
+ and I'll explain what those who you're not familiar with them.
+
+61
+00:03:58,800 --> 00:04:02,800
+然后，我们会迅速进入更高级的工具的讲解以及如何使用它们。
+And then we'll pretty quickly ramp up into more advanced tools and how to use them.
+
+62
+00:04:02,850 --> 00:04:06,975
+你已经可以从讲座笔记中看到我们要讲的主题。
+You can already see from the lecture notes the kind of topics that we're going to be covering.
+
+63
+00:04:07,750 --> 00:04:12,450
+所以，这就是今天的讲座，所以我们今天要讲shell。
+And so, that brings us to today's lecture, in which we are going to cover the shell.
+
+64
+00:04:12,575 --> 00:04:16,500
+当你熟悉的可视化界面无法实现你想要的功能时，
+And the shell is going to be one of the primary ways that 
+
+65
+00:04:16,500 --> 00:04:23,750
+shell 将是你与计算机交互的主要方式之一。
+you interact with your computer once you want to do more things  \N than what the sort of visual interfaces you might be used to allow you to do
+
+66
+00:04:23,750 --> 00:04:27,775
+可视化界面功能是十分局限的,
+The visual interfaces are sort of limited in what they allow you to do, 
+
+67
+00:04:27,775 --> 00:04:32,250
+因为你只能使用它所提供的的按钮、滑块、输入字段等功能.
+because you can only do the things that there are buttons for, sliders for, input fields for. 
+
+68
+00:04:32,350 --> 00:04:37,100
+而这些文本工具通常是相互可组合的，
+Often, these textual tools are built to be both composable with one another, 
+
+69
+00:04:37,225 --> 00:04:41,950
+可以使用许多不同的组合或编程方式进行自动化.
+but also to have tons of different ways to combine them or ways to program and automate them. 
+
+70
+00:04:42,000 --> 00:04:43,238
+这就是为什么，在本课程中，
+And that is why, in this class, 
+
+71
+00:04:43,238 --> 00:04:46,875
+我们将专注于这些基于命令行或文本的工具，
+we will be focusing on these command line or text-based tools,
+
+72
+00:04:47,050 --> 00:04:50,975
+而Shell则是实现这些工作的主要工具之一。
+and the shell is the place that you would do most of this work. 
+
+73
+00:04:51,050 --> 00:04:53,350
+对于那些不熟悉shell的人，
+So, for those of you who are not familiar with the shell, 
+
+74
+00:04:53,350 --> 00:04:56,075
+大多数平台也都提供一些形式的shell。
+most platforms provide some kind of shell. 
+
+75
+00:04:56,100 --> 00:04:58,662
+在Windows上，这通常是PowerShell，
+On Windows, this is often PowerShell,
+
+76
+00:04:58,662 --> 00:05:01,325
+但也有其他shell可用。
+ but there are also other shells available on windows.
+
+77
+00:05:01,325 --> 00:05:04,925
+在Windows和Linux上，你会找到大量的终端。
+on Linux, you will find tons of terminals. 
+
+78
+00:05:04,925 --> 00:05:07,525
+终端是能显示shell的窗口，
+These are windows that allow you to display shells,
+
+79
+00:05:07,650 --> 00:05:10,125
+并且你也会发现许多不同类型的shell，
+and you'll also find many different types of shells, 
+
+80
+00:05:10,275 --> 00:05:14,150
+其中最常见的是Bash(Bourne Again SHell) 。
+the most common of which is Bash or the Bourne Again SHell. 
+
+81
+00:05:14,225 --> 00:05:16,448
+由于Bash是非常常见的Shell，
+Because it's such a common shell,
+
+82
+00:05:16,448 --> 00:05:19,050
+因此它也是我们在这些讲座中要重点介绍的。
+ it is the one we're primarily going to be covering in these lectures. 
+
+83
+00:05:19,425 --> 00:05:22,350
+如果你使用的是Mac OS系统，你也可能拥有Bash,
+If you're on Mac OS, you will probably also have Bash, 
+
+84
+00:05:22,550 --> 00:05:25,425
+但是打开终端时可能会出现一个较旧的版本。
+maybe an older version of it, if you open the terminal app. 
+
+85
+00:05:25,425 --> 00:05:28,625
+因此，如果你想在任何这些平台上跟随学习，可以自由选择，
+And so, if you want to follow along on any of these platforms, feel free, 
+
+86
+00:05:28,625 --> 00:05:33,075
+但我们的教学大多数是面向Linux的。
+but keep in mind that most of this is gonna be  sort of Linux-centric in terms of how we teach it, 
+
+87
+00:05:33,150 --> 00:05:35,500
+尽管这些工具在所有平台上都有效
+even though most of these tools work on all the platforms. 
+
+88
+00:05:37,200 --> 00:05:41,275
+如果你想安装终端和shell，但不知道该怎么做，
+If you want to install a terminal and a shell, and you don't know how to do it, 
+
+89
+00:05:41,325 --> 00:05:43,950
+我们很乐意在办公时间为你展示，
+well, we're happy to show you at office hours, 
+
+90
+00:05:43,975 --> 00:05:47,554
+或者你也可以简单地在Google上搜索
+or it's usually very easy to just Google like 
+
+91
+00:05:47,554 --> 00:05:52,450
+你的平台加"terminal"，你就可以找到教程。
+your platform plus like "terminal", and you will get one. 
+
+92
+00:05:54,675 --> 00:05:59,950
+现在，当你打开一个终端，你会看到一个类似于这样的界面。
+Now, when you open a terminal, you get something that looks a little bit like this. 
+
+93
+00:06:00,075 --> 00:06:06,125
+通常它只有一行在顶部，这就是所谓的shell提示符。
+So, it will usually have just a single line at the top, and this is what's known as the shell prompt. 
+
+94
+00:06:06,175 --> 00:06:08,250
+你可以看到我的 shell 提示符看起来像这样，
+You can see that my shell prompt looks like this, 
+
+95
+00:06:08,275 --> 00:06:11,200
+它包含了我的用户名、机器的名称、
+it has my user name, the name of the machine that I'm on, 
+
+96
+00:06:11,275 --> 00:06:15,250
+我当前所在的路径（我们稍后会讨论路径），
+the current path I'm on (and we will talk about paths a little bit later), 
+
+97
+00:06:15,275 --> 00:06:19,275
+以及闪烁的光标在等待我的输入。
+and then it's really just sort of blinking there, asking me for input. 
+
+98
+00:06:19,350 --> 00:06:22,875
+这就是shell提示符，你可以告诉shell你想让它做什么。
+And this is the shell prompt, where you tell the shell what you want it to do. 
+
+99
+00:06:22,875 --> 00:06:26,550
+你可以自定义这个提示符。
+And you can customize this prompt a lot. 
+
+100
+00:06:26,550 --> 00:06:29,450
+当你在你的机器上打开它时，它可能不会完全像这样。
+And when you open it on your machine, it might not look exactly like this. 
+
+101
+00:06:29,475 --> 00:06:33,442
+如果你配置了一些东西，它可能看起来像这样，
+It might look something like this if you've configured it a little, 
+
+102
+00:06:33,442 --> 00:06:36,075
+或者会呈现出各种各样不同的样子。
+or it might look all sorts of different ways. 
+
+103
+00:06:36,935 --> 00:06:40,660
+我们不会在这个讲座中太多地讨论自定义你的shell，
+We won't go too much into customizing your shell in this particular lecture.
+
+104
+00:06:40,660 --> 00:06:41,450
+我们将在以后讨论。
+We'll do that later. 
+
+105
+00:06:41,500 --> 00:06:45,400
+这里，我们只会谈论如何使用这个shell来做有用的事情。
+Here, we're just going to talk about how do you use this shell to do useful things. 
+
+106
+00:06:46,500 --> 00:06:51,450
+这是你与计算机交互的主要文本界面。
+And this is our the main textual interface you have to your computer through this shell.
+
+107
+00:06:51,450 --> 00:06:53,825
+通过这个shell提示符，你可以输入命令。
+On the shell prompt, you get to write commands. 
+
+108
+00:06:54,050 --> 00:06:57,325
+命令通常是相对简单的东西。
+And commands can be relatively straightforward things. 
+
+109
+00:06:57,425 --> 00:07:01,075
+通常会是像使用参数执行程序之类的事情。
+Usually, it'll be something like executing programs with arguments. 
+
+110
+00:07:01,125 --> 00:07:02,275
+这是什么样子的呢？
+What does that look like? 
+
+111
+00:07:02,275 --> 00:07:04,850
+我们可以执行一个名为"date"的程序。
+Well, one program we can execute is the "date" program. 
+
+112
+00:07:05,000 --> 00:07:09,125
+只需要输入"date"，按下回车，然后它会显示日期和时间。
+We just type "date" and press enter, and then it will show you, unsurprisingly, the date and time. 
+
+113
+00:07:09,675 --> 00:07:12,250
+你也可以在执行程序的时候加上参数
+You can also execute a program with arguments. 
+
+114
+00:07:12,250 --> 00:07:16,100
+这是修改程序行为的一种方式。
+This is one way to modify the behavior of the program. 
+
+115
+00:07:16,200 --> 00:07:19,036
+例如，有一个名为"echo"的程序，
+So for example, there is a program called "echo",
+
+116
+00:07:19,036 --> 00:07:22,361
+它只是打印出你给它的参数。
+and "echo" just prints out the arguments that you give it. 
+
+117
+00:07:22,425 --> 00:07:26,925
+参数就是在命令后面以空格分隔的东西。
+And arguments are just whitespace-separated things that follow the program name. 
+
+118
+00:07:26,925 --> 00:07:30,700
+所以我们可以说"hello"，然后它会打印出"hello"。
+So we can say "hello", and then it will print "hello" back. 
+
+119
+00:07:30,700 --> 00:07:34,800
+也没有多神奇，这就是参数的基础使用。
+Perhaps not terribly surprising, but this is the very basics of arguments. 
+
+120
+00:07:35,125 --> 00:07:39,225
+你会注意到我说参数是由空格分隔的，
+One thing that you'll notice is that I said that arguments are separated by whitespace, 
+
+121
+00:07:39,275 --> 00:07:42,475
+你可能会想，如果我想要一个由多个单词组成的参数怎么办？
+and you might wonder, well, what if I want an argument as multiple words? 
+
+122
+00:07:42,525 --> 00:07:43,950
+你可以使用引号引起来，
+You can also quote things,
+
+123
+00:07:43,950 --> 00:07:47,875
+所以你可以做像{\rcode}echo "Hello world"{\r}这样的事情，
+so you can do things like 'echo "Hello world"', 
+
+124
+00:07:48,125 --> 00:07:51,445
+现在"echo"程序接收到一个
+and now the "echo" program receives one argument
+
+125
+00:07:51,445 --> 00:07:54,250
+包含带有空格的字符串"Hello world"的参数。
+that contains the string "hello world" with a space. 
+
+126
+00:07:54,550 --> 00:07:56,675
+你也可以用单引号来做这件事，
+Well, you can also use single quotes for this, 
+
+127
+00:07:56,775 --> 00:08:00,078
+在讨论bash脚本时
+and the difference between single quotes and double quotes will get back to 
+
+128
+00:08:00,078 --> 00:08:02,000
+我们会提及单引号和双引号之间的区别。
+when we talk about bash scripting. 
+
+129
+00:08:02,725 --> 00:08:05,375
+你也可以转义单个字符。
+You can also just escape single characters. 
+
+130
+00:08:05,450 --> 00:08:10,175
+例如，"Hello\ World"，这也可以正常工作。
+So, for example, "Hello\ World", this will also work just fine. 
+
+131
+00:08:10,675 --> 00:08:13,916
+我们稍后会讲有关转义
+All of these rules about how you escape 
+
+132
+00:08:14,218 --> 00:08:19,175
+和解析各种参数和变量的规则。
+and how you parse and quote various arguments and variables we'll cover a little bit later. 
+
+133
+00:08:19,175 --> 00:08:22,175
+希望你不会遇到太多奇怪的事情。
+Hopefully, you won't run into too many oddities about this. 
+
+134
+00:08:22,300 --> 00:08:25,675
+最起码需要记住用空格分隔参数，
+Just keep in mind at least that spaces separate arguments,
+
+135
+00:08:25,725 --> 00:08:29,737
+所以如果你想做类似于创建名为"my photos"的目录这样的事情，
+so if you want to do something like make a directory called "my photos", 
+
+136
+00:08:29,825 --> 00:08:32,625
+你不能只输入{\rcode}mkdir my photos{\r}。
+you can't just type like "mkdir my photos". 
+
+137
+00:08:32,625 --> 00:08:33,902
+它会创建两个目录，
+It will create two directories, 
+
+138
+00:08:33,902 --> 00:08:37,250
+一个叫做"my"，另一个叫做"photos"，这可能不是你想要的。
+one called "my" and one called "photos", and that is probably not what you want.
+
+139
+00:08:38,412 --> 00:08:42,804
+现在，你可能会问，
+Now, one thing you might ask is,  
+
+140
+00:08:42,804 --> 00:08:45,309
+当我输入"date"或者输入"echo"时，
+how does the shell know what these programs are
+
+141
+00:08:45,309 --> 00:08:47,975
+shell是如何知道这些程序是啥，
+when I type "date" or when I type "echo"?
+
+142
+00:08:47,975 --> 00:08:51,450
+以及它们应该做什么呢？
+How does it know what these programs are supposed to do? 
+
+143
+00:08:51,600 --> 00:08:57,250
+答案是，有一些内置程序，是你的计算机自带的。
+And the answer to this is, your computer has a bunch of built-in programs that comes with the machine. 
+
+144
+00:08:57,375 --> 00:09:01,250
+就像你一样，你的电脑可能会附带终端，
+Just like you, your machine might ship with like the terminal app, 
+
+145
+00:09:01,250 --> 00:09:04,675
+或者附带Windows Explorer，
+or it might ship with like Windows Explorer, 
+
+146
+00:09:04,700 --> 00:09:06,925
+或者附带某种类型的浏览器。
+or it might ship with some kind of browser. 
+
+147
+00:09:06,950 --> 00:09:10,275
+它还会附带一堆面向终端的应用程序，
+It also ships with a bunch of terminal-centric applications, 
+
+148
+00:09:10,450 --> 00:09:12,825
+这些应用程序存储在你的文件系统中。
+and these are stored on your file system. 
+
+149
+00:09:13,275 --> 00:09:18,550
+你的shell有一种方法可以确定程序的位置。
+And your shell has a way to determine where a program is located. 
+
+150
+00:09:18,625 --> 00:09:20,750
+有一种搜索程序的基本方法。
+Basically, it has a way to search for programs. 
+
+151
+00:09:20,850 --> 00:09:26,450
+它通过一种称为环境变量的东西来实现这一点。
+It does this through something called an environment variable. 
+
+152
+00:09:26,525 --> 00:09:31,325
+环境变量是一种变量，就像编程语言中的变量一样。
+An environment variable is a variable, like you might be used to for programming languages. 
+
+153
+00:09:31,575 --> 00:09:35,125
+事实证明，shell，特别是Bash(Bourne Again Shell)，
+It turns out that the shell, and the Bourne Again Shell in particular, 
+
+154
+00:09:35,125 --> 00:09:36,850
+真的是一种编程语言。
+is really a programming language. 
+
+155
+00:09:37,025 --> 00:09:42,150
+这个提示符后面不仅能够运行带有参数的程序，
+This prompt that you're given here is not just able to run a program with arguments. 
+
+156
+00:09:42,225 --> 00:09:46,675
+你还可以做类似于while循环，for循环，条件语句等的事情...
+You can also do things like while loops, for loops, conditionals... 
+
+157
+00:09:46,725 --> 00:09:49,475
+不仅如此,你甚至可以在shell中定义函数，变量
+All of these, you can define functions, you can have variables,
+
+158
+00:09:49,550 --> 00:09:51,175
+所有这些事情都可以在shell中实现。
+and all of these things you can do in the shell. 
+
+159
+00:09:51,225 --> 00:09:54,700
+我们将在下一讲中讲解这些内容，即编写shell脚本。
+We'll cover a lot of that in the next lecture, on shell scripting. 
+
+160
+00:09:55,500 --> 00:09:59,750
+但是现在，让我们只看看这个特定的环境变量。
+For now, though, let's just look at this particular environment variable. 
+
+161
+00:09:59,875 --> 00:10:02,725
+环境变量是在启动shell时设置的东西；
+Environment variables are things that are set whenever you start your shell; 
+
+162
+00:10:02,725 --> 00:10:06,000
+它们不是你每次运行shell时都必须设置的东西。
+they're not things you have to set every time you run your shell. 
+
+163
+00:10:06,050 --> 00:10:07,425
+有一堆这样的变量已经被设置好了，
+They are a bunch of these that are set,
+
+164
+00:10:07,475 --> 00:10:10,600
+例如你的主目录在哪里，你的用户名是什么，
+things like where is your home directory, what is your username, 
+
+165
+00:10:10,650 --> 00:10:15,550
+要查看搜索路径,有一个至关重要的变量，即路径变量。
+and there's also one that's critical for this particular purpose, which is the path variable. 
+
+166
+00:10:15,825 --> 00:10:18,005
+如果我运行{\rcode}echo $PATH{\r}，
+So, if I "echo" out "$path",
+
+167
+00:10:18,005 --> 00:10:25,250
+这将向我显示所有路径列表,shell就是在这些路径里搜索程序的。
+this is going to show me all of the paths on my machine that the shell will search for programs. 
+
+168
+00:10:25,450 --> 00:10:29,750
+你会注意到这是一个用冒号(":")分隔的列表。
+You'll notice that this is a list that is colon separated. 
+
+169
+00:10:29,750 --> 00:10:32,025
+它可能有点长而且难以阅读，
+It might be kind of long and hard to read, 
+
+170
+00:10:32,100 --> 00:10:36,650
+但本质上是每当你键入程序的名称时，
+but the essential is that bash whenever you type the name of a program, 
+
+171
+00:10:36,650 --> 00:10:40,650
+它都会在计算机上搜索这个路径列表，
+it's gonna search through this list of paths on your machine,
+
+172
+00:10:40,650 --> 00:10:45,196
+并在每个目录中查找
+and it's gonna look in each directory for a program or a file 
+
+173
+00:10:45,196 --> 00:10:48,050
+与你尝试运行的命令匹配的程序或文件的名称。
+whose name matches the command you try to run. 
+
+174
+00:10:48,150 --> 00:10:50,775
+因此，当我尝试运行"date"或"echo"时，
+So, in my case, when I try to run "date" or "echo", 
+
+175
+00:10:50,850 --> 00:10:52,850
+它将逐个遍历这些路径，
+it's going to walk through these one at a time 
+
+176
+00:10:52,850 --> 00:10:56,025
+直到找到名为"date"或"echo"的程序，
+until it finds one that contains the program called "date" or "echo", 
+
+177
+00:10:56,125 --> 00:10:57,400
+然后运行它。
+and then it's going to run it.
+
+178
+00:10:57,525 --> 00:10:59,521
+如果我们想知道它实际运行的是哪个程序，
+If we want to know which one it actually runs, 
+
+179
+00:10:59,521 --> 00:11:02,000
+有一个叫做"which"的命令可以让我们做到这一点。
+there's a command called "which" which lets us do that. 
+
+180
+00:11:02,000 --> 00:11:03,825
+因此，我可以运行{\rcode}which echo{\r}，
+So, I can type "which echo",
+
+181
+00:11:04,150 --> 00:11:08,100
+它会告诉我，如果我要运行一个名为{\rcode}echo{\r}的程序，
+and it will tell me that if I were to run a program called "echo", 
+
+182
+00:11:08,200 --> 00:11:09,375
+我将运行这个。
+I would run this one. 
+
+183
+00:11:10,200 --> 00:11:13,750
+现在我们停下来谈谈路径是什么。
+It's worth pausing here to talk about what paths are. 
+
+184
+00:11:14,000 --> 00:11:18,375
+路径是一种描述计算机上文件位置的方式。
+So, paths are a way to name the location of a file on your computer. 
+
+185
+00:11:18,475 --> 00:11:24,350
+在Linux和macOS上，这些路径是由斜杠（正斜杠"/"）分隔的。
+On Linux and macOS, these paths are separated by slashes (forward slashes). 
+
+186
+00:11:24,550 --> 00:11:29,575
+因此，你会看到这是在根目录下，
+So, you'll see here that this is in the root directory, 
+
+187
+00:11:29,600 --> 00:11:34,650
+所以开头的斜杠表示从文件系统的顶部开始。
+so the slash at the very beginning indicates that this is starting from the top of the file system. 
+
+188
+00:11:35,300 --> 00:11:41,350
+然后查看名为"usr"的目录，然后查看名为"bin"的目录，
+Then look inside the directory called "usr", then look inside the directory "bin", 
+
+189
+00:11:41,375 --> 00:11:43,450
+然后查看名为"echo"的文件。
+and then look for the file called "echo". 
+
+190
+00:11:43,550 --> 00:11:48,550
+在Windows上，这样的路径通常用反斜杠("\")分隔。
+On Windows, paths like this are usually separated by backslashes instead.
+
+191
+00:11:48,775 --> 00:11:51,200
+在Linux和macOS上，
+We're on Linux and macOS, 
+
+192
+00:11:51,200 --> 00:11:53,572
+所有内容都属于根命名空间，
+everything lives under the root namespace, 
+
+193
+00:11:53,572 --> 00:11:56,900
+所有(绝对路径)都以"/"开头，
+so all paths start with a slash, or all absolute paths. 
+
+194
+00:11:57,000 --> 00:12:01,150
+在Windows上，每个分区都有一个根目录，
+On Windows, there is one root for every partition,
+
+195
+00:12:01,275 --> 00:12:05,875
+因此你可能已经看到过类似于"C:\"或"D:\"的路径。
+so you might have seen things like C colon backslash or D colon backslash. 
+
+196
+00:12:05,950 --> 00:12:13,050
+因此，在Windows上，每个驱动器都有一个单独的路径结构，
+So, Windows has separate file system path hierarchies for each drive that you have,
+
+197
+00:12:13,100 --> 00:12:16,425
+而在Linux和macOS上，所有这些都挂载在一个命名空间下。
+whereas on Linux and macOS,  these are all mounted under one namespace.
+
+198
+00:12:17,875 --> 00:12:20,711
+你可能已经注意到我说了绝对路径这个词，
+You'll notice that I said the word absolute path, 
+
+199
+00:12:20,711 --> 00:12:22,350
+你可能不知道它是什么意思。
+and you might not know what that means. 
+
+200
+00:12:22,375 --> 00:12:29,475
+绝对路径是能完全确定文件位置的路径。
+Absolute paths are paths that fully determine the location of a file. 
+
+201
+00:12:29,500 --> 00:12:33,750
+因此，在此示例中，它仅针对特定的"echo"文件，
+So, in this case, this is saying this is talking only about a specific "echo" file, 
+
+202
+00:12:33,925 --> 00:12:41,200
+并提供了"echo"的完整路径，但也有相对路径。
+and it's giving you the full path to that file, but there are also things known as relative paths.
+
+203
+00:12:41,450 --> 00:12:46,225
+相对路径是相对于你当前所在的位置的路径，
+A relative path is relative to where you currently are, 
+
+204
+00:12:47,025 --> 00:12:54,400
+要找出当前位置，可以运行{\rcode}pwd{\r}，它将打印出我当前所在的路径。
+and the way we find out where we currently are is you can type "pwd" for present working directory. 
+
+205
+00:12:55,800 --> 00:12:59,647
+打印工作目录，所以如果我键入"pwd"，
+Print working directory, so if I type "pwd",
+
+206
+00:12:59,647 --> 00:13:03,175
+它将打印出我所在的当前路径。
+ it will print out the current path that I'm in. 
+
+207
+00:13:03,275 --> 00:13:07,519
+现在，我在根目录下的home目录中，
+Right ,so currently I'm in the home directory under the root 
+
+208
+00:13:07,519 --> 00:13:10,750
+然后是jon下的dev目录，等等。
+and then jon under that and then dev under that, etc. 
+
+209
+00:13:11,575 --> 00:13:16,000
+从这里，我可以选择更改我的当前工作目录，
+From here, I can then choose to change my current working directory, 
+
+210
+00:13:16,000 --> 00:13:19,725
+所有相对路径都是相对于当前工作目录而言的，
+and all relative paths are relative to the current working directory, 
+
+211
+00:13:19,825 --> 00:13:22,050
+这基本上是你所在的位置。
+which is basically where you are. 
+
+212
+00:13:22,375 --> 00:13:26,500
+在这个例子中，我可以运行{\rcode}cd /home{\r}。
+In this case, for example, I can do "cd /home". 
+
+213
+00:13:26,625 --> 00:13:31,500
+"cd"代表更改目录，这是我更改当前工作目录的命令。
+"cd" stands for change directory; this is the way that I change what my current working directory is. 
+
+214
+00:13:31,525 --> 00:13:33,567
+在这种情况下，我更改到home目录，
+In this case, I change to home,
+
+215
+00:13:33,567 --> 00:13:39,025
+你会看到我的shell提示符已显示我现在在home目录中了。
+ and you'll see my shell prompt change to say that I am now in home.
+
+216
+00:13:39,075 --> 00:13:42,225
+它只给出了路径的最后一段名称，
+It just gives me the name of the last segment of the path, 
+
+217
+00:13:42,300 --> 00:13:46,150
+但你还可以配置终端，让它显示完整的路径。
+but you can also configure your terminal to give you the full path whenever you're anywhere. 
+
+218
+00:13:47,675 --> 00:13:51,800
+现在，如果我再次输入"pwd"，它会告诉我我在"/home"中。
+And now if I type "pwd" again, it will tell me I'm in "/home". 
+
+219
+00:13:52,500 --> 00:13:58,300
+还有几个特殊的目录存在："."和".."。 
+There are also a couple of special directories that exist. There is ".", and ".."
+
+220
+00:13:58,500 --> 00:14:04,400
+"."表示当前目录，".."表示父目录。
+ "." means the current directory, and ".." means the parent directory. 
+
+221
+00:14:04,500 --> 00:14:07,425
+所以这是一个可以更方便切换目录的方式。
+So this is a way that you can easily navigate around the system. 
+
+222
+00:14:07,575 --> 00:14:10,725
+例如，如果我输入{\rcode}cd ..{\r}，
+For example, if I type "cd ..",
+
+223
+00:14:11,150 --> 00:14:13,865
+它会告诉我我现在在"/"中，
+it will tell me that I am now in "/",
+
+224
+00:14:13,865 --> 00:14:15,450
+即我现在在文件系统的根目录中。
+ so I'm now in the root of the file system. 
+
+225
+00:14:15,450 --> 00:14:18,450
+我在"/home"中，现在我在"/"中，
+I was in "/home", now I'm in "/", 
+
+226
+00:14:19,050 --> 00:14:23,050
+如果我输入"pwd"，它会做正确的事情。
+and indeed, if I type "pwd", it will do that right thing. 
+
+227
+00:14:23,150 --> 00:14:27,450
+然后，我还可以使用相对路径进入文件系统，对吧？
+And I can also then use relative paths to go down into the file system, right? 
+
+228
+00:14:27,525 --> 00:14:29,900
+所以我可以运行{\rcode}cd ./home{\r}，
+So I can do "cd ./home", 
+
+229
+00:14:29,975 --> 00:14:35,800
+这将进入当前目录下的home目录，对吧？
+and this is gonna cd into the home directory under the current directory, right? 
+
+230
+00:14:35,800 --> 00:14:37,775
+所以这会把我带回到"/home"。
+So this will bring me back to "/home". 
+
+231
+00:14:37,775 --> 00:14:42,875
+如果我现在再试着{\rcode}cd ./home{\r}，它会说没有这样的目录，
+If I now tried "cd ./home" again, it will say there's no such directory 
+
+232
+00:14:43,000 --> 00:14:46,125
+因为当前目录下没有我要找的home目录，
+because there is no home directory under the current directory I'm on,
+
+233
+00:14:46,125 --> 00:14:48,025
+而我通过"cd"更改了当前目录。
+ which I changed by doing "cd". 
+
+234
+00:14:48,025 --> 00:14:49,375
+对吧
+Right?
+
+235
+00:14:50,975 --> 00:14:58,550
+我可以使用相对路径"cd"一直返回到我使用相对路径的地方，
+And I can "cd" all the way back to the place that I was using relative paths, 
+
+236
+00:14:59,275 --> 00:15:04,109
+我也可以做类似"../../.."这样的事情，
+and I can also do things like "../../.." 
+
+237
+00:15:04,109 --> 00:15:08,875
+以回到我的文件系统的某个深处。
+to get back to somewhere deep in my file system. 
+
+238
+00:15:08,875 --> 00:15:11,110
+这恰好回到根目录，
+This happens to be all the way back to the root, 
+
+239
+00:15:11,110 --> 00:15:15,025
+所以这里有一个"bin"目录，在"bin"目录中，有一个"echo"文件，
+so here there's a "bin" directory, and in the "bin", there's an "echo" file,
+
+240
+00:15:15,025 --> 00:15:19,450
+然后我可以做{\rcode}echo world{\r}，这将在"bin"下运行"echo"程序。
+and so then I could do "echo world" and that runs the "echo" program under "bin". 
+
+241
+00:15:19,450 --> 00:15:24,300
+所以这是通过构建路径来遍历文件系统的方法。
+Alright, so this is a way that you can construct paths to arbitrarily traverse your filesystem. 
+
+242
+00:15:24,300 --> 00:15:27,800
+有时你想使用绝对路径，有时你想使用相对路径。
+Sometimes you want to use absolute paths, and sometimes you want relative ones. 
+
+243
+00:15:27,800 --> 00:15:30,050
+通常，不管用哪个,我们总是希望使用最短的，
+Usually, you want to use whichever one is shorter,
+
+244
+00:15:30,100 --> 00:15:32,350
+但是如果你想，例如，
+but if you want to, for example, 
+
+245
+00:15:32,375 --> 00:15:38,143
+运行一个程序或编写一个里面包含类似"echo"或"date"命令的程序，
+run a program or write a program that runs the program like "echo" or "date", 
+
+246
+00:15:38,150 --> 00:15:41,075
+并且想让它可以从任何地方运行，
+and you want it to be able to be run from anywhere,
+
+247
+00:15:41,100 --> 00:15:45,050
+则要么只需给出程序的名称，如"date"或"echo"，
+you either want to just give the name of the program like "date" or "echo" 
+
+248
+00:15:45,050 --> 00:15:48,235
+让shell使用路径来找到它在哪里，
+and let the shell use the path to figure out where it is, 
+
+249
+00:15:48,235 --> 00:15:50,055
+要么给出其绝对路径，
+or you want to give its absolute path
+
+250
+00:15:50,055 --> 00:15:51,900
+因为如果你给出相对路径，
+because if you gave a relative path,
+
+251
+00:15:51,950 --> 00:15:56,100
+则如果我在我的主目录中运行它，而你在其他目录中运行它，
+then if I ran it in my home directory and you ran it in some other directory, 
+
+252
+00:15:56,100 --> 00:15:57,800
+我可能可以成功运行,而你不行。
+it might work for me but not for you. 
+
+253
+00:16:01,200 --> 00:16:04,025
+通常，当我们运行程序时，
+In general, when we run a program, 
+
+254
+00:16:04,025 --> 00:16:07,250
+它默认会在当前工作目录下进行操作，
+it is going to be operating on the current working directory,  
+
+255
+00:16:07,300 --> 00:16:09,800
+除非我们给出其他参数。
+at least by default, unless we give it any other arguments. 
+
+256
+00:16:09,800 --> 00:16:14,950
+这非常方便，因为它意味着我们通常不必提供完整路径，
+And this is really handy because it means that often we don't have to give full paths for things, 
+
+257
+00:16:14,975 --> 00:16:18,700
+我们只需使用文件名和当前所在的目录。
+we can just use the name of files and the directory that we're currently in. 
+
+258
+00:16:18,750 --> 00:16:23,950
+另外一个非常有用的命令是查看当前目录中有哪些内容。
+One thing that's really useful is to figure out what is in the current directory we're in. 
+
+259
+00:16:23,950 --> 00:16:27,125
+所以我们已经看到了{\rcode}pwd{\r}命令，它会打印出你当前所在的位置。
+So we already saw "pwd" which prints where you currently are. 
+
+260
+00:16:27,150 --> 00:16:32,750
+有一个命令叫做{\rcode}ls{\r}，它会列出当前目录中的文件。
+There's a command called "ls" which will show you, it will list the files in the current directory. 
+
+261
+00:16:32,750 --> 00:16:36,850
+所以如果我在这里输入"ls"，这是当前目录中的所有文件，对吧？
+So if I type "ls" here, this is all the files in the current directory, right?
+
+262
+00:16:37,000 --> 00:16:41,100
+这是一个快速浏览文件的方式。
+And this is a handy way to just quickly navigate through the filesystem. 
+
+263
+00:16:42,375 --> 00:16:49,475
+你会发现如果我执行{\rcode}cd ..{\r},然后运行,{\rcode}ls{\r},他会给我列出上一级目录的文件 。
+You'll see that if I do "cd .." and then do "ls", it'll show me the files in that directory instead. 
+
+264
+00:16:49,875 --> 00:16:56,250
+但是对于"ls"，我也可以用{\rcode}ls ..{\r}，我可以给它一个路径的参数，
+But with "ls", I can also give it "ls .." like I can give it a path 
+
+265
+00:16:56,250 --> 00:16:59,050
+然后它会列出相应路径下的文件,而不是我当前所在的目录的文件，
+and then it will "ls" that file instead of the one that I'm currently in, 
+
+266
+00:16:59,075 --> 00:17:00,900
+或者"ls"那个目录。
+or "ls" that directory. 
+
+267
+00:17:02,375 --> 00:17:05,959
+如果我切换到根目录你也可以看到这一点，对吧？
+And you can see this if I go all the way to the root as well, right? 
+
+268
+00:17:05,959 --> 00:17:07,600
+根目录有不同的文件。
+Root has different files.
+
+269
+00:17:07,600 --> 00:17:13,625
+还有个你可能不知道的技巧是有两个特殊的符号。
+One handy trick you might not know about here is there are two other special things you can do. 
+
+270
+00:17:13,675 --> 00:17:15,975
+一个是波浪号字符("~")。
+One is the tilde character. 
+
+271
+00:17:16,050 --> 00:17:19,125
+"~"会将你带到你的主目录，
+This character brings you to your home directory, 
+
+272
+00:17:19,150 --> 00:17:21,850
+所以"~"总是扩展到主目录，
+so tilde always expands to the home directory, 
+
+273
+00:17:21,950 --> 00:17:24,000
+你可以利用"~"来写相对路径。
+and you can do relative paths to it. 
+
+274
+00:17:24,000 --> 00:17:30,225
+所以，我可以做"~/dev/pdos/classes/missing-semester"，
+So, I can do "~/dev/pdos/classes/missing-semester", 
+
+275
+00:17:30,225 --> 00:17:34,725
+现在我在那里，因为波浪号扩展到"/home/jon"。
+and now I'm there because tilde expanded to "/home/jon". 
+
+276
+00:17:34,725 --> 00:17:40,950
+特别是对于"cd"，还有一个非常方便的参数，就是"-"。
+There is also for "cd", in particular, a really handy argument you can give, which is "-". 
+
+277
+00:17:40,950 --> 00:17:45,550
+如果你做{\rcode}cd -{\r}，它会切换到你之前所在的目录。
+If you do "cd -", it will cd to the directory you were previously in. 
+
+278
+00:17:45,750 --> 00:17:48,150
+所以，如果我做{\rcode}cd -{\r}，我回到了根目录。
+So, if I do "cd -", I go back to root. 
+
+279
+00:17:48,150 --> 00:17:52,650
+如果我再做{\rcode}cd -{\r}，我回到了missing semester。
+If I do "cd -" again, I go back to missing semester. 
+
+280
+00:17:52,700 --> 00:17:55,950
+这是一个方便的方法，如果你想在两个不同的目录之间切换。
+This is a handy way if you want to toggle between two different directories.
+
+281
+00:17:58,800 --> 00:18:05,100
+在"ls"和"cd"命令中，还有很多其他的参数和选项可以使用。
+In the case of "ls" or in the case of "cd", there might be arguments you don't know about. Right ? 
+
+282
+00:18:05,150 --> 00:18:08,650
+现在，除了提供路径以外，我们还没有做任何事情，
+Currently, we haven't really been doing anything except giving paths,
+
+283
+00:18:08,700 --> 00:18:12,275
+你怎么知道该怎样首先给"ls"一个路径吗？
+but how do you even discover that you can give a path to "ls" in the first place? 
+
+284
+00:18:12,325 --> 00:18:17,850
+大多数程序都会采用所谓的参数，如标志和选项。
+Well, most programs take what are known as arguments, like flags and options. 
+
+285
+00:18:17,950 --> 00:18:20,300
+这些标志和选项通常以"-"开头。
+These are things that usually start with a "-". 
+
+286
+00:18:20,325 --> 00:18:23,475
+其中一个方便的选项是"--help"。
+One of the handy ones is "--help". 
+
+287
+00:18:23,475 --> 00:18:28,650
+大多数程序都实现了这个选项，如果你运行，例如，{\rcode}ls --help{\r}，
+Most programs implement this, and if you run, for example, "ls --help",
+
+288
+00:18:28,700 --> 00:18:34,550
+它会打印出大量该命令的帮助信息。
+it will helpfully print out a bunch of information about that command. 
+
+289
+00:18:34,550 --> 00:18:37,450
+在使用ls命令时，
+And you'll see here that it says the usage is "ls", 
+
+290
+00:18:37,450 --> 00:18:41,083
+你可以指定选项和文件。
+and you can give some number of options and you can give some number of files.
+
+291
+00:18:41,150 --> 00:18:47,700
+usage中的"..."表示零个、一个或多个选项,
+The way to read that usage line is triple dot means one like zero or one or more, 
+
+292
+00:18:47,775 --> 00:18:50,050
+而"[]"表示可选项。
+and the square bracket means optional. 
+
+293
+00:18:50,100 --> 00:18:54,750
+因此，在这种情况下，选项和文件都是可选的。
+So, in this case, there's an optional number of options, and there's an optional number of files. 
+
+294
+00:18:54,750 --> 00:18:57,577
+你将看到程序的功能描述
+And you'll see that it says what the program does 
+
+295
+00:18:57,577 --> 00:19:01,350
+和各种可用的标志和选项的详细说明。
+and also specifies a number of different types of flags and options you can give. 
+
+296
+00:19:01,350 --> 00:19:05,550
+通常，我们称单个破折号("-")和单个字母的组合为标志(flag)，
+Usually, we call things that are a single dash and a single letter a flag, 
+
+297
+00:19:05,650 --> 00:19:09,225
+不带任何值的内容也是标志，
+and anything that doesn't take a value, a flag, 
+
+298
+00:19:09,275 --> 00:19:11,300
+带有值的东西为选项(option)。
+and anything that does take a value, an option. 
+
+299
+00:19:11,325 --> 00:19:20,975
+例如，"-a"和"--all"都是标志，"-C"或"--color"是选项。
+So, for example, "-a" and "--all" are both flags, and "-C" or "--color" is an option.
+
+300
+00:19:21,375 --> 00:19:30,000
+如果你一直向下滚动，最终会看到一个“-l”标志.
+One thing you'll see under here, if you scroll down far enough, is the "-l" flag. 
+
+301
+00:19:30,000 --> 00:19:31,300
+嗯?不对.
+And that's unhelpful. 
+
+302
+00:19:31,425 --> 00:19:38,900
+"-l"标志被用来显示长列表格式。
+The "-l" flag uses a long listing format. 
+
+303
+00:19:38,900 --> 00:19:41,040
+这看着好像没什么用
+Now, that's not particularly helpful in and of itself,
+
+304
+00:19:41,040 --> 00:19:42,800
+但让我们看看它实际上是做什么的。
+ but let's see what it actually does. 
+
+305
+00:19:42,800 --> 00:19:48,075
+所以，如果我输入{\rcode}ls -l{\r}，它仍然打印当前目录中的文件，
+So, if I do "ls -l", it still prints the files in the current directory, 
+
+306
+00:19:48,075 --> 00:19:51,000
+但它给我更多关于这些文件的信息。
+but it gives me a lot more information about those files. 
+
+307
+00:19:51,025 --> 00:19:53,900
+你会发现自己将经常使用这个功能，
+And this is something you'll find yourself using quite a lot 
+
+308
+00:19:53,900 --> 00:19:57,900
+因为它提供的额外信息通常非常有用。
+because the additional information it gives you is often quite handy.
+
+309
+00:19:59,225 --> 00:20:04,825
+现在我们来看看这些信息。
+Let's look at what some of that information is. 
+
+310
+00:20:06,250 --> 00:20:11,875
+首先，在某些条目的开头的"d"表示这些条目是一个目录。
+First of all, the "d" at the beginning of some of these entries indicate that something is a directory. 
+
+311
+00:20:11,900 --> 00:20:16,008
+因此，这里的"_data"条目是一个目录，
+So, the "_data" entry here, for example, is a directory, 
+
+312
+00:20:16,008 --> 00:20:19,650
+而html不是目录，它是一个文件。
+whereas for html is not a directory, it's a file. 
+
+313
+00:20:19,725 --> 00:20:26,675
+之后的字母表示为该文件设置的权限。
+The following letters after that indicate the permissions that are set for that file. 
+
+314
+00:20:26,750 --> 00:20:29,275
+因此，正如我们之前所看到的，
+So, like we saw earlier, 
+
+315
+00:20:29,300 --> 00:20:33,600
+我可能无法打开特定的文件或无法进入特定的目录，
+I might not be able to open a given file or I might not be able to cd into a given directory, 
+
+316
+00:20:33,650 --> 00:20:37,100
+这取决于该文件或目录上设置的权限。
+and this is all dictated by the permissions on that particular file or directory. 
+
+317
+00:20:37,225 --> 00:20:44,825
+阅读这些的方法是，前三个字符的第一组是为文件的所有者设置的权限。
+The way to read these is that the first group of three are the permissions are set for the owner of the file. 
+
+318
+00:20:44,950 --> 00:20:47,475
+你会看到，所有这些文件都是我拥有的。
+All of these files, you'll see, are owned by me. 
+
+319
+00:20:48,525 --> 00:20:54,175
+第二组三个字符是为拥有该文件的组设置的权限。
+The second group of three characters is for the permissions for the group that owns this file. 
+
+320
+00:20:54,225 --> 00:20:57,425
+在这种情况下，所有这些文件也都是由jon组拥有的。
+In this case, all of these files are also known by the jon group.
+
+321
+00:20:57,425 --> 00:21:03,050
+最后一组三个字符是其他人的权限列表。
+And a final group of three is a list of the permissions for everyone else. 
+
+322
+00:21:03,175 --> 00:21:06,450
+所以，对于那些不是文件或目录所有者或组所有者的人来说，
+So, anyone who's not a user owner or a group owner,
+
+323
+00:21:06,750 --> 00:21:11,375
+这个目录可能有点无聊，因为所有的东西都是由我拥有的。
+this directory is perhaps kind of boring because all of the things are owned by me. 
+
+324
+00:21:11,375 --> 00:21:16,550
+但如果我们做一些类似于{\rcode}cd /{\r}和{\rcode}ls -l{\r}的操作，
+But if we do something like "cd /" and do "ls -l", 
+
+325
+00:21:16,625 --> 00:21:19,325
+你会看到这里所有的文件都是由root拥有的。
+you'll see that here all of them are owned by root. 
+
+326
+00:21:19,350 --> 00:21:22,100
+我们将在后面介绍root用户，
+We'll get back to what the root user is, 
+
+327
+00:21:22,100 --> 00:21:25,275
+但在这里你会看到一些更有趣的权限。
+but here you see some of the permissions are a little bit more interesting. 
+
+328
+00:21:25,275 --> 00:21:30,600
+每三个字符为一组,分别是读取、写入和执行。
+The groups of three are read, write, and execute. 
+
+329
+00:21:30,650 --> 00:21:35,000
+文件和目录的权限含义并不相同.
+What these mean differs for files and for directories. 
+
+330
+00:21:35,000 --> 00:21:37,025
+对于文件来说，它很简单。
+For files, it's pretty straightforward. 
+
+331
+00:21:37,050 --> 00:21:40,750
+如果你对一个文件有读取权限，那么你可以阅读它的内容。
+If you have read permissions on a file, then you can read its contents. 
+
+332
+00:21:40,750 --> 00:21:44,875
+如果你对一个文件有写入权限，那么你可以保存文件，
+If you have write permissions on a file, then you can save the file, 
+
+333
+00:21:44,875 --> 00:21:47,350
+添加更多内容或完全替换它。
+you can add more to it or you can replace it entirely. 
+
+334
+00:21:47,400 --> 00:21:50,375
+如果你对文件有执行的权限
+And if you have execute to the x bit on a file, 
+
+335
+00:21:50,400 --> 00:21:51,975
+那么你就可以执行那个文件。
+then you're allowed to execute that file. 
+
+336
+00:21:52,275 --> 00:21:59,225
+因此，如果我们在"/bin"中执行{\rcode}ls -l{\r},搞错了,应该是"/usr/bin"，
+So, if we do "ls -l" in "/bin", that's not helpful and "/usr/bin", 
+
+337
+00:21:59,225 --> 00:22:02,250
+你会发现所有的文件都已经设置了执行权限，
+you'll see that all of them have the execute bit set, 
+
+338
+00:22:02,300 --> 00:22:04,825
+即使对于不是文件所有者的人也是如此。
+even for people who are not the owner of the file. 
+
+339
+00:22:04,925 --> 00:22:09,625
+这是因为我们希望所有计算机上的人都能执行"echo"程序。
+And this is because the "echo" program, for example, we want everyone on the computer to be able to execute. 
+
+340
+00:22:09,675 --> 00:22:13,200
+没有理由只允许某些用户运行"echo"。
+There's no reason to say only certain users can run "echo". 
+
+341
+00:22:13,225 --> 00:22:15,400
+这没有任何意义。
+That doesn't really make any make any sense. 
+
+342
+00:22:15,775 --> 00:22:19,650
+然而，对于目录，这些权限的含义有点不同。
+For directories, though, these permissions are a little bit different. 
+
+343
+00:22:19,725 --> 00:22:25,800
+因此，读取转换为"你是否被允许看到这个目录中的文件？"
+So, read translates to "Are you allowed to see which files are inside this directory?" 
+
+344
+00:22:25,825 --> 00:22:28,800
+因此，将读取权限视为查看目录的文件列表。
+So, think of read as lists for a directory. 
+
+345
+00:22:28,875 --> 00:22:30,550
+你是否被允许列出它的内容？
+Are you allowed to list its contents?
+
+346
+00:22:30,700 --> 00:22:37,575
+对于目录的写入是指你是否被允许在该目录中重命名、创建或删除文件。
+Write for a directory is whether you are allowed to rename, create, or remove files within that directory. 
+
+347
+00:22:37,825 --> 00:22:39,925
+因此，它仍然有点道理，
+So, it's still kind of right, 
+
+348
+00:22:39,950 --> 00:22:45,650
+但请注意，这意味着如果你对一个文件有写入权限，
+but notice that this means that if you have write permissions on a file 
+
+349
+00:22:45,650 --> 00:22:50,100
+但你没有对它的目录有写入权限，你就不能删除该文件。
+but you do not have write permissions on its directory, you cannot delete the file. 
+
+350
+00:22:50,250 --> 00:22:55,700
+你可以清空它，但你不能删除它，因为这需要写入到目录本身。
+You can empty it, but you cannot delete it because that would require writing to the directory itself. 
+
+351
+00:22:55,825 --> 00:23:00,025
+最后，目录的执行权限对许多人来说是一个容易出错的地方。
+And finally, execute on directories is something that trips people up a lot. 
+
+352
+00:23:00,125 --> 00:23:03,500
+目录上的执行权限是所谓的搜索权限,
+Execute on a directory is what's known as search,
+
+353
+00:23:03,500 --> 00:23:08,125
+这并不是一个非常有用的名称，但是这意味着：
+and that's not terribly helpful a name, but what that means is:
+
+354
+00:23:08,200 --> 00:23:11,275
+你是否被允许进入该目录？
+Are you allowed to enter this directory
+
+355
+00:23:11,575 --> 00:23:17,000
+如果你想要打开、读取或写入文件，
+if you want to get to a file, if you want to open it or read it or write it, whatever you want to do, 
+
+356
+00:23:17,000 --> 00:23:20,214
+如果要用"cd"进入一个目录，
+basically, to cd into a directory,  
+
+357
+00:23:20,214 --> 00:23:26,039
+你必须拥有该目录及其所有父目录的执行权限。
+you must have the execute permission on all parent directories of that directory and the directory itself.
+
+358
+00:23:26,775 --> 00:23:33,425
+例如,我要访问一个在"/usr/bin"的文件,比如"/usr/bin/echo"，
+So, for example, for me to access a file inside "/usr/bin", such as "/usr/bin/echo", 
+
+359
+00:23:33,475 --> 00:23:35,150
+我必须在根目录、
+I must have executed on root,
+
+360
+00:23:35,325 --> 00:23:38,975
+"usr"目录和"bin"目录上都有执行权限。
+I must have execute on "usr", and I must have execute on "bin". 
+
+361
+00:23:38,975 --> 00:23:41,225
+如果我没有所有这些目录的执行权限，
+If I do not have all those execute bits, 
+
+362
+00:23:41,275 --> 00:23:47,050
+我将不被允许访问该文件，因为我将无法进入其中的目录。
+I will not be allowed to access that file because I won't be able to enter the directories along the way. 
+
+363
+00:23:48,625 --> 00:23:51,700
+你可能会遇到一些其他位，
+There are a number of other bits that you might come across. 
+
+364
+00:23:51,700 --> 00:23:54,900
+例如"s"或"t"，
+Like you might see "s"s or "t"s in these lists, 
+
+365
+00:23:54,925 --> 00:23:58,925
+你可能会看到"l"，如果你感兴趣，我们可以在办公时间里讨论它们。
+you might see "l"s, those we can talk about in office hours if you're curious. 
+
+366
+00:23:58,925 --> 00:24:02,825
+它们大多数情况下对你在这个课程中所做的事情并不重要，
+They will mostly not matter for anything you will do in this class, 
+
+367
+00:24:03,400 --> 00:24:05,125
+但了解它们是很方便的。
+but they are handy to know about. 
+
+368
+00:24:05,150 --> 00:24:09,900
+所以，如果你对它们感兴趣，可以自己查阅或在办公时间来问我们。
+So, if you're curious about them, look them up on your own or come ask us in office hours. 
+
+369
+00:24:10,725 --> 00:24:13,675
+现在还有一些其他有用的程序要知道。
+There are some other programs that are handy to know about. 
+
+370
+00:24:13,750 --> 00:24:15,325
+哦，对不起，还有一件事儿需要说明，
+Oh, sorry, there's one more  thing, as I mentioned, 
+
+371
+00:24:15,350 --> 00:24:17,975
+如果只有一个"-"，那就意味着你没有该权限。
+if you just have a dash it means you do not have that permission. 
+
+372
+00:24:18,025 --> 00:24:21,050
+所以，例如"r-x"
+Right, so if it says, for example, "r-x"
+
+373
+00:24:21,075 --> 00:24:23,950
+这意味着你有读和执行权限，但没有写权限。
+it means that you have read and execute, but you do not have write. 
+
+374
+00:24:25,800 --> 00:24:28,900
+这个时候还有一些其他有用的程序要知道。
+There are some other handy programs to know about at this point. 
+
+375
+00:24:28,925 --> 00:24:31,900
+其中之一是move或{\rcode}mv{\r}命令。
+One of them is move, or the "mv" command. 
+
+376
+00:24:31,900 --> 00:24:37,400
+所以，如果我cd回到missing semester，我让这里的"mv"给我重命名文件。
+So, if I cd back to missing semester, here "mv" lets me rename a file. 
+
+377
+00:24:38,025 --> 00:24:43,725
+而重命名需要两个路径，它需要旧路径和新路径。
+And rename here takes two paths, it takes the old path in the new path. 
+
+378
+00:24:43,775 --> 00:24:47,175
+这意味着"mv"命令既可以重命名文件
+This means that "mv" lets you both rename a file, 
+
+379
+00:24:47,175 --> 00:24:50,500
+例如更改文件名但不更改目录，
+like if you change the name of the file but not the directory, 
+
+380
+00:24:50,525 --> 00:24:53,375
+也可以将文件移动到完全不同的目录中。
+or it lets you move a file to a completely different directory. 
+
+381
+00:24:53,400 --> 00:24:58,350
+只需要提供当前文件的路径和目标文件的路径，
+It just you give the path to the current file and the path to where you want that file to be,
+
+382
+00:24:58,400 --> 00:25:00,875
+就可以改变它的位置和名称。
+and that can change its location and its name. 
+
+383
+00:25:00,925 --> 00:25:02,000
+例如，
+So, for example, 
+
+384
+00:25:02,000 --> 00:25:07,525
+我可以将"dotfiles.md"重命名为"foo.md".这个操作不会有任何输出，对吗？
+I can move "dotfiles.md" to be "foo.md" unhelpfully, right? 
+
+385
+00:25:07,525 --> 00:25:10,250
+同样，我也可以将它改回来。
+And similarly, I can move it back. 
+
+386
+00:25:14,075 --> 00:25:18,875
+还有{\rcode}cp{\r}命令，即复制文件，非常类似。
+There's also the "cp" command, the "cp" or copy is very similar. 
+
+387
+00:25:18,875 --> 00:25:20,375
+它让你复制一个文件。
+It lets you copy a file. 
+
+388
+00:25:20,475 --> 00:25:22,400
+"cp"也需要两个参数，
+"cp" also takes two arguments,
+
+389
+00:25:22,400 --> 00:25:26,196
+一个是要复制的文件路径，一个是目标路径，
+it takes the path you want to copy from and the path you want to copy to,
+
+390
+00:25:26,196 --> 00:25:27,775
+这两个路径都要是完整路径。
+ and these are full paths. 
+
+391
+00:25:27,825 --> 00:25:29,716
+所以，例如，我可以使用这个命令来
+So, I could use this, for example, 
+
+392
+00:25:29,716 --> 00:25:36,275
+将"dotfiles.md"复制到"../food.md"，啊,对的,"food.md"。
+to say I want to copy "dotfiles.md" to "../food.md", sure "food.md". 
+
+393
+00:25:36,275 --> 00:25:38,077
+现在，如果我在当前目录下输入{\rcode}ls ..{\r}，
+And now, if I do "ls ..", 
+
+394
+00:25:38,077 --> 00:25:41,625
+你会看到那个目录下有一个叫做"food.md"的文件。
+you'll see that there's a "food.md" file in that directory. 
+
+395
+00:25:41,750 --> 00:25:45,725
+因此，{\rcode}cp{\r}也需要两个路径，它们不必在同一个目录下。
+So, "cp" as well take two paths, it does not have to be in the same directory. 
+
+396
+00:25:46,150 --> 00:25:50,238
+同样地，还有一个{\rcode}rm{\r}命令可以让你删除文件，
+And similarly, there's the "rm" command which lets you remove a file,
+
+397
+00:25:50,238 --> 00:25:51,925
+需要提供文件的路径。
+ and there ,too, you can give paths. 
+
+398
+00:25:51,975 --> 00:25:54,700
+在这种情况下，我删除了"../food"。
+In this case, I'm removing "../food". 
+
+399
+00:25:54,775 --> 00:26:00,975
+需要注意的是，在Linux上，默认情况下，删除不会递归进行。
+You should be aware, for removing, especially on Linux, removal is by default not recursive. 
+
+400
+00:26:01,050 --> 00:26:04,000
+所以你不能使用{\rcode}rm{\r}删除一个目录。
+So, you cannot remove a directory using "rm". 
+
+401
+00:26:04,150 --> 00:26:08,275
+你可以使用"-r"标志进行递归删除，
+You can pass the "-r" flag which lets you do a recursive remove 
+
+402
+00:26:08,375 --> 00:26:12,050
+然后给出你想要删除的路径，它将删除路径下的所有内容。
+and then give a path that you want to remove and it will remove everything below it. 
+
+403
+00:26:12,050 --> 00:26:17,250
+还有一个{\rcode}rmdir{\r}命令可以让你删除一个目录，
+There is also the "rmdir" command which lets you remove a directory, 
+
+404
+00:26:17,375 --> 00:26:20,525
+但它只能删除空目录。
+but it only lets you remove that directory if it is empty. 
+
+405
+00:26:20,550 --> 00:26:23,700
+这是一种安全机制，
+So, the idea here is to sort of be a safety mechanism for you 
+
+406
+00:26:23,725 --> 00:26:26,075
+以防止你不小心扔掉了一堆文件。
+so you don't accidentally throw away a bunch of your files. 
+
+407
+00:26:26,600 --> 00:26:30,550
+最后一个小命令很方便，那就是{\rcode}mkdir{\r}，
+And the final little command that's handy to use is "mkdir",
+
+408
+00:26:30,550 --> 00:26:32,250
+它可以让你创建一个新目录。
+which lets you create a new directory. 
+
+409
+00:26:32,250 --> 00:26:35,275
+正如我们之前讨论的那样，你不应该这样做，
+And as we talked about before, you don't want to do something like this 
+
+410
+00:26:35,375 --> 00:26:37,600
+因为它会为你创建两个目录，
+because it will create two directories for you, 
+
+411
+00:26:37,600 --> 00:26:39,975
+一个叫做"My"，另一个叫做"Photos"。
+one called "My" and one called "Photos". 
+
+412
+00:26:39,975 --> 00:26:42,400
+如果你真的想创建这样一个目录，
+If you actually want to create a directory like this, 
+
+413
+00:26:42,400 --> 00:26:46,425
+你应该使用反斜杠转义空格或者用引号引起来。
+you would either escape the space or quote the string. 
+
+414
+00:26:49,225 --> 00:26:55,875
+如果你想要更多关于命令在这些平台上如何工作的信息，
+If you ever want more information about how any command to basically on these platforms work,
+
+415
+00:26:55,875 --> 00:26:58,200
+那么还有一个非常方便的命令。
+there's a really handy command for that as well. 
+
+416
+00:26:58,200 --> 00:27:01,550
+这个命令叫做{\rcode}man{\r}，用于手册页。
+There is the program called "man" for manual pages. 
+
+417
+00:27:01,850 --> 00:27:06,411
+这个程序以另一个程序的名称作为参数，
+This program takes as an argument the name of another program 
+
+418
+00:27:06,411 --> 00:27:08,225
+并给出它的手册页。
+and gives you its manual page. 
+
+419
+00:27:08,225 --> 00:27:14,025
+因此，例如，我们可以使用{\rcode}man ls{\r}来查看"ls"的手册页。
+So, for example, we could do "man ls" and this shows us a manual page for "ls". 
+
+420
+00:27:14,125 --> 00:27:15,600
+你会注意到，在"ls"的情况下，
+You'll notice that in the case of "ls", 
+
+421
+00:27:15,600 --> 00:27:18,675
+手册页提供了与{\rcode}ls --help{\r} 得到的信息相似
+it is fairly similar to what we got with "ls --help", 
+
+422
+00:27:18,700 --> 00:27:21,925
+但这个界面更便于浏览和阅读。
+but it's a little easier to navigate, a little easier to read. 
+
+423
+00:27:21,975 --> 00:27:26,865
+通常在底部，你还会找到示例、
+Usually towards the bottom, you will also get examples, 
+
+424
+00:27:26,875 --> 00:27:30,525
+编写者信息、更多信息的位置等信息。
+information about who wrote it, where you can find more information, and that sort of stuff. 
+
+425
+00:27:30,600 --> 00:27:33,125
+之前有一件有时可能会令人困惑的事情，
+One thing that can be confusing sometimes, 
+
+426
+00:27:33,525 --> 00:27:37,633
+直到最近的一个版本加入了底部的"q to quit"的三个字，
+at least until a recent version where they added this three at the bottom which says "q to quit", 
+
+427
+00:27:37,633 --> 00:27:39,633
+它们以前没有这么说。
+they do not use to say this. 
+
+428
+00:27:39,875 --> 00:27:41,900
+你可以按"q"退出该程序。
+You press "q" to quit this program.
+
+429
+00:27:41,900 --> 00:27:44,900
+如果你不知道这个便捷的键盘快捷方式，退出它可能会很困难。
+It can be really hard to quit it if you do not know that. 
+
+430
+00:27:46,975 --> 00:27:49,605
+顺便说一下，
+A handy keyboard shortcut here, by the way, is 
+
+431
+00:27:49,605 --> 00:27:54,075
+"Ctrl+L"是一个便捷的键盘快捷方式，它可以清除终端并回到顶部。
+"Ctrl+L", which lets you clear your terminal and go back to the top. 
+
+432
+00:27:55,050 --> 00:27:58,425
+到目前为止，我们只讨论了单独运行程序的情况。
+So far, we've only talked about programs in isolation, 
+
+433
+00:27:58,525 --> 00:28:02,250
+但是当你开始组合不同的程序时，
+but where much of the power of the shell really comes through is
+
+434
+00:28:02,250 --> 00:28:05,300
+shell的大部分强大功能就会真正体现出来。
+ once you start combining different programs. 
+
+435
+00:28:05,300 --> 00:28:10,125
+而不是仅仅运行{\rcode}cd{\r}，运行{\rcode}ls{\r}等等。
+Right, so rather than just like running "cd", running "ls", and etc., 
+
+436
+00:28:10,175 --> 00:28:12,350
+你还可能希望与文件交互，
+you might want to chain multiple programs together. 
+
+437
+00:28:12,400 --> 00:28:16,350
+并让文件在不同程序之间传输。
+You might want to interact with files and have files operate in between programs. 
+
+438
+00:28:16,450 --> 00:28:21,625
+这时，我们可以使用shell提供的流的概念来实现。
+And the way we can do this is using this notion of streams that the shell gives us. 
+
+439
+00:28:21,650 --> 00:28:27,275
+每个程序都有两个主要的流：
+Every program by default has, I'm gonna simplify a little and say, two primary streams. 
+
+440
+00:28:27,325 --> 00:28:30,650
+输入流和输出流。
+It has an input stream and an output stream. 
+
+441
+00:28:30,700 --> 00:28:33,550
+默认情况下，输入流来自于键盘，
+By default, the input stream is your keyboard. 
+
+442
+00:28:33,625 --> 00:28:35,175
+基本上是你的终端，
+Basically, the input stream is your terminal,
+
+443
+00:28:35,250 --> 00:28:38,125
+你在终端中输入的任何内容都会进入程序，
+and whatever you type into your terminal is going to end up in the program, 
+
+444
+00:28:38,575 --> 00:28:40,450
+而输出流则是每当程序打印输出时，
+and it has a default output stream, which is whenever the program prints something,
+
+445
+00:28:40,450 --> 00:28:42,300
+输出的内容就会传递到这个流中。
+it's gonna print to that stream, 
+
+446
+00:28:42,375 --> 00:28:45,875
+默认情况下，输出流也是指向你的终端的。
+and by default, that is also your terminal. 
+
+447
+00:28:45,875 --> 00:28:48,000
+这就是为什么当我输入"echo hello"时，
+This is why when I type "echo hello", 
+
+448
+00:28:48,025 --> 00:28:49,675
+它会被打印回我的终端，
+it gets printed back to my terminal, 
+
+449
+00:28:50,000 --> 00:28:54,725
+但是，shell也提供了一种重定向这些流的方法，
+but the shell gives you a way to rewire these streams,
+
+450
+00:28:54,725 --> 00:28:58,075
+以改变程序的输入/输出指向。
+ to change where the input/output of a programmer pointed. 
+
+451
+00:28:58,325 --> 00:29:04,975
+最简单的方法是使用尖括号符号（"<>"）。
+The way the most straightforward way you do this is using the angle bracket signs. 
+
+452
+00:29:05,275 --> 00:29:10,150
+因此，你可以像这样写，或者像这样写。
+So you can write something like this, or you can write something like this. 
+
+453
+00:29:10,275 --> 00:29:17,275
+"<"表示将这个程序的输入重定向为这个文件的内容，
+The left angle bracket indicates rewire the input for this program to be the contents of this file,
+
+454
+00:29:17,800 --> 00:29:26,450
+">"表示将前面程序的输出重定向到这个文件中。
+and the end angle bracket means rewire the output of the preceding program into this file. 
+
+455
+00:29:26,725 --> 00:29:29,075
+所以让我们看一个例子。
+So let's look at an example of what that would look like. 
+
+456
+00:29:29,150 --> 00:29:33,025
+如果我输入"echo hello"，我可以把"hello"
+If I do "echo hello", I can say I want that context, 
+
+457
+00:29:33,075 --> 00:29:35,775
+存储在一个名为"hello.txt"的文件中，
+the content to be stored in a file called "hello.txt", 
+
+458
+00:29:36,000 --> 00:29:38,373
+因为我给出的是相对路径，
+and because I gave this as a relative path, 
+
+459
+00:29:38,373 --> 00:29:42,275
+这将在当前目录中构建一个名为"hello.txt"的文件，
+this will construct a file in the current directory called "hello.txt", 
+
+460
+00:29:42,275 --> 00:29:46,350
+至少在理论上，它的内容应该是单词"hello"。
+and at least in theory, its contents should be the word "hello".
+
+461
+00:29:46,525 --> 00:29:47,421
+如果我运行这个命令，
+So if I run this, 
+
+462
+00:29:47,421 --> 00:29:49,875
+你会注意到没有任何东西打印到我的输出中。
+notice that nothing got printed to my output. 
+
+463
+00:29:49,900 --> 00:29:52,850
+之前当我运行{\rcode}echo hello{\r}时，它打印出了"hello"。
+The previous time when I ran "echo hello", it printed "hello". 
+
+464
+00:29:52,875 --> 00:29:56,425
+现在"hello"已经进入一个名为"hello.txt"的文件，
+Now that "hello" is gone into a file called "hello.txt",
+
+465
+00:29:56,625 --> 00:29:59,725
+我可以使用叫做"cat"的程序来验证这一点。
+and I can verify this by using the program called "cat". 
+
+466
+00:29:59,800 --> 00:30:03,225
+{\rcode}cat{\r}是一个打印文件内容的命令。
+So "cat" prints the contents of a file. 
+
+467
+00:30:03,225 --> 00:30:08,000
+比如，我可以输入命令{\rcode}cat hello.txt{\r}，它就会显示出"hello"。
+So I can do "cat hello.txt", and there it shows me "hello". 
+
+468
+00:30:08,225 --> 00:30:12,775
+不过{\rcode}cat{\r}还有另一种功能，支持将输入与输出连在一起。
+But "cat" is also something that supports this kind of wiring, 
+
+469
+00:30:12,850 --> 00:30:16,800
+比如，我可以输入命令"cat"，
+so I can say "cat", which by default just prints its input, 
+
+470
+00:30:16,875 --> 00:30:18,850
+默认情况下它只是将输入内容复制到输出中，
+it just duplicates its input to its output, 
+
+471
+00:30:18,900 --> 00:30:22,700
+但我可以告诉它从文件"hello.txt"中读取输入。
+I can say I want you to take your input from 'hello.txt'. 
+
+472
+00:30:23,375 --> 00:30:27,125
+此时，shell会打开文件"hello.txt"，
+What will happen in this case is that the shell is going to open 'hello.txt', 
+
+473
+00:30:27,300 --> 00:30:28,675
+读取其中的内容
+take its contents,
+
+474
+00:30:28,675 --> 00:30:31,275
+并将其设置为"cat"命令的输入，
+and set that to be the input of "cat", 
+
+475
+00:30:31,275 --> 00:30:34,000
+"cat"将其输出，
+and then "cat" is going to just print that to its output, 
+
+476
+00:30:34,050 --> 00:30:37,250
+因为我没有将输出重定向,所以输出将会显示在终端上。
+which since I haven't rewired it is gonna be my terminal. 
+
+477
+00:30:37,300 --> 00:30:39,860
+这样，"hello"就会被打印到输出中。
+So this will just print "hello" to the output, 
+
+478
+00:30:39,860 --> 00:30:42,975
+我也可以同时使用这两种方法。
+and I can use both of these at the same time. 
+
+479
+00:30:43,000 --> 00:30:44,750
+比如，如果我想复制一个文件，
+So, for example, if I want to copy a file, 
+
+480
+00:30:44,775 --> 00:30:47,500
+但不想使用{\rcode}cp{\r}命令，
+and I don't want to use the "cp" command for some reason,
+
+481
+00:30:47,500 --> 00:30:50,400
+我可以使用{\rcode}cat{\r}命令。
+I can do this, 
+
+482
+00:30:50,400 --> 00:30:54,825
+在这种情况下，我什么也没告诉{\rcode}cat{\r}命令，
+and in this case, I'm telling the "cat" program nothing at all, 
+
+483
+00:30:54,825 --> 00:30:56,600
+只是让它按照默认方式运行。
+I'm just saying do your normal thing. 
+
+484
+00:30:56,625 --> 00:30:59,525
+{\rcode}cat{\r}命令并不知道这个重定向操作，
+Right, the "cat" program does not know anything about this redirection,
+
+485
+00:30:59,525 --> 00:31:03,136
+但是我让shell使用"hello.txt"作为"cat"命令的输入，
+but I'm telling the shell to use "hello.txt" as the input for cat 
+
+486
+00:31:03,136 --> 00:31:06,925
+并将"cat"命令打印的任何内容写入"hello2.txt"。
+and to write anything that "cat" prints to "hello2.txt". 
+
+487
+00:31:07,475 --> 00:31:09,625
+同样，这并不会输出任何内容到我的终端。
+Again, this prints nothing to my terminal.
+
+488
+00:31:09,625 --> 00:31:12,025
+但是，如果我输入{\rcode}cat hello2.txt{\r}，
+But if I "cat hello2.txt", 
+
+489
+00:31:12,025 --> 00:31:16,875
+就会得到我预期的输出，即原始文件的副本。
+I get the output as I would have expected, which is a copy of the original file. 
+
+490
+00:31:17,950 --> 00:31:24,900
+还有一种双向箭头(">>")，它表示追加而不是覆盖，
+There is also a double end bracket which is append instead of just overwrite, 
+
+491
+00:31:25,300 --> 00:31:30,450
+所以如果我执行{\rcode}cat < hello.txt > hello2.txt{\r}，
+so you'll notice that if I do "cat < hello.txt > hello2.txt" again,
+
+492
+00:31:30,450 --> 00:31:32,200
+然后执行{\rcode}cat hello2.txt{\r}，
+and then I cat hello2.txt, 
+
+493
+00:31:32,200 --> 00:31:35,600
+它仍然只包含"hello"，即使它已经包含了"hello"。
+it still just contains "hello", even though it already contained "hello". 
+
+494
+00:31:35,700 --> 00:31:38,650
+如果我把后面的">"改成">>"，就表示追加。
+If I switch that to instead be a double end bracket, 
+
+495
+00:31:38,675 --> 00:31:42,275
+现在，如果我查看该文件，它就包含了两个"hello"。
+it means append, and if I now cat that file, it has "hello" twice. 
+
+496
+00:31:44,650 --> 00:31:49,300
+这些命令只是与文件交互的简单方法，
+These are pretty straightforward, they're usually just ways to interact with files, 
+
+497
+00:31:49,375 --> 00:31:52,950
+但当涉及到shell提供的另一个运算符，
+but where it gets really interesting is an additional operator the shell gives you 
+
+498
+00:31:52,950 --> 00:31:54,425
+即管道符时，它们就变得更加有趣了。
+called the pipe character. 
+
+499
+00:31:54,425 --> 00:31:57,050
+管道符就是一根竖杠("|")，
+So, pipe is just a vertical bar, 
+
+500
+00:31:57,125 --> 00:32:03,175
+它的作用是将左边程序的输出
+and what pipe means is take the output of the program to the left 
+
+501
+00:32:03,175 --> 00:32:07,944
+作为右边程序的输入。
+and make it the input of the program to the right, right? 
+
+502
+00:32:08,650 --> 00:32:16,550
+比如，以{\rcode}ls /{\r}或{\rcode}ls -l /{\r}为例，
+So, what does this look like? Well, let's take the example of "ls /" or "ls -l /". 
+
+503
+00:32:16,550 --> 00:32:17,775
+它们会输出一些东西。
+This prints a bunch of things. 
+
+504
+00:32:17,875 --> 00:32:21,125
+如果我只想得到输出的最后一行，
+Let's say that I only wanted the last line of this output. 
+
+505
+00:32:21,350 --> 00:32:23,725
+可以使用一个叫做{\rcode}tail{\r}的命令，
+Well, there's a command called "tail", 
+
+506
+00:32:23,775 --> 00:32:27,950
+它可以打印输入的最后n行，
+and tail prints the last n lines of its input, 
+
+507
+00:32:28,175 --> 00:32:36,225
+使用"-n1"参数(或者"--line=1")
+and I can do "-n1", so this is a flag called 'n' you can also use "--lines" if you want to  \N use it as a longer option, 
+
+508
+00:32:36,225 --> 00:32:39,400
+在这里，这表示只打印最后一行。
+but in this case, this is saying just print the last line. 
+
+509
+00:32:39,475 --> 00:32:41,625
+我可以将这两个命令连在一起，
+And I can wire these together, 
+
+510
+00:32:41,650 --> 00:32:47,525
+比如输入命令{\rcode}ls -l / | tail -n1{\r}，
+so I can say "ls -l / | tail -n1", 
+
+511
+00:32:48,525 --> 00:32:51,625
+注意到这里的"ls"不知道"tail"，
+and notice here that "ls" does not know about "tail",
+
+512
+00:32:51,650 --> 00:32:53,500
+"tail"也不知道"ls".
+and "tail" does not know about "ls". 
+
+513
+00:32:53,500 --> 00:32:57,775
+它们是不同的程序，从未被编程为彼此兼容。
+They are different programs and have never been programmed to be compatible with one another. 
+
+514
+00:32:57,775 --> 00:33:00,925
+它们只知道如何从输入读取并写入输出，
+All they know how to do is read from input and write to output,
+
+515
+00:33:00,925 --> 00:33:05,325
+然后管道将它们连接在一起，在这种情况下，
+and then the pipe is what wires them together, and in this particular case, 
+
+516
+00:33:05,325 --> 00:33:08,525
+希望"ls"的输出成为"tail"的输入，
+I'm saying I want the output of "ls" to be the input to "tail", 
+
+517
+00:33:08,550 --> 00:33:11,094
+然后想要"tail"的输出仅流到我的终端，
+and then I want the output of 'tail' to just go to my terminal 
+
+518
+00:33:11,094 --> 00:33:12,200
+因为我没有重定向它。
+because I haven't rewired it. 
+
+519
+00:33:12,225 --> 00:33:16,075
+我也可以重新连接它，以便输出到"ls.txt"，
+I could also rewire this to say I want the output to go to "ls.txt", 
+
+520
+00:33:16,075 --> 00:33:19,750
+在这种情况下，如果我运行{\rcode}cat ls.txt{\r}，就会得到适当的输出。
+and in this case, if I "cat ls.txt", I would get the appropriate output. 
+
+521
+00:33:19,875 --> 00:33:22,650
+事实证明，你可以用这个做一些非常有趣的事情。
+And it turns out you can do some really neat things with this. 
+
+522
+00:33:22,775 --> 00:33:26,100
+我们将在数据整理讲座中详细介绍这个问题，
+We're gonna cover this a lot more in the data wrangling lecture
+
+523
+00:33:26,100 --> 00:33:31,725
+大概在四天后，还会讲述一些high level内容
+there will be in like four days  or something on the kind of fancy stuff you can do 
+
+524
+00:33:31,750 --> 00:33:33,875
+例如开始构建先进的管道。
+when you start building more advanced pipelines. 
+
+525
+00:33:35,150 --> 00:33:37,175
+比如，
+One to give you one example, 
+
+526
+00:33:37,225 --> 00:33:43,600
+我们可以做类似于{\rcode}curl --head --silent google.com{\r}的东西，
+we can do something like "curl --head --silent google.com" 
+
+527
+00:33:44,825 --> 00:33:46,775
+就像这样
+so just to show you what that looks like, 
+
+528
+00:33:46,800 --> 00:33:50,975
+就可以给我所有访问google.com的HTTP头，
+this gives me all the HTTP headers for accessing google.com, 
+
+529
+00:33:51,650 --> 00:33:54,231
+然后我可以将其管道传输到 
+and I can pipe that to 
+
+530
+00:33:54,231 --> 00:33:56,915
+例如加上"grep --ignore-case"参数
+like "grep --ignore-case" 
+
+531
+00:33:56,915 --> 00:34:01,763
+或者使用"-i content-length"参数
+or just "-i content-length" 
+
+532
+00:34:01,763 --> 00:34:01,843
+或者使用"-i content-length"参数
+
+533
+00:34:01,843 --> 00:34:05,277
+这样就可以打印出HTTP头信息中的内容长度。
+so this is gonna print the content length header. 
+
+534
+00:34:05,325 --> 00:34:07,075
+"grep"是一个程序，我们稍后会谈到，
+"grep" is a program that we'll talk about later,
+
+535
+00:34:07,075 --> 00:34:10,675
+它可以让你在输入流中搜索指定的关键字。
+they'll let you search in an input stream for a given keyword. 
+
+536
+00:34:11,075 --> 00:34:14,175
+我们可以将其和"cut"命令一起使用，
+We can pipe that through say, the "cut" command, 
+
+537
+00:34:14,225 --> 00:34:21,500
+将分隔符设置为空格，并仅保留第二个字段，
+which takes a delimiter set that to be space, and I want the second field, 
+
+538
+00:34:21,500 --> 00:34:23,625
+这样就只打印了内容长度。
+and this prints just the content length. 
+
+539
+00:34:23,725 --> 00:34:25,625
+这个例子可能有点无聊，对吧？
+This is sort of a silly example, right?
+
+540
+00:34:25,625 --> 00:34:30,550
+因为你只是从命令行中提取了google.com的字节数，
+Like this just lets you extract the content length in bytes of google.com from the command line. 
+
+541
+00:34:30,575 --> 00:34:32,675
+这并不是一个非常有用的事情。
+It's not a very useful thing to do, 
+
+542
+00:34:32,725 --> 00:34:35,150
+但你可以看到通过将它们连接在一起，
+but you can see how by chaining these together 
+
+543
+00:34:35,150 --> 00:34:39,325
+你可以实现一堆真正有趣的文本操作效果。
+you can achieve a bunch of really interesting text manipulation effects. 
+
+544
+00:34:39,400 --> 00:34:42,602
+事实证明，管道不仅适用于文本数据，
+And it turns out pipes are not just for textual data, 
+
+545
+00:34:42,602 --> 00:34:44,825
+你也可以对图像等东西使用它们。
+you can do this for things like images as well.
+
+546
+00:34:44,875 --> 00:34:48,938
+你可以用一个程序，对输入的二进制图像作一些处理,
+You can have a program that manipulates a binary image on its input 
+
+547
+00:34:48,938 --> 00:34:50,575
+并将处理后的图像输出。
+and writes a binary image to its output, 
+
+548
+00:34:50,625 --> 00:34:52,825
+然后可以将这些程序通过管道链接在一起。
+and you can chain them together in this way. 
+
+549
+00:34:52,850 --> 00:34:55,786
+我们在以后的课程会讲一些这种类型的例子.
+And we'll talk about some of those kinds of examples later on,too. 
+
+550
+00:34:55,786 --> 00:34:59,138
+甚至可以用于视频。你可以通过管道进行数据流传输。 
+You can even do this for video if you want.  You can stream. 
+
+551
+00:34:59,138 --> 00:35:01,975
+比如说，如果你家里有Chromecast，
+ this is, for example, a great way if you have a Chromecast at home. 
+
+552
+00:35:02,025 --> 00:35:07,010
+将视频文件通过管道输入到一个Chromecast发送程序中，
+You can stream a video file like this by having the last program in your pipe
+
+553
+00:35:07,010 --> 00:35:09,675
+然后将这个程序设置为最后一个
+ be a Chromecast send program. 
+
+554
+00:35:09,750 --> 00:35:13,375
+它会以HTTP流式传输视频文件到你的Chromecast上。
+So you stream a video file into it, and it streams or HTTP to your Chromecast. 
+
+555
+00:35:17,575 --> 00:35:21,150
+我们将在数据整理课程中更详细地讲解这个。
+We'll talk a lot more about this in the data wrangling lecture. 
+
+556
+00:35:21,175 --> 00:35:24,575
+我还想跟你讨论一件事情,
+But there's one more thing that I wanted to talk to you about
+
+557
+00:35:24,600 --> 00:35:29,225
+关于如何以更有趣、
+sort of how to use the terminal in a more interesting 
+
+558
+00:35:29,225 --> 00:35:31,525
+更强大的方式使用终端，
+and perhaps more powerful way that you might be used to. 
+
+559
+00:35:31,675 --> 00:35:37,275
+这也许会对那些已经适应终端的人来说有点意思.
+And this is perhaps even going to be interesting for the ones of you \N who feel like you're already comfortable with the terminal,  
+
+560
+00:35:38,000 --> 00:35:41,425
+但首先，我们需要讨论 
+but first, we need to cover an important topic 
+
+561
+00:35:41,425 --> 00:35:44,475
+Linux系统和macOS系统中的一个重要主题，
+when it comes to Linux systems and macOS systems, in particular, 
+
+562
+00:35:44,475 --> 00:35:46,975
+即root用户的概念。
+which is the notion of the root user. 
+
+563
+00:35:47,025 --> 00:35:50,449
+root用户有点像Windows上的管理员用户，
+The root user is sort of like the administrator user on Windows, 
+
+564
+00:35:50,449 --> 00:35:52,750
+它的用户ID是零。
+and it has user IDs zero. 
+
+565
+00:35:52,975 --> 00:35:54,375
+root用户是特殊的，
+The root user is special
+
+566
+00:35:54,375 --> 00:35:57,675
+因为它可以在你的系统上随意做任何事情，
+ because it is allowed to do whatever it wants on your system, 
+
+567
+00:35:57,850 --> 00:36:02,750
+即使某个文件对任何人都不可读或不可写，
+even if a file is not readable by anyone, or if it's not writable by anyone, 
+
+568
+00:36:02,775 --> 00:36:04,525
+root仍然可以访问该文件。
+root can still access that file. 
+
+569
+00:36:04,525 --> 00:36:07,685
+root是一个超级用户，可以做任何想做的事情，
+Root is sort of a super user that gets to do whatever they want, 
+
+570
+00:36:07,775 --> 00:36:12,625
+但大多数时间，你不会作为超级用户来操作。
+and most of the time, you will not be operating as the super user. 
+
+571
+00:36:12,625 --> 00:36:13,875
+你不会成为root用户。
+You will not be root. 
+
+572
+00:36:13,875 --> 00:36:16,825
+你会用jon或者其他名字成为一个用户，
+You will be a user like jon or whatever your name is, 
+
+573
+00:36:16,825 --> 00:36:18,525
+这将是你常规情况下使用的用户。
+and that's going to be the user you act with 
+
+574
+00:36:18,650 --> 00:36:22,600
+因为如果你一直以root用户的身份操作计算机，
+because if you were operating your computer as the root user at all times, 
+
+575
+00:36:22,600 --> 00:36:24,135
+如果运行了错误的程序，
+if you ran the wrong program, 
+
+576
+00:36:24,135 --> 00:36:25,725
+它们可能会彻底破坏你的计算机，
+they could just completely destroy your computer, 
+
+577
+00:36:25,825 --> 00:36:27,925
+你肯定不希望发生这种情况，对吧？
+and you don't want that, right? 
+
+578
+00:36:28,475 --> 00:36:32,650
+但偶尔你需要做一些要root权限才能做的事。
+But every now and again, you want to do something that requires that you are root. 
+
+579
+00:36:32,675 --> 00:36:36,000
+通常情况下，你会使用一个叫做"sudo"的程序。
+Usually, for these cases, you will use a program called "sudo". 
+
+580
+00:36:36,250 --> 00:36:43,125
+"sudo"或"do as su"，这里的"su"指的是超级用户，
+"sudo" or "do as su", and "su" in this case is Super User, 
+
+581
+00:36:43,200 --> 00:36:46,750
+这是以超级用户的身份执行操作的一种方式。
+so this is a way to do the following thing as the super user. 
+
+582
+00:36:46,850 --> 00:36:50,274
+通常，你需要在终端中输入"sudo"
+Usually, the way "sudo" works is you write "sudo" 
+
+583
+00:36:50,274 --> 00:36:52,525
+和命令来使用它，
+and then a command like you would normally on your terminal, 
+
+584
+00:36:52,525 --> 00:36:55,325
+它将以root用户的身份运行该命令，
+and it will just run that command as if you were root, 
+
+585
+00:36:55,325 --> 00:36:56,775
+而不是你实际使用的用户身份。
+as opposed to the user you actually are. 
+
+586
+00:36:56,800 --> 00:37:01,225
+在哪些情况下可能需要使用这样的东西呢？
+Where might you need something like this?
+
+587
+00:37:01,275 --> 00:37:06,300
+嗯，在你的计算机上有许多特殊的文件，
+Well, there is a special, there are many special file system on your computer, 
+
+588
+00:37:06,325 --> 00:37:08,825
+比如，有一个叫做sysfs的文件系统。
+but in particular, there's one called sysfs. 
+
+589
+00:37:08,850 --> 00:37:13,775
+如果你cd到"/sys"，你会发现一个新世界。
+If you cd to "/sys", this is a whole new world. 
+
+590
+00:37:13,900 --> 00:37:17,925
+这些实际上不是你计算机上的文件，
+This file system is not actually files on your computer. 
+
+591
+00:37:17,950 --> 00:37:20,925
+而是各种内核参数。
+Instead, these are various kernel parameters. 
+
+592
+00:37:20,975 --> 00:37:24,200
+内核就像是你的计算机的核心。
+So the kernel is like basically the core of your computer. 
+
+593
+00:37:24,325 --> 00:37:31,225
+你可以通过文件来访问各种内核参数。
+This is a way for you to access various kernel parameters through what looks like a file system. 
+
+594
+00:37:31,400 --> 00:37:35,550
+你会看到，如果我进入"class/"，例如，
+You'll see here that if I cd into "class/", for example,
+
+595
+00:37:35,575 --> 00:37:38,625
+它有许多不同类型的设备可以与之交互，
+it has directories for a bunch of different types of devices
+
+596
+00:37:38,700 --> 00:37:46,625
+或者可以访问各种队列或各种内部奇怪的旋钮。
+that I can interact with or various queues I can access or all sorts of weird knobs internally. 
+
+597
+00:37:46,725 --> 00:37:49,850
+由于它们暴露为文件，
+And because they're exposed as files, 
+
+598
+00:37:49,875 --> 00:37:54,475
+这意味着我们可以使用到目前为止使用的所有工具来操作它们。
+it means we can also use all the tools we've been using so far in order to manipulate them. 
+
+599
+00:37:54,475 --> 00:37:59,200
+其中一个例子是，如果你进入{\rcode}sys/class/backlight{\r}，
+One example of this is if you go into sys class backlight, 
+
+600
+00:37:59,425 --> 00:38:04,275
+这会直接让你配置笔记本电脑的背光灯（如果你有的话）。
+so this backlight directly and lets you configure the backlight on your laptop if you have one. 
+
+601
+00:38:04,325 --> 00:38:07,850
+所以我可以进入{\rcode}intel_backlight/{\r}，这是一台Intel笔记本电脑。
+So I can cd into "intel_backlight/", this is an Intel laptop. 
+
+602
+00:38:07,900 --> 00:38:10,652
+在这里面，你会看到有一个叫做"brightness"的文件，
+Inside here, you'll see there's a file called "brightness", 
+
+603
+00:38:10,652 --> 00:38:12,084
+我可以cat这个文件，
+and I can cat the brightness;
+
+604
+00:38:12,084 --> 00:38:15,289
+这是屏幕当前的亮度。
+this is the current brightness of my screen.
+
+605
+00:38:15,325 --> 00:38:20,775
+但不仅如此，我还可以修改它以改变屏幕的亮度。
+But not only that, I can modify this too, in order to change the brightness of my screen. 
+
+606
+00:38:20,900 --> 00:38:23,734
+那么，你可能在想我能做到什么，
+So, you might think that I could do, 
+
+607
+00:38:23,734 --> 00:38:25,200
+让我们先看一下这里的最高亮度
+let's see what the max brightness is here. 
+
+608
+00:38:25,275 --> 00:38:27,500
+好吧，所以他现在已经设置成最高亮度了。
+Okay, so it's currently set to the max brightness. 
+
+609
+00:38:27,550 --> 00:38:30,646
+所以你可能会认为我可以做一些像
+You might imagine that I could do something like 
+
+610
+00:38:30,646 --> 00:38:37,750
+"让我们把它减半"或者其他什么的，例如"调到500亮度"这样的事情。
+if I do "echo" let's do half or something "echo 500 > brightness'. 
+
+611
+00:38:37,825 --> 00:38:39,925
+如果我这样做，它会说"权限被拒绝"。
+If I do this, it says permission denied. 
+
+612
+00:38:40,000 --> 00:38:42,400
+我无法修改亮度，
+I'm not allowed to modify brightness because, 
+
+613
+00:38:42,475 --> 00:38:45,725
+因为要更改内核中的东西，
+in order to basically change things in the kernel, 
+
+614
+00:38:45,750 --> 00:38:47,200
+你需要成为管理员。
+you need to be the administrator. 
+
+615
+00:38:47,200 --> 00:38:51,580
+你可能会想到解决方法是编写{\rcode}sudo echo 500{\r}，
+And you might imagine that the way to solve this is to write "sudo echo 500", 
+
+616
+00:38:51,700 --> 00:38:53,800
+但我仍然会收到权限被拒绝的错误。
+but I still get a permission denied error. 
+
+617
+00:38:53,850 --> 00:38:55,175
+为什么呢？
+But why is that? 
+
+618
+00:38:55,200 --> 00:38:57,499
+因为正如我之前提到的那样，
+It's because, as I mentioned before, 
+
+619
+00:38:57,499 --> 00:39:02,624
+输入和输出的重定向不是程序所知道的。
+these redirections of input and output is not something the programs know about. 
+
+620
+00:39:02,624 --> 00:39:04,612
+当我们将"ls"传输到"tail"时，
+When we piped "ls" to "tail",
+
+621
+00:39:04,612 --> 00:39:07,825
+"tail"并不知道"ls"，而"ls"也不知道"tail"。
+ "tail" did not know about "ls" and "ls" did not know about "tail". 
+
+622
+00:39:07,875 --> 00:39:10,750
+这个通道和重定向是由shell设置的。
+The pipe and the redirection was set up by the shell. 
+
+623
+00:39:10,775 --> 00:39:12,075
+所以，在这种情况下，
+So, in this case,
+
+624
+00:39:12,075 --> 00:39:17,205
+我告诉我的shell运行程序"sudo"
+what's happening is I'm telling my shell to run the program "sudo" 
+
+625
+00:39:17,205 --> 00:39:19,175
+并使用参数"echo"和"500"，
+with the arguments "echo" and "500"
+
+626
+00:39:19,200 --> 00:39:22,700
+并将其输出发送到名为"brightness"的文件，
+and send its output to the file called "brightness",
+
+627
+00:39:22,800 --> 00:39:25,825
+但是shell是打开"brightness"文件的东西，
+but the shell is what is opening the "brightness" file. 
+
+628
+00:39:25,900 --> 00:39:28,375
+不是"sudo"程序。
+It is not the 'sudo' program. 
+
+629
+00:39:28,475 --> 00:39:29,700
+所以，在这种情况下，
+So, in this case, 
+
+630
+00:39:29,725 --> 00:39:32,125
+作为我运行的shell
+the shell, which is running as me, 
+
+631
+00:39:32,125 --> 00:39:35,450
+尝试打开brightness文件进行写入，但是不允许这样做。
+tries to open the brightness file for writing and it's not allowed to do that. 
+
+632
+00:39:35,475 --> 00:39:37,225
+因此，我会收到权限被拒绝的错误。
+Therefore, I get a permission denied error. 
+
+633
+00:39:37,225 --> 00:39:40,250
+如果你搜索某些内容，
+You might have seen this if you like 
+
+634
+00:39:40,250 --> 00:39:44,375
+最终进入Stack Overflow并告诉你只需运行此命令即可看到它的效果，
+search for something end up on Stack Overflow  and it tells you to just run this command 
+
+635
+00:39:44,375 --> 00:39:51,975
+你可能已经看到了这个错误
+and you'll see that it does something like they give you instructions 
+
+636
+00:39:51,975 --> 00:39:57,975
+例如{\rcode}# echo 1 > /sys/net/ipv4 forward{\r}。
+like "1 > /sys",what's an example, "net/ipv4 forward", for example. 
+
+637
+00:39:58,000 --> 00:40:00,800
+如果你正在设置防火墙，
+This is something you may have seen if you're setting up a firewall 
+
+638
+00:40:00,875 --> 00:40:04,245
+此命令应该可以正常工作，
+and this command is intended to work
+
+639
+00:40:04,245 --> 00:40:07,625
+因为这个井号表示以root身份运行此命令。
+ because this little pound symbol indicates run this as root. 
+
+640
+00:40:07,625 --> 00:40:11,425
+这是很少被解释的内容，但这就是井号("#")的含义。
+This is something that is very rarely explained, but that is what the pound symbol means. 
+
+641
+00:40:11,450 --> 00:40:14,050
+你可以看到我的提示符上有一个美元符号("$")，
+You'll see on my prompt there's a dollar symbol instead, 
+
+642
+00:40:14,075 --> 00:40:16,475
+而"$"表示你不是以root身份运行。
+and the dollar indicates you are not running as root. 
+
+643
+00:40:16,625 --> 00:40:19,275
+那么如何解决这个问题？
+So, the question is how do I get around this well? 
+
+644
+00:40:19,275 --> 00:40:22,583
+好吧，我可以切换到root终端，
+I could switch into a root terminal,
+
+645
+00:40:22,583 --> 00:40:24,875
+因此可以通过运行{\rcode}sudo su{\r}来执行此操作。
+ so one way to do this is to run "sudo su". 
+
+646
+00:40:24,925 --> 00:40:28,425
+{\rcode}sudo su{\r}表示以root身份运行以下命令，
+"sudo su" is saying run the following command as root, 
+
+647
+00:40:28,500 --> 00:40:32,631
+"su"是一个复杂的命令，
+and "su" is a complicated command 
+
+648
+00:40:32,631 --> 00:40:35,950
+可以让你以超级用户身份获取一个shell。
+that effectively gets you a shell as the super user. 
+
+649
+00:40:36,250 --> 00:40:39,125
+所以，如果我这样做，输入我的密码，
+So, if I do this, type my password,
+
+650
+00:40:39,225 --> 00:40:43,425
+那么现在你会看到用户名从"jon"变为"root"，
+then now you'll see that the username at the beginning changed from "jon" to "root", 
+
+651
+00:40:43,575 --> 00:40:46,325
+而提示符从"$"变为"#"。
+and the prompt changed from a dollar to a pound. 
+
+652
+00:40:46,325 --> 00:40:48,600
+如果我现在进入该文件，
+If I now come in to that file, 
+
+653
+00:40:48,600 --> 00:40:50,775
+如果我执行{\rcode}echo 500 > brightness{\r}，
+if I do "echo 500 > brightness",
+
+654
+00:40:51,100 --> 00:40:53,425
+我的屏幕变得有点暗，但你看不到它，
+my screen got a little dimmer but you can't see it, 
+
+655
+00:40:53,475 --> 00:40:57,375
+你只需相信我，现在我没有收到错误。
+you just have to trust me, and now I didn't get an error. 
+
+656
+00:40:57,425 --> 00:41:00,525
+这是因为shell现在正在以root身份运行。
+And this is because the shell is now running as root. 
+
+657
+00:41:00,525 --> 00:41:02,323
+而不是以"jon"的身份运行的，而是以root用户的身份运行，
+It is not running as "jon", 
+
+658
+00:41:02,398 --> 00:41:05,200
+root用户允许打开此文件。
+and the root user is allowed to open this file. 
+
+659
+00:41:05,225 --> 00:41:09,300
+但是，根据我们现在对终端的了解，
+But, given our knowledge that we have of the terminal now,
+
+660
+00:41:09,300 --> 00:41:15,000
+除了以root的身份运行shell，还有一种方法,即 
+there's actually a way for us to do this without having to drop to a root shell, and that is as follows...
+
+661
+00:41:17,525 --> 00:41:21,550
+我猜是恢复到1060。
+That's, I guess, restore it to 1060. 
+
+662
+00:41:21,650 --> 00:41:24,125
+你看出这个方法和之前的不同了吗？
+Do you see why this is different?  
+
+663
+00:41:24,150 --> 00:41:28,700
+这里，我告诉我的终端运行{\rcode}echo 1060{\r}命令，
+Here, I'm telling my shell to run the "echo 1060" command,
+
+664
+00:41:28,725 --> 00:41:29,925
+它会打印出1060，
+which is gonna echo 1060, 
+
+665
+00:41:29,975 --> 00:41:32,775
+然后我告诉它运行{\rcode}sudo tee brightness{\r}命令，
+and I'm telling it to run the "sudo tee brightness" command, 
+
+666
+00:41:32,875 --> 00:41:37,750
+并让它将"echo"的输出发送到"sudo tee"中。
+and I'm telling you to send the output of "echo" into "sudo tee".
+
+667
+00:41:37,775 --> 00:41:40,625
+要理解这个过程，你需要知道{\rcode}tee{\r}命令的作用。
+In order to understand this, you need to know what the "tee" command does. 
+
+668
+00:41:40,625 --> 00:41:44,293
+{\rcode}tee{\r}命令会将输入内容写入一个文件，
+The "tee" command takes its input and writes it to a file
+
+669
+00:41:44,293 --> 00:41:46,175
+同时也将它输出到标准输出。
+ but also to standard out. 
+
+670
+00:41:46,175 --> 00:41:53,525
+因此，如果你想将一个日志文件保存起来以备之后查看，
+So, tee is a convenient way if you have say a log file that you want to like send to a file to store for later,
+
+671
+00:41:53,575 --> 00:41:55,429
+但同时也想在屏幕上看到它，
+but you also want to see it to yourself, 
+
+672
+00:41:55,429 --> 00:41:57,225
+你就可以将其通过"tee"命令通道传输，
+then you can pipe it through "tee",
+
+673
+00:41:57,225 --> 00:41:58,500
+给它一个文件名，
+give it the name of a file
+
+674
+00:41:58,500 --> 00:42:02,450
+它就会将输入的内容同时写入那个文件和你的屏幕上。
+ and it will write whatever its input is both to that file and to your screen. 
+
+675
+00:42:02,475 --> 00:42:05,200
+在这里，我利用了这个命令，
+And here, I'm taking advantage of that program. 
+
+676
+00:42:05,225 --> 00:42:08,073
+让"sudo tee"作为root用户运行，
+I'm saying run "tee" as root 
+
+677
+00:42:08,073 --> 00:42:10,550
+并将输出写入"brightness"文件中。
+and have "tee" right into the "brightness" file. 
+
+678
+00:42:10,625 --> 00:42:12,125
+因此，在这种情况下，
+And so, in this case, 
+
+679
+00:42:12,125 --> 00:42:14,781
+打开"brightness"文件的程序"tee"是作为root用户运行的，
+the "tee" program, which is what is opening the "brightness" file,
+
+680
+00:42:14,825 --> 00:42:17,525
+所以它是被允许的。
+is running as root and so it is allowed to do. 
+
+681
+00:42:17,575 --> 00:42:20,375
+如果我运行这个命令，虽然你看不到，
+If I run this, it will now, again, you can't see, 
+
+682
+00:42:20,400 --> 00:42:22,425
+但是现在屏幕的亮度已经变亮了，
+but the brightness has been turned on by a laptop, 
+
+683
+00:42:22,500 --> 00:42:24,483
+而且我也没有收到任何错误消息，
+and I don't get any errors,
+
+684
+00:42:24,483 --> 00:42:27,850
+我也不需要切换到root shell去运行命令，
+ and I never had to drop into a root shell and run commands there, 
+
+685
+00:42:27,875 --> 00:42:30,300
+因为这样做通常是有一定危险的。
+which can often be somewhat dangerous. 
+
+686
+00:42:30,300 --> 00:42:32,800
+如果你想更深入地了解这个文件系统，
+If you want to explore this filesystem a little bit more, 
+
+687
+00:42:32,800 --> 00:42:38,550
+你可以在里面浏览，
+there's a lot of interesting stuff in here if you just start browsing around. 
+
+688
+00:42:38,775 --> 00:42:41,050
+你会发现许多有趣的东西。
+You can find all sorts of fun things. 
+
+689
+00:42:41,050 --> 00:42:44,400
+例如，我们发现这里有一个有趣的"brightness"命令。
+So, for example, we noticed that there was a fun "brightness" command here. 
+
+690
+00:42:44,450 --> 00:42:47,375
+我想知道我还能设置什么其他的亮度。
+I wonder what other kinds of brightness I can set. 
+
+691
+00:42:47,825 --> 00:42:51,850
+因此，我可以使用{\rcode}find{\r}命令，我们也将在接下来的课程中讲解。
+So, I can use the "find" command which we will also talk about in a coming lecture. 
+
+692
+00:42:51,900 --> 00:42:59,800
+我会在当前目录中查找任何名称包含"brightness"的文件。
+I would look on any file whose name it's a little like "brightness" in the current directory. 
+
+693
+00:42:59,850 --> 00:43:01,000
+咦，这样不太有用。
+That's unhelpful. 
+
+694
+00:43:01,200 --> 00:43:03,075
+也许它们不是文件。
+Maybe they're not files. 
+
+695
+00:43:03,350 --> 00:43:06,100
+我拼写错了吗？
+Did I misspell "brightness"? 
+
+696
+00:43:06,700 --> 00:43:09,225
+那为什么这会出错呢？
+Yeah, why is it being annoying? 
+
+697
+00:43:11,675 --> 00:43:18,125
+好吧，它可能不想为我查找"brightness"
+Oh, apparently it does not want to search for "brightness" for me. 
+
+698
+00:43:18,150 --> 00:43:22,875
+好吧，但是我还知道一个方法，
+Oh well, luckily for you, I know of one already , 
+
+699
+00:43:22,950 --> 00:43:29,400
+那就是有一个名为"leds/"的子目录，而"leds/"也有亮度设置。
+handy that there is a subdirectory called "leds/", and "leds/" have brightness too. 
+
+700
+00:43:29,425 --> 00:43:31,000
+有哪些LED呢？
+What kind of LEDs are there? 
+
+701
+00:43:31,000 --> 00:43:35,450
+哦，有很多东西，例如滚动锁定LED。
+Ooh, lots of things, for example, the scroll lock LED. 
+
+702
+00:43:35,550 --> 00:43:39,125
+现在，大多数人可能不知道滚动锁定LED是什么，
+Now, most of you probably don't know what the scroll lock LED is, 
+
+703
+00:43:39,150 --> 00:43:41,250
+更不用说滚动锁定键了。
+or much less what scroll lock is. 
+
+704
+00:43:41,275 --> 00:43:45,525
+你可能已经在键盘上看到过一个名为滚动锁定的键，
+You might have seen a key on your keyboard neighbor named scroll lock. 
+
+705
+00:43:45,525 --> 00:43:50,000
+基本上没有人知道它的意义，也没有人真正使用它做任何事情。
+Basically, no one knows what it means anymore, no one really uses it for anything. 
+
+706
+00:43:50,050 --> 00:43:53,728
+它基本上只是一个死键和一个死LED。
+It's mostly just a dead key and also a dead LED. 
+
+707
+00:43:53,750 --> 00:43:58,025
+如果你想配置它，使得每次你收到电子邮件时，
+What if you wanted to configure it so that every time you get email, 
+
+708
+00:43:58,050 --> 00:43:59,582
+滚动锁定LED都会亮起来，
+your scroll lock LED lights up 
+
+709
+00:43:59,582 --> 00:44:01,625
+因为没有其他原因它会亮起来，那该怎么办呢？
+because there's no other reason why it would light up? 
+
+710
+00:44:01,625 --> 00:44:08,375
+如果我们进入到这个具有亮度设置的特定目录，并将其设置为零，
+Well, if we seed you into this particular directory that has a brightness place and it's set to zero, 
+
+711
+00:44:08,425 --> 00:44:10,650
+那么如果我写入一个一会发生什么呢？
+well, what happens if I write one into it? 
+
+712
+00:44:12,725 --> 00:44:17,425
+你不应该随意在此目录中的某个文件中随便写入数字，
+You probably should not just be writing random numbers into random files in this directory 
+
+713
+00:44:17,425 --> 00:44:19,500
+因为你会直接影响到你的内核。
+because you are affecting your kernel directly. 
+
+714
+00:44:19,500 --> 00:44:20,925
+了解这些文件的功能。
+Like, look up what the files do. 
+
+715
+00:44:20,925 --> 00:44:24,900
+我不一样，我已经戴好了安全眼镜，并且进行了足够的研究，
+In this particular case, I have warned safety goggles, and I've done my research, 
+
+716
+00:44:25,575 --> 00:44:30,650
+所以现在你看不到，但在我的键盘上，滚动锁定LED现在是亮着的。
+so now you can't tell, but on my keyboard, the scroll lock LED is now lit. 
+
+717
+00:44:31,200 --> 00:44:35,300
+因此，如果我编写了一个程序来检查新邮件，
+So, now, if I wrote a program that  like, did some checking of mail and stuff, 
+
+718
+00:44:35,300 --> 00:44:39,625
+在接到新邮件时，我可以让这个程序写入1到brightness
+I could have it at the end run a program that echoes one into this file, 
+
+719
+00:44:39,650 --> 00:44:41,113
+那么我现在就有了一种方法，
+and now I have a way for 
+
+720
+00:44:41,113 --> 00:44:45,300
+可以让我键盘上的LED指示我是否有新的电子邮件。
+my LED to my keyboard to indicate when I've new email. 
+
+721
+00:44:46,100 --> 00:44:51,950
+此时，你应该大致了解如何在终端和shell中操作，
+At this point, you should know roughly your way around the terminal, 
+
+722
+00:44:51,975 --> 00:44:58,575
+并足够了解这些基本任务的原理。
+around the shell, and know enough to accomplish these basic tasks, at least in theory. 
+
+723
+00:44:58,600 --> 00:45:03,300
+现在，你不应该再需要使用鼠标点击来查找文件了。
+Now，you shouldn't need to use like point-and-click interfaces to find files anymore. 
+
+724
+00:45:03,525 --> 00:45:05,825
+你可能需要掌握一个剩余的技巧，
+There's one remaining trick you might need,
+
+725
+00:45:05,825 --> 00:45:08,000
+那就是打开文件的能力。
+ and that is the ability to open a file. 
+
+726
+00:45:08,150 --> 00:45:11,925
+到目前为止，我只告诉了你如何查找文件。
+So far, I've only really given you ways to find files.
+
+727
+00:45:11,925 --> 00:45:19,675
+但你应该知道的一件事是"missing semester...", {\rcode}xdg-open{\r}。
+But one thing you should know about is "missing semester...","xdg-open". 
+
+728
+00:45:19,800 --> 00:45:22,150
+这可能仅适用于Linux。
+This will probably only work on Linux. 
+
+729
+00:45:22,225 --> 00:45:24,535
+在Mac OS上，我认为它只被称为"open"。
+On Mac OS, I think it's just called "open". 
+
+730
+00:45:24,535 --> 00:45:26,075
+在Windows上，谁知道呢？
+On Windows, who knows? 
+
+731
+00:45:26,075 --> 00:45:29,031
+{\rcode}xdg-open{\r}，你可以给出一个文件名，
+"xdg-open", you give the name of a file 
+
+732
+00:45:29,031 --> 00:45:31,925
+它将在适当的程序中打开它。
+and it will open it in the appropriate program. 
+
+733
+00:45:31,925 --> 00:45:31,950
+So, if you do "xdg-open" an HTML file, 
+
+734
+00:45:31,950 --> 00:45:35,427
+因此，如果你使用{\rcode}xdg-open{\r}打开一个HTML文件，
+So, if you do "xdg-open" an HTML file, 
+
+735
+00:45:35,427 --> 00:45:35,452
+因此，如果你使用xdg-open打开一个HTML文件，
+that will open your browser and open that file. 
+
+736
+00:45:35,452 --> 00:45:37,550
+它将打开你的浏览器并打开该文件。
+that will open your browser and open that file. 
+
+737
+00:45:37,550 --> 00:45:37,575
+它将打开你的浏览器并打开该文件。
+
+738
+00:45:38,100 --> 00:45:39,950
+一旦你有了这个程序，在理论上，
+And once you have that program, in theory, 
+
+739
+00:45:39,975 --> 00:45:43,600
+你应该不再需要打开finder窗口了。
+you should no longer need to open like a finder window ever again. 
+
+740
+00:45:43,750 --> 00:45:45,600
+你可能会因其他原因想要打开finder窗口，
+You might want to for other reasons, 
+
+741
+00:45:45,625 --> 00:45:48,875
+但在理论上，你可以使用我们今天学习的工具完成所有操作。
+but in theory, you can accomplish it all using the tools that we've learned today. 
+
+742
+00:45:49,475 --> 00:45:53,000
+对于你们中的一些人来说，这可能都很基础，
+This might all seem relatively basic for some of you,
+
+743
+00:45:53,050 --> 00:45:54,525
+但正如我所提到的，
+but as I mentioned,
+
+744
+00:45:54,525 --> 00:45:57,775
+这是我们现在知道shell如何工作的准备阶段，
+ this is sort of the ramp-up period of now we all know how the shell works, 
+
+745
+00:45:57,800 --> 00:46:02,625
+而我们将在未来的讲座中大量使用这些知识，
+and a lot of what we'll be doing in future lectures is using this knowledge
+
+746
+00:46:02,625 --> 00:46:06,000
+使用shell做真正有趣的事情。
+ to do really interesting things using the shell. 
+
+747
+00:46:06,000 --> 00:46:10,185
+这是我们的基础，
+That's sort of the interface that we're going to be using, 
+
+748
+00:46:10,185 --> 00:46:12,000
+所以我们都要了解它。
+and so it's important we all know it. 
+
+749
+00:46:12,350 --> 00:46:17,725
+我们下一节课会更多地讨论如何自动化这样的任务，
+We're gonna talk a lot more in the next lecture about how to automate tasks like this,
+
+750
+00:46:17,800 --> 00:46:20,675
+如何编写脚本来运行一些程序，
+how to write scripts that run a bunch of programs for you,
+
+751
+00:46:20,675 --> 00:46:25,225
+如何在终端中处理条件和循环，
+and have to do things like conditionals and loops and stuff in your terminal,
+
+752
+00:46:25,225 --> 00:46:28,400
+或者运行一个程序直到它失败，
+and do things like run a program until it fails, 
+
+753
+00:46:28,525 --> 00:46:32,825
+这在你想运行一些测试套件直到它失败的情况下可能会很方便。
+which can be handy in classes where you want to run something until your test suite fails, for example. 
+
+754
+00:46:33,300 --> 00:46:36,100
+那就是下周的讲座主题。
+So, that's the topic for next week's lecture. 
+
+755
+00:46:36,100 --> 00:46:37,425
+你有问题吗？
+Did you have a question?
+
+756
+00:46:37,425 --> 00:46:41,851
+你一直在演示的是这个"sys"目录，
+Yeah, just relating to what you've been demoing this "sys" directory that 
+
+757
+00:46:41,851 --> 00:46:49,250
+*[Windows Subsystem for Linux]
+如果用的是 {\rcode2}WSL[*]{\r}，大概只有当你进入Linux时才会工作。
+presumably will only work if your drop into linux if you running windows subsystem for Linux.
+
+758
+00:46:49,250 --> 00:46:50,575
+这是个好问题。
+That is a good question. 
+
+759
+00:46:50,575 --> 00:46:56,350
+我不知道WSL是否会暴露sys文件系统。
+I don't know whether the Windows subsystem for Linux will expose the sys file system. 
+
+760
+00:46:56,375 --> 00:47:00,425
+如果它这样做了，它可能只暴露了很少一部分。
+If it does, it probably only exposes a very small number of things. 
+
+761
+00:47:00,450 --> 00:47:04,125
+可能是因为有...
+It might because there are... 
+
+762
+00:47:05,450 --> 00:47:07,725
+我不知道，你可以查一下。
+I don't know, check it out.
+
+763
+00:47:07,775 --> 00:47:12,300
+你会发现，本讲座的讲义已经在线上了，
+One thing you'll see is the lecture notes for this lecture are already online, 
+
+764
+00:47:12,300 --> 00:47:16,200
+在讲义的底部有一些练习。
+and at the very bottom of the file, there are a bunch of exercises. 
+
+765
+00:47:16,200 --> 00:47:19,300
+其中一些相对容易，一些可能有点难，
+Some of them are relatively easy, some of them are a little bit harder,
+
+766
+00:47:19,325 --> 00:47:23,300
+我们鼓励你尝试一下。
+and what we encourage you to do is to take a stab at going through them. 
+
+767
+00:47:23,350 --> 00:47:25,875
+如果你已经知道这些东西，应该会很快的。
+If you know this stuff already, it should go really quickly. 
+
+768
+00:47:25,925 --> 00:47:30,700
+如果你不知道，它可能会教你很多你可能不知道的东西。
+If you don't, it might teach you a bunch of things that you might not realize you didn't know. 
+
+769
+00:47:30,750 --> 00:47:34,125
+对于我们在讲座后要进行的办公时间，
+And for the office hours that we're gonna do right after this lecture, 
+
+770
+00:47:34,150 --> 00:47:36,250
+我们将乐意帮助你完成所有这些，
+we will happily help you get through all of those, 
+
+771
+00:47:36,250 --> 00:47:38,300
+或者如果在此过程中学习了其他命令，
+or if there are other commands that you learn in the process, 
+
+772
+00:47:38,300 --> 00:47:40,175
+你想更有效地使用它们，我们也会很乐意帮助你。
+you want to know how to use more efficiently. 
+
+773
+00:47:40,175 --> 00:47:43,425
+然后在明天的课中，
+And then in the next lecture, which is tomorrow, 
+
+774
+00:47:43,425 --> 00:47:48,350
+我们将假定你已经知道需要对课上的内容进行练习。
+we'll basically be assuming that you know the kind of stuff that the exercise is going to teach you.
+
+775
+00:47:48,375 --> 00:47:53,375
+网站上也有一个电子邮件地址，你可以发送问题，
+There's also an email address on the website where you can send us questions 
+
+776
+00:47:53,375 --> 00:47:57,425
+如果在办公时间结束后想到了问题。
+if you think of something like after the office hours are finished. 
+
+777
+00:47:57,625 --> 00:48:04,725
+结束前还有问题吗？没有？
+Are there any questions before we end today? No?
+
+778
+00:48:04,775 --> 00:48:08,200
+好的，我们在Gates Building的九楼，
+Alright, well, we will have office hours on the ninth floor 
+
+779
+00:48:08,200 --> 00:48:11,975
+32号楼有办公时间，大约五分钟后开始。
+of the Gates Building, building 32, in like five minutes. 
+
+780
+00:48:12,075 --> 00:48:14,875
+好的，到时候见。
+Sweet, see you there.
+

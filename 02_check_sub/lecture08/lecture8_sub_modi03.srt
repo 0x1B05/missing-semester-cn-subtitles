@@ -1,0 +1,3576 @@
+﻿1
+00:00:00,400 --> 00:00:04,175
+大家好,让我们开始下一堂课.
+All right everyone let's get started with the next lecture. 
+
+2
+00:00:04,175 --> 00:00:08,450
+今天我们将讲解元编程,
+So, today we're gonna tackle the topic of meta programming, 
+
+3
+00:00:08,450 --> 00:00:10,375
+这个标题有点奇怪.
+and this title is a little weird. 
+
+4
+00:00:10,375 --> 00:00:12,975
+我们实际上并没有完全弄清楚元编程的含义.
+It's not entirely clear what we mean by meta programming. 
+
+5
+00:00:12,975 --> 00:00:16,200
+但是我们在命名这个讲座时想不出更好的名字了,
+We couldn't really come up with a better name for this lecture 
+
+6
+00:00:16,200 --> 00:00:18,750
+因为这个讲座是关于
+because this lecture is about the processes 
+
+7
+00:00:18,750 --> 00:00:22,925
+在软件开发中涉及的一些工作流程.
+that surround the work that you do when working with software. 
+
+8
+00:00:22,925 --> 00:00:27,600
+并不是关于编程本身,而是对中间某些过程的讲解.
+It is not about programming itself necessarily but about the process. 
+
+9
+00:00:27,600 --> 00:00:32,850
+这节课涉及到的话题有如何构建你的系统,如何进行测试,
+This can be things like how your system is built, how it's tested, 
+
+10
+00:00:32,850 --> 00:00:35,500
+如何添加软件依赖等等,
+how you add dependencies to your software, 
+
+11
+00:00:35,500 --> 00:00:37,625
+这些东西在构建较大型的软件时
+that sort of stuff that becomes really relevant 
+
+12
+00:00:37,625 --> 00:00:40,000
+非常重要,
+when you build larger pieces of software, 
+
+13
+00:00:40,000 --> 00:00:43,575
+但它们本身并不是编程.
+but they're not really programming in and of themselves.
+
+14
+00:00:43,575 --> 00:00:50,050
+我们这堂课要讨论的第一个概念是构建系统.
+So, the first thing we're going to talk about in this lecture is the notion of build systems. 
+
+15
+00:00:50,050 --> 00:00:56,322
+我先问问,有多少人使用过构建系统或知道它是什么?
+So, how many of you have used a build system before or know what it is?  
+
+16
+00:00:56,322 --> 00:00:57,400
+好的,大约有一半的人.
+Okay, so about 1/2 of you. 
+
+17
+00:00:57,400 --> 00:01:06,150
+那么对于其余没用过的人,我来解释一下,构建系统的核心思想是,假如你正在编写一篇论文,
+So, for the rest of you, the central idea behind a build system is that you're writing a paper, 
+
+18
+00:01:06,150 --> 00:01:10,425
+编写软件,或者在学习某个课程,无论是哪种情况,
+you're writing software, you're working on a class, whatever it might be, 
+
+19
+00:01:10,425 --> 00:01:15,100
+总之你需要在Shell中运行一系列命令,这些命令可以被记录在你的Shell历史中,
+and you have a bunch of commands that you like either written down in your shell history 
+
+20
+00:01:15,100 --> 00:01:17,311
+或者你可能已经将这些命令写在某个文档中,
+or you wrote them down in a document somewhere 
+
+21
+00:01:17,311 --> 00:01:20,061
+你知道如果想要完成某个特定的任务就必须运行这些命令.
+that you know you have to run if you want to do a particular thing. 
+
+22
+00:01:20,061 --> 00:01:22,695
+例如,你需要按顺序运行一系列命令
+So, for example, there are a sequence of commands 
+
+23
+00:01:22,695 --> 00:01:26,120
+才能编写论文,撰写学位论文,
+so you need to run in order to build your paper or build your thesis 
+
+24
+00:01:26,120 --> 00:01:30,100
+或者只是运行当前课程的测试.
+or just to run the tests for whatever class you're currently in.
+
+25
+00:01:30,100 --> 00:01:36,875
+构建系统的理念是,将构建目标需要运行的命令按序写到一个工具中,
+And a build system sort of idea is that you want to encode these rules for what commands 
+
+26
+00:01:36,875 --> 00:01:41,800
+让这个工具自动地为你执行这些命令.
+to run in order to build particular targets into a tool that can do it for you.
+
+27
+00:01:41,800 --> 00:01:46,375
+特别地,你要让这个工具了解
+And in particular, you're going to teach this tool about the dependencies
+
+28
+00:01:46,375 --> 00:01:49,250
+不同构建产物之间的依赖关系.
+between those different artifacts that you might build. 
+
+29
+00:01:49,250 --> 00:01:54,975
+有许多不同类型的这种工具,
+There are a lot of different types of tools of this kind, 
+
+30
+00:01:54,975 --> 00:01:58,750
+他们很多都是为特定目的或特定语言的系统构建而生的.
+and many of them are built for particular purposes, particularly languages. 
+
+31
+00:01:58,750 --> 00:02:02,200
+有些是用于构建论文,
+Some of them are built for building papers, 
+
+32
+00:02:02,200 --> 00:02:03,875
+有些是用于构建软件,
+some of them are built for building software, 
+
+33
+00:02:03,875 --> 00:02:09,200
+有些是用于特定的编程语言,比如 Java.
+some of them are built for particularly programming languages like Java. 
+
+34
+00:02:09,200 --> 00:02:13,025
+有些工具甚至内置了构建工具,
+Or some tools even have built-in tools for builds. 
+
+35
+00:02:13,025 --> 00:02:17,100
+例如 npm,如果你做过 nodejs 开发,
+So, npm, for example, you might be aware if you've done nodejs development, 
+
+36
+00:02:17,100 --> 00:02:22,250
+可能就知道它有内置工具可以用来跟踪依赖项
+has a bunch of built-in tools for doing tracking of dependencies and building them 
+
+37
+00:02:22,250 --> 00:02:24,325
+和构建依赖项.
+and building all of the dependent stuff of your software.
+
+38
+00:02:24,325 --> 00:02:27,825
+但更一般地说,这些被统称为构建系统,
+But more generally, these are known as build systems, 
+
+39
+00:02:27,825 --> 00:02:32,300
+它们的核心功能在一定程度上是相似的.
+and at their core, they all function in a very similar way. 
+
+40
+00:02:32,300 --> 00:02:35,300
+它们有许多目标,
+And that is, you have a number of targets. 
+
+41
+00:02:35,300 --> 00:02:37,750
+这些目标是你想要构建的东西,
+These are the things that you want to build. 
+
+42
+00:02:37,750 --> 00:02:40,400
+比如 "paper.pdf",
+These are things like "paper.pdf" 
+
+43
+00:02:40,400 --> 00:02:46,575
+它们也可以是更抽象的东西,比如运行测试套件,或程序的二进制可执行文件等等.
+but they can also be more abstract things like run the test suite or build the binary for this program. 
+
+44
+00:02:46,575 --> 00:02:48,400
+然后,你有一堆依赖项,
+Then you have a bunch of dependencies, 
+
+45
+00:02:48,400 --> 00:02:53,150
+依赖项是构建目标所需要的东西,可以构建出对应的目标
+and dependencies are things that need to be built in order for this thing to be built. 
+
+46
+00:02:53,200 --> 00:02:56,820
+然后你有一些规则,
+And then you have rules that define how do you go from 
+
+47
+00:02:56,820 --> 00:02:59,950
+规定如何从完整的依赖项列表中得到目标文件.
+a complete list of dependencies to the given target. 
+
+48
+00:03:00,000 --> 00:03:04,325
+举个例子,如果要构建我的"paper.pdf",
+So, an example of this might be, in order to build my "paper.pdf", 
+
+49
+00:03:04,325 --> 00:03:08,100
+我需要一些图像,
+I need a bunch of like plot images. 
+
+50
+00:03:08,100 --> 00:03:09,200
+它们将被嵌入到论文中,
+They're gonna go into the paper, 
+
+51
+00:03:09,200 --> 00:03:10,400
+因此需要构建它们.
+so they need to be built.
+
+52
+00:03:10,400 --> 00:03:14,875
+但是一旦它们被构建,又如何使用这些文件来构建论文呢?
+But then once they have been built, how do I construct the paper given those files?
+
+53
+00:03:14,900 --> 00:03:16,225
+这就是规则的作用.
+So that is what a rule is. 
+
+54
+00:03:16,225 --> 00:03:19,000
+它是一系列命令,你需要运行它们才能完成从一个文件到另一个文件的转换.
+It's a sequence of command, so you run to get from one to the other. 
+
+55
+00:03:19,100 --> 00:03:23,525
+如何编码这些规则因不同的工具而异.
+How you encode these rules differs between different tools. 
+
+56
+00:03:23,525 --> 00:03:26,725
+在这门课程中,我们将关注一种叫做make的工具.
+In this particular class, we're gonna focus on a tool called make. 
+
+57
+00:03:26,725 --> 00:03:31,925
+make是个几乎可以全平台上都能找到的工具.
+Make is a tool that you will find on almost any system that you log in today. 
+
+58
+00:03:31,925 --> 00:03:36,650
+比如,在Mac OS上,基本上所有的Linux和BSD系统上都能找到它,
+Like, it'll be on Mac OS, it'll be on basically every Linux and BSD system, 
+
+59
+00:03:36,650 --> 00:03:39,100
+而且你也可以很容易地在Windows上获取到它.
+and you can pretty easily get it on Windows. 
+
+60
+00:03:39,100 --> 00:03:42,425
+它不适用于非常复杂的软件,
+It's not great for very complex software, 
+
+61
+00:03:42,425 --> 00:03:47,225
+但对于简单或者中等复杂度的东西都可以很好地工作.
+but it works really well for anything that's sort of simple to medium complexity.
+
+62
+00:03:47,225 --> 00:03:52,250
+现在,当你在命令行上运行"make"命令时,
+Now, when you run "make"--"make" is a user command you can run on the command line, 
+
+63
+00:03:52,250 --> 00:03:55,700
+现在的目录为空,
+and when you type make and this is an empty directory,
+
+64
+00:03:55,700 --> 00:04:00,600
+则屏幕上会显示"没有没有指定构建目标,没有找到makefile文件,已停止".
+if I type make, it just has "No target specified and no makefile found, stop." 
+
+65
+00:04:01,375 --> 00:04:04,100
+它会告诉你已经停止运行,
+And so it helpfully tells you that it stopped running, 
+
+66
+00:04:04,100 --> 00:04:07,500
+但也会告诉你找不到makefile.
+but also tells you that no makefile was found. 
+
+67
+00:04:07,500 --> 00:04:12,125
+"make"将在当前目录中查找一个名为"Makefile"的文件,
+"make" will look for a file literally called "Makefile" in the current directory, 
+
+68
+00:04:12,125 --> 00:04:15,675
+"Makefile"就是你定义这些目标,依赖项和规则的地方.
+and that is where you encode these targets, dependencies,  and rules.  
+
+69
+00:04:15,700 --> 00:04:17,650
+让我们先试着写一个"Makefile".
+So, let's try to write one. 
+
+70
+00:04:17,650 --> 00:04:20,825
+假设我正在写这篇论文,
+Let's imagine that I'm writing this hypothetical paper, 
+
+71
+00:04:20,825 --> 00:04:22,800
+所以我要创建一个Makefile,
+and so I'm gonna make a Makefile, 
+
+72
+00:04:22,800 --> 00:04:26,100
+在这个Makefile中,我将声明我的构建目标"paper.pdf",他将依赖于冒号后面的文件.
+and then in this Makefile, I'm going to say that my "paper.pdf", depends on that's what the colon here indicates. 
+
+73
+00:04:26,100 --> 00:04:28,600
+这里是"paper.tex"和"plot-data.png",
+"paper.tex" was going to be a little attack file, and "plot-data.png".
+
+74
+00:04:37,100 --> 00:04:44,200
+构建这个文件的命令是使用`pdflatex paper.tex`.
+And the command in order to build this is going to be "pdflatex paper.tex".
+
+75
+00:04:44,500 --> 00:04:48,425
+对于那些不熟悉这种构建文档的方式的人来说,
+So, for those of you who are not familiar with this particular way of building documents, 
+
+76
+00:04:48,425 --> 00:04:53,300
+LaTeX是一种非常方便的文档编程语言.
+LaTeX is a really handy programming language for documents. 
+
+77
+00:04:53,325 --> 00:04:55,900
+不过是一种非常丑的语言,
+It's a really ugly language, 
+
+78
+00:04:55,900 --> 00:04:57,175
+使用起来很麻烦,
+and it's a pain to work with, 
+
+79
+00:04:57,175 --> 00:04:58,900
+但它可以产生很漂亮的文档.
+but it produces pretty nice documents. 
+
+80
+00:04:58,900 --> 00:05:05,325
+而将TeX文件转换成PDF的工具就是"pdflatex".
+And the tool you use to go from a tech file to PDF is "pdflatex". 
+
+81
+00:05:05,325 --> 00:05:12,005
+这里我需要用到一个"plot-data.png",
+And here, I'm saying that I also depend on this "plot-data.png" 
+
+82
+00:05:12,005 --> 00:05:13,775
+这个文件将会被嵌入在我的文档中.
+that's gonna be included in my document. 
+
+83
+00:05:13,900 --> 00:05:18,675
+我想说的是,如果这两个依赖关系中的任意一个发生了变化,
+And what I'm really saying here is if either of those two dependencies change, 
+
+84
+00:05:18,675 --> 00:05:20,575
+我希望生成"paper.pdf".
+I want you to build "paper.pdf". 
+
+85
+00:05:21,075 --> 00:05:25,175
+这两个文件都需要存在,如果它们发生了变化,我希望重新构建.
+They both need to be present,  and should they ever change, I wanted to rebuild it.  
+
+86
+00:05:25,350 --> 00:05:29,375
+但我并没有告诉它如何生成这个"plot-data.png",
+But I haven't really told it how to generate this "plot-data.png", 
+
+87
+00:05:29,375 --> 00:05:31,400
+因此我可能还需要一个规则.
+so I might want a rule for that as well.
+
+88
+00:05:31,400 --> 00:05:34,250
+因此,我在这里定义了另一个目标,
+So, I'm gonna define another target here, 
+
+89
+00:05:34,250 --> 00:05:40,975
+它的样子是这样的:"plot-%.png",
+and it's gonna look like this: "plot-%",  
+
+90
+00:05:40,975 --> 00:05:42,825
+然后"%"代表任意字符串,
+and "%" means any string, 
+
+91
+00:05:42,825 --> 00:05:44,550
+就是个通配符.
+sort of a wildcard pattern. 
+
+92
+00:05:44,550 --> 00:05:49,450
+但是,很酷的一点是,当你可以在依赖中重复使用这个模式,
+But the cool thing is as you go and repeat this pattern in the dependencies, 
+
+93
+00:05:49,450 --> 00:05:58,040
+所以我可以说,"plot-%.png"将依赖于"%.dat",
+so I can say that "plot-%.png" is going to depend on "%.data" or "%.dat", 
+
+94
+00:05:58,040 --> 00:06:02,125
+这是一种常见的数据文件后缀.
+that is a common sort of suffix for data files.
+
+95
+00:06:03,375 --> 00:06:07,750
+它还将依赖于一些脚本,这个脚本将实际为我绘制这个图形,
+And it's also going to depend on some script that's gonna actually plot this for me, 
+
+96
+00:06:07,750 --> 00:06:11,100
+如果需要将一个目标构建出来,对应的规则可以是多行的,
+and the rules for to go from one to the other, these can be multiple lines, 
+
+97
+00:06:11,100 --> 00:06:13,650
+但在我这个的例子中,只要一行就够了.
+but in my particular case, they're just one line. 
+
+98
+00:06:13,650 --> 00:06:19,400
+我等会会解释这是什么意思.
+I'm gonna explain what this is in a little second. 
+
+99
+00:06:19,400 --> 00:06:22,727
+好的,所以我们可以定义如下规则,
+Alright, so here we're gonna say that in order to
+
+100
+00:06:22,727 --> 00:06:27,525
+当有一个目标"%.dat"与目标文件里的"%"匹配,
+go from a "%.dat" that matches the wildcard in the target  
+
+101
+00:06:27,525 --> 00:06:33,341
+并且存在"plot.py"文件时,就执行带有"-i"参数的"./plot.py",
+and a "plot.py" file, run the python file with "-i" 
+
+102
+00:06:33,341 --> 00:06:37,050
+这个"-i"参数将会帮助我们在python文件中标记输入.
+which is going to be like the way we take the mark what the input is in our python file. 
+
+103
+00:06:37,050 --> 00:06:38,175
+稍后我会向你们演示一下.
+I'll show it to you later. 
+
+104
+00:06:38,175 --> 00:06:43,135
+"$*"是一个特殊的变量,它的含义已经为你定义好了,
+"$*" is a special variable that is defined for you and 
+
+105
+00:06:43,135 --> 00:06:46,800
+不管"%"具体是啥,makefile都可以成功匹配.
+makefile rules that matches whatever the percentile was. 
+
+106
+00:06:47,025 --> 00:06:51,727
+因此,如果我要构建"plot-foo.png",那么它将查找"foo.dat",
+So, if I do "plot-foo.png", then it's going to look for "foo.dat"
+
+107
+00:06:51,727 --> 00:06:54,300
+它的"$*"会被扩展为"foo".
+and it "$*" can expand to "foo". 
+
+108
+00:06:54,325 --> 00:06:57,900
+所以,这将产生与我们与此匹配的相同文件名(即"foo.dat"),
+So, this will produce the same file name as the one we matched here 
+
+109
+00:06:57,900 --> 00:07:02,550
+而"$@"也是一个特殊变量,表示目标的名称,对吧?
+and "$@" as a special variable that means the name of the target, right? 
+
+110
+00:07:02,550 --> 00:07:03,900
+嗯,也就是输出的文件名. 
+So, the output file.
+
+111
+00:07:04,575 --> 00:07:07,425
+"plot.py"所作的就是
+and hopefully what "plot.py" will do 
+
+112
+00:07:07,425 --> 00:07:11,950
+获取"$*.dat",然后将生成png文件,
+is that it will take whatever the data is here, it will produce a png somehow, 
+
+113
+00:07:11,950 --> 00:07:16,700
+并将其写入"$@"所对应的文件中,对吧?
+and it will write it into the file indicated by the "$@", right? 
+
+114
+00:07:17,075 --> 00:07:18,850
+现在我们有了一个makefile.
+So now we have a makefile. 
+
+115
+00:07:18,850 --> 00:07:23,050
+让我们看看如果这个目录中唯一的文件是makefile,而我们运行"make"会发生什么.
+Let's see what happens if the only file in this directory is the makefile,  and we run "make".  
+
+116
+00:07:23,050 --> 00:07:29,114
+它会说:"不存在构建目标 'paper.pdf' 所需要 'paper.tex'.停止运行."
+One says "No rule to make target 'paper.tex' needed by 'paper.pdf'. stop."
+
+117
+00:07:29,114 --> 00:07:35,925
+所以,它的意思是,它首先看了我们makefile的第一条规则,也就是第一个构建目标,
+So, what it's saying here is, first of all, it looked at the first rule of our file, the first target, 
+
+118
+00:07:35,925 --> 00:07:40,100
+当你没有给make任何参数时,它会默认构建第一个目标.
+and when you give make no arguments, it tries to build whatever the first target is. 
+
+119
+00:07:40,100 --> 00:07:42,150
+这被称为默认目标.
+This is known as the default goal. 
+
+120
+00:07:42,150 --> 00:07:45,700
+因此,在这种情况下,它试图为我们构建paper.pdf文件,
+So, in this case, it tried to helpfully build paper.pdf for us, 
+
+121
+00:07:45,700 --> 00:07:47,400
+然后查找它的依赖关系,
+and then it looked up the dependencies, 
+
+122
+00:07:47,400 --> 00:07:51,525
+它说:"为了构建paper.pdf,我需要paper.tex
+and it said, well, in order to build paper.pdf, I need paper.tex, 
+
+123
+00:07:51,525 --> 00:07:53,650
+和这个png文件.
+and I need this png file. 
+
+124
+00:07:53,650 --> 00:07:55,300
+我找不到paper.tex的文件,
+And I can't find paper.tex 
+
+125
+00:07:55,300 --> 00:07:59,425
+也没有生成paper.tex的规则,
+and I don't have a rule for generating paper.tex, 
+
+126
+00:07:59,450 --> 00:08:00,750
+因此我要退出.
+and therefore I'm gonna exit. 
+
+127
+00:08:00,750 --> 00:08:02,875
+我无能为力了."
+This isn't nothing more I can do."
+
+128
+00:08:05,275 --> 00:08:07,675
+所以,让我们在这里创建一些文件.
+So, let's try to make some files here. 
+
+129
+00:08:07,675 --> 00:08:12,850
+我们可以创建一个空的paper.tex文件,然后再输入make命令.
+Let's just make like an empty paper.tex and then type make. 
+
+130
+00:08:12,850 --> 00:08:17,950
+现在它会显示"没有构建目标'plot-data.png'所需要的'paper.pdf'",对吧?
+So now it says "No rule to make target 'plot-data.png', needed by 'paper.pdf'. Stop.", right? 
+
+131
+00:08:17,950 --> 00:08:20,200
+现在它知道它有一个依赖项,
+So now it knows that it has one dependency, 
+
+132
+00:08:20,200 --> 00:08:21,575
+但它不知道如何获取另一个依赖项.
+but it doesn't know how to get the other one. 
+
+133
+00:08:21,575 --> 00:08:24,000
+它知道有一个与之匹配的目标,
+It knows it as a target that matches, 
+
+134
+00:08:24,000 --> 00:08:26,600
+但实际上找不到依赖项,
+but it can't actually find its dependencies, 
+
+135
+00:08:26,600 --> 00:08:28,500
+所以它最终什么都没有做.
+and so it ends up doing nothing at all. 
+
+136
+00:08:29,400 --> 00:08:35,000
+它仍然需要这个png文件来进行输入.
+It still needs us to generate this png for the input for the png. 
+
+137
+00:08:35,000 --> 00:08:38,600
+因此,让我们在这些文件中添加一些有用的内容.
+So, let's actually put some useful stuff into these files. 
+
+138
+00:08:38,600 --> 00:08:48,425
+幸运的是,我提前准备好了一个tex文件,把plot.py移到这儿,
+Let's say that luckily I have one from earlier, plot.py to here, 
+
+139
+00:08:48,725 --> 00:08:49,875
+很好.
+so it's good. 
+
+140
+00:08:49,875 --> 00:08:51,950
+这个tex文件就是单纯的文本.
+Well, this tex file is what text looks like. 
+
+141
+00:08:51,950 --> 00:08:53,025
+它不是很漂亮,
+It's not very pretty, 
+
+142
+00:08:53,025 --> 00:08:55,275
+我定义了一个空文档.
+but see, I'm defining an empty document. 
+
+143
+00:08:55,275 --> 00:08:59,725
+我将嵌入图形,这是嵌入图像文件的语句.
+I'm going to include graphics, which is the way you include an image file. 
+
+144
+00:08:59,725 --> 00:09:01,875
+我将嵌入"plot-data.png",
+I'm going to include "plot-data.png", 
+
+145
+00:09:01,875 --> 00:09:07,450
+这也是为啥我们需要paper.pdf依赖于png文件.
+and this is of course why we want a dependency of paper.pdf to be the png file. 
+
+146
+00:09:07,450 --> 00:09:11,050
+plot.py也没啥.
+plot.py is also not very interesting. 
+
+147
+00:09:11,050 --> 00:09:13,475
+它只是导入了一堆库.
+It just imports a bunch libraries. 
+
+148
+00:09:13,475 --> 00:09:16,125
+它解析了"-i"和"-o"参数.
+It parses the "-i" and "-o" arguments. 
+
+149
+00:09:16,200 --> 00:09:19,800
+它从"-i"参数中加载数据.
+It loads data from the "-i" argument. 
+
+150
+00:09:19,800 --> 00:09:26,825
+它使用了一个称为matplotlib的库,这个库用于快速绘制数据图像.
+It uses library called matplotlib, which is very handy for just quickly plotting data. 
+
+151
+00:09:26,825 --> 00:09:33,300
+它将数据的第一列绘制为X轴,第二列绘制为Y轴.
+And it's going to plot the first column of the data as X's and the second column of the data as Y's. 
+
+152
+00:09:33,300 --> 00:09:37,375
+因此,我们只需要一个每行都有两列X和Y的数据文件,
+So, we're just gonna have a data file that's two columns, X and Y on every line, 
+
+153
+00:09:37,375 --> 00:09:44,000
+然后将其保存为一个图像文件到指定的"-o"路径.
+and then it saves that as a figure into whatever the given "-o" values. 
+
+154
+00:09:45,975 --> 00:09:54,175
+因此,我们需要一个"data.dat"的数据文件,因为我们需要构建"plot-data.png",
+So we need a data file that's going to be "data.dat" because we want "plot-data.png", 
+
+155
+00:09:54,175 --> 00:09:57,364
+而我们的规则指定了从该模式到".dat"文件的方式,
+and our rules said that the way you go from that pattern to
+
+156
+00:09:57,364 --> 00:10:01,600
+即按照目标文件"plot-"之后的内容来确定".dat"文件的名称.
+the ".dat" file, the ".dat" file is just by whatever follows "plot-". 
+
+157
+00:10:01,650 --> 00:10:05,600
+因此,如果我们需要生成"plot-data.png",则我们需要"data.dat".
+So if we want "plot-data.png", then we want "data.dat"
+
+158
+00:10:05,600 --> 00:10:09,050
+然后"data.dat"这个文件,我们将使用线性坐标,因为为什么不呢?
+And then this file, we're just gonna put in some linear coordinates because why not? 
+
+159
+00:10:09,050 --> 00:10:12,300
+好吧,那不是线性的.
+That's not linear.  All right.  
+
+160
+00:10:12,875 --> 00:10:20,950
+现在,如果我们来"make"一下,芜~
+And now, what happens if we're gonna make. Well, mmm, okay, 
+
+161
+00:10:20,950 --> 00:10:31,275
+那么刚刚发生了什么?嗯,make首先运行plot.py正确生成了png文件,
+so what just happened? Well, make first ran plot.py with the correct files to generate the png file, 
+
+162
+00:10:31,275 --> 00:10:34,400
+然后它运行`pdflatex paper.tex`,
+and then it ran "pdflatex paper.tex", 
+
+163
+00:10:34,400 --> 00:10:37,625
+我们下面看到的所有内容都是该工具的输出.
+and all the stuff we see below is the output from that tool. 
+
+164
+00:10:37,625 --> 00:10:40,200
+如果你想的话,可以让这个工具静默运行,
+If you wanted to, we silence the effort from this tool, 
+
+165
+00:10:40,200 --> 00:10:42,800
+它就不会输出这一坨东西了,
+so we don't have to like have it mess with all our output, 
+
+166
+00:10:42,800 --> 00:10:46,490
+但是通常情况下,你会注意到它运行了两个命令,
+but in general, you notice that it ran the two commands,  
+
+167
+00:10:46,490 --> 00:10:48,850
+然后执行命令的顺序也正确的.
+then it wrote the random, perhaps unsurprisingly, in the right order. 
+
+168
+00:10:49,000 --> 00:10:52,727
+如果我们现在在当前目录下执行"ls",会发现我们多了一堆文件
+And if we now do "ls" in the current directory, we see that we have a bunch of files 
+
+169
+00:10:52,727 --> 00:10:55,300
+是由"pdflatex"生成的,
+that were generated by "pdflatex", 
+
+170
+00:10:55,350 --> 00:10:59,500
+不过要特别关注的是,生成的png文件
+but in particular, we have the png file which was generated, 
+
+171
+00:10:59,500 --> 00:11:01,100
+和"paper.pdf".
+and we have the paper.pdf. 
+
+172
+00:11:01,100 --> 00:11:06,325
+如果我们打开"paper.pdf"文件,我们会看到它有一个图像,图像里有一条直线,
+And if we open the "paper.pdf" file, we see that it has one image which has the straight line, 
+
+173
+00:11:06,325 --> 00:11:10,175
+也许这个本身并不是一个多神奇的结果,
+perhaps in and of itself not a very surprising or interesting result, 
+
+174
+00:11:10,175 --> 00:11:18,600
+但这真的非常方便,我可以做一些其他操作,如果我再次输入"make","make"只说"paper.pdf"是最新了.
+but where this gets really handy is I can do things like if I type "make" again, "make" just says "paper.pdf" is up to date. 
+
+175
+00:11:18,600 --> 00:11:20,300
+它不会再多做任何工作.
+It does no work. 
+
+176
+00:11:20,300 --> 00:11:26,500
+每当你运行"make"时,它尝试以最小的工作量来构建你的目标.
+Whenever you run "make", it tries to do the minimal amount of work in order to produce whatever you ask it to produce. 
+
+177
+00:11:26,500 --> 00:11:29,725
+这里,没有任何依赖项发生变化,
+In this case, none of the dependencies have changed, 
+
+178
+00:11:29,725 --> 00:11:33,625
+因此不必要重建paper或重建png.
+so there's no reason to rebuild the paper or to rebuild the plot. 
+
+179
+00:11:33,625 --> 00:11:39,222
+现在假设我要编辑"paper.tex",
+If I now let's say I'm gonna edit "paper.tex", 
+
+180
+00:11:39,222 --> 00:11:44,150
+我要在这里添加"Hello",再来"make"一下,
+I'm gonna add "Hello" here and now I'll make, 
+
+181
+00:11:44,150 --> 00:11:49,700
+然后如果我们看一下输出,会发现它没有运行"plot.py",因为我不需要重新构建png图像.
+then if we scroll up, we'll see it didn't run "plot.py" again because I didn't need to. 
+
+182
+00:11:49,700 --> 00:11:50,875
+没有依赖项发生变化,
+None of the dependencies changed, 
+
+183
+00:11:50,875 --> 00:11:52,750
+但它再次运行了"pdflatex".
+but it did run "pdflatex" again. 
+
+186
+00:11:52,750 -->  00:11:56,600
+让我再打开"paper.pdf",发现"Hello"出现在了paper里.
+And if we "xdg-open" the paper, and now there's "Hello" over there. 
+
+187
+00:11:56",600 --> 00:12:05,319
+不过,如果我改一下".dat"文件,然后把这个点改为8.
+On the other hand, if I were to change say the ".dat" file and make this point to 8. And I'll make.
+
+188
+00:12:05,319 --> 00:12:525
+然后再"make",那么现在它会重新绘制图形,因为数据变了,
+Then now it plots again because the data changed, 
+
+184
+00:12:08,525 --> 00:12:12,025
+并且它会重新生成PDF,因为图像发生了改变.
+and it regenerates the PDF because the plot changed. 
+
+185
+00:12:12,025 --> 00:12:15,775
+确实,我们可以看到这个"paper.pdf"已经发生了变化.
+And indeed, the paper turns out the way we expected it to. 
+
+186
+00:12:15,775 --> 00:12:21,725
+这并不是说这个有多神奇,它一点儿都不神奇.
+So that's not to say that this particular pipeline is very interesting because it's not. 
+
+187
+00:12:21,725 --> 00:12:25,725
+它现在只有非常基础,简单的目标和规则.
+It's only true very, very straightforward targets and rules. 
+
+188
+00:12:25,725 --> 00:12:28,048
+但是在构建较大的或涉及一些依赖关系的软件时,
+But this can come in really handy 
+
+189
+00:12:28,048 --> 00:12:31,625
+这种自动化构建工具就能发挥很大的作用.
+when you start building larger pieces of software or there might be dependencies. 
+
+190
+00:12:31,700 --> 00:12:33,850
+假设你在写论文,
+You might even imagine that if you're writing a paper, 
+
+191
+00:12:33,850 --> 00:12:39,800
+生成数据文件可能是你的其中一个目标,对吧?
+one of your targets might be producing this data file in the first place, right? 
+
+192
+00:12:39,800 --> 00:12:45,325
+makefile里其中一个目标可能是运行我的实验,对吧?
+So one of the makefile targets might be run my experiment, right? 
+
+193
+00:12:45,325 --> 00:12:50,450
+比如说运行我的基准测试,并将输出的数据点放入数据文件中,
+Run my benchmark and stick the data points that come out into this file 
+
+194
+00:12:50,450 --> 00:12:51,975
+然后绘制结果,
+and then plot the results 
+
+195
+00:12:51,975 --> 00:12:56,025
+然后blabla,直到完成最终论文.
+and then and then and then and then all the way until you end up with a final paper. 
+
+196
+00:12:56,025 --> 00:13:01,250
+这种自动化流程的好处是,首先你不必记住所有需要运行的命令,
+And what's nice about this is, first of all, you don't have to remember all the commands to run. 
+
+197
+00:13:01,250 --> 00:13:02,925
+也不必在任何地方写下来,
+You don't have to write them down anywhere, 
+
+198
+00:13:02,925 --> 00:13:07,450
+工具会做最少的工作来构建目标.
+but also the tool takes care of doing the minimal amount of work needed. 
+
+199
+00:13:08,350 --> 00:13:10,850
+通常情况下,你会发现有些事情也太麻烦了.
+Often you'll find things like they'll be too. 
+
+200
+00:13:10,850 --> 00:13:14,325
+例如,它们会有子命令需要执行,如 "make tests",对吧?
+There'll be sub-commands to make, like "make tests", right? 
+
+201
+00:13:14,325 --> 00:13:18,588
+它会编译整个软件并运行测试.
+Which is going to compile your entire piece of software and also run the tests. 
+
+202
+00:13:18,675 --> 00:13:20,700
+还可能有像 "make release" 这样的命令,
+There might be things like "make release", 
+
+203
+00:13:20,700 --> 00:13:23,800
+它会打开优化选项并构建软件,
+which builds it with optimizations turned on
+
+204
+00:13:23,800 --> 00:13:27,375
+将其打包成一个 tar 文件并上传到某个地方.
+and creates a tarball and uploads that somewhere, right? 
+
+205
+00:13:27,375 --> 00:13:29,300
+因此,它会自动化地帮你走完整个流程.
+So it's gonna do the whole pipeline for you. 
+
+206
+00:13:29,300 --> 00:13:34,500
+这样做的目的是尽可能减少构建过程中你要做的工作.
+The idea is to reduce the effort that you have to do as any part of your build process.
+
+207
+00:13:37,350 --> 00:13:43,900
+我们刚刚演示了一个非常简单的示例,对吧?
+Now what we saw here was a very straightforward example of dependencies, right? 
+
+208
+00:13:43,900 --> 00:13:46,775
+你可以将文件声明为依赖项,
+So we saw here that you could declare files as dependencies, 
+
+209
+00:13:46,775 --> 00:13:49,450
+你也可以声明一些被称为"传递依赖"的依赖关系.
+but you can also declare sort of transitive dependencies. 
+
+210
+00:13:49,450 --> 00:13:52,450
+我在一个很复杂的软件中会用到"传递依赖".
+I depend on this thing which is generate by the other target.
+
+211
+00:13:52,550 --> 00:13:57,775
+在软件开发中,你需要经常和这些依赖关系打交道.
+Very often when you work with dependencies in the larger area of software, 
+
+212
+00:13:57,775 --> 00:14:03,343
+当你在开发更复杂的项目时,可能会发现你的项目有多种不同类型的依赖关系.
+you'll find that your system ends up having many different types of dependencies. 
+
+213
+00:14:03,343 --> 00:14:05,450
+有些依赖是像在这里看到的文件,
+Some of these are files like we saw here, 
+
+214
+00:14:05,450 --> 00:14:08,958
+有些是程序,
+some of them are programs,  
+
+215
+00:14:08,958 --> 00:14:12,975
+比如这个程序隐式地依赖于 Python 环境.
+like this sort of implicitly depends on Python being installed on my machine. 
+
+216
+00:14:13,000 --> 00:14:14,535
+有些依赖可能是库,
+Some of it might be libraries, 
+
+217
+00:14:14,535 --> 00:14:19,375
+比如你可能依赖于像 "matplotlib" 这样的东西,我们在这里也依赖于它.
+like you might depend on something like "matplotlib", which we depend on here. 
+
+218
+00:14:19,375 --> 00:14:22,090
+有些可能是系统库,如 "OpenSSL"
+Some of them might be system libraries like "OpenSSL" 
+
+219
+00:14:22,090 --> 00:14:25,750
+或 "Openssh" 或低级密码库,
+or "Openssh" or like low-level crypto libraries, 
+
+220
+00:14:26,550 --> 00:14:29,250
+你不一定要显性地声明所有这些依赖项.
+and you don't necessarily declare all of them.
+
+221
+00:14:29,250 --> 00:14:34,026
+在很多情况下,工程师们通常会假设目标系统已经安装了一些必要的依赖.
+Very often there's sort of an assumption about what is installed on the given system.
+
+222
+00:14:34,026 --> 00:14:38,425
+通常情况下,在这些需要依赖项的情景中,
+What you'll find it that for most places where you have dependencies 
+
+223
+00:14:38,425 --> 00:14:40,850
+你都能找到一些工具可以帮助你管理这些依赖项.
+there are tools for managing dependencies for you
+
+224
+00:14:40,850 --> 00:14:46,900
+这些依赖项通常情况下也都会放在仓库中.
+And very often, these systems you might depend on are stored in what are known as repositories. 
+
+225
+00:14:47,075 --> 00:14:54,050
+仓库是一个集中存储了一些资源的地方.
+So a repository is just a collection of things usually related that you can install. 
+
+226
+00:14:54,050 --> 00:14:56,450
+这基本上就是仓库的用处,
+That's basically all a repository is, 
+
+227
+00:14:56,450 --> 00:14:59,250
+你们可能对其中一些很熟悉了,对吧?
+and you might be familiar with some of them already, right? 
+
+228
+00:14:59,250 --> 00:15:02,100
+我举一些仓库的例子,比如说 PyPI,
+So some examples of repositories are PyPI, 
+
+229
+00:15:02,100 --> 00:15:06,125
+这是一个众所周知的 Python 包仓库,
+which is a well-known repository for Python packages,  
+
+230
+00:15:06,125 --> 00:15:11,750
+RubyGems,这是 Ruby 的包仓库,crates.io 是 Rust 的仓库,npm 是 Node.js 的仓库,
+RubyGems,which is similar for Ruby, crates.io for Rust, npm for Node.js, 
+
+231
+00:15:11,750 --> 00:15:14,700
+不止是语言,其他东西也会有仓库,
+but other things have repositories too, right? 
+
+232
+00:15:14,750 --> 00:15:18,675
+例如,有加密密钥的仓库,如 Keybase,
+Like there are repositories for cryptographic keys like Keybase.
+
+233
+00:15:18,675 --> 00:15:22,671
+有系统安装包的仓库,
+There are repositories for system-installed packages 
+
+234
+00:15:22,671 --> 00:15:26,700
+比如说你在 Ubuntu 或 Debian 中使用的 apt 安装工具,
+like if you ever use the apt tool in Ubuntu or in Debian, 
+
+235
+00:15:26,725 --> 00:15:29,038
+apt就是与一个包仓库交互,
+you are interacting with a package repository 
+
+236
+00:15:29,038 --> 00:15:32,586
+人们在那个仓库里上传他们写的程序和库,
+where people who have written programs and libraries upload them 
+
+237
+00:15:32,586 --> 00:15:34,425
+以便你可以安装它们.
+so that you can then install them. 
+
+238
+00:15:34,900 --> 00:15:38,925
+有些仓库是完全开放的,
+Similarly, you might have repositories that are entirely open, 
+
+239
+00:15:38,925 --> 00:15:44,150
+比如说 Ubuntu 仓库通常由 Ubuntu 开发人员提供,
+so the Ubuntu repositories, for example, are usually provided by the Ubuntu developers, 
+
+240
+00:15:44,175 --> 00:15:48,375
+但是在 Arch Linux 中,可能会有一个叫做 Arch 用户仓库的地方,
+but in Arch Linux, there might be something called the Arch User Repository 
+
+241
+00:15:48,375 --> 00:15:52,725
+用户在那个仓库可以共享他们自己的库和软件包.
+where users can just share their own libraries and their own packages themselves.
+
+242
+00:15:52,725 --> 00:15:57,875
+仓库往往要么是托管的{\rcode2}[1*]{\r},要么是开放的{\rcode2}[*2]{\r},
+Very often, repositories are either sort of managed or they are just entirely open, 
+[*1任何人都可以随意访问并下载其中的资源][*2通常由某个组织或者机构进行维护]
+
+243
+00:15:57,875 --> 00:16:02,200
+你应该能意识到,如果你使用开放仓库,
+and you should often be aware of this because if you're using an entirely open repository, 
+
+244
+00:16:02,200 --> 00:16:07,100
+它的安全性就会比托管仓库低一些.
+maybe the security guarantees you get from that are less than what you get in a controlled repository. 
+
+245
+00:16:08,000 --> 00:16:13,800
+如果你开始使用仓库,你会注意到一件事儿,那就是很多软件都有版本号.
+One thing you'll notice if you start using repositories is that very often software is versioned. 
+
+246
+00:16:13,800 --> 00:16:19,375
+我所说的版本,你可能已经在像浏览器这样的软件中看到过了.
+And what I mean by version, well, you might have seen this for stuff like browsers, right? 
+
+247
+00:16:19,375 --> 00:16:21,200
+其中可能有一些像 
+Where there might be something like 
+
+248
+00:16:21,200 --> 00:16:35,775
+Chrome 版本 64.0.20190324 这样的东西,
+starting like Chrome version 64.0.20190324, right? 
+
+249
+00:16:36,650 --> 00:16:38,450
+这是一个版本号.
+This is a version number. 
+
+250
+00:16:38,450 --> 00:16:45,175
+可能用点(".")来做划分,这是一种版本号.
+It might, there's a dot here, this is one kind of version number. 
+
+251
+00:16:45,250 --> 00:16:50,225
+但有时候,如果你使用 Photoshop 
+But sometimes, if you start, I don't know, like Photoshop, 
+
+252
+00:16:50,225 --> 00:16:57,475
+或其他工具,可能会有其他样式的版本号,比如 8.1.7.
+or you start any other tool, there might be other kinds of versions that are, like, 8.1.7, right? 
+
+253
+00:16:57,525 --> 00:17:00,375
+这些版本号通常是数字的,但并不一定.
+These version numbers are usually numerical,  but not always.  
+
+254
+00:17:00,475 --> 00:17:03,475
+有时候也会在其中添加哈希值,例如为了引用 Git 提交.
+Sometimes they have hashes in them, for example, to refer to Git commits. 
+
+255
+00:17:03,525 --> 00:17:05,650
+你可能会问,为什么我们需要这些版本号?
+But you might wonder, why do we have these? 
+
+256
+00:17:05,725 --> 00:17:09,425
+为什么在发布软件时添加版本号如此重要呢?
+Why is it even important that you add a number to software that you release? 
+
+257
+00:17:09,425 --> 00:17:13,525
+主要原因是它让我们能够知道
+The primary reason for this is because it enables me 
+
+258
+00:17:13,525 --> 00:17:17,625
+软件是否会出现bug.
+to know whether my software would break. 
+
+259
+00:17:17,625 --> 00:17:22,925
+想象一下,我有个库依赖于Jose编写的一个库,
+Imagine that I have a dependency on a library that Jose has written, right? 
+
+260
+00:17:22,925 --> 00:17:27,700
+而Jose一直在对他的库进行修改以改进它.
+And Jose is constantly doing changes to his library because he wants to make it better. 
+
+261
+00:17:27,700 --> 00:17:31,700
+他发现库中有一个函数名取得很烂,
+And he decides that one of the functions that his library exposes has a bad name, 
+
+262
+00:17:31,700 --> 00:17:32,875
+他决定给他重命名.
+so he renames it. 
+
+263
+00:17:32,875 --> 00:17:37,100
+这时候我的软件会突然停止工作,
+My software suddenly stops working, right? 
+
+264
+00:17:37,100 --> 00:17:40,512
+因为我的库调用了Jose库中的那个函数,
+Because my library calls a function on Jose's library, 
+
+265
+00:17:40,512 --> 00:17:42,050
+但是因Jose的修改,该函数不再存在了.
+but that function no longer exists. 
+
+266
+00:17:42,050 --> 00:17:46,125
+这就得看人们安装的Jose库的哪个版本了,
+Depending on which version people have installed of Jose's library, 
+
+267
+00:17:46,175 --> 00:17:51,900
+所以版本号有助于我指定依赖于哪个版本的Jose库,
+version helps solve this because I can say I depend on this version of Jose's library, 
+
+268
+00:17:51,900 --> 00:17:57,725
+并且在给定版本中,必须有一些规则来约束Jose的行为.
+and there have to be some rules around what is Jose allowed to do within a given version. 
+
+269
+00:17:57,725 --> 00:18:03,325
+如果他做了一个我不能再依赖的更改,他的版本号必须以某种方式更改.
+If he makes a change that I can no longer rely on, his version has to change in some way. 
+
+270
+00:18:03,325 --> 00:18:08,325
+版本号到底应该如何起作用,这需要考虑很多东西,例如
+There are many thoughts on exactly how this should work, 
+
+271
+00:18:08,325 --> 00:18:11,250
+关于版本发布的规则应该如何,
+like what are the rules for publishing new versions,
+
+272
+00:18:11,250 --> 00:18:13,300
+版本号如何更改等等
+how do they change the version numbers. 
+
+273
+00:18:13,300 --> 00:18:17,650
+其中一些仅受时间约束.
+Some of them are just dictated by time. 
+
+274
+00:18:17,650 --> 00:18:22,500
+例如,如果你看一下浏览器,它们的版本号通常具有表示时间的东西.
+So for example, if you look at browsers, they very often have time versions that look like this. 
+
+275
+00:18:22,500 --> 00:18:27,150
+它们最左边的数字是表示发布的版本,
+They have a version number on the far left that's just like which release, 
+
+276
+00:18:27,150 --> 00:18:30,825
+接着是一个增量数,通常是零,
+and then they have sort of an incremental number that is usually zero, 
+
+277
+00:18:30,825 --> 00:18:33,925
+最后是一个日期.
+and then they have a date at the end, right? 
+
+278
+00:18:33,925 --> 00:18:37,875
+因此,这是2019年3月24日的某个版本
+So this is March 24th, 2019, for some reason. 
+
+279
+00:18:37,875 --> 00:18:47,200
+通常,我们也可以知道那一天的 Firefox 版本号为 64.
+And usually, that will indicate that this is version 64 of Firefox from this date. 
+
+280
+00:18:47,275 --> 00:18:51,250
+如果他们发布针对安全漏洞的补丁或热修复,
+And then, if they release sort of patches or hot fixes for security bugs, 
+
+281
+00:18:51,250 --> 00:18:55,475
+他们可能会增加日期但保持左侧版本号不变.
+they might increment the date but keep the version of the left the same. 
+
+282
+00:18:57,325 --> 00:19:02,075
+关于版本号的格式和命名约定,人们可能都有自己固执的偏好,
+And people have strong, strong opinions on exactly what the scheme should be, 
+
+283
+00:19:02,075 --> 00:19:06,575
+因此需要了解其他人所使用的方案.
+and you sort of depend on knowing what schemes other people use, right? 
+
+284
+00:19:06,625 --> 00:19:09,850
+如果我不知道Jose用于更改版本的方案,
+If I don't know what scheme Jose is using for changing his versions,
+
+285
+00:19:09,850 --> 00:19:14,650
+也许我只能说,你必须运行Jose软件的817版本,
+maybe I just have to say, you have to run like 817 of Jose's software, 
+
+286
+00:19:14,700 --> 00:19:17,000
+否则我无法构建我的软件.
+otherwise, I cannot build my software. 
+
+287
+00:19:17,000 --> 00:19:19,250
+但这也是一个问题.
+But this is a problem too, right? 
+
+288
+00:19:19,250 --> 00:19:22,962
+想象一下,Jose作为他的库的主要开发人员,
+Imagine that Jose, as a responsible developer of his library, 
+
+289
+00:19:22,975 --> 00:19:25,925
+他发现了安全漏洞并修复了它,
+and he finds the security bug and he fixes it, 
+
+290
+00:19:25,925 --> 00:19:29,625
+但这个漏洞修复没有改变库的外部接口.
+but it doesn't change the external interfaces library. 
+
+291
+00:19:29,625 --> 00:19:31,950
+函数没有改变,类型也没有改变.
+No functions change, no types change. 
+
+292
+00:19:31,950 --> 00:19:36,450
+然后我希望别人使用该库的最新版来构建我的软件,
+Then I want people to be building my software with his new version,
+
+293
+00:19:36,450 --> 00:19:41,000
+恰好这个新版本不会对我所依赖的任何内容进行更改,
+and it just so happens that building mine works just fine with his new version 
+
+294
+00:19:41,000 --> 00:19:44,550
+因此使用最新版本也不会出现任何问题.
+because that particular version didn't change anything I depended on. 
+
+295
+00:19:45,100 --> 00:19:50,400
+解决这个问题的一种方案是语义化版本控制.
+So one attempted solution to this is something called semantic versioning. 
+
+296
+00:19:50,400 --> 00:19:53,525
+在语义化版本控制中,我们为版本号中
+In semantic versioning, we give each of the numbers 
+
+297
+00:19:53,525 --> 00:19:56,700
+由点分隔的每个数字赋予特定的含义,
+separated by dots in a version number a particular meaning. 
+
+298
+00:19:56,775 --> 00:20:01,150
+并为版本号的增加制定规则.
+And we give a contract for when you have to increment the different numbers. 
+
+299
+00:20:01,150 --> 00:20:18,075
+特别是在语义化版本控制中,我们称这个为主要版本,这个为次要版本,
+In particular, in semantic versioning, we call this the major version, we call this the minor version, 
+
+300
+00:20:18,725 --> 00:20:22,350
+这个为补丁版本.
+and we call this the patch version. 
+
+301
+00:20:24,275 --> 00:20:26,950
+其规则如下:
+The rules around this are as follows: 
+
+302
+00:20:27,475 --> 00:20:31,712
+如果你对你的软件进行了完全向前兼容的更改,
+if you make a change to your software 
+
+303
+00:20:31,712 --> 00:20:36,475
+例如没有添加任何东西,
+and the change you made is entirely backwards compatible, 
+
+304
+00:20:36,575 --> 00:20:42,300
+也没有删除任何东西,没有重命名任何东西,就像什么也没有改变一样,
+like it does not add anything, it does not remove anything, it does not rename anything 
+
+305
+00:20:42,375 --> 00:20:49,750
+那么你只增加补丁号,不做其他更改.
+externally, it is as if nothing changed, then you only increment the patch number, nothing else. 
+
+306
+00:20:49,750 --> 00:20:53,575
+通常,例如安全修复会增加补丁号.
+Usually, security fixes, for example, will increment the patch number. 
+
+307
+00:20:54,250 --> 00:20:57,725
+如果你添加了库中的某些内容
+If you add something to your library,
+
+308
+00:20:57,750 --> 00:21:01,969
+我只拿库来举例,是因为通常情况下版本号在库的使用中非常重要,
+I'm just gonna call them libraries because usually libraries are the things where this matters, 
+
+309
+00:21:01,980 --> 00:21:05,275
+所以对于库,如果你添加了一些东西,
+So to library, if you add some thing to library
+
+310
+00:21:05,275 --> 00:21:09,100
+则增加次要版本号并将补丁号设置为0.
+you increment the minor version and you set the patch to zero. 
+
+311
+00:21:09,200 --> 00:21:12,250
+在这种情况下,假如说我们要发布下一个次要版本,
+In this case, if we were to do a minor release, 
+
+312
+00:21:12,250 --> 00:21:16,325
+则版本号将是 8.2.0.
+the next minor release version number would be 8.2.0. 
+
+313
+00:21:17,050 --> 00:21:19,274
+我们这样做的原因是,
+And the reason we do this is because
+
+314
+00:21:19,274 --> 00:21:25,226
+我的软件可能依赖于 Jose 在8.2.0中添加的某个新特性,
+I might have a dependency on a feature that Jose added in a 2-0, 
+
+315
+00:21:25,226 --> 00:21:29,200
+这意味着你不能使用 8.1.7 构建我的软件.
+which means you can't build my software with 8.1.7. 
+
+316
+00:21:29,225 --> 00:21:31,327
+这可能不太行,尽管...
+That would not be okay, even though...
+
+317
+00:21:31,327 --> 00:21:35,300
+但是如果你先前依赖于 8.1.7,那么换成 8.2.0 依然可以运行.
+if you had written it towards 8.1.7, you could run it with a 8.2.0. 
+
+318
+00:21:35,375 --> 00:21:39,375
+反之则不是这样,因为老版本可能没有你要依赖的新特性.
+The reverse is not true because it might not have been added yet. 
+
+319
+00:21:39,375 --> 00:21:45,825
+最后,如果进行了向前不兼容的更改,则增加主要版本号.
+And then, finally, the major version you increment if you make a backwards incompatible change. 
+
+320
+00:21:45,825 --> 00:21:51,525
+如果我的软件以前可以与依赖库一起正常工作,
+Where if my software used to work with whatever version you had, 
+
+321
+00:21:51,525 --> 00:21:55,225
+然后依赖库做出了一些改变,这意味着我的软件可能不再工作,
+and then you make a change that means that my software might no longer work, 
+
+322
+00:21:55,225 --> 00:21:57,300
+例如删除或重命名函数,
+such as removing a function or renaming it, 
+
+323
+00:21:57,325 --> 00:22:01,075
+这就需要增加主要版本号并将次要版本号和补丁号设置为0.
+then you increment the major version and set minor and patch to zero. 
+
+324
+00:22:01,075 --> 00:22:04,475
+因此,下一个版本将是 9.0.0.
+So, the next major version here would be 9.0.0. 
+
+325
+00:22:05,375 --> 00:22:11,825
+总结一下,有关版本号的这些规则可以让我们在设置依赖关系时做出很好的决策.
+Taken together, these allow us to do really nice things when setting what our dependencies are. 
+
+326
+00:22:11,825 --> 00:22:16,200
+特别是,如果我依赖于某个库的特定版本,
+In particular, if I depend on a particular version of someone's library, 
+
+327
+00:22:16,200 --> 00:22:19,375
+不是说它必须就得是这个版本,
+rather than saying it has to be exactly this version.
+
+328
+00:22:19,450 --> 00:22:23,450
+我真正想表达的是它至少还可以是相同的次要版本,
+What I'm really saying is it has to be the same major version 
+
+329
+00:22:23,450 --> 00:22:27,425
+但是主版本必须完全一致,
+and at least the same minor version, 
+
+330
+00:22:27,425 --> 00:22:29,475
+补丁号可以不必去管.
+and the patch can be whatever. 
+
+331
+00:22:29,475 --> 00:22:33,575
+这意味着,如果我依赖于 Jose 的库,
+This means that if I have a dependency on Jose's software, 
+
+332
+00:22:33,575 --> 00:22:38,300
+则在同一主版本内的任何后续版本都可以正常工作.
+then any later release that is still within the same major is fine. 
+
+333
+00:22:38,300 --> 00:22:45,025
+这包括了早期的版本,只要次版本相同就可以.
+That includes, keep in mind, an earlier version, assuming that the minor is the same.
+
+334
+00:22:45,025 --> 00:22:50,125
+假设你使用的是版本为 8.1.3 的旧电脑.
+Imagine that you are on some older computer that has version 8.1.3. 
+
+335
+00:22:50,125 --> 00:22:54,350
+理论上,我的软件在 8.1.3 版本上应该也可以正常工作.
+In theory, my software should work just fine with 8.1.3 as well. 
+
+336
+00:22:54,350 --> 00:22:58,700
+不过它可能存在 Jose 已经在新版本解决的安全问题.
+It might have whatever bug that Jose fixed in between, like whatever security issue. 
+
+337
+00:22:58,700 --> 00:23:02,425
+但这个规则有个好处,那就是现在你可以
+But this has the nice property that now you can share dependencies 
+
+338
+00:23:02,425 --> 00:23:05,025
+在计算机上的许多不同软件之间共享依赖关系.
+between many different pieces of software on your machine. 
+
+339
+00:23:05,025 --> 00:23:08,541
+比如说,如果你已经安装了8.3.0版本,并且有一堆不同的软件需要依赖于它,
+If you have version 8.3.0 installed 
+
+340
+00:23:08,541 --> 00:23:13,121
+例如一个需要 8.1.7，一个需要 8.2.4，还有一个需要 8.0.1,
+and there are bunch of different software that one requires 8.1.7, one requires 8.2.4, and one requires 8.0.1,
+
+341
+00:23:13,125 --> 00:23:18,257
+那么它们都可以使用相同版本的这个库作为依赖.
+all of them can use the same version of that dependency. 
+
+342
+00:23:18,257 --> 00:23:19,750
+你只需要安装一次.
+You only need to install it once.
+
+343
+00:23:20,850 --> 00:23:27,385
+这种语义化版本控制中最常见或者说最熟悉的例子应该是
+One of the most common or most familiar, perhaps, 
+
+344
+00:23:27,385 --> 00:23:32,225
+Python版本控制.
+examples of this kind of semantic versioning is if you look at the Python versioning. 
+
+345
+00:23:32,225 --> 00:23:34,485
+你们中的许多人可能已经遇到过这个问题,
+Many of you may have come across this, 
+
+346
+00:23:34,485 --> 00:23:38,675
+Python 3和Python 2彼此不兼容.
+where Python 3 and Python 2 are not compatible with one another. 
+
+347
+00:23:38,675 --> 00:23:40,475
+它们不向后兼容.
+They're not backwards compatible. 
+
+348
+00:23:40,475 --> 00:23:45,825
+如果你在Python 2中编写代码并尝试在Python 3中运行它,它可能不起作用.
+If you write code in Python 2 and try to run it in Python 3, it might not work. 
+
+349
+00:23:45,825 --> 00:23:47,825
+有些情况下会起作用,
+There are some cases where it will, 
+
+350
+00:23:47,825 --> 00:23:50,500
+但那最多就是运气好罢了.
+but that is more accidental than anything else. 
+
+351
+00:23:51,375 --> 00:23:54,950
+Python版本号遵循语义化版本控制,至少大部分都遵循.
+Python actually follows semantic versioning, at least mostly. 
+
+352
+00:23:54,950 --> 00:24:03,200
+如果你编写运行在Python 3.5上的软件,那么它也应该在3.6,3.7和3.8上运行.
+If you write software that runs on Python 3.5, then it should also work in 3.6, 3.7,  and 3.8.  
+
+353
+00:24:03,300 --> 00:24:09,025
+但它不一定能在Python 4上运行,虽然python 4要发布可能还需要很长一段时间.
+It will not necessarily work in Python 4, although that will hopefully be a long time away. 
+
+354
+00:24:09,025 --> 00:24:16,000
+但如果你为Python 3.5编写代码,它可能不会在Python 3.4上运行.
+But if you write code for Python 3.5, it will possibly not run on Python 3.4.
+
+355
+00:24:16,000 --> 00:24:19,775
+因此,你会看到许多软件项目
+So, one thing you will see many software projects do is 
+
+356
+00:24:19,775 --> 00:24:24,575
+会尽可能降低它们的版本要求.
+they try to bring the version requirements they have as low as possible. 
+
+357
+00:24:24,600 --> 00:24:29,175
+如果你在依赖库时,只指定主版本和次版本,而不指定补丁版本号
+If you can depend on major and then minor in patch 0, 
+
+358
+00:24:29,175 --> 00:24:31,900
+这是最灵活的选择,
+that is the best possible dependency 
+
+359
+00:24:31,900 --> 00:24:37,200
+因为这种方式允许使用该主版本下的任何版本.
+you can have because it is completely liberal as to which version of that major you're depending on. 
+
+360
+00:24:37,300 --> 00:24:38,425
+有时这很难平衡.
+Sometimes this is hard. 
+
+361
+00:24:38,425 --> 00:24:41,075
+因为有时你确实需要添加一个新特性,
+Sometimes you genuinely need a feature that was added, 
+
+362
+00:24:41,075 --> 00:24:46,600
+但你可以把版本要求降到最低,这对于那些想要依赖你的软件的人来说是最好的.
+but the lower you can get, the better it is for those who want to depend on your software in turn.
+
+363
+00:24:48,375 --> 00:24:54,053
+在处理这些依赖管理系统或版本控制时,
+When working with these sort of dependency management systems or in with versioning in general,
+
+364
+00:24:54,053 --> 00:24:57,075
+你经常会遇到所谓的锁定文件.
+you'll often come across this notion of lock files. 
+
+365
+00:24:57,075 --> 00:25:00,650
+你可能已经遇到过这个问题,当你尝试做某事时,
+You might have seen this where you try to do something 
+
+366
+00:25:00,675 --> 00:25:03,175
+它会说"版本不兼容",
+and it says, "Cannot reconcile versions" 
+
+367
+00:25:03,175 --> 00:25:05,950
+或者你会收到像"锁定文件已经存在"这样的错误.
+or you get an error like, "Lock file already exists." 
+
+368
+00:25:05,950 --> 00:25:08,375
+这两个问题略有区别,
+These are often somewhat different topics, 
+
+369
+00:25:08,375 --> 00:25:12,050
+但总的来说,锁定文件是为了
+but in general, the notion of a lock file is to make sure that
+
+370
+00:25:12,050 --> 00:25:14,450
+确保你不会意外更新某些不该更新的东西.
+you don't accidentally update something. 
+
+371
+00:25:14,450 --> 00:25:19,450
+锁定文件本质上只是一个列表,
+The lock file, at its core, is really just a list of your dependencies 
+
+372
+00:25:19,450 --> 00:25:22,225
+它记录了你的项目所依赖的库以及它们当前使用的版本.
+and which version of them you are currently using. 
+
+373
+00:25:22,225 --> 00:25:25,525
+我的版本可能是8.1.7,
+My version string might be 8.1.7, 
+
+374
+00:25:25,525 --> 00:25:30,825
+而最新版本可能是8.3.0,
+and the latest version, like on the internet somewhere, might be 8.3.0, 
+
+375
+00:25:30,825 --> 00:25:35,275
+但在我的系统上安装的版本也许两个都不是.
+but whatever is installed on my system is not necessarily one of those two. 
+
+376
+00:25:35,275 --> 00:25:37,600
+它可能是8.2.4或其他的版本,
+It might be like 8.2.4 or something like that, 
+
+377
+00:25:37,925 --> 00:25:43,475
+锁定文件会说"依赖于Jose的8.2.4版本".
+and the lock file will then say, "Dependency Jose version 8.2.4." 
+
+378
+00:25:43,475 --> 00:25:46,900
+锁定文件的意义和作用可以有很多方面.
+The reason you want a lock file, there can be many. 
+
+379
+00:25:46,900 --> 00:25:52,250
+其中一个原因可能是你想要更快的构建速度.
+One of them is that you might want your builds to be fast.
+
+380
+00:25:52,250 --> 00:25:56,575
+如果每次构建项目,
+if every single time you try to build your project, 
+
+381
+00:25:56,575 --> 00:25:59,600
+你使用的工具都会下载最新版本,
+whatever tool you were using download the latest version 
+
+382
+00:25:59,600 --> 00:26:01,825
+然后编译它,再编译你的项目,
+and then compile it and then compile your thing, 
+
+383
+00:26:01,825 --> 00:26:04,225
+那么每次等待时间可能会很长,
+you might wait for a really long time each time, 
+
+384
+00:26:04,225 --> 00:26:06,750
+这具体取决于依赖项的发布周期.
+depending on the release cycle of your dependencies. 
+
+385
+00:26:06,750 --> 00:26:10,425
+但是如果你使用锁文件,
+If you use a lock file, then unless the version, 
+
+386
+00:26:10,425 --> 00:26:12,925
+除非你更新了锁文件的版本,
+unless you've updated the version in your lock file, 
+
+387
+00:26:12,925 --> 00:26:16,200
+否则它就会使用之前该依赖项的版本,
+it'll just use whatever it built previously for that dependency 
+
+388
+00:26:16,200 --> 00:26:20,150
+你的开发周期可以更快.
+and your sort of development cycle can be a lot faster. 
+
+389
+00:26:20,150 --> 00:26:25,075
+使用锁文件的另一个原因可能是为了构建的复现.
+Another reason to use lock files is to get reproducible builds. 
+
+390
+00:26:25,075 --> 00:26:29,075
+假设我开发了一些与安全相关的软件,
+Imagine that I produce some kind of security-related software, 
+
+391
+00:26:29,075 --> 00:26:32,375
+我非常仔细地审查了我的依赖关系,
+and I very carefully audited my dependencies, 
+
+392
+00:26:32,450 --> 00:26:35,450
+并生成了一个二进制的签名文件,
+and I produce, like, a signed binary of, like,
+
+393
+00:26:35,450 --> 00:26:41,050
+例如"我保证这个版本是安全的".
+"Here is a sworn statement for me that this version is secure." 
+
+394
+00:26:41,375 --> 00:26:47,325
+如果我没有包含锁文件,那么当其他人安装我的程序时,
+If I didn't include a lock file, then by the time someone else installs my program, 
+
+395
+00:26:47,325 --> 00:26:49,775
+他们可能会依赖于一个更新的版本,
+they might get a later version of their pendency, 
+
+396
+00:26:49,775 --> 00:26:52,525
+而这个版本可能已被黑客攻击
+and maybe that later version as I've been hacked somehow 
+
+397
+00:26:52,525 --> 00:26:54,775
+或存在其他安全漏洞,
+or just has some other security vulnerability 
+
+398
+00:26:54,775 --> 00:26:57,825
+而我还没有机会查看.
+that I haven't had a chance to look at yet, right? 
+
+399
+00:26:57,825 --> 00:27:04,300
+一个锁定文件基本上可以让我将整个生态冻结在我检查的这个版本上.
+And a lock file basically allows me to freeze the ecosystem as of this version that I have checked. 
+
+400
+00:27:04,675 --> 00:27:08,200
+这种做法的极端版本就是所谓的"vendoring".
+The extreme version of this is something called 'vendoring.
+
+401
+00:27:08,200 --> 00:27:12,725
+当你对依赖项进行vendoring时,实际上就是将它们复制/粘贴到项目中.
+When you vendor your dependencies, it really just means you copy/paste of them. 
+
+402
+00:27:12,725 --> 00:27:16,175
+Vendoring 的意思是将你所需要的任何依赖项
+Vendoring means take whatever dependency you care about 
+
+403
+00:27:16,175 --> 00:27:20,125
+复制到你的项目中,
+and copy it into your project because that way, 
+
+404
+00:27:20,125 --> 00:27:25,150
+因为这样你可以确保得到该依赖项的特定版本.
+you are entirely sure that you will get that version of that dependency. 
+
+405
+00:27:25,150 --> 00:27:28,525
+这也意味着你可以自己修改它,
+It also means that you can, like, make modifications to it on your own, 
+
+406
+00:27:28,525 --> 00:27:33,175
+但使用 Vendoring 方法也有缺点,你将失去版本控制所带来的好处.
+but it has the downsides that now you no longer get these benefits of versioning, right? 
+
+407
+00:27:33,175 --> 00:27:38,025
+当一个新的发行版出现时,
+You no longer have the advantage that if there are newer releases of that software, 
+
+408
+00:27:38,025 --> 00:27:40,425
+你将无法自动获取软件的新版本,
+your users might get them automatically, like, 
+
+409
+00:27:40,425 --> 00:27:45,025
+例如当Jose修复了一个安全漏洞.(当然他没有安全漏洞,就是举个例子).
+for example, when Jose fixes his security issues. (not that he has any, of course. )
+
+410
+00:27:48,575 --> 00:27:52,075
+你会注意到,当谈论这个话题时,我们一直会说系统中的一些大的流程.
+One thing you'll notice is that when talking about this, I've been talking about sort of bigger processes around your systems. 
+
+411
+00:27:56,350 --> 00:27:58,725
+这些流程包括测试,
+These are things like testing. 
+
+412
+00:27:58,725 --> 00:28:01,875
+检查依赖库版本,
+They're things like checking your dependency versions. 
+
+413
+00:28:01,875 --> 00:28:05,175
+以及搭建构建系统等.
+They're also things that are just setting up build systems.
+
+414
+00:28:05,175 --> 00:28:08,600
+通常,一个本地的构建系统是不够的,
+And often you don't just want a local build system. 
+
+415
+00:28:08,600 --> 00:28:12,200
+你除了要在本地搭建构建系统外,还需要搭建其他类型的系统,
+You want to build process that includes other types of systems, 
+
+416
+00:28:12,200 --> 00:28:15,925
+比如你想让这些系统能在你的电脑没有开机的情况下运行.
+or you want them to run even when your computer is not necessarily on, 
+
+417
+00:28:15,925 --> 00:28:19,450
+因此,随着你处理的项目规模越来越大,
+and this is why, as you start working a larger and larger project, 
+
+418
+00:28:19,450 --> 00:28:23,525
+你将看到人们使用"持续集成"的理念,
+you will see people use this idea of continuous integration, 
+
+419
+00:28:23,525 --> 00:28:29,650
+持续集成系统本质上就是一个云构建系统.
+and continuous integration systems are essentially a cloud build system. 
+
+420
+00:28:29,650 --> 00:28:33,900
+这意味着你的项目存储在网上的某个地方,
+The idea is that you have your project stored on the internet somewhere, 
+
+421
+00:28:33,900 --> 00:28:37,125
+并且你已经使用某种服务
+and you have set it up with some kind of service 
+
+422
+00:28:37,125 --> 00:28:42,100
+为你的项目运行持续集成,无论它干什么,
+that is running an ongoing thing for your project, whatever it might be, 
+
+423
+00:28:42,100 --> 00:28:45,425
+持续集成可以做各种各样的东西.
+and continuous integration can be all sorts of stuff. 
+
+424
+00:28:45,425 --> 00:28:49,179
+它可以是像将你的库自动发布到PyPI,
+It can be stuff like releasing your library to PyPI automatically 
+
+425
+00:28:49,179 --> 00:28:51,275
+每次都提交到特定分支时.
+whenever you push to a particular branch. 
+
+426
+00:28:51,275 --> 00:28:56,450
+它可以是每当有人提交pr(pull request)时运行测试套件,
+It could be things like run your test suite  whenever someone submits a pull request,  
+
+427
+00:28:56,450 --> 00:29:01,675
+或者可以是每次提交代码时对代码风格进行检查.
+or it could be check your code style every time you commit. 
+
+428
+00:29:01,675 --> 00:29:04,450
+你可以通过持续集成实现各种各样的事情,
+There all sorts of things you could do with continuous integration, 
+
+429
+00:29:04,450 --> 00:29:09,575
+最简单的方法是将它们视为一种事件触发.
+and the easiest way to think about them is that they're sort of event-triggered actions. 
+
+430
+00:29:09,575 --> 00:29:13,375
+因此,每当某个事件发生时,它会根据这个事件对你的项目进行特定的操作,
+So, whenever a particular event happens for your, possibly for your project,
+
+431
+00:29:13,375 --> 00:29:17,675
+其中操作通常是某种脚本,或者一系列要调用的程序,
+a particular action takes place, where the action is usually some kind of script, 
+
+432
+00:29:17,675 --> 00:29:23,200
+它们将执行某些操作.
+some sequence of programs that are going to be invoked,  and they're going to do something.  
+
+433
+00:29:25,375 --> 00:29:30,925
+的确,持续集成包罗万象,它涵盖了许多不同类型的服务.
+This is really an umbrella term that encapsulates a lot of different types of services.
+
+434
+00:29:30,925 --> 00:29:38,350
+一些持续集成服务是非常通用的东西,比如Travis CI,Azure pipelines
+Some continuous integration services are very general things like Travis CI or Azure pipelines, 
+
+435
+00:29:38,350 --> 00:29:43,825
+或GitHub actions都是非常广泛的CI平台.
+or GitHub actions are all very broad CI platforms. 
+
+436
+00:29:43,825 --> 00:29:47,225
+它们可以让你编写在你定义的事件发生时
+They're built to let you write what you want to happen 
+
+437
+00:29:47,225 --> 00:29:51,775
+要进行的操作,持续集成是个非常广泛的系统.
+whenever any event that you define happens, very broad systems. 
+
+438
+00:29:51,775 --> 00:29:59,650
+还有一些针对性更强的系统,例如专门用于处理覆盖率测试之类的持续集成.
+There are some more specialized systems that deal with things like continuous integration coverage testing. 
+
+439
+00:29:59,650 --> 00:30:04,275
+比如说注释你的代码并告知你没有测试这段代码,
+So, like annotate your code and show you have no tests that test this piece of code, 
+
+440
+00:30:04,275 --> 00:30:06,175
+它们仅用于这个目的,
+and they're built only for that purpose, 
+
+441
+00:30:06,175 --> 00:30:12,125
+或者它们仅用于测试基于浏览器的库之类的.
+or they're built only for testing browser-based libraries or something like that. 
+
+442
+00:30:12,125 --> 00:30:16,975
+因此,通常你可以找到专门适用于你正在开发项目的持续集成工具,
+And so, often you can find CI tools that are built for the particular project you're working on, 
+
+443
+00:30:16,975 --> 00:30:19,125
+也可以选择使用一家提供更广泛服务的持续集成工具提供商.
+or you can use one of these broader providers. 
+
+444
+00:30:19,125 --> 00:30:24,075
+而且非常nice的一点是,许多CI工具是免费的,特别是针对开源软件,
+And one thing that's nice is that many of them are actually free,  especially for open source software,  
+
+445
+00:30:24,075 --> 00:30:26,775
+或者如果你是学生,你可以免费使用它们.
+or if you're a student,  you can often get them for free as well. 
+
+446
+00:30:27,750 --> 00:30:34,725
+一般来说,你使用持续集成系统的方法是在代码库中添加一个文件,
+In general, the way you use the CI system is that you add a file to your repository, 
+
+447
+00:30:34,725 --> 00:30:37,075
+这个文件通常被称为"配方(recipe)".
+and this file is often known as a "recipe". 
+
+448
+00:30:37,075 --> 00:30:41,375
+这个"配方"指定了依赖关系周期,
+And what the "recipe" specifies is this sort of dependency cycle again, 
+
+449
+00:30:41,375 --> 00:30:45,182
+就像我们在makefile中看到的那样,但并不完全相同.
+sort of what we saw with makefiles, it's not quite the same. 
+
+450
+00:30:45,182 --> 00:30:50,425
+不像是makefile里依赖是文件,这里的依赖是事件,可能是像某人推送了一个提交,
+The events, instead of being files, might be something like when someone pushes a commit 
+
+451
+00:30:50,425 --> 00:30:53,375
+提交包含了特定消息,
+or when a commit contains a particular message 
+
+452
+00:30:53,375 --> 00:30:59,325
+或者有人提交了pr等等这样的时间.
+or when someone submits a pull request or continuously, right? 
+
+453
+00:30:59,325 --> 00:31:02,537
+一个不与代码更改相关的
+One example of a continuous integration service
+
+454
+00:31:02,537 --> 00:31:06,825
+持续集成服务的例子是Dependabot.
+that's not tied to any particular change to your code is something called the Dependabot. 
+
+455
+00:31:06,825 --> 00:31:08,725
+你可以在GitHub上找到它,
+You can find this on GitHub, 
+
+456
+00:31:08,725 --> 00:31:12,825
+而Dependabot是你连接到你的代码库中的一个东西,
+and the Dependabot is something that you hook up to your repository, 
+
+457
+00:31:12,825 --> 00:31:19,125
+它只扫描你没有使用的依赖项中是否有新的版本.
+and it will just scan whether there are newer versions available of your dependencies that you're not using.
+
+458
+00:31:19,125 --> 00:31:25,625
+因此,例如,如果我依赖于8.1.7,并且我有一个锁定文件将它锁定在8.2.4上,
+So, for example, if I was depending on 8.1.7 and I had a lock file that locked it to 8.2.4, 
+
+459
+00:31:25,625 --> 00:31:28,950
+然后8.3.0发布了,Dependabot会说:
+and then 8.3.0 is released, the Dependabot will go, 
+
+460
+00:31:29,000 --> 00:31:30,625
+"你应该更新你的锁定文件",
+"You should update your lock file," 
+
+461
+00:31:30,625 --> 00:31:33,700
+然后向你的代码库提交"你该更新了!!"的pr.
+and then submit the pull request to your repository with that update. 
+
+462
+00:31:33,700 --> 00:31:36,125
+这是一个持续集成服务的例子.
+This is a continuous integration service. 
+
+463
+00:31:36,125 --> 00:31:40,550
+它与我代码的具体内容无关,而是与整个生态系统的变化相关.
+It's not tied to me changing anything but to the ecosystem at large changing. 
+
+464
+00:31:42,325 --> 00:31:47,275
+这些持续集成系统通常也可以嵌入到你的项目中.
+Often these CI systems integrate back into your project as well. 
+
+465
+00:31:47,275 --> 00:31:51,525
+因此,这些持续集成服务经常会提供一些像小徽章之类的东西.
+So, very often, these CI services will provide things like little badges.
+
+466
+00:31:51,525 --> 00:31:53,175
+让我举个例子.
+Let me give an example. 
+
+467
+00:31:53,175 --> 00:32:02,450
+例如,这是我最近参与的一个项目,它设置了持续集成.
+Tutututu...So, for example, here's a project I've worked on recently that has continuous integration set up. 
+
+468
+00:32:02,450 --> 00:32:05,950
+所以,这个项目,你会注意到它的README.
+So, this project, you'll notice its README. 
+
+469
+00:32:07,250 --> 00:32:14,825
+我可以用那个Chrome bean放大它.Oh,不,这有点儿太大了.
+If I can zoom in here with that Chrome bean, nope, nope, that's much larger than I wanted. 
+
+470
+00:32:14,825 --> 00:32:22,450
+在这里,你会看到在代码库页面的顶部有一堆这样的徽章,
+Here, you'll see that at the top of the repositories page, there are a bunch of these badges, 
+
+471
+00:32:22,450 --> 00:32:25,275
+它们显示各种类型的信息.
+and they display various types of information. 
+
+472
+00:32:25,275 --> 00:32:27,975
+你们有注意到我正在运行Dependable吧?
+You'll notice that I have dependable running, right? 
+
+473
+00:32:27,975 --> 00:32:29,450
+所以当前的依赖项是最新版.
+So the dependencies are currently up to date. 
+
+474
+00:32:29,450 --> 00:32:33,775
+它会告诉我主分支上的测试套件当前是否通过.
+It tells me about whether the test suite is currently passing on the master branch. 
+
+475
+00:32:33,775 --> 00:32:37,600
+它还告诉我代码中有多少被测试覆盖了,
+It tells me how much of the code is covered by tests, 
+
+476
+00:32:37,600 --> 00:32:41,725
+并告诉我这个库的最新版本
+and it tells me what is the latest version of this library 
+
+477
+00:32:41,725 --> 00:32:46,200
+和在线可用的文档版本.
+and what is the latest version of the documentation of the library that's available online. 
+
+478
+00:32:46,200 --> 00:32:51,175
+所有这些都由各种持续集成服务管理.
+And all of these are managed by various continuous integration services. 
+
+479
+00:32:51,175 --> 00:32:55,617
+另一个你们中有些人可能很熟悉的例子,
+Another example that some of you might find useful or might even be familiar with is
+
+480
+00:32:55,617 --> 00:32:59,650
+是GitHub Pages.
+the notion of GitHub Pages. 
+
+481
+00:32:59,675 --> 00:33:03,900
+GitHub Pages是GitHub提供的一个非常好的服务,
+So GitHub Pages is a really nice service the GitHub provides 
+
+482
+00:33:03,900 --> 00:33:15,450
+它允许你设置一个CI操作,将你的仓库构建为博客.
+which lets you set up a CI action that builds your repository as a blog essentially. 
+
+483
+00:33:15,450 --> 00:33:19,125
+它运行一个静态站点生成器称为Jekyll,
+It runs a static site generator called Jekyll, 
+
+484
+00:33:19,125 --> 00:33:26,050
+Jekyll只需要一堆Markdown文件,然后就可以生成一个完整的网站.
+and Jekyll just takes a bunch of markdown files and then produces a complete website. 
+
+485
+00:33:26,050 --> 00:33:30,975
+作为GitHub Pages的一部分,它们还会将其上传到GitHub服务器
+And that, as a part of GitHub Pages, they will also upload that to GitHub servers 
+
+486
+00:33:30,975 --> 00:33:33,950
+并提供一个特定域名.
+and make it available at a particular domain. 
+
+487
+00:33:33,950 --> 00:33:36,975
+这实际上就是课程网站的工作方式.
+And this is actually how the class website works. 
+
+488
+00:33:36,975 --> 00:33:41,250
+课堂网站不是一堆我们自己管理的HTML页面.
+The class website is not a bunch of like HTML pages that we manage. 
+
+489
+00:33:41,250 --> 00:33:46,475
+相反,有一个名为"Missing Semester"的仓库.
+Instead, there's a repository "Missing Semester."
+
+490
+00:33:46,575 --> 00:33:53,075
+如果你查看"Missing Semester"仓库,你会看到,
+So if you look at the "Missing Semester" repository, you will see, 
+
+491
+00:33:53,075 --> 00:33:59,675
+如果我缩小一下,它只有一堆Markdown文件.
+if I zoom out a little here, this just has a bunch of markdown files. 
+
+492
+00:33:59,675 --> 00:34:06,825
+这里有"_2020","metaprogramming.md"...
+Right? It has "_2020","metaprogramming.md"....
+
+493
+00:34:06,825 --> 00:34:12,975
+所以这是今天讲座的Markdown笔记原文件.
+So this is the raw markdown for today's lecture. 
+
+494
+00:34:12,975 --> 00:34:16,175
+这是我编写课程笔记的方式,
+So this is the way that I write the lecture notes, 
+
+495
+00:34:16,175 --> 00:34:20,375
+然后我将其提交到我们的仓库,并将其推送.
+and then I commit that to the repository we have,  and I push it.  
+
+496
+00:34:20,375 --> 00:34:22,350
+每当发生推送时,
+And whenever a push happens, 
+
+497
+00:34:22,350 --> 00:34:28,150
+GitHub Pages CI将运行GitHub Pages的构建脚本,
+the GitHub Pages CI is gonna run the build script for GitHub Pages 
+
+498
+00:34:28,150 --> 00:34:32,941
+为我们的课程笔记生成网站,
+and produces the website for our class 
+
+499
+00:34:32,941 --> 00:34:36,675
+都不用我干啥.
+without me having to do any additional steps to make that happen. 
+
+500
+00:34:36,925 --> 00:34:38,800
+所以,是的.
+And so, yeah, 
+
+501
+00:34:45,350 --> 00:34:51,075
+它使用一个称为Jekyll的工具,
+So Jekyll, it's using a tool called Jekyll, which is a tool that
+
+502
+00:34:51,075 --> 00:34:57,625
+它可以把包含Markdown文件的目录结构转换成网站.
+takes a directory structure that contains markdown files and produces a website. 
+
+503
+00:34:57,625 --> 00:34:59,475
+它会生成像HTML文件这样的文件,
+It produces like HTML files, 
+
+504
+00:34:59,475 --> 00:35:01,716
+然后作为操作的一部分,
+and then as a part of the action, 
+
+505
+00:35:01,716 --> 00:35:06,775
+它会接着将这些文件上传到GitHub服务器的一个特定域名下,
+it takes those files and uploads them to GitHub servers at a particular domain, 
+
+506
+00:35:06,775 --> 00:35:11,450
+通常是"github.io"域名下.
+and usually, that's the domain under like "github.io" that they control. 
+
+507
+00:35:11,450 --> 00:35:16,025
+然后我将"Missing Semester"设置为指向GitHub域名.
+And then I have set "Missing Semester" to point to the GitHub domain. 
+
+508
+00:35:22,350 --> 00:35:25,875
+我想在测试方面给大家一些额外的信息,
+I want to give you one aside on testing 
+
+509
+00:35:25,875 --> 00:35:30,550
+因为很多人可能之前已经了解了这个领域的知识,
+because it's something that many of you may be familiar with from before, right? 
+
+510
+00:35:30,550 --> 00:35:32,350
+你们已经对测试有了一个大致的概念.
+You have a rough idea of what testing is. 
+
+511
+00:35:32,350 --> 00:35:33,875
+你会在之前运行测试.
+You run the test before. 
+
+512
+00:35:33,875 --> 00:35:35,350
+你曾经看过测试失败.
+You've seen a test fail. 
+
+513
+00:35:35,350 --> 00:35:39,150
+你知道基础知识,或者你从来没有见过测试失败.
+You know, like the basics of it, or maybe you've never seen a test fail. 
+
+514
+00:35:39,150 --> 00:35:40,475
+如果你已经掌握了这些知识,那么很棒,
+In case congratulations, 
+
+515
+00:35:40,475 --> 00:35:45,425
+但是当你开始开发更高级的项目时,
+but as you get to more advanced projects, though, 
+
+516
+00:35:45,425 --> 00:35:49,600
+你会发现人们对于测试有很多专业术语.
+you'll find that people have a lot of terminology around testing.
+
+517
+00:35:49,600 --> 00:35:52,420
+测试是一个可以非常深入的主题,
+and testing is a pretty deep subject 
+
+518
+00:35:52,420 --> 00:35:56,475
+你可能需要花费许多时间来理解其中的细节.
+that you could spend many many hours trying to understand the ins and outs of, 
+
+519
+00:35:56,500 --> 00:35:59,250
+我介绍所有的细节,
+and I'm not going to go through it in excruciating detail, 
+
+520
+00:35:59,250 --> 00:36:02,625
+但是有几个词汇我认为是有用的,你需要知道它们的含义.
+but there are a couple of words that I think it's useful to know what mean. 
+
+521
+00:36:02,625 --> 00:36:05,275
+第一个是测试套件.
+And the first of these is a test suite. 
+
+522
+00:36:05,275 --> 00:36:10,375
+测试套件是程序中所有测试的简称.
+So a test suite is a very straightforward name for all of the tests in a program. 
+
+523
+00:36:10,375 --> 00:36:16,400
+它是一组测试,通常作为一个整体运行,
+It's really just a suite of tests, it's a large collection of tests that usually are run as a unit, 
+
+524
+00:36:16,400 --> 00:36:22,225
+通常由不同类型的测试组成.
+and there are different types of tests that often make up a test suite. 
+
+525
+00:36:22,225 --> 00:36:25,275
+第一个类型是单元测试.
+The first of these is what's known as a unit test. 
+
+526
+00:36:25,275 --> 00:36:34,000
+单元测试是一种通常比较小的,自包含的测试,用于测试一个单一的功能.
+A unit test is a, often usually fairly small, test of self-contained tests that tests a single feature. 
+
+527
+00:36:34,000 --> 00:36:38,250
+什么是一个功能,这取决于项目本身,
+What exactly a feature might mean is a little bit up to the project, 
+
+528
+00:36:38,250 --> 00:36:43,575
+但是单元测试的想法应该是有一个微型测试,只测试一个非常特定的东西.
+but the idea is that should be sort of a micro test that only tests a very particular thing. 
+
+529
+00:36:43,575 --> 00:36:47,625
+然后有更大的测试,称为集成测试.
+Then you have the larger tests that are known as integration tests. 
+
+530
+00:36:47,625 --> 00:36:53,600
+集成测试尝试测试程序的不同子系统之间的交互.
+Integration tests try to test the interaction between different subsystems of a program. 
+
+531
+00:36:53,600 --> 00:36:59,025
+我来举个例子:
+So this might be something like, an example of a unit test might be
+
+532
+00:36:59,025 --> 00:37:07,575
+如果你正在编写一个 HTML 解析器,单元测试可能是测试它是否能够解析 HTML 的tag.
+if you're writing an HTML parser, the unit test might be test that it can parse an HTML tag. 
+
+533
+00:37:07,575 --> 00:37:12,475
+而集成测试可能是这样一个例子:这是一个 HTML 文档,请解析它.
+An integration test might be, here's an HTML document, parse it. 
+
+534
+00:37:13,050 --> 00:37:17,500
+这将是解析器的多个子系统的集成.
+So that is going to be the integration of multiple of the subsystems of the parser. 
+
+535
+00:37:18,575 --> 00:37:21,625
+还有一个回归测试的概念.
+You also have a notion of regression tests. 
+
+536
+00:37:21,625 --> 00:37:26,750
+回归测试是测试过去出现过问题的东西.
+Regression tests are tests that test things that were broken in the past. 
+
+537
+00:37:26,750 --> 00:37:31,584
+假设有人向你提交了一个问题,
+So imagine that someone submits some kind of issue to you 
+
+538
+00:37:31,584 --> 00:37:37,175
+并告知如果给它一个"marquee"标记,
+and says your library breaks if I give it a marquee tag, 
+
+539
+00:37:37,225 --> 00:37:40,175
+你的库就会出现问题,这让你很难过,所以你想要修复它.
+and that makes you sad,  so you want to fix it.  
+
+540
+00:37:40,175 --> 00:37:43,525
+因此,你将修复解析器以支持"marquee"的标记,
+So you fix your parser to now support "marquee" tags, 
+
+541
+00:37:43,525 --> 00:37:49,125
+并在测试套件中添加一个检查是否可以解析"marquee"标记的测试.
+but then you want to add a test to your test suite that checks that you can parse marquee tags. 
+
+542
+00:37:49,125 --> 00:37:52,186
+这样做的原因是为了
+The reason for this is so that in the future, 
+
+543
+00:37:52,186 --> 00:37:55,300
+将来该错误不会再发生.
+you don't accidentally reintroduce that bug. 
+
+544
+00:37:55,775 --> 00:37:57,575
+因此,回归测试非常有用,
+So that is what regression tests are for, 
+
+545
+00:37:57,575 --> 00:38:00,325
+随着时间的推移,你的项目将会积累越来越多这样的测试,
+and over time your project is gonna build up more and more of these, 
+
+546
+00:38:00,325 --> 00:38:05,825
+它们非常好,因为它们可以防止项目退回到早期的 bug.
+and they're nice because they prevent your project from regressing to earlier bugs. 
+
+547
+00:38:06,100 --> 00:38:11,200
+我想要提及的最后一个概念是"模拟(mocking)".
+The last one I want to mention is a concept called mocking. 
+
+548
+00:38:11,275 --> 00:38:18,425
+"mocking"是指能够用一种虚拟的方式替换掉系统的某些部分,
+So mocking is the idea of being able to replace parts of your system 
+
+549
+00:38:18,425 --> 00:38:26,225
+这种虚拟行为是由你控制的.
+with a sort of dummy version of itself that behaves in a way that you control. 
+
+550
+00:38:26,225 --> 00:38:31,950
+一个常见的例子是,你正在编写一个....
+A common example of this is you're writing something that does, oh I don't know, 
+
+551
+00:38:31,950 --> 00:38:35,025
+比如说用ssh拷贝文件的工具?
+file copying over ssh. 
+
+552
+00:38:35,025 --> 00:38:39,050
+是的,通过ssh进行文件拷贝的工具.
+Right? This is a tool that you've written that does file copying over ssh. 
+
+553
+00:38:39,050 --> 00:38:41,425
+在这里,你可能想要模拟许多东西.
+There are many things you might want to mock here. 
+
+554
+00:38:41,425 --> 00:38:45,950
+例如,在运行测试套件时,
+For example, when running your test suite, you probably don't actually care that there's a network there. 
+
+555
+00:38:45,950 --> 00:38:49,975
+你可能并不关心是否有网络存在.
+Right? You don't need to have to like set up TCP ports and stuff, 
+
+556
+00:38:49,975 --> 00:38:52,350
+所以,你可以模拟网络.
+so instead you're gonna mock the network. 
+
+557
+00:38:52,350 --> 00:38:55,900
+通常的做法是,在你的库中,
+The way this usually works is that, somewhere in your library,
+
+558
+00:38:55,900 --> 00:39:00,800
+有一些东西建立连接,从连接中读取数据,或者向连接中写入数据.
+you have something that like opens a connection, or reads from the connection, or writes to the connection, 
+
+559
+00:39:00,800 --> 00:39:05,275
+你会在你的库内部覆盖这些函数,
+and you're gonna overwrite those functions internally in your library 
+
+560
+00:39:05,275 --> 00:39:08,925
+而使用你专门为测试而编写的函数.
+with functions that you've written just for the purposes of testing, 
+
+561
+00:39:08,925 --> 00:39:11,775
+例如,读取函数只会返回数据,
+where the read function just like returns the data, 
+
+562
+00:39:11,775 --> 00:39:15,550
+写入函数只会将数据丢弃.
+and the write function just drops the data on the floor, or something like that. 
+
+563
+00:39:15,550 --> 00:39:19,750
+同样,你可以为ssh功能编写一个模拟函数.
+Similarly, you can write a mocking function for the ssh functionality. 
+
+564
+00:39:19,750 --> 00:39:22,425
+你可以编写一个不实际进行加密和与网络通信的函数.
+You could write something that does not actually do encryption, 
+
+565
+00:39:22,425 --> 00:39:24,150
+它不联网,
+it doesn't talk to the network:
+
+566
+00:39:24,150 --> 00:39:27,450
+这个函数只是接收字节信息,然后在另一端把它们输出.
+it just like takes bytes in here and just magically they pop out the other side, 
+
+567
+00:39:27,475 --> 00:39:29,950
+你可以忽略中途的一切,
+and you can ignore everything that's between, 
+
+568
+00:39:29,950 --> 00:39:34,475
+因为对于文件拷贝的目的,如果你只是想测试该功能,
+because for the purpose of copying a file, if you just wanted to test that functionality, 
+
+569
+00:39:34,475 --> 00:39:37,325
+那么底层干了什么对于该测试并不重要.
+the stuff below doesn't matter for that test, 
+
+570
+00:39:37,325 --> 00:39:39,725
+你可能会模拟它.
+and you might mock it away. 
+
+571
+00:39:39,725 --> 00:39:46,000
+通常情况下,在任何一种语言中,都有工具可以很容易地进行这些模拟抽象.
+Usually, in any given language, there are tools that let you build these kind of mocking abstractions pretty easily. 
+
+572
+00:39:46,825 --> 00:39:52,550
+这就是我想讨论有关元编程的全部内容,
+That is the end of what I wanted to talk about metaprogramming, 
+
+573
+00:39:52,550 --> 00:39:55,225
+但元编程是一个非常广泛的主题.
+but this is a very, very broad subject. 
+
+574
+00:39:55,225 --> 00:39:58,175
+像持续集成,构建系统这样的东西,
+Things like continuous integration, build systems, 
+
+575
+00:39:58,175 --> 00:40:03,000
+有很多工具可以让你对你的项目做很多有趣的事情,
+there are so many out there that can let you do so many interesting things with your projects, 
+
+576
+00:40:03,000 --> 00:40:06,125
+所以我强烈建议你稍微了解一下.
+so I highly recommend that you start looking into it a little. 
+
+577
+00:40:06,125 --> 00:40:11,975
+今天的练习比较散,
+The exercises are sort of all over the place, 
+
+578
+00:40:11,975 --> 00:40:13,625
+但这是件好事.
+and I mean that in a good way. 
+
+579
+00:40:13,625 --> 00:40:18,375
+它们旨在向你展示构建
+They're intended to try to just show you the kind of possibilities that exist 
+
+580
+00:40:18,375 --> 00:40:21,700
+和处理这些过程的各种可能性.
+for building and working with these kind of processes. 
+
+581
+00:40:21,700 --> 00:40:28,050
+例如,最后一个练习让你自己编写一个持续集成操作,
+So, for example, the last exercise has you write one of these continuous integration actions yourself  
+
+582
+00:40:28,050 --> 00:40:33,575
+你可以自己决定事件和操作是什么,
+where you decide what the event be and you decide what the action be, 
+
+583
+00:40:33,575 --> 00:40:35,200
+但要尝试自己真正地构建出来.
+but try to actually build one. 
+
+584
+00:40:35,200 --> 00:40:38,450
+这可能是对你以后的项目非常有用的东西.
+And this can be something that you might find useful in your project. 
+
+585
+00:40:38,475 --> 00:40:41,300
+我在练习中给出的示例是,
+The example I gave in the exercises is 
+
+586
+00:40:41,300 --> 00:40:48,775
+尝试构建一个类似于 write-good 或 proselint 等英语检查器,在你的代码库中运行并输出检查结果的操作.
+to try to build an action that runs like write-good or proselint one of the linter result for the english language on your repository.
+
+587
+00:40:48,800 --> 00:40:53,925
+如果你真的这样做了,我们可以在课堂仓库中启用它,
+And if you do like, we could enable that for the class repository 
+
+588
+00:40:53,925 --> 00:40:58,325
+这样我们的讲义就会写得很好.
+so that our lecture notes are actually well written. Right?
+
+589
+00:40:58,325 --> 00:41:02,475
+这种持续集成测试的另一个好处是,
+and this is one other thing that's nice about this kind of continuous integration testing, 
+
+590
+00:41:02,475 --> 00:41:05,875
+你可以在项目之间进行协作.
+is that you can collaborate between projects. 
+
+591
+00:41:05,875 --> 00:41:07,900
+如果你编写了一个持续集成测试,我可以在我的项目中使用它,
+If you write one, I can use it in my project, 
+
+592
+00:41:07,900 --> 00:41:13,050
+还有一个非常方便的特点,就是可以逐步构建出一个改善所有事物的生态系统.
+and there's a really handy feature where you can build this ecosystem of improving everything. 
+
+593
+00:41:13,050 --> 00:41:17,700
+到现在关于今天所讲的内容有问题吗?
+Any questions about any of the stuff we recorded today? 
+
+594
+00:41:31,225 --> 00:41:36,378
+是的,问题是,为什么我们既有make又有CMake?它们都是做什么的?
+Yeah, so the question is, why do we have both make and CMake? What do they do, 
+
+595
+00:41:36,378 --> 00:41:39,975
+它们之间可以进行交互的原因是什么?
+and is there a reason for them to talk together? 
+
+596
+00:41:40,100 --> 00:41:46,475
+CMake,我实际上不知道CMake的标语是什么,
+So, CMake, I don't actually know what the tagline for CMake is anymore, 
+
+597
+00:41:46,475 --> 00:41:49,100
+但它有点像更适用于C语言的make.
+but it's sort of like a better make for C. 
+
+598
+00:41:49,150 --> 00:41:54,250
+顾名思义,
+As the name implies, CMake generally 
+
+599
+00:41:54,250 --> 00:41:58,925
+CMake通常比makefile更好地了解C项目的布局.
+understands the layout of C projects a little bit better than makefiles do. 
+
+600
+00:41:58,925 --> 00:42:04,375
+它们的建立是为了解析你的依赖项结构,
+They're sort of built to try to parse out what the structure of your dependencies are, 
+
+601
+00:42:04,375 --> 00:42:06,000
+从一个规则到另一个规则是如何转换.
+what the rules are from going to one to the other. 
+
+602
+00:42:06,000 --> 00:42:10,850
+它还可以更好地与系统库这样的东西做集成,
+It also integrates a little bit nicer with things like system libraries, 
+
+603
+00:42:10,850 --> 00:42:14,900
+因此CMake可以比如检测计算机上的某个库是否可用,
+so CMake can do things like detect given libraries available on your computer 
+
+604
+00:42:14,900 --> 00:42:17,425
+或者如果该库在多个不同的路径上可用,
+or if it's available at multiple different paths, 
+
+605
+00:42:17,425 --> 00:42:23,175
+它会尝试找到其所在的路径,然后进行适当的链接.
+it tries to find which of those paths it's present on on this system and then link it appropriately. 
+
+606
+00:42:23,175 --> 00:42:25,800
+因此,CMake比make更智能.
+So CMake is a little bit smarter than make. 
+
+607
+00:42:25,800 --> 00:42:29,300
+"make只执行你在makefile中的内容".
+"make will only do whatever you put in the makefile."
+
+608
+00:42:29,325 --> 00:42:34,975
+这话不是完全正确,其实make还有所谓地隐式规则,它是make中的内置规则,
+Not entirely true, there are things called implicit rules that are like built-in rules in make, 
+
+609
+00:42:35,050 --> 00:42:39,925
+但它们非常简单,而CMake则尝试成为一个大型构建系统,
+but they're pretty dumb, whereas CMake tries to be able to be a larger build system that is 
+
+610
+00:42:39,925 --> 00:42:42,875
+它默认针对C项目工作.
+opinionated by default to work for C projects. 
+
+611
+00:42:42,925 --> 00:42:49,500
+同样,还有一个名为Maven和Ant的工具,这是另一个构建系统.
+Similarly, there's a tool called Maven and Ant, which is another project. 
+
+612
+00:42:49,525 --> 00:42:52,025
+它们都是为了构建Java项目.
+They are both built for Java projects. 
+
+613
+00:42:52,025 --> 00:42:57,250
+它们了解Java代码如何相互交互,如何构造Java程序,
+They understand how Java code interacts with one another, how you structure Java programs, 
+
+614
+00:42:57,300 --> 00:42:59,525
+它们是为此而生的.
+and they're built for that task. 
+
+615
+00:42:59,525 --> 00:43:02,025
+通常,至少当我使用make时,
+Very often, at least when I use make, 
+
+616
+00:43:02,025 --> 00:43:07,650
+我会在率先选择make命令,然后再调用其他工具
+I use make sort of at the top and then make my call other tools that build 
+
+617
+00:43:07,650 --> 00:43:09,800
+来构建它们擅长构建的任何子系统.
+whatever subsystem they know how to build. 
+
+618
+00:43:09,800 --> 00:43:11,525
+比如说,我的makefile,会先调用cargo来构建一个rust程序
+Right,like my makefile, call cargo to build a rust program
+
+619
+00:43:14,444 --> 00:43:17,719
+然后调用CMake来构建该rust程序所依赖的C语言程序库.
+and then call cmake to build like c dependency of that.
+
+620
+00:43:19,575 --> 00:43:21,575
+但在除了构建目标之外的话,我可能还会做一些其他工作,如在程序构建完成后运行rust代码中的基准测试,然后使用C语言代码进行绘图等..
+But then at the top like I'm gonna do some stuff at the end. After the programs have built and that might just be like run a benchmark which is in rust code, and then like plot it using C code or something like that,right.
+
+621
+00:43:29,925 --> 00:43:33,050
+对我来说,make就像"胶水",它将各个构建组件粘合在一起.
+For me, make is sort of the glue at the top that I might write. 
+
+622
+00:43:33,050 --> 00:43:39,425
+通常,如果你的makefile变得非常大,就会有更好的工具来替代它.
+Usually, if your makefile gets very large, there's a better tool. 
+
+623
+00:43:40,100 --> 00:43:42,850
+你会发现在大公司,例如谷歌,
+What you'll find at big companies, for example, 
+
+624
+00:43:42,850 --> 00:43:47,100
+他们通常有一个构建系统来管理其所有软件.
+is they often have one build system that manages all of their software. 
+
+625
+00:43:47,100 --> 00:43:51,250
+因此,如果你看看谷歌,他们有名为Bazel的开源系统,
+So if you look at Google, for example, they have this open-source system called Bazel, 
+
+626
+00:43:51,250 --> 00:43:56,100
+我不认为谷歌在谷歌内部会直接使用Bazel,
+and I don't think Google literally uses Bazel inside of Google, 
+
+627
+00:43:56,100 --> 00:43:59,275
+但是Bazel的设计理念应该与Google内部的构建系统自成一派.
+but it's sort of based on what they use internally. 
+
+628
+00:43:59,275 --> 00:44:04,825
+Bazel的初衷是用于管理Google所有项目的完整构建过程.
+And it's really just intended to manage the entire build of everything Google has. 
+
+629
+00:44:04,825 --> 00:44:12,300
+Bazel实际上是一种多语言构建框架,
+And Bazel, in particular, is built to be, I think they call it, like a polyglot build framework. 
+
+630
+00:44:12,300 --> 00:44:15,400
+因此,这个工具适用于许多不同的语言.
+So the idea is that it works for many different languages. 
+
+631
+00:44:15,400 --> 00:44:20,875
+Bazel有很多针对不同编程语言和技术栈的模块和插件,
+There's like an implement, there's a module for Bazel for this language and that language in that language, 
+
+632
+00:44:20,875 --> 00:44:23,875
+你可以使用这些模块和插件来管理特定语言的构建过程,
+but they all integrate with the same Bazel framework, 
+
+633
+00:44:23,875 --> 00:44:29,500
+然后Bazel知道如何在不同库和不同语言之间集成依赖项.
+which then knows how to integrate dependencies between different libraries and different languages.
+
+634
+00:44:30,225 --> 00:44:31,400
+有问题吗?
+Got a question? 
+
+635
+00:44:39,150 --> 00:44:44,150
+没错,你说的表达式,是指文件中的这个玩意儿吗?
+Sure.So when you say expressions, you mean the things in this file? Or....  
+
+636
+00:44:44,150 --> 00:44:46,375
+是的,
+yeah, so these are ...
+
+637
+00:44:49,050 --> 00:44:53,137
+makefile是一门独立的语言.
+so makefiles are their own language
+
+638
+00:44:53,137 --> 00:44:57,375
+是一种相当奇怪的语言.
+They are...It's a pretty weird language. 
+
+639
+00:44:57,375 --> 00:45:00,250
+就像Bash一样,它有很多奇怪的东西.
+Like, it has a lot of weird exceptions. 
+
+640
+00:45:00,250 --> 00:45:03,225
+在很多方面,它就像Bash一样奇怪,
+In many ways, it's weird just like bash is weird, 
+
+641
+00:45:03,225 --> 00:45:05,300
+但是它们的奇怪之处又各有不同,这就更为不便.
+but in different ways, which is even worse. 
+
+642
+00:45:05,300 --> 00:45:07,500
+当你编写makefile时,
+Like, when you're writing a makefile, you sort of, 
+
+643
+00:45:07,500 --> 00:45:09,700
+你可能会认为自己正在编写Bash,
+you can sort of think like you're writing bash, 
+
+644
+00:45:09,700 --> 00:45:11,950
+但实际上你是在写makefile,它们的错误并不一样.
+but you're not because it's broken in different ways. 
+
+645
+00:45:11,950 --> 00:45:14,475
+但是,makefile确实是一种独立的语言.
+but it is its own language. 
+
+646
+00:45:14,500 --> 00:45:18,050
+makefile的结构是由一系列指令（也称为规则）组成的
+And the way that makefiles are generally structured is that you have a sequence of, I think they call them directives. 
+
+647
+00:45:22,500 --> 00:45:28,525
+所以,像这个玩意儿.(哎呀)这个玩意儿是一个指令,
+So, every like this thing. (oops) this thing is a directive, 
+
+648
+00:45:28,525 --> 00:45:30,050
+这是一个指令.
+and this is a directive. 
+
+649
+00:45:30,050 --> 00:45:33,175
+每个构建指令都有一个":",
+And every directive has a colon somewhere, 
+
+650
+00:45:33,175 --> 00:45:35,775
+在":"左侧是构建目标,
+and everything to the left of the colon is a target, 
+
+651
+00:45:35,775 --> 00:45:42,050
+在":"号右侧是依赖项.
+and everything to the right of the colon is right of the colon is a dependency. 
+
+652
+00:45:42,050 --> 00:45:45,850
+然后在指令下面的所有行都代表了构建过程中的一系列操作,
+And then all of the lines below that line 
+
+653
+00:45:45,875 --> 00:45:52,250
+也称为规则,这些操作用于一旦你有了相应的依赖项,它会执行命令来构建目标.
+are the sequence of operations known as the rules for once you have the dependencies how do you build these targets?
+
+654
+00:45:53,725 --> 00:45:59,725
+注意,makefile非常注重缩进,你必须使用制表符来缩进.
+Notice that make is very particular that you must use a tab to indent the rules. 
+
+655
+00:45:59,800 --> 00:46:02,325
+如果不这样做,make就不会工作.
+If you do not, make will not work. 
+
+656
+00:46:02,325 --> 00:46:05,525
+它们必须是制表符,不能是4或8个空格,
+If they must be tabs, they cannot be four eight spaces. 
+
+657
+00:46:05,525 --> 00:46:06,250
+必须是制表符.
+Must be tabs. 
+
+658
+00:46:06,375 --> 00:46:09,650
+你可以在这里有多个操作.
+And like, you can have multiple operations here. 
+
+659
+00:46:09,650 --> 00:46:11,675
+我可以做"echo hello"或其他什么,
+I like I can do "echo hello" or whatever, 
+
+660
+00:46:11,675 --> 00:46:15,125
+然后它们将首先运行这个,然后运行这个.
+and then they would first run this and then run this. 
+
+661
+00:46:15,225 --> 00:46:19,000
+今天的讲座中有一个练习,
+There's a there's an exercise for today's lecture that
+
+662
+00:46:19,000 --> 00:46:22,750
+让你尝试扩展这个makefile,加入一些其他有趣的目标,
+has you try to extend this makefile with a couple of other targets that
+
+663
+00:46:22,750 --> 00:46:25,625
+随着你了解更多的细节,你会觉得它很有意思.
+you might find interesting that goes into a little bit more detail. 
+
+664
+00:46:26,650 --> 00:46:31,675
+makefile还可以执行外部命令,
+There's also some ability to execute external commands 
+
+665
+00:46:31,675 --> 00:46:35,000
+它可以确定比如说依赖项可能是什么,
+to like determine what the dependencies might be
+
+666
+00:46:35,000 --> 00:46:38,250
+如果你的依赖项不是静态文件列表的话.
+if your dependencies are not like a static list of files.
+
+667
+00:46:38,250 --> 00:46:39,350
+但是它有一点限制.
+But it's a little limited.
+
+668
+00:46:39,350 --> 00:46:42,650
+通常,一旦你开始需要这种东西,
+Usually, once you've started needing that sort of stuff, 
+
+669
+00:46:42,650 --> 00:46:45,900
+你可能需要使用更高级的构建系统.
+you might want to move to a more advanced build system. 
+
+670
+00:46:48,975 --> 00:46:49,750
+是的,
+Yeah, 
+
+671
+00:46:58,050 --> 00:47:09,900
+问题是,如果我有,假设我有库a和库b,
+so the question is what happens if I have, let's say that I have library a and library b, 
+
+672
+00:47:10,025 --> 00:47:13,300
+它们都依赖于库c,
+and they both depend on library c, 
+
+673
+00:47:13,300 --> 00:47:18,875
+但库a依赖于4.0.1,
+but library a depends on like 4.0.1, 
+
+674
+00:47:18,875 --> 00:47:24,150
+库b依赖于3.4.7,
+and library b depends on 3.4.7. 
+
+675
+00:47:24,725 --> 00:47:26,775
+它们都依赖于 c,
+So they both depend on c, 
+
+676
+00:47:26,775 --> 00:47:28,750
+理想情况下,我们希望重用 c的一个版本,
+and so ideally, we'd like to reuse c, 
+
+677
+00:47:28,750 --> 00:47:31,425
+但它们依赖于不同的主要版本的 c.
+but they depend on different major versions of c. 
+
+678
+00:47:31,425 --> 00:47:32,475
+我们该怎么办?
+What do we do? 
+
+679
+00:47:32,725 --> 00:47:37,675
+这种情况下,完全取决于你正在使用的系统和语言.
+Well, what happens in this case depends entirely on the system that you're using, the language that you're using. 
+
+680
+00:47:39,825 --> 00:47:43,800
+在某些情况下,工具会选择其中一个版本,
+In some cases, the tool would just be like, well, I'll just pick for 
+
+681
+00:47:43,800 --> 00:47:47,175
+这说明它们实际上没有使用语义化版本控制.
+which sort of implies that they're not really using semantic versioning. 
+
+682
+00:47:47,175 --> 00:47:52,725
+在某些情况下,工具会显示"不可能".
+In some cases, the tool will say, this is not possible. 
+
+683
+00:47:52,725 --> 00:47:54,700
+如果这样做,会导致错误,
+Like, if you do this, it's an error, 
+
+684
+00:47:54,700 --> 00:47:58,850
+并且工具将告诉你需要升级 b,
+and the tool will tell you you either need to upgrade b , 
+
+685
+00:47:58,850 --> 00:48:03,225
+例如使 b 使用 c 的较新版本,或者降级 a.
+like have b use a newer version of c, or you need to downgrade a. 
+
+686
+00:48:03,225 --> 00:48:04,700
+你不能这样做,
+You do not get to do this, 
+
+687
+00:48:04,700 --> 00:48:06,350
+编译将失败.
+and compilation will fail. 
+
+688
+00:48:06,350 --> 00:48:10,700
+有些工具将构建两个版本的 c,
+Some tools are gonna build two versions of c, 
+
+689
+00:48:10,700 --> 00:48:17,850
+然后在构建 a 时使用 c 的主要版本 4,
+and then like when it builds a, it will use the major four version of c, 
+
+690
+00:48:17,850 --> 00:48:21,450
+在构建 b 时使用 c 的主要版本 3.
+and when it builds b, it will use the major three version of c. 
+
+691
+00:48:21,600 --> 00:48:25,900
+你最终会遇到一些非常奇怪的情况,
+One thing you end up with is really weird conditions here were like
+
+692
+00:48:25,900 --> 00:48:27,558
+例如如果 c 有依赖项,
+if c has dependencies, 
+
+693
+00:48:27,558 --> 00:48:31,900
+则现在必须将所有 c 的依赖项都构建两次,一次用于 3,一次用于 4,
+then now you have to build all of c's dependencies twice to 1 for 3 and 1 for 4, 
+
+694
+00:48:31,950 --> 00:48:34,550
+也许它们共享,也许它们不共享.
+and maybe they share and maybe they don't. 
+
+695
+00:48:34,550 --> 00:48:37,250
+最后这将会大寄特寄.
+You can end up in particularly weird situations. 
+
+696
+00:48:37,250 --> 00:48:44,375
+如果想象一下库 c,
+If imagine that the library c, like... 
+
+697
+00:48:44,400 --> 00:48:56,975
+比如说调用库 c 写入一个文件,比如说写入一些缓存到磁盘上.
+imagine that library c, like writes to a file, like writes to some like file on disk, some cache stuff.
+
+698
+00:48:57,075 --> 00:49:02,975
+如果现在运行你的应用程序,a 做了一些调用,比如调用 "c.save",
+If you run your application now and like a does something to call like "c.save" 
+
+699
+00:49:02,975 --> 00:49:05,725
+而 b 做了一些调用,比如调用 "c.load",
+and b to something like "c.load", 
+
+700
+00:49:05,725 --> 00:49:11,500
+那么底层的应用程序就不会工作,因为格式是不同的,对吧?
+then suddenly your application of the bottom is not going to work because the format is different, right? 
+
+701
+00:49:11,500 --> 00:49:13,850
+因此,这些情况通常非常棘手,
+So, these situations are often very problematic, 
+
+702
+00:49:13,875 --> 00:49:20,325
+大多数支持语义化版本控制的工具会因为这个原因拒绝这种配置.
+and most tools that support semantic versioning will reject this kind of configuration for exactly that reason. 
+
+703
+00:49:20,325 --> 00:49:22,850
+反正就很容易寄.
+But it's so easy to shoot yourself in the foot. 
+
+704
+00:49:25,850 --> 00:49:29,300
+好了,我们明天再见,进行安全方面的学习.
+All right, we will see you again tomorrow for security. 
+
+705
+00:49:29,300 --> 00:49:32,200
+请记住,如果你还没有填写问卷调查,请务必参加.
+Keep in mind, again, if you haven't done the survey, 
+
+706
+00:49:32,200 --> 00:49:35,300
+在问卷调查中,我最关心的问题是
+the question I care the most about in the survey is 
+
+707
+00:49:35,300 --> 00:49:39,050
+你们希望我们在最后两节课中讲什么内容.
+what you would like us to cover in the last two lectures. 
+
+708
+00:49:39,050 --> 00:49:43,576
+因此,请选择你想要我们讨论的主题
+So, the last two lectures are for you to choose what you want us to talk about 
+
+709
+00:49:43,576 --> 00:49:46,350
+并提出任何你想知道的问题.
+and to give any questions you want us to answer. 
+
+710
+00:49:46,350 --> 00:49:48,375
+球球了,请填一下问卷调查.
+So please, like, add that if you can. 
+
+711
+00:49:48,375 --> 00:49:49,900
+就这样,
+And that's it. 
+
+712
+00:49:49,900 --> 00:49:50,675
+明天见.
+See you tomorrow.  
+

@@ -1,0 +1,3495 @@
+﻿1
+00:00:00,900 --> 00:00:06,650
+好的,欢迎来到今天的讲座,我们将会讲解数据整理(Data Wrangling).
+All right, so welcome to today's lecture which is going to be on data wrangling. 
+
+2
+00:00:06,650 --> 00:00:10,100
+"Data Wrangling"这个词可能听起来有点奇怪,
+And data wrangling might be a phrase that sounds a little bit odd to you, 
+
+3
+00:00:10,100 --> 00:00:14,125
+但它的基本想法是,你有一种格式的数据,
+but the basic idea of data wrangling is that you have data in one format 
+
+4
+00:00:14,125 --> 00:00:16,250
+而你想要它把它转化成另一种不同的格式的数据,
+and you want it in some different format, 
+
+5
+00:00:16,250 --> 00:00:18,200
+这种情况非常常见.
+and this happens all of the time. 
+
+6
+00:00:18,200 --> 00:00:20,575
+我不仅指转换图像,
+I'm not just talking about like converting images, 
+
+7
+00:00:20,575 --> 00:00:23,800
+还可能是你有一个文本文件或日志文件,
+but it could be like you have a text file or a log file 
+
+8
+00:00:23,800 --> 00:00:26,618
+但是你想用其他的格式来展现这些数据,
+and what you really want this data in some other format. 
+
+9
+00:00:26,618 --> 00:00:29,750
+例如图表或对数据进行统计.
+Like you want a graph or you want statistics over the data. 
+
+10
+00:00:29,750 --> 00:00:38,125
+任何把一种格式的数据转换成另一种格式的数据的过程都可以被称为"数据整理".
+Anything that goes from one piece of data to another representation of that data is what I would call data wrangling. 
+
+11
+00:00:38,150 --> 00:00:43,400
+在前面几节课,我们已经看到了一些这种数据整理的例子,
+We've seen some examples of this kind of data wrangling already previously in the semester, 
+
+12
+00:00:43,400 --> 00:00:46,600
+例如当你使用管道操作符时,
+like basically whenever you use the pipe operator 
+
+13
+00:00:46,600 --> 00:00:50,750
+它可以让你从一个程序的输出中获取数据并将其传递给另一个程序,
+that lets you sort of take output from one program and feed it through another program, 
+
+14
+00:00:50,775 --> 00:00:53,475
+这就是做数据整理的一种方式.
+you are doing data wrangling in one way or another. 
+
+15
+00:00:53,475 --> 00:00:56,325
+但是在这节课上,
+But what we're going to do in this lecture is take a look at 
+
+16
+00:00:56,325 --> 00:00:59,225
+我们将会学到更高级,更实用的数据整理方法.
+some of the fancier ways you can do data wrangling 
+
+17
+00:00:59,225 --> 00:01:02,600
+
+and some of the really useful ways you can do data wrangling. 
+
+18
+00:01:02,600 --> 00:01:07,375
+要进行任何类型的数据整理,首先你都需要有一个数据源.
+In order to do any kind of data wrangling, though, you need a data source. 
+
+19
+00:01:07,375 --> 00:01:09,850
+你需要先有一些数据才能进行操作.
+You need some data to operate on in the first place, 
+
+20
+00:01:09,850 --> 00:01:14,475
+这样的数据很多,
+and there are a lot of good candidates for that kind of data. 
+
+21
+00:01:14,475 --> 00:01:18,250
+我们在今天的讲座笔记的练习中就给出了一些例子.
+We give some examples in the exercise section for today's lecture notes. 
+
+22
+00:01:18,250 --> 00:01:22,200
+今天,我将使用一个系统日志.
+In this particular one, though, I'm going to be using a system log. 
+
+23
+00:01:22,200 --> 00:01:25,555
+我有一台在荷兰运行的服务器,
+So, I have a server that's running somewhere in the Netherlands 
+
+24
+00:01:25,555 --> 00:01:28,093
+这个选择在当时来看十分合理.
+because that seemed like a reasonable thing at the time, 
+
+25
+00:01:28,093 --> 00:01:34,825
+在那台服务器上,它通过"systemd"运行了一个常规的日志守护进程,
+and on that server, it's running sort of a regular logging daemon that comes with "systemd". 
+
+26
+00:01:34,825 --> 00:01:37,750
+这是一个相对标准的Linux日志机制,
+It's a sort of relatively standard Linux logging mechanism, 
+
+27
+00:01:37,750 --> 00:01:43,950
+有一个名为`journalctl`的命令,可以让你查看系统日志.
+and there's a command called "journalctl" on Linux systems that will let you view the system log. 
+
+28
+00:01:43,950 --> 00:01:48,225
+所以我将对该日志进行一些转换,
+And so what I'm gonna do is I'm gonna do some transformations over that log 
+
+29
+00:01:48,225 --> 00:01:50,650
+看看是否可以从中提取出一些有趣的东西.
+and see if we can extract something interesting from it. 
+
+30
+00:01:50,650 --> 00:01:56,475
+然而,你会看到,如果我运行这个命令,我会得到很多数据,
+You'll see, though, that if I run this command, I end up with a lot of data 
+
+31
+00:01:56,475 --> 00:02:01,679
+因为这个日志包含了很多东西,对吧?
+because this is a log that has just like there's a lot of stuff in it, right? 
+
+32
+00:02:01,679 --> 00:02:03,300
+在我的服务器上发生了很多事,
+A lot of things have happened on my server, 
+
+33
+00:02:03,300 --> 00:02:06,075
+你看这条记录时一月一日的,
+and this goes back to like January first, 
+
+34
+00:02:06,075 --> 00:02:08,550
+而且有些日志甚至记录了更早的事件.
+and there are logs that go even further back on this. 
+
+35
+00:02:08,550 --> 00:02:09,725
+这里有很多记录.
+There's a lot of stuff. 
+
+36
+00:02:09,725 --> 00:02:15,075
+所以我们要做的第一件事情是尝试限制它的内容.
+So the first thing we're gonna do is try to limit it down to only one piece of content. 
+
+37
+00:02:15,100 --> 00:02:17,300
+在这里,我们将使用"grep"命令.
+And here the "grep" command is your friend. 
+
+38
+00:02:17,300 --> 00:02:19,425
+我们用管道把"ssh"的输出连接到"grep"上.
+So we're gonna pipe this through "grep", 
+
+39
+00:02:19,425 --> 00:02:21,700
+
+and we're gonna pipe for ssh, right? 
+
+40
+00:02:21,700 --> 00:02:24,450
+过去我们并没有真正地介绍过ssh
+So ssh we haven't really talked to you about yet, 
+
+41
+00:02:24,450 --> 00:02:27,800
+但是我们知道,ssh是一种通过命令行远程访问计算机的方式.
+but it is a way to access computers remotely through the command line. 
+
+42
+00:02:27,800 --> 00:02:32,700
+特别是当你将服务器放在公网上时,
+And in particular, what happens when you put a server on the public Internet is that 
+
+43
+00:02:32,700 --> 00:02:36,750
+全世界的人都会试图连接并登录,以控制你的服务器.
+lots and lots of people around the world try to connect to it and log in and take over your server. 
+
+44
+00:02:36,750 --> 00:02:39,800
+因此,我想看看这些人是怎么做的,
+And so I want to see how those people are trying to do that, 
+
+45
+00:02:39,800 --> 00:02:41,750
+所以我要使用"grep"搜索ssh.
+and so I'm going to "grep" for ssh, 
+
+46
+00:02:41,750 --> 00:02:47,600
+很快你就会看到,这会生成一大堆东西.
+and you'll see pretty quickly that this also generates a bunch of content. 
+
+47
+00:02:47,600 --> 00:02:52,050
+至少在理论上是这样的,但你看到了实际上这会非常慢.
+At least in theory, this is gonna be real slow. 
+
+48
+00:02:52,050 --> 00:02:53,575
+就像这样.
+There we go. 
+
+49
+00:02:53,575 --> 00:02:57,725
+你可以看到它生成了这么一坨的内容,
+So this generates tons and tons and tons of content, 
+
+50
+00:02:57,725 --> 00:03:01,125
+光看到那么多内容就感觉头疼.
+and it's really hard to even just visualize what's going on here. 
+
+51
+00:03:01,125 --> 00:03:06,225
+现在,让我们只查看人们尝试登录我的服务器时使用的用户名.
+So let's look at only what user names people have used to try to log into my server. 
+
+52
+00:03:06,225 --> 00:03:12,300
+所以,你会看到其中一些行显示为已断开连接的无效用户,
+So you'll see some of these lines say disconnected, disconnected from invalid user, 
+
+53
+00:03:12,300 --> 00:03:13,600
+然后后面是某个用户名.
+And then, some user name. 
+
+54
+00:03:13,600 --> 00:03:16,325
+现在我只想要这种日志记录.
+I want only those lines, that's all I really care about. 
+
+55
+00:03:16,325 --> 00:03:19,050
+不过,我还要进行一些修改.
+I'm gonna make one more change here though, 
+
+56
+00:03:19,050 --> 00:03:22,124
+如果你考虑管道的工作原理,
+which is if you think about how this pipeline does, 
+
+57
+00:03:22,125 --> 00:03:28,225
+如果我在这里加上"Disconnect from"(断开连接),
+if I here do this connected from, so this pipeline at the bottom here, 
+
+58
+00:03:28,225 --> 00:03:33,625
+首先整个日志文件都会通过先网络传到我的电脑,
+what that will do is it will send the entire log file over the network to my machine 
+
+59
+00:03:33,625 --> 00:03:39,750
+然后在本地运行"grep"来仅查找包含"ssh"的行,然后在本地进一步过滤它们.
+and then locally run "grep" to find only the lines to contained "ssh" and then locally filter them further. 
+
+60
+00:03:39,800 --> 00:03:43,350
+这似乎有点浪费,因为我不关心这些这个日志中的大部分,
+This seems a little bit wasteful because I don't care about most of these lines, 
+
+61
+00:03:43,350 --> 00:03:45,575
+而且远程站点也在运行shell,
+and the remote site is also running a shell, 
+
+62
+00:03:45,575 --> 00:03:51,225
+所以我实际上可以在服务器上直接运行整个命令.
+so what I can actually do is I can have that entire command run on the server. 
+
+63
+00:03:51,225 --> 00:03:56,550
+因此,我会告诉ssh,在服务器上运行这三个管道操作,
+Right, so I'm telling you,  the command I want you to run on the server is this pipeline of three things, 
+
+64
+00:03:56,600 --> 00:03:59,825
+然后将返回的数据通过管道接到"less"上面.
+and then what I get back, I want to pipe through "less". 
+
+65
+00:03:59,825 --> 00:04:04,120
+这个操作是什么意思呢?它将进行与我们之前筛选日志相同的筛选,
+So, what does this do? Well, it's gonna do that same filtering that we did, 
+
+66
+00:04:04,120 --> 00:04:05,775
+不过它是在服务器端运行的,
+but it's gonna do it on the server side, 
+
+67
+00:04:05,775 --> 00:04:09,900
+只将我关心的那些行发送给我.
+and the server is only going to send me those lines that I care about. 
+
+68
+00:04:09,900 --> 00:04:15,475
+然后,当我将在本地通过管道把这些行连接到一个叫做"less"的程序(一个分页查看的程序).
+And then when I pipe it locally through the program called "less", "less" is a pager. 
+
+69
+00:04:15,500 --> 00:04:18,825
+你已经看到过一些例子,
+You'll see some examples of this, you've actually seen some of them already, 
+
+70
+00:04:18,825 --> 00:04:22,575
+比如当你输入"man"命令时,它用一个分页器中打开,
+like when you type "man" and some command that opens in a pager, 
+
+71
+00:04:22,575 --> 00:04:28,200
+分页是一种便于阅读的方式,可以将长篇内容适应到你的终端窗口中,
+and a pager is a convenient way to take a long piece of content and fit it into your term window 
+
+72
+00:04:28,200 --> 00:04:33,875
+并让你滚动和浏览,而不是直接滚过你的屏幕.
+and have you scrolled down and scroll up and navigate it so that it doesn't just like scroll past your screen. 
+
+73
+00:04:33,875 --> 00:04:39,100
+因此,如果我运行这个命令,我们仍然需要等待一段时间,因为它必须解析大量的日志文件.
+And so, if I run this, it still takes a little while because it has to parse through a lot of log files, 
+
+74
+00:04:39,100 --> 00:04:46,600
+特别地,"grep"正在缓存输出,所以它还卡在这儿.
+and in particular, grep is buffering and therefore it decides to be relatively unhelpful. 
+
+75
+00:04:46,600 --> 00:04:57,275
+我试试不加"grep"参数来运行,看看会不会好一些.
+I may do this without, let's see if that's more helpful. 
+
+76
+00:04:57,275 --> 00:05:02,875
+为啥还这样?
+Why doesn't it want to be helpful to me? 
+
+77
+00:05:02,875 --> 00:05:08,800 
+好吧,我要搞点手段了,你们假装没看见,
+Fine, I'm gonna cheat a little, just ignore me. 
+
+78
+00:05:17,825 --> 00:05:21,375
+大概是网速真的很慢.
+Or the internet is really slow, those are two possible options. 
+
+79
+00:05:21,375 --> 00:05:28,800
+幸运的是,有一个解决办法,因为上课前我已经运行了这个命令.
+Luckily, there's a fix for that because previously I have run the following command. 
+
+80
+00:05:28,800 --> 00:05:35,700
+这个命令将匹配所有包含"disconnect from"的ssh日志条目,并将其保存在我本地的一个文件中.
+So this command just takes the output of that command and sticks it into a file locally on my computer. 
+
+81
+00:05:35,700 --> 00:05:37,875
+我先前在我的办公室运行了这个命令,
+Alright, so I ran this when I was up in my office, 
+
+82
+00:05:37,875 --> 00:05:44,325
+这样做的目的是下载所有包含"disconnect from"的ssh日志条目到本地,
+and so what this did is it downloaded all of the SSH log entries that matched disconnect from, 
+
+83
+00:05:44,325 --> 00:05:45,571
+因此我本地拥有这些条目,
+so I have those locally, 
+
+84
+00:05:45,571 --> 00:05:47,250
+这非常方便,对吧?
+and this is really handy, right? 
+
+85
+00:05:47,250 --> 00:05:50,125
+没有必要每次都流式传输整个日志,
+There's no reason for me to stream the full log every single time 
+
+86
+00:05:50,125 --> 00:05:53,450
+因为我知道我只要以它开头的那些行.
+because I know that that starting pattern is what I'm going to want anyway. 
+
+87
+00:05:53,450 --> 00:05:56,450
+因此,我们可以查看"ssh.log"文件,
+So we can take a look at "ssh.log", 
+
+88
+00:05:56,450 --> 00:06:00,875
+你会看到有很多很多行,都说"disconnected from",
+and you will see there are lots and lots and lots of lines that all say "disconnected from", 
+
+89
+00:06:00,875 --> 00:06:02,875
+"invalid user","authenticating users"等等.
+"invalid user", "authenticating users", etc., right? 
+
+90
+00:06:04,350 --> 00:06:07,187
+这些是我们需要处理的行,
+So these are the lines that we have to work on, 
+
+91
+00:06:07,187 --> 00:06:11,300
+这也意味着未来,我们不必再走整个ssh的流程.
+and this also means that going forward, we don't have to go through this whole SSH process. 
+
+92
+00:06:11,300 --> 00:06:14,300
+我们只需要"cat"(查看)那个文件,然后再进行操作.
+We can just cat that file and then operate it on it directly. 
+
+93
+00:06:14,300 --> 00:06:18,475
+在这里我还可以演示一下这个分页器.
+So here I can also demonstrate this pager, 
+
+94
+00:06:18,475 --> 00:06:23,150
+如果我运行`cat ssh.log`并将其用管道连接"less",
+so if I do cat s is a cat `cat ssh.log` and I pipe it through "less", 
+
+95
+00:06:23,175 --> 00:06:26,000
+它会让我分页阅读,还可以上下滚动.
+it gives me a pager where I can scroll up and down. 
+
+96
+00:06:26,000 --> 00:06:31,450
+可以把字体变小一点,这样我可以滚动浏览整个文件了.
+Make that a little bit smaller maybe so I can scroll this file screw through this file,
+
+97
+00:06:31,450 --> 00:06:34,800
+我还可以使用Vim的按键来浏览,
+And I can do so with what are roughly Vim bindings. 
+
+98
+00:06:34,800 --> 00:06:37,850
+比如"Ctrl+U"向上滚动,"Ctrl+D"向下滚动,
+So, "Ctrl+U" to scroll up, "Ctrl+D" to scroll down, 
+
+99
+00:06:37,850 --> 00:06:39,600
+"q"退出.
+and "q" to exit. 
+
+100
+00:06:39,600 --> 00:06:44,225
+但是这依然是一大坨,
+This is still a lot of content though, 
+
+101
+00:06:44,225 --> 00:06:47,550
+而且这些行包含了我并不感兴趣的垃圾信息.
+and these lines contain a bunch of garbage that I'm not really interested in. 
+
+102
+00:06:47,550 --> 00:06:50,525
+我真正想看到的是这些用户名.
+What I really want to see is what are these user names. 
+
+103
+00:06:50,525 --> 00:06:54,625
+这里,我们要开始使用的工具叫做 "sed".
+And here, the tool that we're going to start using is one called "sed". 
+
+104
+00:06:54,625 --> 00:07:02,000
+"sed" 是一个流编辑器,它改良自更早的一个叫作"ed"程序,
+"sed" is a stream editor that modifies or is a modification of a much earlier program called "ed", 
+
+105
+00:07:02,000 --> 00:07:06,275
+后者是一个非常奇怪的编辑器,你们可能都不想使用.
+which was a really weird editor that none of you will probably want to use. 
+
+106
+00:07:06,275 --> 00:07:14,616
+是的,(学生提问:"tsp"是啥玩意儿?)"tsp" 是我正在连接的远程计算机的名称.
+Yeah, Oh "tsp" is the name of the remote computer I'm connecting to. 
+
+107
+00:07:16,000 --> 00:07:19,050
+所以"sed" 是一个流编辑器,
+So, "sed" is a stream editor, 
+
+108
+00:07:19,100 --> 00:07:25,100
+它基本上允许你修改流的内容.
+and it basically lets you make changes to the contents of a stream. 
+
+109
+00:07:25,100 --> 00:07:28,200
+你可以将其视为文本替换,
+You can think of it a little bit like doing replacements, 
+
+110
+00:07:28,200 --> 00:07:32,700
+但实际上它是在流上运行的一个完整的编程语言.
+but it's actually a full programming language over the stream that is given.
+
+111
+00:07:32,700 --> 00:07:39,650
+然而,你用 "sed" 最常做的事情之一就是在输入流上执行替换表达式.
+One of the most common things you do with "sed" though is to just run replacement expressions on an input stream. 
+
+112
+00:07:39,650 --> 00:07:41,375
+这是什么样子的呢?
+What do these look like? 
+
+113
+00:07:41,375 --> 00:07:43,375
+好的,让我给你展示一下.
+Well, let me show you. 
+
+114
+00:07:45,075 --> 00:07:47,850
+这里,我将管道连接到到 "sed",
+Here, I'm gonna pipe this to "sed", 
+
+115
+00:07:47,850 --> 00:07:54,400
+然后比如说我想要删除"Disconnected from"之前的所有内容.
+and I'm going to say that I want to remove everything that comes before "Disconnected from". 
+
+116
+00:07:57,084 --> 00:07:59,084
+这可能看起来有点奇怪.
+This might look a little weird. 
+
+117
+00:07:59,084 --> 00:08:03,700
+观察到的是,ssh守护程序的日期,主机名
+The observation is that the date and the hostname and
+
+118
+00:08:03,700 --> 00:08:06,575
+和进程 ID,我不关注这些东西.
+the sort of process ID of the ssh daemon, I don't care about. 
+
+119
+00:08:06,575 --> 00:08:08,300
+我可以直接删除它们,
+I can just remove that straightaway, 
+
+120
+00:08:08,300 --> 00:08:11,750
+还可以删除"Disconnected from"那一部分,
+and I can also remove that "Disconnected from" bit 
+
+121
+00:08:11,750 --> 00:08:14,100
+因为似乎每个日志条目中都包含这个.
+because that seems to be present in every single log entry. 
+
+122
+00:08:14,100 --> 00:08:15,725
+所以我想...
+So I just want to give a little bit.
+
+123
+00:08:15,725 --> 00:08:18,384
+所以我编写了一个 "sed" 表达式.
+So, what I write is a "sed" expression. 
+
+124
+00:08:18,384 --> 00:08:22,650
+在这种情况下,它是一个 "s/" 表达式,即一个替换表达式.
+In this particular case, it's an "s/" expression, which is a substitute expression. 
+
+125
+00:08:22,650 --> 00:08:28,100
+它有两个以"/"分割的参数.
+It takes two arguments that are basically enclosed in these slashes. 
+
+126
+00:08:28,125 --> 00:08:30,875
+因此,第一个是要搜索的字符串,
+So, the first one is the search string, 
+
+127
+00:08:30,875 --> 00:08:33,700
+第二个是目前为空的要换成的字符串.
+and the second one, which is currently empty, is a replacement string. 
+
+128
+00:08:33,700 --> 00:08:38,750
+所以,在这里,我是说按这个模式搜索字符串并将其替换为空,
+So, here, I'm saying search for the following pattern and replace it with blank, 
+
+129
+00:08:38,750 --> 00:08:41,475
+然后在最后将其接到 "less" 上.
+and then I'm gonna pipe it into "less" at the end. 
+
+130
+00:08:41,475 --> 00:08:46,200
+看到了吗?现在它已经删除了所有这些行的开头.
+Do you see that? Now, what it's done is trim off the beginning of all these lines, 
+
+131
+00:08:47,025 --> 00:08:49,550
+这看起来非常方便.
+and that seems really handy. 
+
+132
+00:08:49,550 --> 00:08:54,300
+但你可能会想,我构建的这个模式是啥玩意儿?
+But you might wonder, what is this pattern that I've built up here, right? 
+
+133
+00:08:54,300 --> 00:08:55,950
+这个".*"又是啥玩意儿?
+This is this dot star. 
+
+134
+00:08:55,950 --> 00:08:57,300
+
+What does that mean? 
+
+135
+00:08:57,300 --> 00:09:00,200
+这是一个正则表达式的例子.
+This is an example of a regular expression. 
+
+136
+00:09:00,200 --> 00:09:04,850
+在编程中你可能已经接触过正则表达式,
+And regular expressions are something that you may have come across in programming in the past, 
+
+137
+00:09:04,850 --> 00:09:07,600
+但是一旦你进入命令行,
+but it's something that once you go into the command line, 
+
+138
+00:09:07,600 --> 00:09:11,125
+你会发现需要经常使用它来进行数据整理.
+you will find yourself using a lot, especially for this kind of data wrangling. 
+
+139
+00:09:11,125 --> 00:09:16,100
+正则表达式本质上是一种强大的匹配文本的方法.
+Regular expressions are essentially a powerful way to match text. 
+
+140
+00:09:16,100 --> 00:09:18,925
+你可以用它来匹配其他东西,
+You can use it for other things than text too, 
+
+141
+00:09:18,925 --> 00:09:20,200
+但文本是最常见的例子.
+but text is the most common example. 
+
+142
+00:09:20,200 --> 00:09:26,450
+在正则表达式中,有许多特殊字符,
+And in regular expressions, you have a number of special characters 
+
+143
+00:09:26,450 --> 00:09:29,625
+它们不仅可以匹配单个字符,
+that say don't just match this character, 
+
+144
+00:09:29,650 --> 00:09:34,450
+还可以匹配特定类型的字符或字符串.
+but match, for example, a particular type of character or a particular set of options. 
+
+145
+00:09:34,450 --> 00:09:38,600
+它本质上为你生成一个程序,用于搜索给定的文本.
+It essentially generates a program for you that searches the given text. 
+
+146
+00:09:38,600 --> 00:09:42,850
+例如,"."表示任何单个字符,
+Dot, for example, means any single character, 
+
+147
+00:09:43,875 --> 00:09:45,200
+接着是"*"
+and star, 
+
+148
+00:09:45,200 --> 00:09:50,875
+如果你在一个字符后面加上"*",它就表示匹配零次或多次该字符.
+if you follow a character with a star, it means zero or more of that character. 
+
+149
+00:09:50,875 --> 00:09:53,850
+因此,在这种情况下,这个模式表示零个或多个任意字符,
+And so  in this case, this pattern is saying zero 
+
+150
+00:09:53,875 --> 00:09:59,200
+后面跟着字面上的字符串"Disconnected from".
+or more of any character followed by the literal string "Disconnected from". 
+
+151
+00:09:59,250 --> 00:10:03,450
+我要找到这样的字符串,然后把他们替换为空.
+I'm saying match that and then replace it with blank. 
+
+152
+00:10:03,500 --> 00:10:07,725
+正则表达式有许多这种特殊字符,具有各种不同的含义.
+Regular expressions have a number of these kinds of special characters 
+
+153
+00:10:07,725 --> 00:10:10,100
+你可以使用它们.
+that have various meanings you can take advantage of them. 
+
+154
+00:10:10,100 --> 00:10:12,500
+我提到了"*",表示匹配零次或多次,
+I talked about star, which is zero or more. 
+
+155
+00:10:12,500 --> 00:10:14,900
+还有"+",表示匹配一次或多次.
+There's also Plus, which is one or more. 
+
+156
+00:10:14,900 --> 00:10:18,350
+这表示我想要前面的表达式至少匹配一次.
+This is saying I want the previous expression to match at least once. 
+
+157
+00:10:18,350 --> 00:10:21,675
+你还可以使用"[]"来匹配多种字符中的一种.
+You also have square brackets. 
+
+158
+00:10:21,675 --> 00:10:25,975
+
+Square brackets let you match one of many different characters. 
+
+159
+00:10:26,025 --> 00:10:30,625
+所以在这里,我们写个字符串, 比如说"aba",
+So here, let's build up a string list something like "aba", 
+
+160
+00:10:30,625 --> 00:10:37,500
+接着,我想把"a"和"b"换成空.
+and I want to substitute "a" and "b" with nothing. 
+
+161
+00:10:37,500 --> 00:10:47,525
+好的,那么这里我告诉模式要做的是把任何"a"或"b"字符替换为空.
+Okay, so here, what I'm telling the pattern to do is to replace any character that is either "a" or "b" with nothing. 
+
+162
+00:10:47,525 --> 00:10:52,150
+不过即使我把第一个字符变成"b",它仍然会输出"ba".
+So if I make the first character "b", it will still produce "ba". 
+
+163
+00:10:52,150 --> 00:10:54,700
+你可能会想,为什么它只替换了一次?
+You might wonder though why did it only replace once? 
+
+164
+00:10:54,700 --> 00:10:58,750
+这是因为正则表达式,特别是在这种默认模式下,
+Well, it's because what regular expressions will do, especially in this default mode, 
+
+165
+00:10:58,750 --> 00:11:03,500
+每行只会匹配一次,替换一次.
+is they will just match the pattern once and then apply the replacement once per line. 
+
+166
+00:11:03,500 --> 00:11:05,575
+这就是"sed"通常会做的事情.
+That is what "sed" normally does. 
+
+167
+00:11:05,575 --> 00:11:10,900
+你可以提供"g"修饰符,它表示尽可能多的匹配,
+You can provide the "g" modifier which says do this as many times as it keeps matching, 
+
+168
+00:11:10,900 --> 00:11:16,375
+这种情况下会删除整行,因为每个字符都是"a"或"b".
+which in this case would erase the entire line because every single character is either an "a" or a "b". 
+
+169
+00:11:16,400 --> 00:11:20,025
+如果我在这里添加了一个"c"并移除除"c"以外的所有字符,
+If I added a "c" here and removed everything but the "c", 
+
+170
+00:11:20,025 --> 00:11:24,575
+那么中间的其他字符都将被保留,
+if I added other characters in the middle of this string somewhere, they would all be preserved 
+
+171
+00:11:24,575 --> 00:11:27,175
+但是任何"a"或"b"都会被删除.
+but anything that is an "a" or a "b" is removed. 
+
+172
+00:11:30,382 --> 00:11:35,107
+你也可以像对这个添加修饰符.
+You can also do things like add modifiers to this. 
+
+173
+00:11:35,107 --> 00:11:44,007
+例如,这会做什么?
+For example, what would this do? 
+
+174
+00:11:44,007 --> 00:11:50,932
+它表示我想要零个或多个"ab"字符串,
+This is saying I want zero or more of the string "ab", 
+
+175
+00:11:50,932 --> 00:11:53,182
+然后我要用空替换它们.
+and I'm gonna replace them with nothing. 
+
+176
+00:11:53,182 --> 00:11:56,882
+这意味着如果我有一个独立的"a",它将不会被替换.
+This means that if I have a standalone "a", it will not be replaced. 
+
+177
+00:11:56,882 --> 00:11:59,157
+如果我有一个独立的"b",它将不会被替换,
+If I have a standalone "b", it will not be replaced, 
+
+178
+00:11:59,157 --> 00:12:02,357
+但是如果我有"ab"字符串,它将被删除,
+but if I have the string "ab", it will be removed.
+
+179
+00:12:02,357 --> 00:12:10,382
+这是因为"sed"很愚蠢.
+which, yeah, what are they? "sed" is stupid. 
+
+180
+00:12:11,550 --> 00:12:16,125
+这里的"-E"是因为"sed"是一个非常古老的工具,
+The -E here is because "sed" is a really old tool, 
+
+181
+00:12:16,125 --> 00:12:20,100
+因此它仅支持非常旧的正则表达式版本.
+and so it supports only a very old version of regular expressions. 
+
+182
+00:12:20,100 --> 00:12:26,000
+通常,你需要使用"-E"运行它,这使它使用更现代的语法来支持更多的功能.
+Generally, you will want to run it with -E (capital E), which makes it use a more modern syntax that supports more things. 
+
+183
+00:12:26,000 --> 00:12:28,775
+如果你无法使用"-E",
+If you are in a place where you can't, 
+
+184
+00:12:28,775 --> 00:12:34,775
+你必须在括号前加上"\",以表示转义,
+you have to prefix these with backslashes to say 'I want the special meaning of parenthesis,' 
+
+185
+00:12:34,775 --> 00:12:39,375
+否则,它们只会匹配括号本身,这可能不是你想要的.
+otherwise, they will just match a literal parenthesis, which is probably not what you want. 
+
+186
+00:12:39,375 --> 00:12:45,950
+注意,这里"ab"被替换了,这里"ab"也被替换了,
+So notice how this replaced the "ab" here and it replaced the "ab" here, 
+
+187
+00:12:45,975 --> 00:12:47,450
+但是它留下了这个"c",
+but it left this "c", 
+
+188
+00:12:47,450 --> 00:12:52,725
+而且它也留下了最后的"a",因为这个"a"不再匹配这个模式了.
+and it also left the "a" at the end because that "a" does not match this pattern anymore. 
+
+189
+00:12:53,125 --> 00:12:56,000
+你可以按任何方式组合这些模式.
+And you can group these patterns in whatever ways you want. 
+
+190
+00:12:56,000 --> 00:12:58,575
+你也有类似于替换的东西.
+You also have things like alternations. 
+
+191
+00:12:58,575 --> 00:13:04,350
+你可以说,我要删除任何匹配"ab"或"bc"的内容.
+You can say anything that matches "ab" or "bc", I want to remove. 
+
+192
+00:13:06,100 --> 00:13:09,200
+你会发现这个"ab"已经被删除了,
+And here you'll notice that this "ab" got removed. 
+
+193
+00:13:09,200 --> 00:13:13,350
+而这个"bc"虽然也符合模式,
+This "bc" did not get removed, even though it matches the pattern, 
+
+194
+00:13:13,350 --> 00:13:16,200
+但因为"ab"已经被删除了,所以它没有被删除.
+because the "ab" had already been removed. 
+
+195
+00:13:16,200 --> 00:13:18,800
+这个"ab"被正确地删除了,
+This "ab" is removed right, 
+
+196
+00:13:18,800 --> 00:13:19,825
+但"c"仍然保留在原地.
+but the "c" stays in place.
+
+197
+00:13:19,825 --> 00:13:24,575
+这个"ab"被删除了,而这个"c"被保留了,因为它仍然不匹配.
+This "ab" is removed and this "c" states because it still does not match that. 
+
+198
+00:13:24,575 --> 00:13:26,350
+如果我这样做,
+If I made this, 
+
+199
+00:13:26,350 --> 00:13:32,550
+如果我删除这个"a",那么现在这个"ab"模式就不会匹配到这个"b",所以它会被保留,
+if I remove this "a", then now this "ab" pattern will not match this "b", so it'll be preserved, 
+
+200
+00:13:32,550 --> 00:13:35,375
+然后"bc"将匹配"bc",就会被删除.
+and then "bc" will match "bc" and it'll go away. 
+
+201
+00:13:35,425 --> 00:13:40,375
+当你第一次接触到正则表达式时,它们可能会非常复杂,
+Regular expressions can be all sorts of complicated when you first encounter them, 
+
+202
+00:13:40,375 --> 00:13:44,200
+即使你对它们有更多的经验,看起来仍然会让人望而生畏.
+and even once you get more experience with them, they can be daunting to look at. 
+
+203
+00:13:44,200 --> 00:13:49,125
+这就是为什么通常需要使用类似于正则表达式调试器这样的工具,
+And this is why very often you want to use something like a regular expression debugger, 
+
+204
+00:13:49,125 --> 00:13:50,675
+我们稍后会介绍.
+which we'll look at in a little bit. 
+
+205
+00:13:50,675 --> 00:13:54,575
+但首先,让我们试着制定一个能够匹配日志
+But first, let's try to make up a pattern that will match the logs 
+
+206
+00:13:54,575 --> 00:13:58,200
+并且匹配到目前为止我们一直在处理的日志的模式.
+and match the logs that we've been working with so far. 
+
+207
+00:13:58,200 --> 00:14:02,625
+所以在这里,我将从这个文件中提取出几行,
+So here, I'm gonna just sort of extract a couple of lines from this file, 
+
+208
+00:14:02,625 --> 00:14:04,300
+比如前五行.
+let's say the first five. 
+
+209
+00:14:04,300 --> 00:14:08,100
+这些行现在看起来都是这样的,对吧?
+So these lines all now look like this, right? 
+
+210
+00:14:08,100 --> 00:14:13,800
+我们想要做的是只留下用户名.
+And what we want to do is we want to only have the user name. 
+
+211
+00:14:13,800 --> 00:14:16,700
+那么我们就会有可能写成啥样呢?
+Okay, so what might this look like? 
+
+212
+00:14:16,700 --> 00:14:22,575
+好的,我们可以先试着做一件事情.
+Well, here's one thing we could try to do. 
+
+213
+00:14:27,275 --> 00:14:31,350
+让我先拿出一行内容,
+Actually, let me show you one, except one thing first. 
+
+214
+00:14:31,350 --> 00:14:34,425
+比如说
+Let me take a line that says something like 
+
+215
+00:14:34,425 --> 00:14:44,850
+"Disconnected from invalid user disconnected from maybe four to one one whatever.",
+"Disconnected from invalid user Disconnected from maybe four to one one whatever." 
+
+216
+00:14:44,850 --> 00:14:47,875
+这是一个登录行的例子,
+Okay, so this is an example of a login line 
+
+217
+00:14:47,875 --> 00:14:52,975
+其中有人尝试使用用户名"Disconnected from"登录.
+where someone tried to login with the username "Disconnected from". 
+
+218
+00:14:52,975 --> 00:14:56,475
+嗷,少了一个"s"
+missing an "s"
+
+219
+00:15:03,275 --> 00:15:07,325
+你会发现这个模式实际上删除了用户名,
+You'll notice that this actually removed the username as well, 
+
+220
+00:15:07,325 --> 00:15:09,925
+这是因为当你使用".*"
+and this is because when you use ".*"
+
+221
+00:15:09,925 --> 00:15:14,078
+这种匹配一个范围的正则表达式,它们是贪婪匹配.
+and any of these sort of range expressions, indirect expressions, they are greedy. 
+
+222
+00:15:14,078 --> 00:15:16,475
+即它们会尽可能匹配更多内容.
+They will match as much as they can. 
+
+223
+00:15:16,475 --> 00:15:21,100
+所以在这种情况下,这是我们想要保留的用户名,
+So in this case, this was the username that we wanted to retain, 
+
+224
+00:15:21,100 --> 00:15:26,425
+但是这个模式实际上一直匹配到第二次出现它
+but this pattern actually matched all the way up until the second occurrence of it 
+
+225
+00:15:26,425 --> 00:15:27,800
+或最后一次出现它,
+or the last occurrence of it, 
+
+226
+00:15:27,825 --> 00:15:31,875
+所以它之前的所有内容,包括用户名本身,都被删除了.
+and so everything before it, including the username itself, got removed. 
+
+227
+00:15:31,875 --> 00:15:35,075
+因此,我们需要想出一个匹配策略
+And so we need to come up with a slightly clever or matching strategy 
+
+228
+00:15:35,075 --> 00:15:37,150
+一个比只使用".*"更聪明的匹配策略,
+than just saying sort of dot star 
+
+229
+00:15:37,150 --> 00:15:39,581
+因为这意味着如果我们遇到特别不对劲儿的输入,
+because it means that if we have particularly adversarial input, 
+
+230
+00:15:39,625 --> 00:15:41,975
+我们可能会得到我们意想不到的结果.
+we might end up with something that we didn't expect. 
+
+231
+00:15:43,000 --> 00:15:46,250
+好的,让我们来看看如何匹配这些行.
+Okay, so let's see how we might try to match these lines. 
+
+232
+00:15:46,250 --> 00:15:48,850
+让我们从头开始.
+Let's just do a head-first. 
+
+233
+00:15:48,850 --> 00:15:58,150
+我们先构建这个正则表达式.
+Well, let's try to construct this up from the beginning. 
+
+234
+00:15:58,150 --> 00:16:03,100
+首先,我们知道我们要"-E",对吧?
+We first of all know that we want a "-E", right? 
+
+235
+00:16:03,100 --> 00:16:06,575
+因为我们不想到处都要加"\".
+Because we want to not have to put all these "\" everywhere. 
+
+236
+00:16:06,575 --> 00:16:09,850
+先是"from",
+These lines look like they say "from", 
+
+237
+00:16:09,850 --> 00:16:13,700
+然后有些行写了"invalid",
+and then some of them say "invalid", 
+
+238
+00:16:13,700 --> 00:16:16,150
+但有些行又没有,对吧?
+but some of them do not, right? 
+
+239
+00:16:16,150 --> 00:16:18,250
+这行写了"invalid",那个没有.
+This line has "invalid", that one does not. 
+
+240
+00:16:18,275 --> 00:16:21,050
+这里的"?"表示零或一次,
+"?" here is saying zero or one, 
+
+241
+00:16:21,050 --> 00:16:25,525
+所以我想要0个或1个"invalid ".
+so I want zero or zero or one of "invalid ".
+
+242
+00:16:26,704 --> 00:16:28,079
+然后是"user"?
+user?
+
+243
+00:16:28,525 --> 00:16:30,350
+还有什么?
+What else? 
+
+244
+00:16:30,350 --> 00:16:33,250
+emm,多了一个空格,删掉它.
+Well, that's going to be a double space, so we can't have that. 
+
+245
+00:16:33,250 --> 00:16:36,675
+然后后面有个用户名,
+And then there's gonna be some username, 
+
+246
+00:16:36,675 --> 00:16:43,025
+然后是一个看起来像是IP地址的东西.
+and then there's gonna be what exactly is gonna be what looks like an IP address.
+
+247
+00:16:43,025 --> 00:16:50,000
+这里我们可以使用我们的区间匹配,匹配0-9和".",对吧?
+So here we can use our range syntax and say zero to nine and a dot, right? 
+
+248
+00:16:50,000 --> 00:16:54,625
+这就是IP地址,我们还要匹配多次.
+That's what IP addresses are, and we want many of those. 
+
+249
+00:16:55,025 --> 00:17:02,275
+然后后面是"port",所以我们只需要匹配一个固定的字符串"port",然后又是0-9匹配多次,
+Then it says "port," so we're just going to match a literal port and then another number zero to nine, 
+
+250
+00:17:02,275 --> 00:17:05,575
+这里使用"+".
+and we're going to wand plus of that. 
+
+251
+00:17:06,675 --> 00:17:11,400
+这里还有一件事儿就是要给正则表达式打锚点.
+The other thing we're going to do here is we're going to do what's known as anchoring the regular expression. 
+
+252
+00:17:11,425 --> 00:17:14,325
+所以正则表达式中有两个特殊字符:
+So, there are two special characters in regular expressions: 
+
+253
+00:17:14,325 --> 00:17:18,275
+一个是"^",它匹配行的开头,
+there's carrot or hat, which matches the beginning of a line, 
+
+254
+00:17:18,325 --> 00:17:21,200
+还有一个是"$",它匹配行的结尾.
+and there's dollar, which matches the end of a line. 
+
+255
+00:17:21,200 --> 00:17:26,725
+所以我们这样写就是说这个正则表达式必须匹配整行.
+So, here we're going to say that this regular expression has to match the complete line. 
+
+256
+00:17:26,725 --> 00:17:33,450
+我们这样做的原因是,想象一下,如果有人把他们的用户名设置为整条日志文本,
+The reason we do this is because imagine that someone made their username the entire log string. 
+
+257
+00:17:33,450 --> 00:17:35,975
+那么如果你尝试匹配的时候,
+Then, if you try to match this pattern, 
+
+258
+00:17:35,975 --> 00:17:40,925
+它会匹配用户名本身,这不是我们想要的.
+it would match the username itself, which is not what we want. 
+
+259
+00:17:40,925 --> 00:17:45,950
+通常,锚点能加上就尽量加上,以避免那些偶然情况.
+Generally, you will want to try to anchor your patterns wherever you can to avoid those kind of oddities. 
+
+260
+00:17:45,950 --> 00:17:47,825
+好的,让我看看效果.
+Okay, let's see what that gave us. 
+
+261
+00:17:47,825 --> 00:17:51,450
+这删除了许多行,还是留下了一些.
+That removed many of the lines but not all of them. 
+
+262
+00:17:51,450 --> 00:17:56,775
+例如,这个行末有一个"[preauth]",所以我们需要去掉它.
+So, this one, for example, includes this "[preauth]" at the end, so we'll want to cut that off. 
+
+263
+00:17:56,775 --> 00:18:05,800
+空格,"preauth","[]"是特殊字符,我们需要转义它们
+If there's a space, "preauth," square brackets are specials, we need to escape them, right? 
+
+264
+00:18:05,800 --> 00:18:09,225
+现在,让我们看看如果尝试多来几行会发生什么.
+Now, let's see what happens if we try more lines of this. 
+
+265
+00:18:09,300 --> 00:18:11,650
+淦,它仍然得到了一些诡异的结果.
+No, it still gets something weird. 
+
+266
+00:18:11,650 --> 00:18:15,050
+这是因为有些行非空,也就是说这个模式没有匹配上.
+Some of these lines are not empty, right, which means that the pattern did not match. 
+
+267
+00:18:15,050 --> 00:18:20,650
+例如,这一行是"authenticating user",而不是"invalid user".
+This one, for example, says "authenticating user" instead of "invalid user." 
+
+268
+00:18:20,650 --> 00:18:29,375
+那么,我们改成在"user"前匹配"invalid "或"authenticated "零次或一次,现在如何?
+Okay, so as to match "invalid " or "authenticated " zero or one time before "user," how about now? 
+
+269
+00:18:29,375 --> 00:18:32,325
+好的,现在看起来很有希望了,
+Okay, that looks pretty promising, 
+
+270
+00:18:32,400 --> 00:18:35,853
+但是这个输出也没啥用,
+but this output is not particularly helpful, right? 
+
+271
+00:18:35,853 --> 00:18:41,450
+这里我们只是成功地删除了日志文件的每一行,这并不是非常有用的.
+Here we've just erased every line of our log files successfully, which is not very helpful. 
+
+272
+00:18:41,450 --> 00:18:46,675
+相反,当我们在匹配用户名时,
+Instead, what we really wanted to do is when we match the username, right over here, 
+
+273
+00:18:46,675 --> 00:18:51,800
+我们真正想要记录的是用户名,因为这才是我们想要输出的内容.
+we really wanted to remember what that username was because that is what we want to print out. 
+
+274
+00:18:51,800 --> 00:18:57,975
+在正则表达式中,我们可以使用捕获组(capture groups)来实现这一点.
+And the way we can do that in regular expressions is using something like capture groups. 
+
+275
+00:18:57,975 --> 00:19:07,100
+捕获组可以指示我们要记住这个值,并在以后重复使用它.
+So, capture groups are a way to say that I want to remember this value and reuse it later, 
+
+276
+00:19:07,100 --> 00:19:12,250
+在正则表达式中,任何带圆括号的表达式
+and in regular expressions, any bracketed expression, any parenthesis expression, 
+
+277
+00:19:12,250 --> 00:19:14,250
+都算是一个捕获组.
+is going to be such a capture group. 
+
+278
+00:19:14,250 --> 00:19:17,700
+我们实际上已经有了一个捕获组,这是第一个组,
+So, we already actually have one here, which is this first group, 
+
+279
+00:19:17,700 --> 00:19:20,025
+现在我们正在创建第二个组.
+and now we're creating a second one here. 
+
+280
+00:19:20,125 --> 00:19:23,925
+请注意,这些括号对匹配没有任何影响,
+Notice that these parentheses don't do anything to the matching, right, 
+
+281
+00:19:23,925 --> 00:19:26,850
+因为它们只是在表示这个表达式是一个整体,
+because they're just saying this expression as a unit, 
+
+282
+00:19:26,850 --> 00:19:30,475
+但是我们没有在后面加上任何修饰符,所以只匹配一次.
+but we don't have any modifiers after it, so it's just match one-time. 
+
+283
+00:19:30,475 --> 00:19:36,300
+捕获组之所以有用,
+And the reason matching groups are useful or capture groups are useful 
+
+284
+00:19:36,300 --> 00:19:39,350
+是因为你可以在替换时引用它们.
+is because you can refer back to them in the replacement. 
+
+285
+00:19:39,400 --> 00:19:42,875
+在这里,我可以说"\2".
+So, in the replacement here, I can say "\2". 
+
+286
+00:19:42,875 --> 00:19:45,900
+这是引用捕获组的方式.
+This is the way that you refer to the name of a capture group. 
+
+287
+00:19:45,900 --> 00:19:49,525
+这里我是说先匹配整行,
+In this case, I'm saying match the entire line, 
+
+288
+00:19:49,525 --> 00:19:55,700
+然后在替换中放入你在第二个捕获组匹配的值.
+and then in the replacement, put in the value you captured in the second capture group. 
+
+289
+00:19:55,700 --> 00:19:57,950
+记住,这是第一个捕获组,
+Remember, this is the first capture group, 
+
+290
+00:19:57,950 --> 00:19:59,525
+而这是第二个捕获组.
+and this is the second one.
+
+291
+00:20:00,375 --> 00:20:02,350
+这样可以得到所有的用户名.
+And this gives me all the usernames. 
+
+292
+00:20:02,350 --> 00:20:04,775
+现在回顾一下我们写的内容,
+Now,  if you look back at what we wrote, 
+
+293
+00:20:04,775 --> 00:20:07,750
+这非常复杂,对吧?
+this is pretty complicated, right? 
+
+294
+00:20:07,750 --> 00:20:11,550
+但是我们已经逐步走过了它的每个步骤,知道为什么它必须是这样的,
+It might make sense now that we walk through it and why it had to be the way it was, 
+
+295
+00:20:11,550 --> 00:20:15,175
+但要搞懂这坨东西的执行还是不那么显然的.
+but this is not obvious that this is how these lines work. 
+
+296
+00:20:15,175 --> 00:20:20,850
+这个时候可以借助正则调试器来帮我们.
+And this is where a regular expression debugger can come in really, really handy. 
+
+297
+00:20:20,850 --> 00:20:24,200
+这里有一个调试器,网上也有很多.
+So we have one here, there are many online, 
+
+298
+00:20:24,200 --> 00:20:28,325
+我已经预先填好了我们刚刚使用的表达式.
+but here I've sort of pre-filled in this expression that we just used. 
+
+299
+00:20:28,325 --> 00:20:33,100
+你会注意到它告诉我现在所有的匹配情况.
+And notice that it tells me what all the matching does, 
+
+300
+00:20:33,100 --> 00:20:38,300
+这个窗口的字体有点小,
+in fact, now this window is a little small with this font size, 
+
+301
+00:20:38,300 --> 00:20:46,250
+但是如果我在这里做一些操作,这个注释说
+but if I do....Here, this explanation says ".*" matches any character 
+
+302
+00:20:46,250 --> 00:20:48,425
+".*"可以匹配零个或多个任意字符,
+between zero and unlimited times, 
+
+303
+00:20:48,425 --> 00:20:54,050
+然后是"Disconnected from",后面是一个捕获组,
+followed by "Disconnected from" literally followed by a capture group, 
+
+304
+00:20:54,050 --> 00:20:56,150
+它会向你展示所有的东西.
+and then walks you through all the stuff. 
+
+305
+00:20:56,150 --> 00:20:57,925
+这是它的一个功能,
+And that's one thing, 
+
+306
+00:20:57,925 --> 00:21:03,450
+它还可以让你给出一个测试字符串,然后将正则表达式与每个测试字符串匹配,
+but it also lets you've given a test string and then matches the pattern against every single test string 
+
+307
+00:21:03,450 --> 00:21:07,750
+并突出显示不同的捕获组.
+that you give and highlights what the different capture groups, for example, are. 
+
+308
+00:21:07,750 --> 00:21:12,750
+在这里,我们将用户设置成了一个捕获组,对吧?
+So here, we made user a capture group, right? 
+
+309
+00:21:13,200 --> 00:21:17,525
+它会说整个字符串都匹配了,整个字符串都是蓝色的,表明它匹配成功了.
+So it'll say okay, the full string matched, the whole thing is blue, so it matched. 
+
+310
+00:21:17,600 --> 00:21:21,300
+绿色是第一个捕获组,红色是第二个捕获组,
+Green is the first capture group, red is the second capture group, 
+
+311
+00:21:21,300 --> 00:21:25,400
+这是第三个捕获组,因为"preauth"也被放在括号中.
+and this is the third because "preauth" was also put into parenthesis. 
+
+312
+00:21:25,400 --> 00:21:28,975
+这是一种可以调试正则表达式的一个很nice的办法.
+And this can be a handy way to try to debug your regular expressions. 
+
+313
+00:21:29,000 --> 00:21:33,075
+例如,如果我输入"Disconnected from",
+For example, if I put "Disconnected from", 
+
+314
+00:21:33,075 --> 00:21:37,850
+然后在这里新加一行,
+and let's add a new line here, 
+
+315
+00:21:39,225 --> 00:21:43,250
+让用户名变成"Disconnected from",
+and I make the username "Disconnected from",
+
+316
+00:21:43,250 --> 00:21:46,400
+现在这一行的用户名已经变成"Disconnect from".
+now that line already had the username be "Disconnect from". 
+
+317
+00:21:46,400 --> 00:21:48,725
+很好,已经被我预判到了.
+Great, here I'm thinking ahead. 
+
+318
+00:21:48,725 --> 00:21:55,300
+你会注意到,使用这个模式,这不再是一个问题,
+You'll notice that with this pattern, this was no longer a problem 
+
+319
+00:21:55,300 --> 00:21:57,300
+因为它成功匹配了用户名.
+because it got matched the username. 
+
+320
+00:21:57,300 --> 00:22:06,275
+如果我们把整行或这行变成用户名会发生什么?
+What happens if we take this entire line or this entire line and make that the username? 
+
+321
+00:22:06,275 --> 00:22:08,525
+猜猜看?
+Now what happens? 
+
+322
+00:22:10,125 --> 00:22:13,125
+非常令人迷惑,对吧?
+It gets really confused, right? 
+
+323
+00:22:13,250 --> 00:22:19,450
+所以这就是为什么正则表达式很难弄对,它现在尝试匹配...
+So this is where regular expressions can be a pain to get right because it now tries to match ...
+
+324
+00:22:19,450 --> 00:22:23,250
+它匹配第一次出现的用户名,
+It matches the first place where username appears, 
+
+325
+00:22:23,275 --> 00:22:28,825
+似乎是第一个"invalid".emm,第二个"invalid",因为这是贪婪匹配.
+or the first "invalid" in this case, the second invalid, because this is greedy. 
+
+326
+00:22:28,825 --> 00:22:32,500
+我们可以通过在这里加一个"?"来使它变成非贪婪.
+We can make this non-greedy by putting a "?" here. 
+
+327
+00:22:32,500 --> 00:22:39,500
+如果你在"+"或"*"后面加上一个"?",它就变成了一个非贪婪匹配.
+So if you suffix a "+" or a "*" with a "?", it becomes a non-greedy match. 
+
+328
+00:22:39,500 --> 00:22:41,900
+这意味着它将不会尽可能地匹配尽可能多的字符.
+So it will not try to match as much as possible. 
+
+329
+00:22:41,900 --> 00:22:44,250
+然后你会发现,这个表达式被正确解析了,
+And then you see that this actually gets parsed correctly 
+
+330
+00:22:44,250 --> 00:22:48,325
+因为这个点会停在第一个"Disconnected from",
+because this dot will stop at the first "Disconnected from", 
+
+331
+00:22:48,325 --> 00:22:54,100
+这是ssh实际上生成并出现在我们的日志中的那个.
+which is the one that's actually emitted by SSH, the one that actually appears in our logs. 
+
+332
+00:22:55,700 --> 00:23:01,650
+讲到现在,你已经知道正则表达式可以非常复杂,
+As you can probably tell from the explanation of this so far, regular expressions can get really complicated, 
+
+333
+00:23:01,650 --> 00:23:06,425
+并且你可能必须在正则表达式中应用各种奇怪的修饰符.
+and there are all sorts of weird modifiers that you might have to apply in your pattern. 
+
+334
+00:23:06,425 --> 00:23:11,950
+真正学习它们的唯一方法是从简单的表达式开始,然后逐步构建,直到它们匹配你所需的内容.
+The only way to really learn them is to start with simple ones and then build them up until they match what you need. 
+
+335
+00:23:11,950 --> 00:23:16,475
+通常你只需要处理一些类似于我们在这里提取用户名的一次性工作,
+Often you're just doing some like one-off job like when we're hacking out the usernames here, 
+
+336
+00:23:16,475 --> 00:23:19,600
+而不需要关心所有特殊的条件,对吧?
+and you don't need to care about all the special conditions, right?
+
+337
+00:23:19,675 --> 00:23:24,900
+不必担心某个人的ssh用户名是否完全匹配你的登录格式.
+Don't have to care about someone having the SSH username perfectly match your login format. 
+
+338
+00:23:24,900 --> 00:23:28,925
+那可能不是什么重要的事情,因为你只是想找到用户名.
+That's probably not something that matters because you're just trying to find the usernames. 
+
+339
+00:23:28,925 --> 00:23:31,150
+但是正则表达式确实非常强大,
+But regular expressions are really powerful, 
+
+340
+00:23:31,150 --> 00:23:34,125
+如果你做的是真正重要的事情,你就要小心.
+and you want to be careful if you're doing something where it actually matters. 
+
+341
+00:23:34,125 --> 00:23:35,200
+你有问题吗?
+You had a question ?
+
+342
+00:23:40,148 --> 00:23:45,773
+默认情况下,正则表达式只会按行匹配,
+regular expressions by default only match per line anyway. 
+
+343
+00:23:46,250 --> 00:23:49,200
+不会跨行匹配.
+They will not match across new lines. 
+
+344
+00:23:56,750 --> 00:24:02,050
+所以"sed"的工作方式是逐行操作,
+So, the way that "sed" works is that it operates per line, 
+
+345
+00:24:02,050 --> 00:24:07,300
+所以"sed"将为每一行去匹配这个表达式.
+and so "sed" will do this expression for every line. 
+
+346
+00:24:08,800 --> 00:24:12,675
+好的,关于正则表达式或者这个模式有什么问题吗?
+Okay, questions about regular expressions or this pattern so far? 
+
+347
+00:24:12,675 --> 00:24:16,975
+这是一个复杂的模式,如果感觉困惑,不要担心.
+It is a complicated pattern, so if it feels confusing, like don't be worried about it. 
+
+348
+00:24:16,975 --> 00:24:18,300
+下课后可以自己去正则调试器去试试看.
+Look at it in the debugger later. 
+
+349
+00:24:29,600 --> 00:24:36,925
+记住一点,我们在这里假设用户只能控制他们的用户名.
+Keep in mind that we're assuming here that the user only has control over their username. 
+
+350
+00:24:37,050 --> 00:24:43,150
+所以他们能做的最坏的事儿就是把整条记录都作为用户名.
+So the worst that they could do is take like this entire entry and make that the username. 
+
+351
+00:24:43,150 --> 00:24:47,825
+看看会发生什么.会像这样,对吧
+Let's see what happens, right? 
+
+352
+00:24:47,825 --> 00:24:48,625
+这就是它的工作原理.
+So that's how it works. 
+
+353
+00:24:48,625 --> 00:24:55,100
+原因在于这个"?"的作用,它意味着一旦我们遇到"Disconnected from",
+And the reason for this is this "?" means that the moment we hit the disconnect keyword, 
+
+354
+00:24:55,100 --> 00:24:58,375
+就立刻匹配后面的模式.
+we start parsing the rest of the pattern , right?
+
+355
+00:24:58,375 --> 00:25:04,175
+而ssh在用户的可编辑内容之前就打印了第一次出现的"Disconnected".
+And the first occurrence of "Disconnected" is printed by ssh before anything the user controls. 
+
+356
+00:25:04,175 --> 00:25:08,325
+因此,在这种特定情况下,模式也能正确匹配.
+So in this particular instance, even this will not confuse the pattern. 
+
+357
+00:25:08,375 --> 00:25:09,650
+好...
+Yep.
+
+358
+00:25:15,525 --> 00:25:20,350
+emm...所以如果你正在...
+Well, so if you're writing a... 
+
+359
+00:25:20,450 --> 00:25:29,500
+如果你在进行数据整理时使用这种奇怪的匹配方式,通常不会涉及到安全问题,
+This sort of odd matching will, in general, when you're doing data wrangling, is like not security-related, 
+
+360
+00:25:29,500 --> 00:25:32,350
+但可能会导致你得到非常奇怪的数据.
+but it might mean that you get really weird data back. 
+
+361
+00:25:32,350 --> 00:25:36,950
+如果你要绘制数据图表,可能会漏掉重要的数据点,
+And so if you're doing something like plotting data, you might drop data points that matter. 
+
+362
+00:25:36,950 --> 00:25:39,100
+或者解析出错误的数字,
+You might parse out the wrong number, 
+
+363
+00:25:39,100 --> 00:25:42,875
+然后你的图表中就会出现原始数据中没有的数据点.
+and then your plot suddenly has data points that weren't in the original data. 
+
+364
+00:25:42,875 --> 00:25:47,150
+因此,如果你发现自己在编写复杂的正则表达式,
+And so it's more that if you find yourself writing a complicated regular expression, 
+
+365
+00:25:47,150 --> 00:25:50,175
+请仔细检查它是否确实匹配了你想要匹配的内容.
+like double-check that it's actually matching what you think it's matching. 
+
+366
+00:25:50,225 --> 00:25:59,225
+即使与安全无关,正则表达式的模式也可能非常复杂.
+And even if it's not security-related, as you can imagine, these patterns can get really complicated. 
+
+367
+00:25:59,250 --> 00:26:04,825
+例如,关于如何使用正则表达式匹配电子邮件地址就存在很大的争议.
+Like, for example, there's a big debate about how do you match an email address with a regular expression? 
+
+368
+00:26:04,850 --> 00:26:06,550
+你可能会想到类似于这样的模式:
+And you might think of something like this. 
+
+369
+00:26:06,550 --> 00:26:13,350
+这是一个非常简单的例子,只说字母和数字,下划线分数和百分比,
+So this is a very straightforward one that just says letters and numbers and underscore scores and percent 
+
+370
+00:26:13,375 --> 00:26:17,950
+然后一个"+",因为在Gmail中,email地址可以包含"+".
+followed by a "+" because in Gmail, you can have pluses in email addresses with a suffix. 
+
+371
+00:26:17,950 --> 00:26:23,250
+在这种情况下,"+"只是用于表示任意数量的这些字符,
+In this case, the "+" is just for any number of these, 
+
+372
+00:26:23,250 --> 00:26:27,000
+但至少要有一个,因为"@"前为空的电子邮件地址是无效的,
+but at least one because you can't have an email address that doesn't have anything before the address, 
+
+373
+00:26:27,000 --> 00:26:29,675
+后面域名的规则也类似.
+and then similarly after the domain, right?  
+
+374
+00:26:29,675 --> 00:26:33,800
+顶级域名必须至少包含两个字符,并且不能包含数字.
+And the top-level domain has to be at least two characters and can't include digits.
+
+375
+00:26:33,800 --> 00:26:35,225
+你可以使用".com",
+Right? You can have it ".com", 
+
+376
+00:26:35,225 --> 00:26:36,575
+但不能使用".7".
+but you can't have a ".7". 
+
+377
+00:26:37,350 --> 00:26:39,525
+但事实证明,这种方法也不是完全正确的.
+It turns out this is not really correct. 
+
+378
+00:26:39,525 --> 00:26:43,275
+有很多有效的电子邮件地址无法通过这种方式匹配,
+There are a bunch of valid email addresses that will not be matched by this, 
+
+379
+00:26:43,275 --> 00:26:45,775
+也有很多无效的电子邮件地址可以通过这种方式匹配.
+and there are a bunch of invalid email addresses that will be matched by this. 
+
+380
+00:26:45,775 --> 00:26:50,400
+因此,有许多建议,
+So there are many, many suggestions, 
+
+381
+00:26:50,400 --> 00:26:55,775
+有些人已经建立了完整的测试套件来尝试找到最佳的正则表达式,
+and there are people who've built like full test suites to try to see which regular expression is best, 
+
+382
+00:26:55,800 --> 00:27:00,150
+而这个特定的正则表达式是用于 URL 的.
+and this particular one is for URLs. 
+
+383
+00:27:00,150 --> 00:27:04,600
+类似的正则表达式也适用于电子邮件地址,他们发现最好的正则表达式是这个.
+There are similar ones for email where they found that the best one is this one. 
+
+384
+00:27:05,400 --> 00:27:08,450
+我不建议你试图理解这个模式,
+I don't recommend you trying to understand this pattern, 
+
+385
+00:27:08,450 --> 00:27:13,925
+但这个模式似乎几乎可以完美地匹配
+but this one apparently will almost perfectly match what 
+
+386
+00:27:13,925 --> 00:27:17,525
+互联网标准中的有效电子邮件地址,
+the internet standard for email addresses says as a valid email address, 
+
+387
+00:27:17,525 --> 00:27:20,675
+包括各种奇怪的 Unicode 编码.
+and that includes all sorts of weird Unicode code points. 
+
+388
+00:27:20,775 --> 00:27:24,100
+这只是说,正则表达式可能非常复杂,
+This is just to say, regular expressions can be really hairy, 
+
+389
+00:27:24,100 --> 00:27:28,300
+如果你写出这样复杂的表达式,那么可能有更好的方法去做.
+and if you end up somewhere like this, there's probably a better way to do it. 
+
+390
+00:27:28,300 --> 00:27:32,495
+例如,如果你发现自己试图解析HTML
+For example, if you find yourself trying to parse HTML or something, 
+
+391
+00:27:32,495 --> 00:27:39,870
+或JSON等表达式的内容,你应该使用不同的工具.
+or parse JSON where there are expressions, you should probably use a different tool. 
+
+392
+00:27:39,870 --> 00:27:44,800
+笔记里也有一个练习,要求你不使用正则表达式完成这个任务.
+And there is an exercise that has you do this, not with regular expressions. 
+
+393
+00:27:47,710 --> 00:27:51,343
+这里有很多建议.
+yep, there is also lots of suggestions.
+
+394
+00:27:51,343 --> 00:27:55,275
+如果你想了解它们的工作原理,
+They give you deep dives into how they work if you want to look that up.
+
+395
+00:27:55,275 --> 00:27:57,375
+可以查看课程笔记.
+it's in the lecture notes.
+
+396
+00:27:57,825 --> 00:28:02,525
+现在我们有了用户名列表,
+Okay, so now we have the list of usernames. 
+
+397
+00:28:02,525 --> 00:28:04,650
+让我们回到数据整理.
+Let's go back to data wrangling. 
+
+398
+00:28:04,650 --> 00:28:08,425
+对我来说,这个用户名列表依然不友好.
+This list of usernames is still not that interesting to me. 
+
+399
+00:28:08,425 --> 00:28:10,750
+让我们看看有多少行.
+Let's see how many lines there are. 
+
+400
+00:28:10,750 --> 00:28:19,000
+如果我使用`wc -l`命令,有198000行.
+So if I do "wc -l", there are 198,000 lines. 
+
+401
+00:28:19,000 --> 00:28:23,325
+"wc"(word count)是单词计数程序,"-l"是让它计算行数.
+wc is the word count program, -l makes it count the number of lines. 
+
+402
+00:28:23,325 --> 00:28:25,350
+这里有很多行.
+This is a lot of lines. 
+
+403
+00:28:25,350 --> 00:28:28,850
+如果我开始滚动它们,这仍然没啥用.
+If I start scrolling through them, that still doesn't really help me. 
+
+404
+00:28:28,850 --> 00:28:33,785
+我需要统计数据以及把这些数据做某种聚合,
+I need statistics over this, I need aggregates of some kind, 
+
+405
+00:28:33,785 --> 00:28:39,532
+而"sed"工具用途广泛,它提供了一个完整的编程语言,
+and the "sed" tool is useful for many things, it gives you a full programming language, 
+
+406
+00:28:39,532 --> 00:28:44,532
+可以做奇怪的事情,比如插入文本或只输出匹配的行,
+it can do weird things like insert text or only print matching lines, 
+
+407
+00:28:44,532 --> 00:28:47,336
+但"sed"并不是完美的工具.
+but it's not necessarily the perfect tool for everything. 
+
+408
+00:28:47,336 --> 00:28:49,486
+有时候有更好的工具.
+Sometimes there are better tools. 
+
+409
+00:28:49,486 --> 00:28:52,850
+例如,要编写一个行计数器.
+For example, you could write a line counter in sed.
+
+410
+00:28:53,737 --> 00:28:59,391
+你不应该只是使用"sed",除了搜索和替换之外,它是一个糟糕的编程语言,
+You just should never, "sed" is a terrible programming language except for searching and replacing, 
+
+411
+00:28:59,391 --> 00:29:01,729
+还有其他好用的工具.
+but there are other useful tools. 
+
+412
+00:29:01,729 --> 00:29:05,327
+例如,有一个叫做"sort"的工具.
+So, for example, there's a tool called "sort". 
+
+413
+00:29:05,327 --> 00:29:09,544
+当然"sort"有时候也不是很好用
+So ,"sort"...this is also not can be very helpful.
+
+414
+00:29:09,544 --> 00:29:12,383
+但是"sort"可以接受很多行的输入,
+but "sort" takes a bunch of lines of input,
+
+415
+00:29:12,383 --> 00:29:14,486
+再把它们排序,然后把排序好的行输出.
+sorts them and then prints them to your output. 
+
+416
+00:29:14,486 --> 00:29:18,551
+因此,这里我现在得到了有序列表.
+So in this case, I now get the sorted output of that list. 
+
+417
+00:29:18,551 --> 00:29:21,822
+它仍然有20万行,对我来说仍然不是很友好,
+It is still 200,000 lines long, so it's still not very helpful to me, 
+
+418
+00:29:21,822 --> 00:29:25,981
+但现在我可以将它与一个叫做"uniq"的工具组合使用.
+but now I can combine it with a tool called "uniq". 
+
+419
+00:29:25,981 --> 00:29:32,990
+"uniq"会查看一个排序后的行列表,然后它会去除那些重复的行.
+"uniq" will look at a sorted list of lines and it will only print those that are unique. 
+
+420
+00:29:32,990 --> 00:29:37,430
+即,如果有多个相同的行,则仅打印一次.
+So if you have multiple instances of any given line, it will only print it once. 
+
+421
+00:29:37,430 --> 00:29:40,187
+然后我可以使用"uniq -c"
+And then I can say "uniq -c", 
+
+422
+00:29:40,187 --> 00:29:47,102
+这将计算任何重复行的重复次数并消除它们.
+so this is going to say count the number of duplicates for any lines that are duplicated and eliminate them. 
+
+423
+00:29:47,243 --> 00:29:48,598
+这是什么样子?
+What does this look like? 
+
+424
+00:29:48,598 --> 00:29:52,336
+好的,如果我运行它,需要等一段时间.
+if I run it, it's going to take a while. 
+
+425
+00:29:52,336 --> 00:29:59,087
+有13个"zzz"用户名,有10个"zxvf"用户名等等.
+There were thirteen "zzz" usernames, there were ten "zxvf" usernames, etc. 
+
+426
+00:29:59,087 --> 00:30:00,654
+我可以滚动浏览这个列表.
+There, and I can scroll through this. 
+
+427
+00:30:00,654 --> 00:30:02,710
+这仍然是一个非常长的列表,
+This is still a very long list, right, 
+
+428
+00:30:02,710 --> 00:30:06,542
+但至少现在它比以前更有条理了一些.
+but at least now it's a little bit more collated than it was. 
+
+429
+00:30:06,635 --> 00:30:09,673
+让我们看看现在我有多少行.
+Let's see how many lines I'm down to now. 
+
+430
+00:30:12,383 --> 00:30:15,000
+好的,有24,000行.
+Okay, 24,000 lines.   
+
+431
+00:30:15,000 --> 00:30:17,757
+它仍然太多垃圾信息,
+It's still too much, it's not useful information to me, 
+
+432
+00:30:17,757 --> 00:30:20,981
+我可以使用更多的工具来缩小范围.
+But I can keep burning down this with more tools. 
+
+433
+00:30:20,981 --> 00:30:25,607
+例如,我可能向知道哪个用户名出现的次数最多.
+For example, what I might care about is which user names have been used the most. 
+
+434
+00:30:25,607 --> 00:30:33,364
+那么,我可以再次使用"sort",然后我可以说我想在输入的第一列上进行数字排序,
+Well, I can do "sort" again and I can say I want a numeric sort on the first column of the input, 
+
+435
+00:30:33,364 --> 00:30:42,102
+因此"-n"数字排序,"-k"可以选择输入中的一个空白字符分隔列,执行排序.
+so "-n" says numeric sort, "-k" lets you select a white space separated column from the input to sort by. 
+
+436
+00:30:42,102 --> 00:30:45,046
+我在这里给出一个",1"
+And the reason I'm giving one comma one here 
+
+437
+00:30:45,046 --> 00:30:48,644
+是因为我想从第一列开始并在第一列停止.
+is because I want to start at the first column and stop at the first column. 
+
+438
+00:30:48,644 --> 00:30:52,663
+或者,我可以说依照所有的列进行排序,
+Alternatively, I could say I want you to sort by this list of columns, 
+
+439
+00:30:52,663 --> 00:30:55,467
+但在这种情况下,我只想按第一列排序.
+but in this case, I just want to sort by that column. 
+
+440
+00:30:55,467 --> 00:31:00,514
+然后我只想要最后的十行.
+And then I want only the ten last lines. 
+
+441
+00:31:00,514 --> 00:31:05,467
+默认情况下,"sort"会按升序输出,
+So, "sort" by default will output in ascending order,  
+
+442
+00:31:05,467 --> 00:31:09,692
+因此具有次数最多的将位于底部,
+so the ones with the highest counts are gonna be at the bottom,
+
+443
+00:31:09,692 --> 00:31:12,056
+然后我只想要最后的十行.
+and then I want only lost ten lines. 
+
+444
+00:31:13,458 --> 00:31:17,710
+现在当我执行这个命令时,我确实得到了一些我想要的数据.
+And now when I run this, I actually get a useful bit of data. 
+
+445
+00:31:17,710 --> 00:31:22,430
+对,它告诉我用户名"root"有11,000次的登录尝试,
+Right, it tells me there were eleven thousand login attempts with the username "root", 
+
+446
+00:31:22,430 --> 00:31:28,224
+有4,000次使用用户名"123456"等等.
+there were four thousand with "123456" as the username, etc. 
+
+447
+00:31:28,224 --> 00:31:31,168
+这非常方便,对吧?
+And this is pretty handy, right? 
+
+448
+00:31:31,168 --> 00:31:36,822
+现在这个巨大的日志文件已经为我提供了我想要的信息.
+And now suddenly this giant log file actually produces useful information for me. 
+
+449
+00:31:36,822 --> 00:31:39,439
+这就是我真正想从那个日志文件中得到的信息.
+This is what I really want from that log file.
+
+450
+00:31:39,439 --> 00:31:46,916
+现在,也许我只想禁用我的机器上ssh登录的"root"用户,
+Now, maybe I want to just like do a quick disabling of "root", for example, for ssh login on my machine, 
+
+451
+00:31:46,916 --> 00:31:49,383
+这是我建议你也要做的.
+which I recommend you will do, by the way. 
+
+452
+00:31:51,448 --> 00:31:58,878
+在这种情况下,我们实际上不需要"sort"的"-k"排序,因为默认情况下,"sort"会按整行排序,
+In this particular case, we don't actually need the "-k" for "sort" because "sort" by default will sort by the entire line, 
+
+453
+00:31:58,878 --> 00:32:00,560
+而数字恰好排在第一列.
+and the number happens to come first. 
+
+454
+00:32:00,560 --> 00:32:03,224
+但是了解这些额外的标志是有用的,
+But it's useful to know about these additional flags, 
+
+455
+00:32:03,224 --> 00:32:06,449
+你可能会想知道,我怎么知道这些标志存在?
+How would I know that these programs even exist? 
+
+456
+00:32:06,449 --> 00:32:08,449
+我怎么知道这些程序存在的?
+and you might wonder, well, how would I know that these flags exist? 
+
+457
+00:32:08,551 --> 00:32:13,644
+好吧,通常是从像这样的课程中得到的信息.
+Well, the programs usually pick up just from being told about them in classes like here. 
+
+458
+00:32:13,644 --> 00:32:16,215
+这些标志通常表示
+The flags are usually like, 
+
+459
+00:32:16,215 --> 00:32:20,280
+我想按照某一标准进行排序,但经常不是按照整行
+"I want to sort by something that is not the full line."
+
+460
+00:32:20,280 --> 00:32:25,046
+你的第一反应应该是键入后`man sort`阅读页面,
+Your first instinct should be to type main sort and then read through the page, 
+
+461
+00:32:25,046 --> 00:32:26,823
+很快你就会知道这些东西,
+and then very quickly will tell you, 
+
+462
+00:32:26,823 --> 00:32:30,794
+"这是怎么选中一行,以及这是怎么按数字排序的"
+"Here's how to select a pretty good column. Here's how to sort by a number, etc."
+
+463
+00:32:32,616 --> 00:32:38,224
+好的,如果现在我有了这个前20名的名单,
+Okay, what if now that I have this top, let's say top 20 list,
+
+464
+00:32:38,224 --> 00:32:41,240
+假设我实际上并不关心计数,
+let's say I don't actually care about the counts, 
+
+465
+00:32:41,240 --> 00:32:44,626
+我只想要一个","分隔的用户名列表,
+I just want like a comma separated list of the user names 
+
+466
+00:32:44,626 --> 00:32:49,766
+因为我要每天通过电子邮件发送给自己之类的东西,
+because I'm gonna send it to myself by email every day or something like that. 
+
+467
+00:32:49,766 --> 00:32:52,383
+例如:"这些是用户名前20"
+Like, these are the top 20 usernames. 
+
+468
+00:32:52,383 --> 00:32:55,794
+那么我可以这样做.
+Well, I can do this. 
+
+469
+00:32:58,271 --> 00:33:01,074
+又出现了很多诡异的命令,
+Okay, that's a lot more weird commands, 
+
+470
+00:33:01,074 --> 00:33:03,037
+但是你们应该知道这些.
+but their commands that are useful to know about. 
+
+471
+00:33:03,037 --> 00:33:08,084
+"awk"是一种基于列的流处理器.
+So, "awk" is a column-based stream processor. 
+
+472
+00:33:08,084 --> 00:33:14,673
+我们谈论过"sed",它是一种流编辑器,主要尝试编辑输入中的文本.
+So, we talked about sed, which is a stream editor, so it tries to edit text primarily in the inputs. 
+
+473
+00:33:14,673 --> 00:33:18,598
+另一方面,"awk"也让你编辑文本.
+Awk, on the other hand, also lets you edit text. 
+
+474
+00:33:18,598 --> 00:33:20,280
+它仍然提供了一种完整的编程语言,
+It is still a full programming language, 
+
+475
+00:33:20,280 --> 00:33:22,757
+但它更专注处理列数据.
+but it's more focused on columnar data. 
+
+476
+00:33:22,757 --> 00:33:28,598
+因此,在这种情况下,"awk"默认会解析其输入的空格分隔列,
+So, in this case, "awk" by default will parse its input in whitespace-separated columns, 
+
+477
+00:33:28,598 --> 00:33:31,401
+然后单独操作这些列.
+and then that you operate on those columns separately. 
+
+478
+00:33:31,401 --> 00:33:35,093
+在这种情况下,我正在说仅打印第二列,也就是用户名.
+In this case, I'm saying just print the second column, which is the username. 
+
+479
+00:33:35,140 --> 00:33:36,215
+是吧?
+Right?
+
+480
+00:33:36,215 --> 00:33:40,187
+"paste"是一个命令,它可以把多个行合并在一起
+"paste" is a command that takes a bunch of lines 
+
+481
+00:33:40,187 --> 00:33:46,542
+使其成为一行,使用"-s"命令可以分割输入
+and pastes them together into a single line, that's the "-s" with the delimiter comma. 
+
+482
+00:33:46,542 --> 00:33:52,440
+因此,在这种情况下,对于这个问题,我可以用"-sd,"想获得一个以","分隔的排名最靠前的用户名列表,
+So, in this case, for this, I want to get a comma-separated list of the top usernames, 
+
+483
+00:33:52,440 --> 00:33:55,187
+然后我可以物尽其用.
+which I can then do whatever useful thing I might want. 
+
+484
+00:33:55,233 --> 00:34:00,467
+也许我想将其放入用户黑名单的配置文件中啥的.
+Maybe I want to stick this in a config file of disallowed usernames or something along those lines. 
+
+485
+00:34:00,981 --> 00:34:04,749
+"awk"还有一些有趣的用法
+Awk is worth talking a little bit more about 
+
+486
+00:34:04,749 --> 00:34:09,833
+因为它被证明是这种数据整理的一个非常强大的语言.
+because it turns out to be a really powerful language for this kind of data wrangling. 
+
+487
+00:34:10,093 --> 00:34:15,140
+我们简要提到了"print $2"做了什么,
+We mentioned briefly what this "print $2" does, 
+
+488
+00:34:15,140 --> 00:34:20,654
+但事实证明,对于"awk",你可以做一些非常非常复杂的事情.
+but it turns out that for awk, you can do some really, really fancy things. 
+
+489
+00:34:20,654 --> 00:34:23,878
+例如,让我们回到我们只有用户名的地方.
+For example, let's go back to here where we just have the usernames. 
+
+490
+00:34:23,878 --> 00:34:32,149
+我认为我们仍需要使用"sort"和"uniq",否则列表会很长,
+I say let's still do "sort" and "uniq" because we don't, the list gets far too long, 
+
+491
+00:34:32,149 --> 00:34:37,430
+而且我只想输出与特定模式匹配的用户名.
+and let's say that I only want to print the usernames that match a particular pattern. 
+
+492
+00:34:37,430 --> 00:34:41,903
+例如,emmmm....
+Let's say, for example, that I want....
+
+493
+00:34:45,869 --> 00:34:48,476
+"uniq -c"
+"uniq -c"
+
+494
+00:34:48,476 --> 00:34:58,738
+我想查看所有仅出现一次且以"c"开头以"e"结尾的用户名.
+I want all of the usernames that only appear once and that start with a "c" and end with an "e". 
+
+495
+00:34:58,831 --> 00:35:01,308
+虽然这是一件奇怪的事情,
+That's a really weird thing to look for, 
+
+496
+00:35:01,308 --> 00:35:04,205
+但总体来说,它非常简单易懂.
+but in all, it's really simple to express. 
+
+497
+00:35:04,205 --> 00:35:07,009
+我可以说我希望第一列为1,
+I can say I want the first column to be 1, 
+
+498
+00:35:07,149 --> 00:35:14,392
+第二列匹配以下正则表达式.
+and I want the second column to match the following regular expression. 
+
+499
+00:35:20,374 --> 00:35:23,504
+嘿,这可能只是"."就行了,
+Hey, this could probably just be dot, 
+
+500
+00:35:26,028 --> 00:35:28,925
+然后我想整行打印.
+and then I want to print the whole line. 
+
+501
+00:35:31,121 --> 00:35:38,177
+所以,除非我弄错了什么,这将给我所有以"c"开头以"e"结尾
+So, unless I mess something up, this will give me all the usernames that start with a "c", end with an "e", 
+
+502
+00:35:38,177 --> 00:35:40,280
+并且在日志中仅出现一次的用户名.
+and only appear once in my log. 
+
+503
+00:35:41,495 --> 00:35:45,140
+现在,这个数据处理本身可能并不是非常有用.
+Now, that might not be a very useful thing to do with the data. 
+
+504
+00:35:45,140 --> 00:35:48,878
+这节课我就是试图向你展示实用的工具,
+What I'm trying to do in this lecture is show you the kind of tools that are available, 
+
+505
+00:35:48,878 --> 00:35:54,252
+即使我举的例子很奇怪,但这种模式也不是很复杂.
+and in this particular case, this pattern is not that complicated, even though what we're doing is sort of weird. 
+
+506
+00:35:54,299 --> 00:36:00,093
+这是因为在Linux上,特别是在命令行工具中,
+This is because very often on Linux, with Linux tools in particular and command-line tools in general, 
+
+507
+00:36:00,093 --> 00:36:04,813
+工具通常是基于输入行和输出行构建的,
+the tools are built to be based on lines of input and lines of output, 
+
+508
+00:36:04,813 --> 00:36:08,458
+而这些行通常会有很多列,
+and very often, those lines are going to have multiple columns, 
+
+509
+00:36:08,458 --> 00:36:10,981
+而"awk"非常适合操作列.
+and "awk" is great for operating over columns. 
+
+510
+00:36:16,168 --> 00:36:24,392
+现在,"awk"不仅可以像每行匹配那样做事情,
+Now, "awk" is not just able to do things like match per line, 
+
+511
+00:36:24,392 --> 00:36:29,299
+而且还可以让你做一些事情,例如,我想知道这些的数量.
+but it lets you do things like let's say I want the number of these. 
+
+512
+00:36:29,299 --> 00:36:32,149
+我想知道有多少用户名与此模式匹配.
+I want to know how many usernames match this pattern. 
+
+513
+00:36:32,149 --> 00:36:35,327
+很好,"wc -l"可以正常工作.
+Well, I can do "wc -l" that works just fine. 
+
+514
+00:36:36,308 --> 00:36:38,785
+有31个这样的用户名,
+Alright, there are 31 such usernames, 
+
+515
+00:36:38,785 --> 00:36:41,028
+但"awk"是一种编程语言.
+but "awk" is a programming language. 
+
+516
+00:36:41,028 --> 00:36:45,794
+这是你可能永远不会去碰它,
+This is something that you will probably never end up doing yourself, 
+
+517
+00:36:45,841 --> 00:36:47,803
+但是重要的是要知道你可以做到.
+but it's important to know that you can. 
+
+518
+00:36:47,803 --> 00:36:52,289
+有时候这样做实际上是有用的.
+Every now and again, it is actually useful to know about these. 
+
+519
+00:36:53,551 --> 00:36:58,878
+我刚刚意识到这可能在我的屏幕上很难阅读,
+This might be hard to read on my screen, I just realized. 
+
+520
+00:37:00,934 --> 00:37:04,018
+我马上来处理以下.
+Let me try to fix that in a second. 
+
+521
+00:37:06,962 --> 00:37:09,719
+让我们开始……
+Let's do... 
+
+522
+00:37:09,766 --> 00:37:15,140
+好吧,显然"fish"不想让我这样做.
+yeah, Apparently "fish" does not want me to do that. 
+
+523
+00:37:15,140 --> 00:37:20,888
+那么,"BEGIN"再第一行的开头被匹配.
+Um, so here "BEGIN" is a special pattern that only matches the zeroth line. 
+
+524
+00:37:20,888 --> 00:37:26,355
+"END"在最后一行的最后被匹配.
+"END" is a special pattern that only matches after the last line. 
+
+525
+00:37:26,355 --> 00:37:30,140
+然后这是一个普通的正则匹配模式,用于逐行匹配.
+And then this is gonna be a normal pattern that's matched against every line. 
+
+526
+00:37:30,140 --> 00:37:34,813
+所以我在这里所说的是,从第0行开始,将变量"rows"设置为零.
+So what I'm saying here is on the zeroth line, set the variable "rows" to zero. 
+
+527
+00:37:34,813 --> 00:37:38,785
+碰到匹配此模式的行时,"rows"的值就会增加.
+On every line that matches this pattern, increment "rows". 
+
+528
+00:37:38,785 --> 00:37:43,738
+直到匹配到最后一行,打印"rows"的值.
+And after you have matched the last line, print the value of "rows". 
+
+529
+00:37:43,738 --> 00:37:47,056
+这和运行"wc -l"一样的,
+And this will have the same effect as running "wc -l", 
+
+530
+00:37:47,056 --> 00:37:48,411
+不过这个是全部用"awk"实现的.
+but all within awk. 
+
+531
+00:37:48,411 --> 00:37:52,056
+像"wc -l"就已经效果非常棒了,
+Its particular instance like "wc -l" is just fine, 
+
+532
+00:37:52,056 --> 00:37:57,897
+但有时你可能想要维护一个字典或映射(map)之类的.
+but sometimes you want to do things like you want to might want to keep a dictionary or a map of some kind. 
+
+533
+00:37:57,990 --> 00:37:59,719
+你可能想要统计一些东西.
+You might want to compute statistics. 
+
+534
+00:37:59,719 --> 00:38:03,738
+或者你可能想要这样做:我想要此模式的第二个匹配项.
+You might want to do things like, I want the second match of this pattern. 
+
+535
+00:38:03,738 --> 00:38:09,299
+因此,你需要一个有状态的匹配器,可以忽略第一个匹配项,但然后打印第二个匹配项之后的所有的匹配项.
+So you need a stateful matcher like ignore the first match but then print everything following the second match. 
+
+536
+00:38:09,299 --> 00:38:13,411
+对于这些简单的任务,"awk"编程可以很有用.
+And for that, this kind of simple programming in "awk" can be useful to know about. 
+
+537
+00:38:15,794 --> 00:38:18,732
+实际上,我们可以在这种模式中,
+In fact, we could, in this pattern, 
+
+538
+00:38:18,732 --> 00:38:25,514
+摆脱最初用于生成此文件的"sed sort uniq"和"grep",
+get rid of "sed sort uniq" and "grep" that we originally used to produce this file, 
+
+539
+00:38:25,514 --> 00:38:26,635
+并全部使用"awk"来完成.
+and do it all in awk. 
+
+540
+00:38:26,635 --> 00:38:28,504
+但你可能不想这样做.
+But you probably don't want to do that. 
+
+541
+00:38:28,504 --> 00:38:31,308
+因为这可能得不偿失.
+It would be probably too painful to be worth it. 
+
+542
+00:38:32,944 --> 00:38:39,252
+再来讲讲其他非常好用的工具.
+It's worth talking a little bit about the other kinds of tools that you might want to use on the command line. 
+
+543
+00:38:39,252 --> 00:38:42,757
+其中之一是一个非常好用的程序,称为"bc".
+The first of these is a really handy program called "bc". 
+
+544
+00:38:42,803 --> 00:38:46,308
+我记得"bc"是伯克利计算器
+So "bc" is the "Berkeley calculator", I believe. 
+
+545
+00:38:46,308 --> 00:38:47,757
+"man bc"
+"man bc". 
+
+546
+00:38:48,972 --> 00:38:51,822
+我记得"bc"最初应该就是来自伯克利计算器.
+I think "bc" is originally from Berkeley calculator . 
+
+547
+00:38:51,822 --> 00:38:57,056
+它是一个非常简洁的命令行计算器,它不会给你提示符让你输入,
+Anyway,it is a very simple command-line calculator but instead of giving you a prompt, 
+
+548
+00:38:57,056 --> 00:38:58,683
+而是从标准输入流中读取.
+it reads from standard in. 
+
+549
+00:38:58,683 --> 00:39:03,528
+所以我可以像这样做:`echo 1+2 | bc -l`.
+So I can do something like echo 1 plus 2 and pipe it to bc -l. 
+
+550
+00:39:03,528 --> 00:39:09,719
+(要加"-l")Shell因为许多程序的默认模式通常会有奇怪的问题,因此它们不是很好用.
+because many of these programs normally operate in like a stupid mode where they're unhelpful. 
+
+551
+00:39:09,719 --> 00:39:13,458
+所以它在这里打印了3.
+So here it prints 3. 
+
+552
+00:39:13,458 --> 00:39:14,906
+非常哇塞.
+Wow, very impressive. 
+
+553
+00:39:14,906 --> 00:39:17,663
+这可以非常方便.
+But it turns out this can be really handy. 
+
+554
+00:39:17,663 --> 00:39:20,514
+想象一下你有一个很多行的文件,
+Imagine you have a file with a bunch of lines, 
+
+555
+00:39:20,514 --> 00:39:28,214
+比如说,我不确定,这个文件...
+let's say something like, oh, I don't know, this file. 
+
+556
+00:39:28,214 --> 00:39:33,925
+假设我想要求出登录的总次数,
+And let's say I want to sum up the number of logins, 
+
+557
+00:39:33,925 --> 00:39:37,289
+把出现不止一次的用户的次数加起来.
+the number of usernames that have not been used only once. 
+
+558
+00:39:37,289 --> 00:39:45,374
+接下来,对于计数不为1的用户名,把他们的次数输出.
+Alright, so the ones where the count is not equal to one, I want to print just the count. 
+
+559
+00:39:46,215 --> 00:39:51,448
+对的,这是我,给我所有非单次使用用户名的计数.
+Right, this is me, give me the counts for all the non single-use usernames. 
+
+560
+00:39:51,448 --> 00:39:54,299
+然后我想知道总数是多少.
+And then I want to know how many are there of these. 
+
+561
+00:39:54,299 --> 00:39:59,299
+请注意,我不能只数行,因为每行都有对应的次数.
+Notice that I can't just count the lines, that wouldn't work right because there are numbers on each line. 
+
+562
+00:39:59,299 --> 00:40:00,654
+我需要把他们加起来.
+I want to sum. 
+
+563
+00:40:00,654 --> 00:40:04,719
+好的,我可以使用"paste"一边粘贴输入,一边加上"+".
+Well, I can use "paste" to paste by "+". 
+
+564
+00:40:04,719 --> 00:40:09,579
+这样前进把所有的次数用"+"连起来了.
+So this paste every line together into a plus expression, right? 
+
+565
+00:40:09,579 --> 00:40:15,177
+这是一个算术表达式,因此我可以将其用管道传递到"bc -l".
+And this is now an arithmetic expression, so I can pipe it through bc -l. 
+
+566
+00:40:15,177 --> 00:40:22,944
+非单次登录的登录总数是十九万一千多次.
+And now there have been 191,000 logins that share to username with at least one other login. 
+
+567
+00:40:22,944 --> 00:40:26,261
+再次说明,这可能不是你想关注的事情,
+Again, probably not something you really care about, 
+
+568
+00:40:26,261 --> 00:40:30,607
+但这只是为了向你展示你可以相当容易地进行数据提取.
+but this is just to show you that you can extract this data pretty easily. 
+
+569
+00:40:30,607 --> 00:40:35,981
+你还可以用这个做很多其他的事情.
+And there's all sorts of other stuff you can do with this. 
+
+570
+00:40:35,981 --> 00:40:39,345
+例如,有一些工具可以让你对输入进行统计分析.
+For example, there are tools that let you compute statistics over inputs. 
+
+571
+00:40:39,345 --> 00:40:46,588
+因此,对于我刚刚打印的这个数字列表,
+So for example, for this list of numbers, just the numbers that I just printed out,
+
+572
+00:40:46,588 --> 00:40:50,130
+就这些分散的数据而言
+Just the distribution numbers,
+
+573
+00:40:50,140 --> 00:40:54,554
+我可以通过使用R语言完成这样的事情.
+I could do things like use R. 
+
+574
+00:40:54,554 --> 00:40:58,364
+R是一种专门用于统计分析的单独编程语言.
+R is a separate programming language that's specifically built for statistical analysis. 
+
+575
+00:40:58,364 --> 00:41:03,598
+我可以这样,让我看看我做对了没有......
+And I can say, let's see if I got this right...
+
+576
+00:41:03,598 --> 00:41:09,756
+这又是一种你需要特意去学习的编程语言,
+this is again a different programming language that you would have to learn, 
+
+577
+00:41:10,607 --> 00:41:19,999
+但如果你已经了解R,或者你也可以将它们管道传递给其他语言,比如这样.
+but if you already know R or you can pipe them through other languages too, like so. 
+
+578
+00:41:21,729 --> 00:41:27,336
+这个命令会在输入流中给我汇总统计数据.
+This gives me summary statistics over that input stream of numbers. 
+
+579
+00:41:27,476 --> 00:41:32,336
+因此,每个用户名的登录尝试次数的中位数为3,
+So, the median number of login attempts per username is 3, 
+
+580
+00:41:32,336 --> 00:41:35,317
+最大值为10,000+,我们之前看过了,
+the max is 10,000 that was route we saw before, 
+
+581
+00:41:35,317 --> 00:41:37,056
+最后告诉我平均值为8.
+and it tells me the average was 8. 
+
+582
+00:41:37,430 --> 00:41:40,000
+这些例子可能不是太有意义,
+For this might not matter particular instance, 
+
+583
+00:41:40,000 --> 00:41:41,448
+同时这些数字可能不是很有趣,
+and these might not be interesting numbers, 
+
+584
+00:41:41,448 --> 00:41:45,093
+但是如果你正在处理统计脚本的输出
+but if you're looking at things like output from your benchmarking script 
+
+585
+00:41:45,093 --> 00:41:49,439
+或其他一些有数值分布的输出,并且想要查看它们,
+or something else where you have some numerical distribution and you want to look at them, 
+
+586
+00:41:49,439 --> 00:41:51,588
+这些工具就非常有用.
+these tools are really handy. 
+
+587
+00:41:51,729 --> 00:41:54,860
+我们甚至可以绘制一些简单的图标.
+We can even do some simple plotting if we wanted to. 
+
+588
+00:41:54,860 --> 00:41:55,841
+不是吗?
+Right?
+
+589
+00:41:55,841 --> 00:41:58,598
+这里有一些数字.
+So this has a bunch of numbers. 
+
+590
+00:41:58,598 --> 00:42:07,289
+让我们回到我们的"sort -nk1,1",并只保留最前面5个.
+Let's go back to our "sort -nk1,1" and look at only the two top 5. 
+
+591
+00:42:07,289 --> 00:42:14,766
+"gnuplot"是一种让从标准输入中获取内容的绘图工具.
+gnuplot is a plotter that lets you take things from standard in. 
+
+592
+00:42:16,355 --> 00:42:20,467
+我并不指望你会所有这些编程语言,
+I'm not expecting you to know all of these programming languages 
+
+593
+00:42:20,467 --> 00:42:24,710
+因为它们确实都是独立的一门语言,
+because they really are programming languages in their own right, 
+
+594
+00:42:24,813 --> 00:42:27,009
+只是想你展示一下你可以使用的工具.
+but it's just to show you what is possible. 
+
+595
+00:42:29,159 --> 00:42:32,617
+现在,这是一个直方图——
+So, this is now a histogram of 
+
+596
+00:42:32,617 --> 00:42:39,102
+一个关于"自1月1日以来我的服务器上前5的用户名的使用次数"的直方图,
+how many times each of the top 5 usernames have been used for my server since January 1st, 
+
+597
+00:42:39,392 --> 00:42:42,523
+而这只用了一行命令.
+and it's just one command-line. 
+
+598
+00:42:42,523 --> 00:42:44,953
+虽然有点复杂,
+It's a somewhat complicated command line, 
+
+599
+00:42:44,953 --> 00:42:47,336
+但它只有一行
+but it's just one command-line thing that you can do.
+
+600
+00:42:50,654 --> 00:42:57,103
+在最后的几分钟里,我想讲一下两种特殊的数据整理方法
+There are two special types of data wrangling that I want to talk to you about in the last little bit of time that we have, 
+
+601
+00:42:57,103 --> 00:43:01,775
+第一种是命令行参数整理
+and the first one is command-line argument wrangling. 
+
+602
+00:43:01,869 --> 00:43:09,906
+有时,你可能会像我们在上一堂课中看到的"find"那样,
+Sometimes, you might have something that, actually, we looked at in the last lecture, 
+
+603
+00:43:09,906 --> 00:43:13,551
+会产生一串文件,
+like you have things like find that produce a list of files 
+
+604
+00:43:13,551 --> 00:43:21,962
+或者你的基准测试脚本可能产生了一坨的参数,
+or maybe something that produces a list of arguments for your benchmarking script, 
+
+605
+00:43:21,962 --> 00:43:24,766
+例如你想使用特定的参数分布运行它.
+like you want to run it with a particular distribution of arguments. 
+
+606
+00:43:24,766 --> 00:43:29,486
+假设你有一个脚本,会输出特定项目的迭代次数,
+Let's say you had a script that printed the number of iterations to run a particular project, 
+
+607
+00:43:29,486 --> 00:43:31,682
+并且你希望它像指数分布一样...
+and you wanted, like, an exponential distribution or something, 
+
+608
+00:43:31,682 --> 00:43:34,392
+打印每行的迭代次数,
+and this prints the number of iterations on each line, 
+
+609
+00:43:34,392 --> 00:43:37,103
+并且你要为每个迭代次数运行你的基准测试脚本.
+and you were to run your benchmark for each one. 
+
+610
+00:43:37,103 --> 00:43:40,280
+好的,这里有一个工具叫做"xargs",它是你的好帮手.
+Well, here is a tool called xargs that's your friend. 
+
+611
+00:43:40,280 --> 00:43:46,635
+"xargs"可以将输入的每行都转换成参数.
+xargs takes lines of input and turns them into arguments, 
+
+612
+00:43:46,916 --> 00:43:48,598
+这可能看起来有些奇怪.
+and this might look a little weird. 
+
+613
+00:43:48,598 --> 00:43:51,495
+我来举一个例子.
+See if I can come up with a good example for this. 
+
+614
+00:43:51,495 --> 00:43:53,364
+我用Rust编程,
+So, I program in Rust, 
+
+615
+00:43:53,364 --> 00:43:57,383
+而Rust可以安装多个版本的编译器.
+And rust lets you install multiple versions of the compiler. 
+
+616
+00:43:57,383 --> 00:44:04,299
+在这种情况下,你可以看到我安装了稳定版,beta版和几个较早的稳定版本,
+So in this case, you can see that I have stable beta, I have a couple of earlier stable releases, 
+
+617
+00:44:04,299 --> 00:44:06,261
+还有不同的日期的Nightly版本.
+and I've launched a different dated nightlys
+
+618
+00:44:06,261 --> 00:44:08,317
+所有版本的编译器都是可以用的
+And this is all very well, 
+
+619
+00:44:08,317 --> 00:44:14,813
+但是随着时间的推移,我不需要比如去年3月的Nightly版本了.
+but over time like I don't really need the nightly version from like March of last year anymore. 
+
+620
+00:44:14,813 --> 00:44:16,805
+我可能想不时地清理一下这些版本,
+I can probably delete that every now and again, 
+
+621
+00:44:16,916 --> 00:44:18,411
+或者我想清理一下这些东西.
+and maybe I want to clean these up a little. 
+
+622
+00:44:18,411 --> 00:44:23,472
+好吧,这是一个多行列表,所以我可以先找出nightly版本,
+Well, this is a list of lines, so I can get for nightly, 
+
+623
+00:44:23,472 --> 00:44:25,472
+然后把它们删掉.
+I can get rid of...
+
+624
+00:44:25,514 --> 00:44:31,542
+"-V"表示不匹配,我不想匹配到当前最新的Nightly版本.
+So "-V" is don't match, I don't want to match to the current nightly. 
+
+625
+00:44:31,542 --> 00:44:34,719
+好的,这是过期的nightly列表.
+Okay, so this is a list of dated nightlys. 
+
+626
+00:44:34,766 --> 00:44:37,243
+我只想要2019年后的版本,
+Maybe I want only the ones from 2019, 
+
+627
+00:44:38,972 --> 00:44:44,346
+现在我想卸载这一个个工具链.
+and now I want to remove each of these tool chains for my machine. 
+
+628
+00:44:44,346 --> 00:44:47,640
+我可以手动复制每个工具链的名称并粘贴到...
+I could copy paste each one into...
+
+629
+00:44:47,640 --> 00:44:55,888
+到"rustup toolchain remove"或"uninstall",对吧?
+there's a "rustup toolchain remove" or "uninstall" maybe ,toolchain uninstall, right? 
+
+630
+00:44:55,888 --> 00:44:59,065
+所以我可以手动输入每一个名字,或者复制/粘贴它们,
+So I could manually type out the name of each one or copy/paste them, 
+
+631
+00:44:59,065 --> 00:45:02,757
+但是我现在有了这个列表,手动输入不是很麻烦吗.
+but that's getting gets annoying really quickly because I have the list right here. 
+
+632
+00:45:02,757 --> 00:45:13,037
+那么现在问题转换为,我应该怎么去掉它的后缀?
+So instead, how about I said away this sort of this suffix that it adds? 
+
+633
+00:45:13,084 --> 00:45:17,056
+看这里,接下来我会用"xargs"
+Right, so now it's just that, and then I use "xargs". 
+
+634
+00:45:17,056 --> 00:45:22,476
+"xargs"会将一系列输入列表转换成参数.
+So "xargs" takes a list of inputs and turns them into arguments. 
+
+635
+00:45:22,476 --> 00:45:28,785
+所以我想把这些参数传递给"rustup toolchain uninstall",
+So I want this to become arguments to "rustup toolchain uninstall", 
+
+636
+00:45:29,159 --> 00:45:34,813
+但为了方便起见,我会加上"echo"以便查看要运行的命令是什么.
+and just for my own sanity's sake, I'm gonna make this echo just so it's going to show which command it's gonna run. 
+
+637
+00:45:34,860 --> 00:45:36,635
+嗯,这些信息可能不是很有用,而且可读性不强
+Well, it's relatively unhelpful, 
+
+638
+00:45:36,635 --> 00:45:39,141
+
+but are hard to read at least. 
+
+639
+00:45:39,141 --> 00:45:41,374
+但至少你可以看到即将执行的命令.
+You see the command it's going to execute. 
+
+640
+00:45:41,374 --> 00:45:44,673
+如果我去掉这个"echo",将会执行"rustup toolchain uninstall",
+If I remove this echo, it's "rustup toolchain uninstall", 
+
+641
+00:45:44,673 --> 00:45:48,177
+nightly的列表就会作为该程序的参数.
+and then the list of nightlys as arguments to that program. 
+
+642
+00:45:48,177 --> 00:45:54,065
+这样,如果我运行它,就会卸载所有工具链,而不必逐个复制粘贴它们.
+And so if I run this, it uninstalls every tool chain instead of me having to copy paste them. 
+
+643
+00:45:54,766 --> 00:46:00,374
+因此,这是一个例子,说明这种数据整理实际上可以用于除了查看数据以外的其他任务.
+So this is one example where this kind of data wrangling actually can be useful for other tasks than just looking at data. 
+
+644
+00:46:00,374 --> 00:46:02,850
+它只是从一个形式的数据转换到另一种.
+It's just going from one format to another. 
+
+645
+00:46:02,850 --> 00:46:05,327
+你也可以整理二进制数据.
+You can also wrangle binary data. 
+
+646
+00:46:05,327 --> 00:46:09,159
+比如一些视频和图像,
+So a good example of this is stuff like videos and images 
+
+647
+00:46:09,159 --> 00:46:14,149
+你可能想整点儿活儿.
+where you might actually want to operate over them in some interesting way. 
+
+648
+00:46:14,149 --> 00:46:16,168
+例如,有一个叫做"ffmpeg"的工具.
+So for example, there's a tool called "ffmpeg". 
+
+649
+00:46:16,168 --> 00:46:20,981
+"ffmpeg"用于编码和解码视频,某种程度上的图像也可以.
+"ffmpeg" is for encoding and decoding video and to some extent images. 
+
+650
+00:46:20,981 --> 00:46:25,327
+我将设置它的日志级别为"panic",不然它会输出很多东西.
+I'm gonna set its log level to panic because otherwise it prints a bunch of stuff. 
+
+651
+00:46:25,327 --> 00:46:32,289
+我希望它从"/dev/video0"读取,这是我录制视频的网络摄像头设备,
+I want it to read from /dev/video0, which is my video of my webcam video device, 
+
+652
+00:46:32,383 --> 00:46:38,224
+我想要获取第一帧,换句话说我只需要得到一张照片,
+and I wanted to take the first frame, so I just wanted to take a picture, 
+
+653
+00:46:38,224 --> 00:46:43,551
+但不是单帧视频文件,
+and I wanted to take an image rather than a single frame video file, 
+
+654
+00:46:43,551 --> 00:46:46,215
+然后我希望把它输出.
+and I wanted to print its output. 
+
+655
+00:46:46,215 --> 00:46:48,785
+所以这张图片被捕获到标准输出.
+So the imaged captures to stand output
+
+656
+00:46:48,785 --> 00:46:54,252
+"-"通常是告诉程序使用标准输入输出而不要用文件.
+"-" is usually the way you tell the program to use standard input or output rather than a given file. 
+
+657
+00:46:54,252 --> 00:46:55,747
+这个参数在这里想要一个文件名,
+So here it expects a file name, 
+
+658
+00:46:55,747 --> 00:46:59,532
+而"-"在这种情况下作为文件名就表示标准输出.
+and the "file name -" means standard output in this context. 
+
+659
+00:46:59,532 --> 00:47:03,037
+然后,我想用管道把它传输到一个叫做"convert"的程序.
+And then I want to pipe that through a parameter called "convert". 
+
+660
+00:47:03,037 --> 00:47:06,215
+"convert"是一个图像处理程序.
+"convert" is an image manipulation program. 
+
+661
+00:47:06,215 --> 00:47:13,972
+我想告诉"convert"从标准输入读取,并将图像转换为灰度图,
+I want to tell "convert" to read from standard input and turn the image into the colorspace gray, 
+
+662
+00:47:13,972 --> 00:47:20,747
+然后将图像写入"-",也就是标准输出.
+and then write the resulting image into the file -, which is standard output. 
+
+663
+00:47:20,841 --> 00:47:24,097
+然后我想接给"gzip";
+And I don't want to pipe that into gzip
+
+664
+00:47:24,097 --> 00:47:26,862
+它将压缩这个图像文件,
+we're just gonna compress this image file, 
+
+665
+00:47:26,916 --> 00:47:31,261
+它也在标准输入和标准输出上操作.
+and that's also going to just operate on standard input, standard output. 
+
+666
+00:47:31,261 --> 00:47:35,934
+然后,我将把它传输到我的远程服务器,
+And then I'm going to pipe that to my remote server, 
+
+667
+00:47:35,934 --> 00:47:39,860
+并在那里解码该图像,
+and on that, I'm going to decode that image, 
+
+668
+00:47:39,860 --> 00:47:43,504
+然后存储该图像的副本.
+and then I'm gonna store a copy of that image. 
+
+669
+00:47:43,504 --> 00:47:48,645
+记住,"tee" 会读取输入,然后输出到文件和标准输出中.
+So remember, tee reads input, prints it to standard out and to a file. 
+
+670
+00:47:48,645 --> 00:47:53,598
+这将以png的格式得到解码后的图像文件的副本,
+This is gonna make a copy of the decoded image file as copy about PNG, 
+
+671
+00:47:54,953 --> 00:47:57,523
+继续沿着管道传递.
+and then it's gonna continue to stream that out. 
+
+672
+00:47:57,523 --> 00:48:01,215
+现在我将把它传递回本地流,
+So now I'm gonna bring that back into a local stream, 
+
+673
+00:48:01,215 --> 00:48:06,729
+并在在图片查看器中显示.
+and here I'm going to display that in an image display. 
+
+674
+00:48:06,729 --> 00:48:08,458
+让我们看看是否有效.
+Err, let's see if that works. 
+
+675
+00:48:10,747 --> 00:48:17,990
+嘿,好的,现在它通过服务器进行了往返,然后通过管道返回,
+Hey, right, so this now did a round-trip to my server and then came back over pipes, 
+
+676
+00:48:17,990 --> 00:48:25,280
+至少在理论上,我的服务器上有一份未压缩的文件的副本.
+and there's now a computer, there's a decompressed version of this file, at least in theory, on my server. 
+
+677
+00:48:25,280 --> 00:48:30,280
+让我们看看它是否存在:`scp tsp copy.png .` 
+Let's see if that's there: "scp tsp copy.png .", 
+
+678
+00:48:30,327 --> 00:48:33,738
+啊哦,少了":"
+and ...
+
+679
+00:48:36,402 --> 00:48:40,747
+就是这样,同样的文件出现在了服务器上,我们的管道生效了.
+Yeah, hey, same file ended up on the server, so our pipeline worked. 
+
+680
+00:48:41,121 --> 00:48:43,691
+再次强调,这是一个有点儿傻的例子,
+Again, this is a sort of silly example, 
+
+681
+00:48:43,691 --> 00:48:49,298
+但它让你看到了构建这些通道的强大之处,这些通道不必是文本数据,
+but let's you see the power of building these pipelines where it doesn't have to be textual data; 
+
+682
+00:48:49,298 --> 00:48:51,765
+它只是将任何格式的数据转换为另一种格式.
+it's just going from data in any format to any other. 
+
+683
+00:48:51,775 --> 00:48:53,037
+例如,
+Like, for example, 
+
+684
+00:48:53,037 --> 00:49:00,093
+如果我想,我可以使用`cat /dev/video0`,然后将其传送到Anish的服务器上,
+if I wanted to, I can do "cat  /dev/video0" and then pipe that to a server that Anish controls, 
+
+685
+00:49:00,093 --> 00:49:05,420
+然后他可以把他用管道接到视频播放器上,然后就可以观看该视频了.
+and then he could watch that video stream by piping it into a video player on his machine. 
+
+686
+00:49:05,467 --> 00:49:07,710
+只要我们想,不是吗?
+If we wanted to,right? 
+
+687
+00:49:07,710 --> 00:49:10,233
+只要这些工具存在就可以实现
+It just need to know that these things exist. 
+
+688
+00:49:12,009 --> 00:49:14,719
+今天又有一些练习题,
+There are a bunch of exercises for this lab, 
+
+689
+00:49:14,719 --> 00:49:20,701
+其中一些依赖于你拥有一个看起来有点像Mac OS和Linux上的日志的数据源.
+and some of them rely on you having a data source that looks a little bit like a log on Mac OS and Linux. 
+
+690
+00:49:20,701 --> 00:49:22,757
+我们提供了一些命令,供你实验,
+We give you some commands you can try to experiment with, 
+
+691
+00:49:22,757 --> 00:49:27,009
+但请记住,你使用的数据源不是那么重要.
+but keep in mind that it's not that important exactly what data source you use. 
+
+692
+00:49:27,009 --> 00:49:31,402
+更重要的是找到一些你认为有趣的数据源,
+This is more finding some data source where you think there might be an interesting signal, 
+
+693
+00:49:31,402 --> 00:49:33,738
+然后尝试从中提取一些有趣的东西,这就是所有练习的目的.
+and then try to extract something interesting from it. 
+
+694
+00:49:33,738 --> 00:49:36,355
+这就是我们这节课的内容了
+That is what all of the exercises are about. 
+
+695
+00:49:36,355 --> 00:49:43,925
+因为周一是马丁·路德·金纪念日,所以下一次课是星期二,到时候我们会讲述命令行环境.
+We will not have class on Monday because it's MLK Day, so next lecture will be Tuesday on command line environments. 
+
+696
+00:49:43,925 --> 00:49:49,532
+大家对我们目前讲解的内容或是传管道传输或是正则表达式有什么问题吗?
+Any questions about what we've covered so far or the pipelines or regular expressions? 
+
+697
+00:49:49,532 --> 00:49:53,831
+我强烈推荐你们好好学学正则表达式,
+I really recommend that you look into regular expressions and try to learn them. 
+
+698
+00:49:53,831 --> 00:49:57,897
+它们非常方便,不仅在这里使用,而且在编程中也很实用.
+They are extremely handy, both for this and in programming in general, 
+
+699
+00:49:57,897 --> 00:49:59,719
+如果有任何问题,请在办公时间来提问,我们会帮助你们的.
+and if you have any questions, come to office hours, and we'll help you out.
+

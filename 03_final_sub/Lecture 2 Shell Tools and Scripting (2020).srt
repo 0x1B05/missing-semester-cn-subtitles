@@ -1,0 +1,3176 @@
+﻿1
+00:00:00,900 --> 00:00:02,575
+好,欢迎回来.
+Okay, welcome back.
+
+2
+00:00:02,575 --> 00:00:07,600
+今天我们将讨论与Shell相关的两个重要主题.
+Today we're gonna cover kind of a couple separate like two main topics related to the Shell.
+
+3
+00:00:07,600 --> 00:00:11,376
+首先,我们将编写一些Shell脚本,主要用bash,
+First, we're gonna do some kind of Shell scripting, mainly related to bash, 
+
+4
+00:00:11,376 --> 00:00:18,875
+bash是Mac或Linux系统中默认的Shell.
+which is the Shell that most of you will start like in Mac, \N or like in most Linux systems, that's the default Shell.
+
+5
+00:00:18,875 --> 00:00:22,650
+它也与其他Shell(如zsh)兼容,非常实用.
+And it's also kind of backward compatible through other Shells like zsh, it's pretty nice.
+
+6
+00:00:22,650 --> 00:00:26,450
+然后,我们将介绍一些非常方便的Shell工具,
+And then we're gonna cover some other Shell tools that are really convenient,
+
+7
+00:00:26,450 --> 00:00:29,325
+可以让你免做一些重复的任务,
+so you avoid doing like really repetitive tasks,
+
+8
+00:00:29,325 --> 00:00:33,350
+例如查找某些代码或某些藏得很深的文件.
+like looking for some piece of code or for some elusive file.
+
+9
+00:00:33,400 --> 00:00:36,700
+Shell中一些内置命令已经非常有用,
+And there are already kind of really nice built-in commands
+
+10
+00:00:36,700 --> 00:00:40,550
+可以帮助你完成这些任务.
+that will kind of really help you to do those things.
+
+11
+00:00:40,550 --> 00:00:46,475
+昨天,我们已经介绍了Shell的一些特性,
+So yesterday we already kind of introduced you to the Shell and kind of like it's quirks,
+
+12
+00:00:46,475 --> 00:00:50,350
+比如如何执行命令并对他们重定向等等.
+and some like how you start executing commands,redirecting them.
+
+13
+00:00:50,350 --> 00:00:57,475
+今天,我们将更详细地介绍Shell的变量语法、流程控制和函数等内容.
+Today, we're gonna kind of cover more about like the syntax of more \N like the variables, the control flow,functions of the Shell.
+
+14
+00:00:57,475 --> 00:01:03,875
+例如,一旦你进入Shell,你可能想要定义一个变量,
+So for example, once you kind of drop into a Shell, say you want to kind of define a variable, 
+
+15
+00:01:03,975 --> 00:01:09,250
+这是学习编程语言的第一步.
+which is kind of one of the first things you learn to do in a programming language.
+
+16
+00:01:09,250 --> 00:01:13,125
+在这里,你可以执行类似{\rcode}foo=bar{\r}的操作.
+Here you could do something like "foo=bar".
+
+17
+00:01:13,150 --> 00:01:17,775
+现在,我们可以通过"$foo"来访问"foo"的值.
+And now we can access the value of "foo" by doing "$foo".
+
+18
+00:01:18,300 --> 00:01:20,850
+结果为"bar",完美.
+And that's "bar", perfect.
+
+19
+00:01:20,900 --> 00:01:24,650
+需要注意的一个问题是,
+One quirk that you need to be aware of is that 
+
+20
+00:01:24,650 --> 00:01:28,025
+在使用bash的时候,空格非常关键.
+spaces are really critical when you're dealing with bash.
+
+21
+00:01:28,025 --> 00:01:33,500
+主要是因为空格是用于分隔参数的字符.
+Mainly because spaces are reserved, and that will be for separating arguments.
+
+22
+00:01:33,500 --> 00:01:37,526
+因此,例如,{\rcode}foo = bar{\r}将不起作用,
+So, for example, something like "foo = bar" won't work, 
+
+23
+00:01:37,526 --> 00:01:41,950
+Shell会告诉你为什么不起作用.
+and the Shell is gonna tell you why it's not working. 
+
+24
+00:01:41,950 --> 00:01:46,150
+这是因为"foo"命令并没有执行,例如这里提示说"foo"不存在.
+It's because the "foo" command is not working, like "foo" is non-existent.
+
+25
+00:01:46,150 --> 00:01:49,925
+事实上,我们并没有把"foo"分配到"bar"
+And here what is actually happening, we're not assigning "foo" to "bar",
+
+26
+00:01:49,925 --> 00:01:56,575
+换句话说,我们调用"foo"程序时,第一个参数是"=",第二个参数是"bar".
+what is happening is we're calling the "foo" program with the first argument "=" and the second argument "bar".
+
+27
+00:01:57,400 --> 00:02:03,700
+通常情况下,当你遇到一些问题时,例如一些带有空格的文件时,
+And in general, whenever you are having some issues, like some files with spaces
+
+28
+00:02:03,700 --> 00:02:06,203
+需要小心处理.
+you will need to be careful about that.
+
+29
+00:02:06,203 --> 00:02:10,525
+注意要用引号把含空格的字符串引起来.
+You need to be careful about quoting strings.
+
+30
+00:02:10,525 --> 00:02:14,350
+接下来,我们将讨论在bash中如何使用字符串.
+So, going into that, how you do strings in bash. 
+
+31
+00:02:14,350 --> 00:02:16,700
+有两种方法可以定义字符串：
+There are two ways that you can define a string:
+
+32
+00:02:16,700 --> 00:02:20,900
+你可以使用双引号("")定义字符串,
+You can define strings using double quotes 
+
+33
+00:02:20,900 --> 00:02:25,000
+也可以使用单引号('')定义字符串.
+and you can define strings using single,
+
+34
+00:02:25,000 --> 00:02:26,275
+错辣,
+Sorry,
+
+35
+00:02:26,275 --> 00:02:28,775
+是用单引号('')
+using single quotes.
+
+36
+00:02:28,800 --> 00:02:32,900
+对于纯文本字符串,它们是等效的,
+However, for literal strings they are equivalent,
+
+37
+00:02:32,900 --> 00:02:35,550
+但对于有些情况则不然.
+but for the rest they are not equivalent.
+
+38
+00:02:35,550 --> 00:02:43,200
+例如,如果我们执行{\rcode}echo "Value is $foo"{\r},
+So, for example, if we do `echo "Value is $foo"`,
+
+39
+00:02:43,650 --> 00:02:47,783
+则会将"$foo"展开为字符串,
+The "$foo" has been kind of expanded like a string 
+
+40
+00:02:47,783 --> 00:02:51,125
+并将其替换为Shell中"foo"的值.
+substituted to the value of the "foo" variable in the Shell. 
+
+41
+00:02:51,125 --> 00:02:58,900
+而如果我们使用单引号,则就仅仅是"$foo",
+Whereas if we do this with single quotes, we are just getting the "$foo" as it is
+
+42
+00:02:58,975 --> 00:03:01,850
+即单引号不会进行替换.
+and like single quotes won't be replacing.
+
+43
+00:03:01,850 --> 00:03:04,354
+所以写bash脚本真的很简单,
+And again,it's really easy to write a script, 
+
+44
+00:03:04,354 --> 00:03:08,350
+这类似于你可能更熟悉的Python,
+assume that this is kind of like Python, that you might be more familiar with,  
+
+45
+00:03:08,350 --> 00:03:10,774
+只是你暂时还没有意识到这一点.
+and not realize all that.
+
+46
+00:03:10,775 --> 00:03:14,350
+这就是你给变量赋值的方式.
+And this is the way you will assign variables.
+
+47
+00:03:14,350 --> 00:03:19,925
+然后,bash还可以进行流程控制,例如for循环、while循环,
+Then bash also has control flow techniques that we'll see later,like for loops, while loops, 
+
+48
+00:03:19,925 --> 00:03:23,450
+更主要的是你可以定义函数.
+and one main thing is you can define functions.
+
+49
+00:03:23,450 --> 00:03:28,325
+我们可以调用我在这里定义的一个函数
+And we can access like a function I have defined here.
+
+50
+00:03:28,325 --> 00:03:32,400
+我们可以访问此处定义的"mcd"函数.
+And here we have the "mcd" function, that has been defined, 
+
+51
+00:03:32,400 --> 00:03:35,737
+目前为止,我们只是演示了
+and the thing is, so far, we have just kind of seen 
+
+52
+00:03:35,737 --> 00:03:38,931
+通过将多个命令使用管道传输来执行这些命令,
+how to execute several commands by piping into them, 
+
+53
+00:03:38,931 --> 00:03:41,200
+昨天已经简要介绍了这个.
+kind of saw that briefly yesterday.
+
+54
+00:03:41,200 --> 00:03:45,150
+但是在很多情况下,你会想先执行一件事,然后再做另一件事.
+But a lot of times you want to do first one thing and then another thing.
+
+55
+00:03:45,150 --> 00:03:51,100
+这就像我们这里的这个按序执行的例子一样.
+And that's kind of like the sequential execution that we get here.
+
+56
+00:03:51,100 --> 00:03:54,075
+例如,在这里,我们调用了"mcd"函数.
+Here, for example, we're calling the "mcd" function.
+
+57
+00:03:54,100 --> 00:04:02,625
+我们首先调用"mkdir"命令来创建这个目录.
+And we, first,are calling the "mkdir" command, which is like creating this directory.
+
+58
+00:04:02,625 --> 00:04:06,175
+在这里,"$1"是一种特殊变量.
+Here, "$1" is like a special variable.
+
+59
+00:04:06,175 --> 00:04:12,175
+这是bash的一种特性,类似于其他脚本语言里的"argv",
+This is the way that bash works,whereas in other scripting languages there will be like "argv",
+
+60
+00:04:12,175 --> 00:04:16,775
+"argv"第一项将包含该参数.
+the first item of the array "argv" will contain the argument.
+
+61
+00:04:16,775 --> 00:04:18,125
+在bash中,它被表示为"$1".
+In bash it's "$1". 
+
+62
+00:04:18,125 --> 00:04:22,320
+通常,在bash中,有许多"$"开头的东西,
+And in general, a lot of things in bash will be "$..."
+
+63
+00:04:22,320 --> 00:04:25,750
+这表明它们是保留关键字,稍后我们会看到更多例子.
+and will be reserved, we will be seeing more examples later.
+
+64
+00:04:25,775 --> 00:04:30,675
+一旦我们创建了文件夹,我们就进入该文件夹,
+And once we have created the folder, we cd into that folder,
+
+65
+00:04:30,675 --> 00:04:34,550
+这是相当常见的情况.
+which is kind of a fairly common pattern that you will see.
+
+66
+00:04:34,550 --> 00:04:38,375
+我们可以在Shell中直接输入这个命令,
+We will actually type this directly into our Shell, 
+
+67
+00:04:38,375 --> 00:04:40,450
+它会定义该函数并起作用.
+and it will work  and it will define this function.  
+
+68
+00:04:40,450 --> 00:04:45,126
+但是,有时将这些内容写入文件会更好.
+But sometimes it's nicer to kind of write things in a file.
+
+69
+00:04:45,126 --> 00:04:49,801
+我们可以使用{\rcode}source mcd.sh{\r}
+What we can do is we can source this. 
+
+70
+00:04:49,801 --> 00:04:54,050
+这会在我们的Shell中加载并执行这个脚本.
+And that will execute this script in our Shell and load it.
+
+71
+00:04:54,050 --> 00:04:56,360
+现在看起来好像什么都没有发生,
+So now it looks like nothing happened, 
+
+72
+00:04:56,360 --> 00:05:01,525
+但是我们的Shell中已经定义了"mcd"函数.
+but now the "mcd" function has been defined in our Shell. 
+
+73
+00:05:01,525 --> 00:05:05,225
+我们现在可以执行"mcd test"命令来试试,
+So we can now for example do like "mcd test", 
+
+74
+00:05:05,225 --> 00:05:09,675
+然后我们从"tools"目录移动到"test"目录.
+and now we move from the "tools" directory to the "test" directory. 
+
+75
+00:05:09,675 --> 00:05:13,675
+我们先创建了文件夹,然后进入了它.
+We both created the folder and we moved into it.
+
+76
+00:05:15,450 --> 00:05:18,875
+还有什么?
+What else. So a result is...
+
+77
+00:05:18,875 --> 00:05:22,275
+我们可以使用"$1"来访问第一个参数.
+We can access the first argument with "$1".
+
+78
+00:05:22,275 --> 00:05:26,475
+还有很多保留关键字,
+There's a lot more kind of  reserved commands for example,
+
+79
+00:05:26,475 --> 00:05:29,950
+例如"$0"表示脚本的名称,
+"$0" will be the name of the script,
+
+80
+00:05:29,950 --> 00:05:37,125
+"$2"到"$9"将是bash脚本接收的第二到第九个参数.
+"$2" through "$9" will be the second through the ninth arguments that the bash script takes.  
+
+81
+00:05:37,125 --> 00:05:42,225
+其中一些保留关键字可以直接在Shell中使用,
+Some of these reserved keywords can be directly used in the Shell, 
+
+82
+00:05:42,225 --> 00:05:50,300
+例如"$?"可以获取上一个命令的错误代码,
+so for example "$?" will get you the error code from the previous command,
+
+83
+00:05:50,300 --> 00:05:53,900
+这个我等会会简要解释一下.
+and which I'll also explain briefly.
+
+84
+00:05:53,900 --> 00:05:59,275
+例如"$_"可以获取上一个命令的最后一个参数.
+But for example, "$_ " will get you the last argument of the previous command.
+
+85
+00:05:59,275 --> 00:06:07,325
+因此,我们也可以这样做,例如使用{\rcode}mkdir test{\r},
+So another way we could have done this is we could have said like "mkdir test"
+
+86
+00:06:07,325 --> 00:06:09,802
+而不需要重复输入"test",
+and instead of rewriting test, 
+
+87
+00:06:09,802 --> 00:06:14,282
+我们可以使用"$_"作为上一个命令的一部分来访问上一个参数,
+we can access that last argument as part of the (previous command),
+
+88
+00:06:14,282 --> 00:06:22,675
+这样它将被替换为"test",然后我们进入"test".
+using "$_" ,like that will be replaced with "test" and now we go into "test".
+
+89
+00:06:24,825 --> 00:06:27,675
+还有很多这样的命令,你应该熟悉它们.
+There are a lot of them, you should familiarize with them.
+
+90
+00:06:27,675 --> 00:06:31,975
+我经常使用的另一个命令叫做"!!",
+Another one I often use is kind of is called "bang bang" ("!!"), 
+
+91
+00:06:31,975 --> 00:06:38,775
+当你尝试创建某些东西时但没有足够权限的时候,它就很有用.
+you will run into this whenever you, for example, \N are trying to create something and you don't have enough permissions. 
+
+92
+00:06:38,775 --> 00:06:41,070
+然后,你可以执行{\rcode}sudo !!{\r}命令,
+Then, you can do "sudo !!" 
+
+93
+00:06:41,070 --> 00:06:46,825
+然后"!!"会被替换为上一次的命令,现在你可以再执行一次.
+and then that will replace the command in there and now you can just try doing that. 
+
+94
+00:06:46,825 --> 00:06:50,000
+现在它会提示你输入密码,因为你拥有sudo权限.
+And now it will prompt you for a password,because you have sudo permissions.
+
+95
+00:06:53,550 --> 00:06:57,300
+刚刚,我提到了执行命令出现error.
+Before, I mentioned the kind of the error command.
+
+96
+00:06:57,300 --> 00:07:00,958
+昨天我们提到,进程可以通过不同的方式
+Yesterday we saw that, in general, there are like different ways 
+
+97
+00:07:00,958 --> 00:07:04,825
+与其他进程或命令进行通信.
+a process can communicate with other processes or commands.
+
+98
+00:07:04,825 --> 00:07:07,709
+我们提过标准输入(流),
+We mentioned the standard input, 
+
+99
+00:07:07,709 --> 00:07:13,900
+这个不像从标准输入流中读取或是输出到标准输出流
+which also was less than like getting stuff through the standard input, \N putting stuff into the standard output.
+
+100
+00:07:13,900 --> 00:07:18,250
+这里有很多有意思的东西,比如说标准错误流,
+There are a couple more interesting things, there's also like a standard error,
+
+101
+00:07:18,250 --> 00:07:21,858
+它用于在程序编写时输出错误信息,
+a stream where you write errors that happen with your program 
+
+102
+00:07:21,858 --> 00:07:24,075
+以避免污染标准输出.
+and you don't want to pollute the standard output.
+
+103
+00:07:24,075 --> 00:07:29,365
+还有错误代码这种东西,这是许多编程语言中都有的,
+There's also the error code, which is like a general thing in a lot of programming languages, 
+
+104
+00:07:29,365 --> 00:07:34,700
+它可以报告程序的整体运行情况.
+some way of reporting how the entire run of something went.
+
+105
+00:07:34,700 --> 00:07:39,825
+因此,如果我们执行像{\rcode}echo "hello"{\r}这样的命令,
+So if we do  something like 'echo "hello"' 
+
+106
+00:07:39,825 --> 00:07:43,325
+并且检查其错误代码,它将为0.
+and we like query for the value, it's zero.
+
+107
+00:07:43,325 --> 00:07:46,850
+这是因为一切都很顺利,没有出现任何问题.
+And it's "zero" because everything went okay and there weren't any issues. 
+
+108
+00:07:46,850 --> 00:07:51,916
+"0"的退出代码与C语言中的退出代码相同,
+And a "0" exit code is the same as you will get in a language like c, 
+
+109
+00:07:51,925 --> 00:07:54,900
+例如"0"表示一切顺利,没有错误.
+like "0" means everything went fine, there were no errors.
+
+110
+00:07:54,900 --> 00:07:57,450
+但是,有时事情并不按照我们预期的方式进行.
+However, sometimes things won't work.
+
+111
+00:07:57,450 --> 00:08:04,850
+例如,如果我们执行{\rcode}grep foobar mcd.sh{\r},
+Sometimes, like if we try to "grep" for "foobar" in our "mcd.sh",
+
+112
+00:08:04,850 --> 00:08:07,800
+然后检查其错误代码,它将为1.
+and now we check for that value, it's "1". 
+
+113
+00:08:07,800 --> 00:08:12,750
+这是因为我们试图在"mcd.sh"中搜索"foobar"字符串,
+And that's because we tried to search for the "foobar" string in the "mcd.sh" 
+
+114
+00:08:12,750 --> 00:08:13,900
+但是该字符串不存在.
+and it wasn't there.
+
+115
+00:08:13,900 --> 00:08:17,320
+因此,"grep"不会输出任何内容,
+So "grep" doesn't print anything, 
+
+116
+00:08:17,320 --> 00:08:21,925
+但是会返回一个1的错误代码告诉我们发生了错误.
+but let us know that things didn't work by giving us a "1" error code.
+
+117
+00:08:21,925 --> 00:08:30,550
+还有一些有趣的命令,比如"true",它的错误代码始终为"0",
+There are some interesting commands like "true", for example, will always have a "0" error code, 
+
+118
+00:08:30,550 --> 00:08:35,075
+而"false"的错误代码始终为1.
+and "false" will always have a "1" error code.
+
+119
+00:08:35,075 --> 00:08:43,150
+通过使用这些逻辑运算符,我们可以执行某些条件语句.
+Then there are like these logical operators that you can use to do some sort of conditionals for example
+
+120
+00:08:43,150 --> 00:08:46,600
+例如,你还可以用"if-else",这个我们稍后再说
+one way...you also have "if"s and "else"s, that we will see later, 
+
+121
+00:08:46,600 --> 00:08:52,250
+你可以输入一些命令,例如{\rcode}false || echo "Oops fail"{\r}
+But you can do something like "false", and 'echo "Oops fail" '.
+
+122
+00:08:52,250 --> 00:08:56,300
+这里,我们使用"||"(或)运算符连接两个命令
+So here we have two commands connected by this "||" operator.
+
+123
+00:08:56,300 --> 00:09:00,725
+然后在这里,bash会执行第一个命令
+What bash is gonna do here, it's gonna execute the first one
+
+124
+00:09:00,725 --> 00:09:06,075
+如果第一个命令失败,则bash将执行第二个命令.
+and if the first one didn't work, then it's gonna execute the second one. 
+
+125
+00:09:06,075 --> 00:09:10,475
+所以在这里我们得到了这个结果,因为它是一个逻辑或.
+So here we get it,because it's gonna try to do a logical OR. 
+
+126
+00:09:10,475 --> 00:09:14,525
+如果第一个命令失败,则bash将执行第二个命令.
+If the first one didn't have a "0" error code, it's gonna try to do the second one. 
+
+127
+00:09:14,525 --> 00:09:19,675
+同样的,如果我们不用{\rcode}false{\r},我们用{\rcode}true{\r}
+Similarly, if we instead of use "false", we use something like "true",
+
+128
+00:09:19,675 --> 00:09:22,134
+因为执行{\rcode}true{\r}不会报错,
+since "true" will have a "0" error code, 
+
+129
+00:09:22,134 --> 00:09:27,234
+第二个命令就会跳过({\rcode2}短路[*]{\r})并且不会打印出来
+then the second one will be short-circuited and it won't be printed.
+*[这里是逻辑表达式的短路~]
+
+130
+00:09:32,425 --> 00:09:35,877
+同样,使用与运算符连接两个命令时,
+Similarly, we have an AND operator 
+
+131
+00:09:35,877 --> 00:09:42,175
+只有在第一个命令没有错误的情况下才会执行第二个命令.
+which will only execute the second part if the first one ran without errors.
+
+132
+00:09:42,175 --> 00:09:45,100
+和之前(逻辑或)一样,
+And the same thing will happen.
+
+133
+00:09:45,100 --> 00:09:49,825
+如果第一个命令失败,则bash将不会执行第二个命令.
+If the first one fails, then the second part of this thing won't be executed.
+
+134
+00:09:50,425 --> 00:09:58,400
+此外,无论执行什么命令,
+Kind of not exactly related to that, but another thing that you will see is
+
+135
+00:10:01,400 --> 00:10:05,062
+都可以使用";"将它们连接在同一行中,
+that no matter what you execute, then you can concatenate commands
+
+136
+00:10:05,062 --> 00:10:09,137
+并将它们打印出来.
+using a semicolon in the same line,and that will always print.
+
+137
+00:10:09,975 --> 00:10:13,461
+除此之外,例如我们现在还不知道
+Beyond that, what we haven't seen, for example, 
+
+138
+00:10:13,461 --> 00:10:19,475
+如何将一个命令的输出存储到一个变量中.
+is how you go about kind of getting the output of a command into a variable.
+
+139
+00:10:19,475 --> 00:10:24,300
+我们可以通过这样做来实现.
+And the way we can do that is doing something like this.
+
+140
+00:10:24,300 --> 00:10:29,451
+在这里,我们获取了{\rcode}pwd{\r}命令的输出,
+What we're doing here is we're getting the output of the "pwd" command,
+
+141
+00:10:29,451 --> 00:10:33,900
+该命令只是打印我们现在所在的当前工作目录,
+which is just printing the present working directory where we are right now.
+
+142
+00:10:33,900 --> 00:10:37,175
+然后将其存储到"foo"变量中.
+And then we're storing that into the "foo" variable.
+
+143
+00:10:37,175 --> 00:10:42,575
+然后我们查看一下"foo",我们就能看到之前存储的路径.
+So we do that and then we ask for "foo", we view our string.
+
+144
+00:10:42,575 --> 00:10:43,925
+更一般地说,
+And more generally, 
+
+145
+00:10:43,925 --> 00:10:51,725
+我们可以将它放入字符串中来执行{\rcode2}"命令替换"[*]{\r}.
+we can do this thing called command substitution by putting it into any string.
+*[命令替换是一种在Unix、Linux和类Unix操作系统中常见的技术，用于在一个命令的输出中嵌套另一个命令。]
+
+146
+00:10:51,725 --> 00:10:55,515
+由于我们使用的是双引号("")而不是单引号(''),
+And since we're using double quotes instead of single quotes
+
+147
+00:10:55,515 --> 00:11:02,450
+这个东西将被扩展,并告诉我们现在所在的位置.
+that thing will be expanded and it will tell us that we are in this working folder.
+
+148
+00:11:02,450 --> 00:11:05,950
+另一个有趣的事情是,
+Another interesting thing is, 
+
+149
+00:11:05,950 --> 00:11:11,034
+现在,这个东西扩展为一个字符串,而不是...
+right now, what this is expanding to is a string instead of kind of like, 
+
+150
+00:11:11,034 --> 00:11:13,375
+它只是扩展为一个字符串.
+it's just expanding as a string.
+
+151
+00:11:13,375 --> 00:11:19,867
+另一个小众的工具称为进程替换,它和命令替换有点类似.
+Another nifty and lesser known tool is called process substitution which is kind of similar. 
+
+152
+00:11:19,867 --> 00:11:20,975
+怎么做呢.
+What it will do...
+
+153
+00:11:24,025 --> 00:11:31,350
+这里,例如,"<"加上命令,再套上括号,
+It will, here for example, the "<", some command and another parenthesis,
+
+154
+00:11:31,350 --> 00:11:34,750
+它的作用是,它会内部执行,然后将输出放到
+what that will do is, that will execute, that will get the output to
+
+155
+00:11:34,750 --> 00:11:39,525
+一个类似临时文件的东西中,并将文件标识符提供给最左边命令.
+kind of like a temporary file and it will give the file handle to the command.
+
+156
+00:11:39,650 --> 00:11:42,500
+所以在这里,
+So here what we're doing is we're getting...
+
+157
+00:11:42,500 --> 00:11:45,800
+我们正在查看这个目录,
+we're LS'ing the directory, putting it into a temporary file,
+
+158
+00:11:45,800 --> 00:11:48,036
+将其放入一个临时文件中,对父文件夹做同样的事情,
+doing the same thing for the parent folder 
+
+159
+00:11:48,036 --> 00:11:50,500
+然后将两个文件连接起来.
+and then we're concatenating both files. 
+
+160
+00:11:50,500 --> 00:11:52,883
+这可能非常方便,
+And this will, might be really handy, 
+
+161
+00:11:52,883 --> 00:11:57,950
+因为一些命令不是从标准输入流中获取输入的,
+because some commands instead of expecting the input coming from the stdin,
+
+162
+00:11:57,950 --> 00:12:03,575
+而是从某些文件中获取的.
+they are expecting things to come from \N some file that is giving some of the arguments.
+
+163
+00:12:04,725 --> 00:12:08,150
+所以我们得到了两个命令连接在一起的输出.
+So we get kind of both things concatenated.
+
+164
+00:12:11,000 --> 00:12:15,238
+我认为到目前为止已经讲了不少东西,
+I think so far there's been a lot of information, 
+
+165
+00:12:15,238 --> 00:12:16,988
+让我们看一个简单的脚本示例,
+let's see kind of a simple, 
+
+166
+00:12:16,988 --> 00:12:22,800
+在其中我们可以看到一些这些东西的应用.
+an example script where we see a few of these things.
+
+167
+00:12:22,800 --> 00:12:29,475
+例如在这里我们有一个字符串和一个"$(date)".
+So for example here we have a string and we have kind of this "$(date)". 
+
+168
+00:12:29,475 --> 00:12:31,050
+"$(date)"是一个程序.
+So "$(date)" is a program.
+
+169
+00:12:31,050 --> 00:12:36,050
+UNIX中有很多程序,你将慢慢地熟悉.
+Again there's a lot of programs in UNIX you will kind of slowly familiarize with a lot of them.
+
+170
+00:12:36,050 --> 00:12:41,800
+{\rcode}date{\r}只是打印当前日期,你可以指定不同的格式.
+"date" just prints what the current date is and you can specify different formats.
+
+171
+00:12:41,800 --> 00:12:47,673
+接下来,我们有这些"$0".
+Then, we have these "$0" here. 
+
+172
+00:12:47,673 --> 00:12:50,525
+"$0"是我们正在运行的脚本的文件名.
+"$0" is the name of the script that we're running.
+
+173
+00:12:50,525 --> 00:12:57,575
+然后我们有"$#",这是我们给该命令的参数数量,
+Then we have "$#", that's the number of arguments that we are giving to the command,
+
+174
+00:12:57,625 --> 00:13:02,325
+然后"$$"是正在运行的该命令的{\rcode2}进程ID[*]{\r}.
+and then "$$" is the process ID of this command that is running.
+*[也简称PID]
+
+175
+00:13:02,325 --> 00:13:06,500
+再次提醒,这里有很多"$"符号,它们不直观,
+Again, there's a lot of kind of these dollar things, they're not intuitive 
+
+176
+00:13:06,500 --> 00:13:10,175
+因为它们没有一种助记的记忆方式,比如"$#".
+because they don't have like a mnemonic way of remembering, maybe, "$#".
+
+177
+00:13:10,175 --> 00:13:14,525
+但是用得多了就会逐渐熟悉它们.
+But it can be... you will just be seeing them and getting familiar with them.
+
+178
+00:13:14,525 --> 00:13:19,175
+这里我们有"$@",它将展开为所有的参数.
+Here we have this "$@", and that will expand to all the arguments.
+
+179
+00:13:19,175 --> 00:13:26,100
+因此,不必假定可能有三个参数而编写"$1","$2","$3",
+So, instead of having to assume that, maybe say,\N  we have three arguments and writing "$1", "$2", "$3",
+
+180
+00:13:26,100 --> 00:13:29,925
+如果我们不知道有多少参数,我们可以将所有这些参数放在那里.
+if we don't know how many arguments we can put all those arguments there.
+
+181
+00:13:29,925 --> 00:13:33,153
+然后将其传递给for循环.
+And that has been given to a for loop. 
+
+182
+00:13:33,153 --> 00:13:39,377
+for循环将依次创建"file"变量,
+And the for loop will, in time, get like the file variable 
+
+183
+00:13:39,377 --> 00:13:48,100
+并将每个参数逐一赋值给"file".
+and it will be giving each one of the arguments. \N So what we're doing is, for every one of the arguments we're giving. 
+
+184
+00:13:48,100 --> 00:13:53,612
+接下来,在下一行中,我们运行"grep"命令,
+Then, in the next line we're running the "grep" command
+
+185
+00:13:53,612 --> 00:13:56,850
+它只是在某个文件中搜索子字符串,
+which is just search for a substring in some file 
+
+186
+00:13:56,850 --> 00:14:01,450
+这里我们在文件中搜索字符串"foobar".
+and we're searching for the string "foobar" in the file.
+
+187
+00:14:01,450 --> 00:14:06,413
+我们将"file"变量展开.
+Here, we kind of have put the variable that the file took to expand.
+
+188
+00:14:06,413 --> 00:14:11,484
+昨天,如果我们关心程序的输出,
+And yesterday we saw that like if we care about the output of a program,
+
+189
+00:14:11,484 --> 00:14:16,200
+我们可以将其重定向到某个地方,以保存它或连接到其他文件.
+we can redirect it to somewhere to save it or like to connect it to some other file.
+
+190
+00:14:16,200 --> 00:14:19,075
+但是有时候我们想要相反的效果.
+But sometimes you want the opposite.
+
+191
+00:14:19,075 --> 00:14:21,225
+有时,例如在这里,
+Sometimes, here for example, we care...
+
+192
+00:14:21,225 --> 00:14:23,175
+我们需要关注错误代码.
+we're gonna care about the error code. 
+
+193
+00:14:23,175 --> 00:14:28,200
+对于这个脚本,我们想知道"grep"命令是否成功运行.
+About this script, we're gonna care whether the "grep" ran successfully or it didn't.
+
+194
+00:14:28,200 --> 00:14:33,661
+我们完全可以忽略输出,
+So we can actually discard entirely what the output 
+
+195
+00:14:33,661 --> 00:14:37,825
+就像"grep"命令的标准输出流和标准错误流一样.
+like both the standard output and the standard error of the "grep" command.
+
+196
+00:14:37,825 --> 00:14:42,925
+我们要做的是将输出重定向到{\rcode2}"/dev/null"[*]{\r},
+And what we're doing is we're redirecting the output to "/dev/null" 
+*["/dev/null"被称为黑洞文件,顾名思义,就像黑洞一样~]
+
+197
+00:14:42,925 --> 00:14:50,550
+这是UNIX系统中的一种特殊设备,
+which is kind of like a special device in UNIX systems where you can like write and it will be discarded. 
+
+198
+00:14:50,550 --> 00:14:54,500
+你可以像写入文件一样写入数据,但它将被丢弃.
+Like you can write no matter how much you want there, and it will be discarded. 
+
+199
+00:14:54,500 --> 00:15:00,225
+这里有一个">"符号,我们昨天已经知道它用于重定向.
+And here's the ">" symbol that we saw yesterday for redirecting output. 
+
+200
+00:15:00,375 --> 00:15:05,500
+这里有一个"2>",正如一些人可能已经猜到的那样,
+Here you have a "2>" and, as some of you might have guessed by now, 
+
+201
+00:15:05,500 --> 00:15:07,550
+这是用于重定向标准错误流的,
+this is for redirecting the standard error, 
+
+202
+00:15:07,550 --> 00:15:10,275
+因为这两个流是分开的,
+because those two streams are separate, 
+
+203
+00:15:10,300 --> 00:15:14,750
+你需要告诉bash如何处理它们.
+and you kind of have to tell bash what to do with each one of them.
+
+204
+00:15:14,750 --> 00:15:18,300
+所以在这里,我们检查文件是否包含"foobar",
+So here, we run, we check if the file has "foobar", 
+
+205
+00:15:18,300 --> 00:15:22,575
+如果文件包含"foobar",它将返回0.
+and if the file has "foobar" then it's going to have a "0" code. 
+
+206
+00:15:22,575 --> 00:15:25,750
+如果没有"foobar",它将返回非0的错误代码.
+If it doesn't have "foobar", it's gonna have a nonzero error code. 
+
+207
+00:15:25,750 --> 00:15:28,125
+因此,这正是我们检查的内容.
+So that's exactly what we check in this 
+
+208
+00:15:28,125 --> 00:15:33,050
+在这个if命令的一部分中,我们说"给我错误代码".
+"if" part of the command we say "get me the error code". 
+
+209
+00:15:33,050 --> 00:15:35,250
+这里用了"$?"
+Again, this "$?".
+
+210
+00:15:35,300 --> 00:15:37,700
+然后我们有一个比较运算符:
+And then we have a comparison operator:
+
+211
+00:15:37,700 --> 00:15:39,800
+"-ne",表示"not equal"(不相等).
+which is "-ne", for "not equal". 
+
+212
+00:15:39,800 --> 00:15:47,450
+有些其他编程语言有"=="、"!="这些比较符.
+And like some other programming languages will have "==", "!=", 
+
+213
+00:15:47,450 --> 00:15:53,550
+在bash中还有一系列的比较运算符,
+these symbols in bash there's kind of like a reserved set of comparisons 
+
+214
+00:15:53,550 --> 00:15:57,675
+{\rstrange}这主要是因为你可能需要测试很多东西{\r}
+and it's mainly because there's a lot of things you might want to test for 
+
+215
+00:15:57,675 --> 00:15:58,575
+{\rstrange}当你在shell中进行测试时,{\r}
+when you're in the Shell. 
+
+216
+00:15:58,575 --> 00:16:03,800
+{\rstrange}例如,在这里,我们只是检查两个整数值是否相同.{\r}
+Here for example we're just checking for the two values, two integer values, being the same. 
+
+217
+00:16:03,800 --> 00:16:10,050
+{\rstrange}或者例如在这里,"-f"检查文件是否存在,{\r}
+Or for example here, the "-f" check will let us know if a file exists, 
+
+218
+00:16:10,150 --> 00:16:13,800
+{\rstrange}这是你经常会遇到的一些事情.{\r}
+which is something that you will run into very,very commonly. 
+
+219
+00:16:14,625 --> 00:16:18,450
+我回到这个例子.
+I'm going back to the example. 
+
+220
+00:16:18,450 --> 00:16:27,489
+当文件没有"foobar"时会发生什么,
+Then, what happens when we,if the file did not have "foobar", 
+
+221
+00:16:27,489 --> 00:16:30,325
+就会返回非零错误代码,
+like there was a nonzero error code,
+
+222
+00:16:30,325 --> 00:16:34,650
+接着会打印:"这个文件中没有'foobar',我们将添加一个".
+then we print: this file doesn't have any "foobar",we're going to add one. 
+
+223
+00:16:34,650 --> 00:16:42,350
+我们所做的是{\rcode}echo "# foobar"{\r},希望这是对文件的注释,
+And what we do is we echo this "# foobar", hoping this is a comment to the file 
+
+224
+00:16:42,350 --> 00:16:48,350
+然后我们使用运算符">>"在文件末尾追加.
+and then we're using the operator ">>" to append at the end of the file. 
+
+225
+00:16:48,350 --> 00:16:52,450
+因为文件名已经被传递给脚本,
+Here since the file has been fed through the script, 
+
+226
+00:16:52,450 --> 00:16:57,250
+我们之前不知道文件名,所以我们用了"file"变量,现在要将它展开.
+and we don't know it beforehand, we have to substitute the variable of the filename. 
+
+227
+00:16:58,025 --> 00:17:02,000
+我们可以运行这个脚本.
+We can actually run this. 
+
+228
+00:17:02,000 --> 00:17:07,900
+我们已经在这个脚本中具有正确的权限,我们可以举出一些例子.
+We already have correct permissions in this script and we can give a few examples. 
+
+229
+00:17:07,900 --> 00:17:13,950
+在此文件夹中,我们有一些文件,"mcd.sh"是我们在开头看到的"mcd"函数,
+We have a few files in this folder, "mcd.sh" is the one we saw at the beginning for the "mcd" function, 
+
+230
+00:17:13,950 --> 00:17:20,175
+还有一些其他的脚本,我们甚至可以将这个脚本也放到输入中,
+some other "script" function and we can even feed the own script to itself to check 
+
+231
+00:17:20,175 --> 00:17:21,850
+以检查它是否包含"foobar".
+if it has "foobar" in it.
+
+232
+00:17:22,150 --> 00:17:31,575
+然后我们运行它,首先可以看到许多已经被扩展了的变量.
+And we run it and first we can see that there's different variables that we saw, \N that have been successfully expanded. 
+
+233
+00:17:31,575 --> 00:17:36,350
+我们有{\rcode}date{\r}命令,已经被替换为当前时间,
+We have date that has been replaced to the current time, 
+
+234
+00:17:36,350 --> 00:17:40,125
+然后我们传递三个参数给这个程序,
+then we're running this program, with three arguments, 
+
+235
+00:17:40,125 --> 00:17:44,400
+这是随机生成的{\rcode2}PID[*]{\r},
+this randomized PID, 
+*[PID代表进程标识符(Process Identifier)。\N 每个运行中的进程都有一个唯一的PID，用于在操作系统中标识该进程。]
+
+236
+00:17:44,400 --> 00:17:48,550
+然后它告诉我们"mcd.sh"没有任何"foobar",所以我们正在添加一个新的,
+and it's telling us "mcd" doesn't have any "foobar", so we are adding a new one,
+
+237
+00:17:48,550 --> 00:17:51,025
+这个脚本文件也没有"foobar".
+and this script file doesn't have one. 
+
+238
+00:17:51,025 --> 00:17:56,025
+现在让我们来看看"mcd.sh",它现在有了"foobar"注释.
+So now for example let's look at "mcd" and it has the comment that we were looking for.
+
+239
+00:17:58,875 --> 00:18:04,750
+当你执行脚本时,还有一件事需要知道,
+One other thing to know when you're kind of executing scripts 
+
+240
+00:18:04,750 --> 00:18:09,000
+就是这里有三个完全不同的参数,
+is that here we have like three completely different arguments 
+
+241
+00:18:09,000 --> 00:18:16,675
+但有时候你不需要一个个输入文件名.
+but very commonly you will be given arguments \N that can be more succinctly given in some way.
+
+242
+00:18:16,675 --> 00:18:25,200
+例如,在这里,如果我们想引用所有的".sh"脚本,
+So for example here if we wanted to refer to all the ".sh" scripts 
+
+243
+00:18:25,200 --> 00:18:31,000
+我们可以做一些像{\rcode}ls *.sh{\r}的事情,
+we could just do something like "ls *.sh"
+
+244
+00:18:31,000 --> 00:18:35,946
+这是大多数shell都有的一种文件名扩展方式.
+and this is a way of kind of filename expansion that most Shells have
+
+245
+00:18:35,946 --> 00:18:37,275
+称为"globbing"(通配符)的
+ that's called "globbing". 
+
+246
+00:18:37,275 --> 00:18:40,925
+在这里,正如你所想,
+Here, as you might expect, this is gonna say anything 
+
+247
+00:18:40,925 --> 00:18:45,125
+这将显示任何以".sh"结尾的文件.
+that has any kind of sort of characters and ends up with ".sh".
+
+248
+00:18:46,600 --> 00:18:50,750
+显然,我们确实得到了"example.sh"和"mcd.sh".
+Unsurprisingly, we get "example.sh" and "mcd.sh". 
+
+249
+00:18:50,775 --> 00:18:54,050
+我们还有这些"project1"和"project2",
+We also have these "project1" and "project2", 
+
+250
+00:18:54,050 --> 00:18:56,050
+如果有一个...
+and if there were like a... 
+
+251
+00:18:56,050 --> 00:19:00,375
+我们可以创建一个"project42",
+we can do a "project42", for example
+
+252
+00:19:00,375 --> 00:19:05,911
+例如,现在如果我们只想匹配"project"后面加一个字符,
+And now if we just want to refer to the projects that have a single character, 
+
+253
+00:19:05,911 --> 00:19:08,521
+而不是两个字符.
+but not two characters afterwards,
+
+254
+00:19:08,521 --> 00:19:10,400
+我们可以使用"?".
+like any other characters, we can use the question mark.  
+
+255
+00:19:10,400 --> 00:19:14,375
+所以"?"将扩展为一个任意字符.
+So "?" will expand to only a single one.
+
+256
+00:19:14,375 --> 00:19:20,525
+我们得到,第一个是"project1"然后是"project2"
+And we get, lsing, first "project1" and then "project2".
+
+257
+00:19:20,525 --> 00:19:27,700
+通常情况下,通配符可以非常强大.你也可以结合使用.
+Another kind of the...globbing can be very powerful. You can also combine it.
+
+258
+00:19:32,350 --> 00:19:36,050
+还有一个比较常见的模式是用花括号("\{\}").
+A common pattern is to use what is called curly braces.
+
+259
+00:19:36,050 --> 00:19:39,525
+假设我们有一个图像,在这个文件夹中,
+So let's say we have an image, that we have in this folder
+
+260
+00:19:39,525 --> 00:19:43,850
+我们想将这个图像从PNG转换为JPG,
+and we want to convert this image from PNG to JPG
+
+261
+00:19:43,850 --> 00:19:45,975
+或者我们可以复制它,
+or we could maybe copy it, 
+
+262
+00:19:45,975 --> 00:19:49,625
+这是一个非常常见的情况,有两个或更多相似的参数,
+or it's a really common pattern, to have two or more arguments 
+
+263
+00:19:49,625 --> 00:19:55,150
+你想将它们作为参数传递给某个命令.
+that are fairly similar and you want to do something with them \N as arguments to some command.
+
+264
+00:19:55,150 --> 00:19:58,763
+你可以这样做,你也可以用更加简介的方式
+You could do it this way, or more succinctly, 
+
+265
+00:19:58,763 --> 00:20:08,850
+你只要输入"image.\{png,jpg\}"就可以了
+you can just do "image.{png,jpg}"
+
+266
+00:20:08,850 --> 00:20:12,675
+在这里,我得到了一些彩色的反馈.
+And here, I'm getting some color feedback. 
+
+267
+00:20:12,675 --> 00:20:17,575
+反正它会扩展为上面那行.
+but what this will do, is expand into the line above.
+
+268
+00:20:17,575 --> 00:20:23,175
+实际上,我可以让zsh替我做到这一点.
+Actually, I can ask zsh to do that for me and that what's happening here.
+
+269
+00:20:24,600 --> 00:20:26,125
+这真的很nice.
+This is really powerful. 
+
+270
+00:20:26,150 --> 00:20:28,475
+例如,你可以做一些像...
+So for example you can do something like... 
+
+271
+00:20:28,475 --> 00:20:34,250
+我们可以"touch"一串"foo",所有这些都会被扩展.
+we could do "touch" on a bunch of "foo"s, and all of this will be expanded.
+
+272
+00:20:35,950 --> 00:20:42,425
+你还可以多层操作,他们将做笛卡尔积...
+You can also do it at several levels and you will do the Cartesian...
+
+273
+00:20:44,000 --> 00:20:48,650
+如果我们有一些这样的组,
+We have something like this, we have one group here, 
+
+274
+00:20:48,650 --> 00:20:52,525
+"\{1,2\}",然后这里有"\{1,2,3\}",
+"\{1,2\}" and then here there's "\{1,2,3\}", 
+
+275
+00:20:52,625 --> 00:20:56,600
+这将以这两个组的笛卡尔积进行扩展,
+and this is going to do the Cartesian product of these two expansions 
+
+276
+00:20:56,600 --> 00:21:03,425
+并将扩展为所有这些东西,我们可以快速地创建文件.
+and it will expand into all these things,that we can quickly "touch".
+
+277
+00:21:03,450 --> 00:21:10,825
+你还可以将"*"与"\{\}"结合使用.
+You can also combine the asterisk glob with the curly braces glob.
+
+278
+00:21:10,875 --> 00:21:13,900
+你甚至可以使用类似于区间的东西.
+You can even use kind of ranges.
+
+279
+00:21:13,900 --> 00:21:16,910
+比如,我们可以做"mkdir",
+Like, we can do "mkdir"
+
+280
+00:21:16,910 --> 00:21:20,025
+并创建"foo"和"bar"目录,
+and we create the "foo" and the "bar" directories, 
+
+281
+00:21:20,075 --> 00:21:25,275
+然后我们可以做类似这样的事情.
+and then we can do something along these lines. 
+
+282
+00:21:25,275 --> 00:21:31,700
+这将会扩展到"foo/a","foo/b"...所有这些组合,一直到"j",
+This is going to expand to "foo/a", "foo/b" like all these combinations, through "j", 
+
+283
+00:21:31,725 --> 00:21:34,275
+然后对于"bar"同样如此.
+and then the same for "bar". 
+
+284
+00:21:34,375 --> 00:21:36,023
+我还没有真正测试过它... 
+I haven't really tested it... 
+
+285
+00:21:36,023 --> 00:21:40,150
+但是是的,我们得到了所有这些我们可以"touch"的组合.
+but yeah, we're getting all these combinations that we can "touch".
+
+286
+00:21:40,150 --> 00:21:47,700
+现在,我们如果在这两个目录创建俩不同的文件,
+And now, if we touch something that is different between these two (directories), 
+
+287
+00:21:47,700 --> 00:21:56,326
+我们可以再演示一下之前的进程替换.
+we can again showcase the process substitution that we saw earlier. 
+
+288
+00:21:56,326 --> 00:22:00,450
+比如我们想检查这两个文件夹之间有哪些文件不同.
+So  we want to check what files are different between these two folders.
+
+289
+00:22:00,450 --> 00:22:03,425
+对于我们来说很明显,我们刚刚看到了,是"x"和"y",
+For us it's obvious, we just saw it, it's "x" and "y",
+
+290
+00:22:03,425 --> 00:22:06,946
+但是我们可以要求shell进行"diff",
+but we can ask the Shell to do this "diff" for us 
+
+291
+00:22:06,946 --> 00:22:09,900
+并且让它在两个"ls"的输出之间作比较.
+between the output of one "ls" and the other "ls".
+
+292
+00:22:09,900 --> 00:22:12,308
+毫不奇怪,我们得到的结果是:
+Unsurprisingly we're getting: 
+
+293
+00:22:12,308 --> 00:22:14,155
+"x"只存在于第一个文件夹中,
+"x" is only in the first folder 
+
+294
+00:22:14,155 --> 00:22:18,180
+而"y"只存在于第二个文件夹中.
+and "y" is only in the second folder. 
+
+295
+00:22:20,275 --> 00:22:25,400
+我们现在只看到了bash脚本.
+What is more is, right now, we have only seen bash scripts. 
+
+296
+00:22:25,400 --> 00:22:27,047
+如果你喜欢其他脚本,
+If you like other scripts,
+
+297
+00:22:27,047 --> 00:22:31,600
+对于某些任务,bash可能不是最好的,可能会很棘手.
+like for some tasks bash is probably not the best,it can be tricky. 
+
+298
+00:22:31,600 --> 00:22:36,875
+你实际上可以用许多不同语言来实现与shell交互的脚本.
+You can actually write scripts that interact with the Shell implemented in a lot of different languages. 
+
+299
+00:22:36,875 --> 00:22:39,075
+所以,例如,让我们看一下这里.
+So for example, let's see here...
+
+300
+00:22:39,075 --> 00:22:46,025
+一个Python脚本,在开头有一个魔法行,我现在不解释.
+Python script that has a magic line at the beginning that I'm not explaining for now.
+
+301
+00:22:46,025 --> 00:22:48,350
+然后我们有"import sys",
+Then we have "import sys",it's kind of like the... 
+
+302
+00:22:49,737 --> 00:22:55,916
+Python默认情况下不会与shell交互,
+Python is not, by default, trying to interact with the Shell, 
+
+303
+00:22:55,916 --> 00:22:57,900
+所以你需要导入一些库.
+so you will have to import some library. 
+
+304
+00:22:57,900 --> 00:23:06,624
+然后我们正在做一件非常简单的事,就是遍历"sys.argv[1:]".
+And then we're doing a really silly thing of just iterating over "sys.argv[1:]".
+
+305
+00:23:06,675 --> 00:23:13,150
+"sys.argv"有点类似于在bash中我们得到的"$0","$1"等,
+"sys.argv" is kind of similar to what in bash we're getting as "$0", "$1",etc
+
+306
+00:23:13,150 --> 00:23:17,250
+就像参数向量一样,我们将其按相反的顺序打印出来.
+Like the vector of the arguments, we're printing it in the reversed order.
+
+307
+00:23:17,500 --> 00:23:22,300
+开头的魔法行叫做shebang,
+And the magic line at the beginning is called a shebang 
+
+308
+00:23:22,300 --> 00:23:26,525
+是让shell知道如何运行这个脚本.
+and is the way that the Shell will know how to run this program.
+
+309
+00:23:26,525 --> 00:23:33,575
+你总是可以做一些像"python script.py"这样的事情,然后"a b c",
+Like you can always do something like "python script.py", and then like "a b c" 
+
+310
+00:23:33,600 --> 00:23:36,300
+这样可以运行.
+and that will work, always, like that. 
+
+311
+00:23:36,300 --> 00:23:40,925
+但是,如果我们想让它在shell中直接执行呢? 
+But what if we want to make this to be executable from the Shell? 
+
+312
+00:23:40,925 --> 00:23:45,277
+shell知道它必须使用python作为解释器
+The way the Shell knows that it has to use python as the interpreter 
+
+313
+00:23:45,277 --> 00:23:50,550
+这样才能通过shebang的方式来运行此文件.
+to run this file is using that first line. 
+
+314
+00:23:50,550 --> 00:23:56,275
+shebang展示的就是运行这个脚本的程序所在路径.
+And that first line is giving it the path to where that thing lives.
+
+315
+00:23:58,325 --> 00:24:00,225
+但是,你可能不知道.
+However, you might not know,like, 
+
+316
+00:24:00,225 --> 00:24:04,100
+不同的机器可能会将python放在不同的位置,
+different machines will have probably different places where they put python
+
+317
+00:24:04,100 --> 00:24:09,243
+你可能无法提前知道python或者其他解释器安装在哪里.
+and you might not want to assume where python is installed, or any other interpreter.
+
+318
+00:24:09,243 --> 00:24:17,525
+所以你可以使用"env".
+So one thing that you can do is use the "env" command.
+
+319
+00:24:17,525 --> 00:24:21,598
+你也可以在shebang中给出参数,
+You can also give arguments in the shebang, 
+
+320
+00:24:21,598 --> 00:24:26,273
+所以我们在这里指定运行"env"命令,
+so what we're doing here is specifying run the "env" command, 
+
+321
+00:24:26,273 --> 00:24:29,550
+对于几乎所有系统来说,有一些例外,
+that is for pretty much every system, there are some exceptions, 
+
+322
+00:24:29,550 --> 00:24:31,057
+但是对于几乎所有系统来说,
+but like for pretty much every system 
+
+323
+00:24:31,057 --> 00:24:34,375
+它都在"usr/bin"中,那里有很多二进制文件,
+it's is in "usr/bin", where a lot of binaries live,
+
+324
+00:24:34,375 --> 00:24:37,450
+然后我们用参数"python"调用它
+and then we're calling it with the argument "python". 
+
+325
+00:24:37,450 --> 00:24:43,625
+然后它将利用我们在第一节课上学到的路径环境变量.
+And then that will make use of the path environment variable that we saw in the first lecture. 
+
+326
+00:24:43,625 --> 00:24:46,500
+它将在该路径中搜索Python二进制文件,
+It's gonna search in that path for the Python binary 
+
+327
+00:24:46,500 --> 00:24:49,875
+然后使用它来解释该文件.
+and then it's gonna use that to interpret this file. 
+
+328
+00:24:49,875 --> 00:24:51,704
+这将使得它的可移植性变强了,
+And that will make this more portable 
+
+329
+00:24:51,704 --> 00:24:56,854
+因此这个脚本可以在我的电脑、你的电脑和其他电脑上运行.
+so it can be run in my machine, and your machine and some other machine.
+
+330
+00:25:08,500 --> 00:25:14,350
+另一件事是,bash并不现代化,
+Another thing is that the bash is not really like modern, 
+
+331
+00:25:14,350 --> 00:25:16,025
+它是很久以前开发的.
+it was developed a while ago. 
+
+332
+00:25:16,025 --> 00:25:18,375
+有时调试起来可能会很棘手.
+And sometimes it can be tricky to debug. 
+
+333
+00:25:18,375 --> 00:25:23,475
+默认情况下,有些故障可能不太直观,
+By default, and the ways it will fail sometimes are intuitive 
+
+334
+00:25:23,475 --> 00:25:28,500
+例如我们之前看到的"foo"命令不存在.
+like the way we saw before of like "foo" command not existing, sometimes it's not. 
+
+335
+00:25:28,500 --> 00:25:35,600
+因此,在课堂笔记中我们提供了一个叫做"shellcheck"的工具,
+So there's like a really nifty tool that we have linked in the lecture notes, which is called "shellcheck", 
+
+336
+00:25:35,600 --> 00:25:40,400
+它可以为你提供警告、语法错误
+that will kind of give you both warnings and syntactic errors
+
+337
+00:25:40,400 --> 00:25:43,600
+和其他可能不正确引用
+and other things that you might not have quoted properly,
+
+338
+00:25:43,600 --> 00:25:46,975
+或文件中错放空格的问题.
+or you might have misplaced spaces in your files. 
+
+339
+00:25:46,975 --> 00:25:54,450
+例如,对于非常简单的"mcd.sh"文件,我们会得到一些错误提示,
+So for example for extremely simple "mcd.sh" file we gonna hava a couple of errors saying hey, 
+
+340
+00:25:54,450 --> 00:25:56,225
+令人惊讶的是,我们缺少了shebang,
+surprisingly,we're missing a shebang, 
+
+341
+00:25:56,225 --> 00:26:00,675
+如果在不同的系统上运行,可能无法正确解释它.
+like this might not interpret it correctly if you're running it at a different system. 
+
+342
+00:26:00,750 --> 00:26:07,325
+此外,这个"cd"命令可能不会正确扩展,
+Also, this "cd" is taking a command and it might not expand properly 
+
+343
+00:26:07,325 --> 00:26:11,060
+因此,与其使用"cd",不如使用其他方法
+so instead of using "cd" you might want to use something 
+
+344
+00:26:11,060 --> 00:26:14,160
+像是使用类似于"cd ... || exit"这样的东西.
+like "cd ... || exit". 
+
+345
+00:26:14,160 --> 00:26:16,411
+我们回到之前解释的内容,
+We go back to what we explained earlier, 
+
+346
+00:26:16,411 --> 00:26:21,325
+这样做的效果就是,如果"cd"没有正确执行,
+what this will do is like if the "cd" doesn't end correctly, 
+
+347
+00:26:21,325 --> 00:26:25,850
+你不能"cd"进入该文件夹,因为要么你没有权限,要么它不存在...
+you cannot "cd" into the folder because either you don't have permissions, it doesn't exist...
+
+348
+00:26:25,850 --> 00:26:30,800
+这将返回一个非0的错误代码,
+That will give a nonzero error command, 
+
+349
+00:26:30,800 --> 00:26:34,275
+脚本将执行"exit",这将停止脚本的运行,
+so you will execute "exit" and that will stop the script
+
+350
+00:26:34,275 --> 00:26:39,100
+而不是继续对实际并不存在的地方执行命令.
+instead of continue executing as if you were in a place that you are actually not in. 
+
+351
+00:26:39,175 --> 00:26:42,537
+实际上,我还没有测试过,
+And actually I haven't tested, 
+
+352
+00:26:42,537 --> 00:26:47,775
+{\rstrange}但我认为我们可以检查"example.sh",{\r}
+but I think we can check for the "example.sh"
+
+353
+00:26:47,775 --> 00:26:54,625
+在这里我们得到的是我们应该以不同的方式检查退出代码,
+and here we're getting that we should be checking the exit code in a different way, 
+
+354
+00:26:54,625 --> 00:26:58,625
+因为这种方法可能不是最好的方法.
+because it's probably not the best way, doing it this way.  
+
+355
+00:26:59,850 --> 00:27:07,575
+我还想强调一点,在编写bash脚本或函数时,
+One last remark I want to make is that when you're writing bash scripts or functions for that matter,
+
+356
+00:27:07,575 --> 00:27:16,700
+直接运行脚本/函数和载入shell的脚本/函数是有区别的
+there's kind of a difference between writing bash scripts in isolation \N like a thing that you're gonna run, and a thing that you're gonna load into your Shell.
+
+357
+00:27:16,700 --> 00:27:22,950
+我们将在命令行环境讲座中看到一些内容,
+We will see some of this in the command line environment lecture, 
+
+358
+00:27:22,950 --> 00:27:26,800
+那里我们将会处理bashrc和sshrc.
+where we will kind of be tooling with the bashrc and the sshrc. 
+
+359
+00:27:26,800 --> 00:27:31,575
+但总的来说,如果你对例如你所在的所在路径进行更改,
+But in general, if you make changes to for example where you are, 
+
+360
+00:27:31,575 --> 00:27:36,050
+例如如果你"cd"到一个bash脚本并且只执行该bash脚本,
+like if you "cd" into a bash script and you just execute that bash script, 
+
+361
+00:27:36,050 --> 00:27:39,075
+这个脚本就不会"cd"到shell当前所在路径
+it won't "cd" into the Shell are right now. 
+
+362
+00:27:39,150 --> 00:27:45,325
+但是,如果你直接将代码加载到你的shell中,例如你加载......
+But if you have loaded the code directly into your Shell, for example we load the...
+
+363
+00:27:45,325 --> 00:27:49,225
+你找到函数并执行该函数,
+You source the function and then you execute the function 
+
+364
+00:27:49,225 --> 00:27:51,293
+那么它就可以直接在你当前路径执行.
+then you will get those side effects. 
+
+365
+00:27:51,293 --> 00:27:55,625
+同样的道理也适用于在shell中定义的变量.
+And the same goes for defining variables into the Shell.
+
+366
+00:27:57,075 --> 00:28:05,950
+现在我将讨论一些我认为在处理shell时非常好用的工具.
+Now I gonna kind of talk about some tools that I think are nifty when working with the Shell. 
+
+367
+00:28:05,950 --> 00:28:10,250
+这也是昨天简单介绍过的.
+The first was also briefly introduced yesterday.
+
+368
+00:28:10,250 --> 00:28:15,500
+你如何知道使用哪些选项或确切的命令.
+How do you know what flags, or like what exact commands can go
+
+369
+00:28:15,500 --> 00:28:21,475
+比如我该如何知道"ls -l"会以列表格式列出文件,
+like how I am supposed to know that "ls -l" will list the files in a list format, 
+
+370
+00:28:21,475 --> 00:28:26,725
+或者如果我执行"mv -i",它会提示我输入内容.
+or that if I do "mv - i", it's gonna like prom me for stuff. 
+
+371
+00:28:26,825 --> 00:28:29,500
+为此,你可以使用"man"命令.
+For that what you have is the "man" command. 
+
+372
+00:28:29,500 --> 00:28:35,100
+"man"命令会提供很多帮助信息...
+And the "man" command will kind of have \N like a lot of information of how will you go about... 
+
+373
+00:28:35,100 --> 00:28:40,025
+例如在这里它会解释"-i"选项
+so for example here it will explain for the "-i" flag, 
+
+374
+00:28:40,025 --> 00:28:42,700
+有哪些可选项.
+there are all these options you can do. 
+
+375
+00:28:43,800 --> 00:28:45,800
+这其实非常有用,
+That's actually pretty useful and it will work 
+
+376
+00:28:45,800 --> 00:28:51,525
+不仅适用于你操作系统中打包好的简单命令,
+not only for really simple commands that come packaged with your OS
+
+377
+00:28:51,525 --> 00:28:56,600
+而且还适用于你从互联网上安装的一些工具.
+but will also work with some tools that you install from the internet for example
+
+378
+00:28:56,600 --> 00:29:02,900
+例如,如果安装工具的同时安装了"man"包,
+if the person that did the installation made it so that the "man" package were also installed. 
+
+379
+00:29:02,950 --> 00:29:07,025
+比如我们稍后要介绍的一个名为"ripgrep"的工具,
+So for example a tool that we're gonna cover in a bit
+
+380
+00:29:07,025 --> 00:29:11,375
+它的命令叫做"rg",
+which is called "ripgrep" and is called with "rg", 
+
+381
+00:29:11,425 --> 00:29:13,994
+这并没有与我的系统一起提供,
+and this didn't come with my system 
+
+382
+00:29:13,994 --> 00:29:18,975
+但它一同安装了自己的"man"页面,我可以访问它.
+but it has installed its own man page and I have it here and I can access it. 
+
+383
+00:29:18,975 --> 00:29:23,950
+对于某些命令,"man"页面是有用的,
+For some commands the man page is useful 
+
+384
+00:29:23,950 --> 00:29:26,625
+但有时它又不太方便,
+but sometimes it can be tricky to decipher 
+
+385
+00:29:26,625 --> 00:29:30,075
+因为它更像是一份文档或是描述工具
+because it's more kind of a documentation 
+
+386
+00:29:30,075 --> 00:29:33,400
+关于所能做的所有事情的说明.
+and a description of all the things the tool can do. 
+
+387
+00:29:33,400 --> 00:29:37,500
+有时它会有示例,但有时不会,
+Sometimes it will have examples but sometimes not, 
+
+388
+00:29:37,525 --> 00:29:40,275
+有时工具可以做很多事情,
+and sometimes the tool can do a lot of things. 
+
+389
+00:29:40,275 --> 00:29:47,475
+比如我经常使用的一些好工具是"convert"或"ffmpeg",
+So a couple of good tools that I use commonly are "convert" or "ffmpeg", 
+
+390
+00:29:47,525 --> 00:29:51,975
+它们分别处理图像和视频,"man"页内容巨多.
+which deal with images and video respectively and the "man" pages are like enormous. 
+
+391
+00:29:52,000 --> 00:29:56,000
+你还可以安装一个很好的,叫做"tldr"的工具,
+So there's one neat tool called "tldr" that you can install 
+
+392
+00:29:56,000 --> 00:30:02,612
+然后你就可以得到一些很好的例子,
+and you will have like some nice kind of explanatory examples of 
+
+393
+00:30:02,612 --> 00:30:04,900
+来解释如何使用这个命令.
+how you want to use this command. 
+
+394
+00:30:04,900 --> 00:30:07,209
+当然你也可以随时在谷歌上搜索,
+And you can always Google for this, 
+
+395
+00:30:07,209 --> 00:30:10,925
+但我发现我总是要先进入浏览器,
+but I find myself saving going into the browser, 
+
+396
+00:30:10,925 --> 00:30:16,825
+查找一些例子,然后再回来(这很慢~),而"tldr"是社区贡献的,
+looking about some examples and coming back, whereas "tldr" are community contributed 
+
+397
+00:30:16,825 --> 00:30:19,000
+使用"tldr"效率就非常高.
+and they're fairly useful. 
+
+398
+00:30:19,025 --> 00:30:23,965
+然后,"ffmpeg"的页面有很多有用的例子,
+Then, the one for "ffmpeg" has a lot of useful examples 
+
+399
+00:30:23,965 --> 00:30:25,550
+这些例子的格式也很美观
+that are more nicely formatted 
+
+400
+00:30:25,550 --> 00:30:29,025
+如果你特意用大号字体的话.
+if you don't have a huge font size for recording. 
+
+401
+00:30:29,025 --> 00:30:35,450
+{\rstrange}甚至于像"tar"这样的简单命令,有很多选项需要组合使用.{\r}
+Or even simple commands like "tar", that have a lot of options that you are combining. 
+
+402
+00:30:35,475 --> 00:30:40,875
+例如,在这里,你可以组合2、3个不同的flag,
+So for example, here you can be combining 2, 3... different flags 
+
+403
+00:30:40,875 --> 00:30:45,425
+当你想组合不同的flag时,可能不是很直观
+and it can not be obvious, when you want to combine different ones. 
+
+404
+00:30:47,175 --> 00:30:52,175
+"tldr"就可以帮你更快了解这些工具.
+That's how you would go about finding more about these tools. 
+
+405
+00:30:52,175 --> 00:30:58,350
+现在让我们学学如何查找文件.
+On the topic of finding, let's try learning how to find files. 
+
+406
+00:30:58,350 --> 00:31:08,425
+你可以随时使用{\rcode}ls{\r},比如{\rcode}ls project1{\r},并不断{\rcode}ls{\r}到底.
+You can always go "ls", and like you can go like "ls project1", and keep LS'ing all the way through. 
+
+407
+00:31:08,475 --> 00:31:17,175
+但是,也许如果我们已经知道我们要查找所有名为"src"的文件夹,
+But maybe, if we already know that we want to look for all the folders called "src", 
+
+408
+00:31:17,225 --> 00:31:20,225
+那么可能有更好的命令来完成这个任务.
+then there's probably a better command for doing that. 
+
+409
+00:31:20,225 --> 00:31:21,425
+这就是"find".
+And that's "find".
+
+410
+00:31:21,450 --> 00:31:25,525
+"find"是几乎每个UNIX系统都带有的工具.
+"find" is the tool that, pretty much comes with every UNIX system. 
+
+411
+00:31:25,525 --> 00:31:30,250
+我们要将把"find"用在...
+And "find", we're gonna give it... 
+
+412
+00:31:31,725 --> 00:31:36,548
+我们将在当前文件夹中调用"find" ,
+here we're saying we want to call "find" in the current folder, 
+
+413
+00:31:36,548 --> 00:31:39,375
+别忘了"."表示当前文件夹,
+remember that "." stands for the current folder, 
+
+414
+00:31:39,375 --> 00:31:44,975
+我们要让它的名称是"src",类型为文件夹.
+and we want the name to be "src" and we want the type to be a directory. 
+
+415
+00:31:45,075 --> 00:31:50,625
+通过输入这个命令,它将递归地浏览当前文件夹,
+And by typing that it's gonna recursively go through the current directory 
+
+416
+00:31:50,625 --> 00:31:55,350
+并查找所有符合此标准的文件或文件夹.
+and look for all these files, or folders in this case, that match this pattern. 
+
+417
+00:31:55,350 --> 00:31:59,700
+"find"有很多有用的标志.
+"find" has a lot of useful flags. 
+
+418
+00:31:59,825 --> 00:32:04,800
+例如,你甚至可以查询特定模式的文件路径.
+So for example, you can even test for the path to be in a way. 
+
+419
+00:32:04,800 --> 00:32:08,425
+以便说我们希望有一些文件夹,
+Here we're saying we want some number of folders,
+
+420
+00:32:08,425 --> 00:32:10,225
+我们并不在意有多少文件夹,
+we don't really care how many folders,
+
+421
+00:32:10,225 --> 00:32:13,750
+然后我们想要的是所有的Python脚本,
+and then we care about all the Python scripts, 
+
+422
+00:32:13,750 --> 00:32:16,873
+所有的扩展名为".py"的东西,
+all the things with the extension ".py",
+
+423
+00:32:16,873 --> 00:32:18,600
+这些都需要在一个名为"test"的文件夹中.
+ that are within a test folder. 
+
+424
+00:32:18,600 --> 00:32:20,821
+而且,我们也检查一下,只是以防万一,
+And we're also checking, just in cases really 
+
+425
+00:32:20,821 --> 00:32:23,025
+但我们只是检查一下它也是"f"(文件)类型
+but we're checking just that it's also are...
+
+426
+00:32:23,025 --> 00:32:25,400
+"-type f"代表查找类型是文件
+"-type f", which stands for file. 
+
+427
+00:32:25,425 --> 00:32:28,200
+我们正在获取所有符合条件的文件.
+We're getting all these files.
+
+428
+00:32:28,200 --> 00:32:34,500
+你还可以使用路径或类型之外的标志.
+You can also use different flags for things that are not the path or the name.
+
+429
+00:32:34,500 --> 00:32:39,325
+比如你可以检查已修改过的文件
+You could check things that have been modified 
+
+430
+00:32:39,325 --> 00:32:41,550
+"-mtime"用于修改时间,
+"-mtime" is for the modification time, 
+
+431
+00:32:41,550 --> 00:32:45,350
+在过去一天内修改过的文件,这几乎将是所有文件.
+things that have been modified in the last day, which is gonna be pretty much .
+
+432
+00:32:45,350 --> 00:32:47,225
+因此,这将打印
+Everything ,so this is gonna print
+
+433
+00:32:47,225 --> 00:32:50,950
+我们今天创建的许多文件和已经存在的文件.
+a lot of the files we created and files that were already there. 
+
+434
+00:32:50,950 --> 00:32:57,700
+你还可以使用其他的标志和选项,例如大小,所有者,权限等.
+You can even use other things like size, the owner, permissions, you name it. 
+
+435
+00:32:58,200 --> 00:33:02,150
+更强大的是,"find"不仅可以查找东西,
+What is even more powerful is, "find" can find stuff
+
+436
+00:33:02,150 --> 00:33:05,875
+它也可以在找到这些文件时执行一些操作.
+but it also can do stuff when you find those files. 
+
+437
+00:33:05,950 --> 00:33:15,250
+因此,我们可以查找所有具有"tmp"扩展名的文件,
+So we could look for all the files that have a "tmp" extension, 
+
+438
+00:33:15,250 --> 00:33:22,850
+然后,我们可以告诉"find"对于这些文件中的每一个文件,
+which is a temporary extension, and then, we can tell "find" that like for every one of those files,
+
+439
+00:33:22,850 --> 00:33:26,500
+只需为它们执行"rm"命令.
+just execute the "rm" command for them. 
+
+440
+00:33:26,500 --> 00:33:30,150
+这将调用"rm"来处理所有这些文件.
+And that will just be calling "rm" with all these files. 
+
+441
+00:33:30,150 --> 00:33:36,050
+因此,让我们首先执行这个,然后再执行这个.
+So let's first execute it without, and then we execute it with it.
+
+442
+00:33:36,050 --> 00:33:42,050
+看起来好像什么也没发生,这很命令行.
+Again, as with the command line philosophy, it looks like nothing happened. 
+
+443
+00:33:42,050 --> 00:33:48,875
+但是由于我们错误代码是0,所以命令都成功执行了
+But since we have a "0" error code, something happened 
+
+444
+00:33:48,875 --> 00:33:51,350
+只是一切都正确,一切都好.
+just that everything went correct and everything is fine. 
+
+445
+00:33:51,350 --> 00:33:56,700
+现在,如果我们搜索这些文件,它们就已经被删除了.
+And now, if we look for these files, they aren't there anymore.
+
+446
+00:33:56,700 --> 00:34:04,350
+一般来说,关于Shell的另一个好处是不仅有这些工具,
+Another nice thing about the Shell in general is that there are these tools, 
+
+447
+00:34:04,350 --> 00:34:07,500
+而且人们会不断发现新的方法,
+but people will keep finding new ways, 
+
+448
+00:34:07,500 --> 00:34:10,400
+所以会有一些工具的替代品.
+so alternative ways of writing these tools. 
+
+449
+00:34:10,400 --> 00:34:12,075
+了解它非常好.
+It's nice to know about it. 
+
+450
+00:34:12,075 --> 00:34:20,075
+例如,如果你只想匹配以"tmp"结尾的内容,
+So, for example "find" if you just want to match like the things that end in "tmp"
+
+451
+00:34:20,075 --> 00:34:24,375
+可能很难做到这一点,因为它有很长的命令.
+it can be sometimes weird to do this thing, it has a long command.
+
+452
+00:34:24,375 --> 00:34:29,000
+所以就有了"fd"这样的东西,
+There's things like "fd" for example
+
+453
+00:34:29,050 --> 00:34:32,550
+这是一个更短的命令,它默认使用正则表达式,
+that is a shorter command that by default will use regex 
+
+454
+00:34:32,550 --> 00:34:37,225
+甚至还能忽略搜索你的git文件.
+and will ignore your gitfiles,  so you don't even search for them.  
+
+455
+00:34:37,225 --> 00:34:41,850
+它会用不同的颜色显示代码,更好地支持Unicode编码...
+It will color-code, it will have better Unicode support... 
+
+456
+00:34:41,875 --> 00:34:44,325
+了解一些这些工具是很好的.
+It's nice to know about some of these tools. 
+
+457
+00:34:44,325 --> 00:34:51,350
+但是,再次强调的是,如果你知道这些工具的存在,
+But, again, the main idea is that if you are aware that these tools exist, 
+
+458
+00:34:51,475 --> 00:34:56,575
+你可以节省大量时间,不必做一些繁琐重复的任务.
+you can save yourself a lot of time from doing kind of menial and repetitive tasks.
+
+459
+00:34:56,575 --> 00:35:00,850
+还有一个命令要记住,就像"find"一样.
+Another command to bear in mind is like "find". 
+
+460
+00:35:00,850 --> 00:35:02,775
+有些人可能会想,
+Some of you may be wondering, 
+
+461
+00:35:02,775 --> 00:35:09,075
+"find"可能只是实际上在遍历目录结构并寻找内容,
+"find" is probably just actually going through a directory structure and looking for the things 
+
+462
+00:35:09,075 --> 00:35:11,650
+但如果我一天要做很多"find",那怎么办?
+but what if I'm doing a lot of "find"s a day?
+
+463
+00:35:11,650 --> 00:35:17,675
+是否更好,采用数据库方法并首先构建一个索引,
+Wouldn't it be better, doing kind of a database approach and build an index first, 
+
+464
+00:35:17,675 --> 00:35:21,050
+然后让该索引以某种方式进行更新.
+and then use that index and update it in some way. 
+
+465
+00:35:21,075 --> 00:35:23,475
+实际上,大多数Unix系统已经通过"locate"命令完成了这一点,
+Well, actually most Unix systems already do it and this is through the "locate" command
+
+466
+00:35:23,475 --> 00:35:32,262
+而且"locate"将被用来... 
+and the way that the "locate" will be used... 
+
+467
+00:35:32,262 --> 00:35:40,150
+"locate"只会查找你的文件系统中包含你想要的子字符串的路径.
+it will just look for paths in your file system that have the substring that you work. 
+
+468
+00:35:40,150 --> 00:35:43,050
+我实际上不知道它是否有效...
+I actually don't know if it will work... 
+
+469
+00:35:43,050 --> 00:35:43,650
+好的,它有效.
+Okay, it worked. 
+
+470
+00:35:43,650 --> 00:35:49,825
+让我试试像"missing-semester"这样的东西.
+Let me try to do something like "missing-semester".
+
+471
+00:35:52,500 --> 00:35:55,662
+{\rstrange}它会花一些时间,但它找到了所有这些文件,{\r}
+You're gonna take a while but it found all these files 
+
+472
+00:35:55,662 --> 00:35:57,300
+{\rstrange}这些文件都在我的文件系统中某个地方,{\r}
+that are somewhere in my file system 
+
+473
+00:35:57,300 --> 00:36:02,400
+{\rstrange}因为它已经在它们上面构建了一个索引,所以它要快得多.{\r}
+and since it has built an index already on them, it's much faster. 
+
+474
+00:36:02,400 --> 00:36:05,776
+为了使其保持更新,
+And then, to keep it updated, 
+
+475
+00:36:05,776 --> 00:36:09,275
+我们可以使用"updatedb"命令来更新此数据库.
+using the "updatedb" command 
+
+476
+00:36:09,275 --> 00:36:15,725
+这正是通过{\rcode2}"cron"[*]{\r}运行的
+that is running through "cron", to update this database. 
+*[Cron是一种在Unix、Linux和类Unix操作系统中用于定期运行任务的工具。\N 它允许用户指定一个或多个命令或脚本，并设置在指定时间或周期运行这些命令或脚本的方式。]
+
+477
+00:36:15,725 --> 00:36:19,525
+再次强调,查找文件真的很有用
+Finding files, again, is really useful. 
+
+478
+00:36:19,525 --> 00:36:23,625
+有时你实际上关心的不是文件本身,
+Sometimes you're actually concerned about, not the files themselves,
+
+479
+00:36:23,625 --> 00:36:25,650
+而是文件的内容.
+but the content of the files. 
+
+480
+00:36:25,650 --> 00:36:32,575
+为此,可以使用我们之前看到的"grep"命令.
+For that you can use the "grep" command that we have seen so far. 
+
+481
+00:36:32,575 --> 00:36:38,525
+因此,你可以在"mcd.sh"中执行类似"grep foobar"的操作,它就在那里.
+So you could do something like "grep foobar" in "mcd.sh", it's there.
+
+482
+00:36:38,525 --> 00:36:45,700
+如果你想要再次递归地搜索当前结构并查找更多文件,怎么办?
+What if you want to, again, recursively search through the current structure and look for more files?
+
+483
+00:36:45,700 --> 00:36:48,975
+我们不想手动完成这项工作.
+We don't want to do this manually.
+
+484
+00:36:48,975 --> 00:36:51,025
+我们可以使用"find"和"-exec",
+We could use "find", and the "-exec", 
+
+485
+00:36:51,025 --> 00:37:02,550
+但实际上,"grep"具有"-R"标志,它将遍历整个目录.
+but actually "grep" has the "-R" flag that will go through the entire directory, here. 
+
+486
+00:37:02,550 --> 00:37:07,325
+"example.sh"中这三行有包含"foobar"
+And it's telling us that oh we have the "foobar" line in "example.sh"
+
+487
+00:37:07,325 --> 00:37:11,800
+另外还有两个文件也含有"foobar"
+at these three places and in this other two places in foobar. 
+
+488
+00:37:13,675 --> 00:37:15,975
+这非常方便.
+This can be really convenient. 
+
+489
+00:37:15,975 --> 00:37:18,175
+主要用例是,
+Mainly, kind of the use case for this is 
+
+490
+00:37:18,175 --> 00:37:22,675
+你知道你已经用某种编程语言编写了一些代码,
+you know you have written some code in some programming language, 
+
+491
+00:37:22,675 --> 00:37:25,675
+并且知道它在你的文件系统的某个地方,
+and you know it's somewhere in your file system 
+
+492
+00:37:25,675 --> 00:37:26,850
+但你实际上不知道在哪里.
+but you actually don't know. 
+
+493
+00:37:26,850 --> 00:37:29,175
+你就可以快速搜索.
+But you can actually quickly search.
+
+494
+00:37:29,175 --> 00:37:38,575
+例如,我可以在"scratch"文件夹中
+So for example, I can quickly search for all the Python files 
+
+495
+00:37:38,575 --> 00:37:45,600
+快速搜索导入了"requests"库的所有Python文件.
+that I have in my scratch folder where I used the request library.
+
+496
+00:37:45,625 --> 00:37:51,300
+如果我运行这个命令,它会搜索所有这些文件,
+And if I run this, it's giving me through all these files, exactly in
+
+497
+00:37:51,300 --> 00:37:53,425
+并精确地给出在哪一行找到了它.
+what line it has been found. 
+
+498
+00:37:53,425 --> 00:37:58,375
+这里,我没有使用"grep",(当然这也是可以的)
+And here instead of using "grep", which is fine, you could also do this, 
+
+499
+00:37:58,375 --> 00:38:03,325
+而是使用了"ripgrep",它与"grep"的想法有点相同,
+I'm using "ripgrep", which is kind of the same idea 
+
+500
+00:38:03,325 --> 00:38:12,750
+但是"ripgrep"更好康,比如彩色编码或文件处理等.
+but again trying to bring some more niceties like color coding or file processing and other things. 
+
+501
+00:38:12,750 --> 00:38:15,325
+它也支持unicode.
+It think it has, also, unicode support. 
+
+502
+00:38:15,325 --> 00:38:21,425
+但是你不必担心他因为这些功能而速度会慢,它查找速度也很快.
+It's also pretty fast so you are not paying like a trade-off on this being slower 
+
+503
+00:38:21,425 --> 00:38:25,216
+还有许多有用的标志.
+and there's a lot of useful flags. 
+
+504
+00:38:25,216 --> 00:38:30,550
+你可以说,哦,我实际上想获得这些结果周围的一些上下文.
+You can say, oh, I actually want to get some context around those results.
+
+505
+00:38:32,875 --> 00:38:37,275
+因此,你可以看到导入所在的位置
+So I want to get like five lines of context around that, 
+
+506
+00:38:37,275 --> 00:38:43,025
+并查看周围的代码.
+so you can see where that import lives and see code around it.
+
+507
+00:38:43,025 --> 00:38:44,343
+在导入中,这并不是真正有用的,
+Here in the import it's not really useful 
+
+508
+00:38:44,343 --> 00:38:47,868
+但是如果你正在寻找使用该函数的位置,
+but like if you're looking for where you use the function, for example, 
+
+509
+00:38:49,250 --> 00:38:51,475
+那么它将非常方便.
+It will be very handy. 
+
+510
+00:38:51,475 --> 00:38:59,025
+我们还可以做其他事情,例如在这里.
+We can also do things like we can search, for example here,.
+
+511
+00:38:59,075 --> 00:39:09,625
+更高级的用法,我们可以说,"-u"是为了不忽略隐藏文件,
+A more advanced use, we can say, "-u" is for don't ignore hidden files, 
+
+512
+00:39:09,625 --> 00:39:16,000
+有时你想忽略隐藏文件,
+sometimes you want to be ignoring hidden files, 
+
+513
+00:39:16,000 --> 00:39:21,625
+除非你要搜索默认隐藏的配置文件.
+except if you want to search config files, that are by default hidden. 
+
+514
+00:39:21,625 --> 00:39:25,075
+然后,我们不是打印匹配项,
+Then, instead of printing the matches, 
+
+515
+00:39:25,075 --> 00:39:31,525
+而是要求执行一些可能很难使用"grep"实现的操作
+we're asking to do something that would be kind of hard, I think,to do with "grep", out of my head, 
+
+516
+00:39:31,525 --> 00:39:37,250
+比如"我希望你打印出所有不匹配给定模式的文件",
+which is I want you to print all the files that don't match the pattern I'm giving you, 
+
+517
+00:39:37,275 --> 00:39:41,800
+这可能是一个奇怪的要求,但请你们继续看...
+which may be a weird thing to ask here but then we keep going... 
+
+518
+00:39:41,800 --> 00:39:45,125
+这里的模式是一个正则表达式,
+And this pattern here is a small regex 
+
+519
+00:39:45,150 --> 00:39:51,514
+它表示在行的开头有一个"#"和一个"!",这是一个shebang.
+which is saying at the beginning of the line I have a "#" and a "!", and that's a shebang.
+
+520
+00:39:51,514 --> 00:39:57,100
+这样,我们在这里搜索所有没有shebang的文件,
+Like that, we're searching here for all the files that don't have a shebang
+
+521
+00:39:57,100 --> 00:40:03,415
+然后在这里给它一个"-t sh"表示只查找"sh"文件,
+and then we're giving it, here, a "-t sh" to only look for "sh" files,  
+
+522
+00:40:03,415 --> 00:40:09,000
+因为你的Python或文本文件可能没有shebang也没问题.
+because maybe all your Python or text files are fine without a shebang. 
+
+523
+00:40:09,025 --> 00:40:12,875
+这里告诉我们,"哦,mcd.sh显然缺少一个shebang",
+And here it's telling us "oh, 'mcd.sh' is obviously missing a shebang"
+
+524
+00:40:12,875 --> 00:40:15,775
+我们甚至可以... 
+We can even... 
+
+525
+00:40:15,775 --> 00:40:21,425
+它有一些不错的标志,例如如果我们包括"--stats"标志,
+It has like some nice flags, so for example if we include the "--stats" flag
+
+526
+00:40:28,600 --> 00:40:31,400
+它将得到所有这些结果,
+it will get all these results 
+
+527
+00:40:31,400 --> 00:40:35,050
+它还会告诉我们它所搜索的所有内容的信息.
+but it will also tell us information about all the things that it searched. 
+
+528
+00:40:35,050 --> 00:40:40,900
+例如,找到的匹配次数、行数、搜索的文件、
+For example, the number of matches that it found, the lines, the file searched,
+
+529
+00:40:40,900 --> 00:40:42,775
+打印的字节数等等.
+the bytes that it printed, etc.
+
+530
+00:40:42,775 --> 00:40:47,675
+与"fd"类似,它有时候不是很好用
+Similar as with "fd", sometimes it's not as useful
+
+531
+00:40:47,775 --> 00:40:52,700
+有时候特定的工具并不是很有用,就跟"ripgrep"一样,
+using one specific tool or another and in fact, as "ripgrep", 
+
+532
+00:40:52,700 --> 00:40:58,425
+{\rstrange}还有像"ack"这样的工具是最初编写的"grep"替代工具.{\r}
+there are several other tools, like "ack", you know, is kind of the original "grep" alternative that was written. 
+
+533
+00:40:58,425 --> 00:41:03,350
+然后是另一个工具"ag".
+Then the silver searcher, "ag", was another one... 
+
+534
+00:41:03,350 --> 00:41:05,850
+它们都可以相互替换,
+and they're all pretty much interchangeable
+
+535
+00:41:05,850 --> 00:41:08,625
+所以也许你所在的系统有其中一个而没有另一个,
+so maybe you're at a system that has one and not the other, 
+
+536
+00:41:08,625 --> 00:41:13,800
+你只要知道你可以使用这些非常好用的工具.
+just knowing that you can use these things with these tools can be fairly useful. 
+
+537
+00:41:13,800 --> 00:41:19,450
+最后,我想谈谈如何查找你已经使用过的命令,不是找文件或代码.
+Lastly, I want to cover how you go about, not finding files or code, 
+
+538
+00:41:19,450 --> 00:41:24,525
+就是你如何找到你已经使用过的命令.
+but how you go about finding commands that you already some time figured out. 
+
+539
+00:41:24,525 --> 00:41:30,525
+第一种,显然的方法就是使用"↑",
+The first, obvious way is just using the up arrow,
+
+540
+00:41:30,525 --> 00:41:34,675
+慢慢浏览你的历史记录,寻找这些匹配项.
+and slowly going through all your history, looking for these matches.
+
+541
+00:41:34,675 --> 00:41:37,650
+这实际上并不是很高效,你可能已经猜到了.
+This is actually not very efficient, as you probably guessed. 
+
+542
+00:41:37,650 --> 00:41:43,025
+因此,bash有更轻松的方法来做这件事.
+So the bash has ways to do this more easily.
+
+543
+00:41:43,025 --> 00:41:45,900
+有一个{\rcode}history{\r}命令,会打印出你的历史记录.
+There is the "history" command, that will print your history. 
+
+544
+00:41:45,900 --> 00:41:49,300
+这里我在zsh中,它只打印出一部分历史记录,
+Here I'm in zsh and it only prints some of my history, 
+
+545
+00:41:49,300 --> 00:41:53,575
+但如果我说,我想要你从一切开始打印,
+but if I say, I want you to print everything from the beginning of time, 
+
+546
+00:41:53,575 --> 00:41:57,325
+它将从这个历史记录的开始打印一切.
+it will print everything from the beginning of whatever this history is.
+
+547
+00:41:57,325 --> 00:42:02,225
+由于这是很多结果,也许我们关心的是
+And since this is a lot of results, maybe we care about the ones 
+
+548
+00:42:02,225 --> 00:42:05,204
+{\rstrange}我们使用"convert"命令{\r}
+where we use the "convert" command
+
+549
+00:42:05,204 --> 00:42:08,925
+{\rstrange}使其从某种文件类型转换为另一种文件类型.{\r}
+ to go from some type of file to some other type of file.
+
+550
+00:42:08,925 --> 00:42:11,125
+一些图片....呃
+Some image, sorry. 
+
+551
+00:42:11,125 --> 00:42:18,250
+然后,我们获得了所有与该子字符串匹配的结果.
+Then, we're getting all these results here, about all the ones that match this substring.
+
+552
+00:42:18,250 --> 00:42:29,250
+几乎所有的shell默认都会将"Ctrl+R"这个键绑定为反向搜索.
+Even more, pretty much all Shells by default will link "Ctrl+R", the keybinding, to do backward search. 
+
+553
+00:42:29,300 --> 00:42:33,425
+这里我们有一个反向搜索,我们可以输入"convert",
+Here we have backward search, where we can type "convert" 
+
+554
+00:42:33,425 --> 00:42:36,050
+它会找到我们刚输入的命令.
+and it's finding the command that we just typed. 
+
+555
+00:42:36,050 --> 00:42:38,500
+如果我们一直按"Ctrl+R",
+And if we just keep hitting "Ctrl+R", 
+
+556
+00:42:38,500 --> 00:42:45,250
+它会浏览这些匹配项,让我们在原地重新执行.
+it will kind of go through these matches and it will let re-execute it in place. 
+
+557
+00:42:47,750 --> 00:42:50,486
+另外一件你可以做的与此相关的事情,
+Another thing that you can do, related to that,
+
+558
+00:42:50,486 --> 00:42:53,375
+是你可以使用这个非常棒的工具叫做"fzf",
+is you can use this really nifty tool called "fzf", 
+
+559
+00:42:53,375 --> 00:42:56,792
+"fzf"是一个模糊查找器,
+which is like a fuzzy finder, like it will let you...
+
+560
+00:42:57,000 --> 00:43:00,275
+它可以让你进行交互式的"grep".
+It will let you do kind of like an interactive "grep". 
+
+561
+00:43:01,750 --> 00:43:09,350
+例如,我们可以执行{\rcode}cat example.sh{\r},
+We could do for example this, where we can cat our "example.sh" command, 
+
+562
+00:43:09,350 --> 00:43:11,350
+它将打印到标准输出,
+that will print print to the standard output, 
+
+563
+00:43:11,350 --> 00:43:13,550
+并将其传递到"fzf"中.
+and then we can pipe it through "fzf". 
+
+564
+00:43:13,550 --> 00:43:15,126
+它只是获取所有的行,
+It's just getting all the lines 
+
+565
+00:43:15,126 --> 00:43:20,425
+然后我们可以交互式地查找我们关心的字符串.
+and then we can interactively look for the string that we care about. 
+
+566
+00:43:20,425 --> 00:43:23,700
+"fzf"的好处是,
+And the nice thing about fzf is that, 
+
+567
+00:43:23,700 --> 00:43:33,675
+如果你启用了默认绑定,它会绑定到你的"Ctrl+R",
+if you enable the default bindings, it will bind to your "Ctrl+R" Shell execution 
+
+568
+00:43:33,675 --> 00:43:37,958
+现在你可以快速交互式地在历史记录中查找
+and now you can quickly and dynamically like look for 
+
+569
+00:43:37,958 --> 00:43:41,750
+所有你尝试转换"favicon"的命令.
+all the times you try to convert a favicon in your history.
+
+570
+00:43:41,750 --> 00:43:44,925
+它还可以模糊匹配,.
+And it's also like fuzzy matching, 
+
+571
+00:43:44,925 --> 00:43:47,406
+而默认情况下"grep"或这些工具,
+whereas like by default in "grep" or these things 
+
+572
+00:43:47,406 --> 00:43:52,475
+需要写一个正则表达式来进行匹配.
+you have to write a regex or some expression that will match within here.
+
+573
+00:43:52,475 --> 00:43:54,975
+而这里我只是输入"convert"和"favi",
+Here I'm just typing "convert" and "favi" 
+
+574
+00:43:54,975 --> 00:44:00,000
+它尝试做出最佳扫描,在它的输入中进行匹配.
+and it's just trying to do the best scan, doing the match in the lines it has.
+
+575
+00:44:01,500 --> 00:44:05,350
+最后,一个你可能已经见过的工具,
+Lastly, a tool that probably you have already seen, 
+
+576
+00:44:05,350 --> 00:44:09,441
+我用它来避免重新输入这些非常长的命令,
+that I've been using for not retyping these extremely long commands 
+
+577
+00:44:09,441 --> 00:44:12,300
+它叫做"历史子字符串搜索",
+is this "history substring search", 
+
+578
+00:44:12,300 --> 00:44:15,925
+当我在shell中输入时,
+where as I type in my Shell, 
+
+579
+00:44:15,925 --> 00:44:22,975
+Fish没提到这个概念,我认为最初是由zsh引入的,
+both Fish fail to mention but zsh, which I think originally introduced this concept
+
+580
+00:44:22,975 --> 00:44:25,375
+而且zsh有一个很好的实现,我认为最初是由它引入的,
+and then zsh has a really nice implementation 
+
+581
+00:44:25,375 --> 00:44:28,700
+它让你在键入命令时,
+What it'll let you do is as you type the command, 
+
+582
+00:44:28,700 --> 00:44:34,700
+动态地在历史记录中搜索具有相同前缀的相同命令,
+it will dynamically like search back in your history to the same command that has a common prefix,
+
+583
+00:44:34,700 --> 00:44:36,500
+然后,如果你...
+and then, if you...
+
+584
+00:44:38,850 --> 00:44:45,550
+它会随着匹配列表停止工作而改变,然后当你按"→"时,
+it will change as the match list stops working and then as you do the right arrow. 
+
+585
+00:44:45,550 --> 00:44:49,325
+你可以选择那个命令,然后重新执行它.
+you can select that command and then re-execute it.
+
+586
+00:45:06,575 --> 00:45:09,175
+我们已经看到了一些东西...
+We've seen a bunch of stuff... 
+
+587
+00:45:09,175 --> 00:45:11,650
+我想我还有几分钟的时间,
+I think I have a few minutes left 
+
+588
+00:45:11,650 --> 00:45:19,950
+所以我要介绍一些快速目录列表和目录导航的工具.
+so I'm going to cover a couple of tools to do \N kind of really quick directory listing and directory navigation.
+
+589
+00:45:19,950 --> 00:45:30,525
+你总是可以使用"-R"来递归地列出某个目录结构,
+So you can always use the "-R" to recursively list some directory structure,
+
+590
+00:45:30,525 --> 00:45:35,300
+但这可能不是最优的,这不是很好理解.
+but that can be suboptimal, I cannot really make sense of this easily.
+
+591
+00:45:35,300 --> 00:45:45,775
+有一个叫做"tree"的工具,它更友好地打印目录结构,
+There's tool called "tree" that will be the much more friendly form of printing all the stuff, 
+
+592
+00:45:45,775 --> 00:45:47,600
+它也会根据不同的类型进行着色...
+it will also color code based on...
+
+593
+00:45:47,600 --> 00:45:51,000
+例如,这里的"foo"是蓝色的,因为它是一个目录,
+here for example "foo" is blue because it's a directory 
+
+594
+00:45:51,000 --> 00:45:55,000
+这个是红色的,因为它有执行权限.
+and this is red because it has execute permissions.
+
+595
+00:45:55,325 --> 00:45:58,175
+但我们可以做得更好.
+But we can go even further than that. 
+
+596
+00:45:58,175 --> 00:46:00,166
+有一些很好的工具,
+There's really nice tools 
+
+597
+00:46:00,166 --> 00:46:04,325
+比如最近出现的一个叫做"broot"的工具,它可以做同样的事情,
+like a recent one called "broot" that will do the same thing 
+
+598
+00:46:04,325 --> 00:46:08,400
+但是在这里,不像列出每一个单独的文件,
+but here for example instead of doing this thing of listing every single file, 
+
+599
+00:46:08,400 --> 00:46:11,550
+例如在"bar"中,我们有这些"a"到"j"的文件,
+for example in bar we have these "a" through "j" files,
+
+600
+00:46:11,550 --> 00:46:14,375
+它会说"噢,还有更多,这里就不列举了".
+it will say "oh there are more, unlisted here".
+
+601
+00:46:14,525 --> 00:46:22,175
+我实际上可以开始输入,它会再次匹配到那些存在的文件,
+I can actually start typing and it will again facily match to the files that are there
+
+602
+00:46:22,175 --> 00:46:24,925
+我可以快速选择它们并浏览它们.
+and I can quickly select them and navigate through them.
+
+603
+00:46:24,925 --> 00:46:30,300
+因此,了解这些事情很重要.
+So, again, it's good to know that these things exist 
+
+604
+00:46:30,300 --> 00:46:36,000
+这样你就不会浪费大量时间去寻找这些文件.
+so you don't lose a large amount of time going for these files.
+
+605
+00:46:36,000 --> 00:46:45,292
+还有,我也安装了一些你也许想要的工具,
+There are also, I think I have it installed also something more similar to what you would expect your OS to have,
+
+606
+00:46:45,292 --> 00:46:48,710
+比如Nautilus或者其中一个Mac Finder,
+like Nautilus or one of the Mac finders 
+
+607
+00:46:48,710 --> 00:46:59,400
+它们有一个交互式的界面,你可以使用箭头快速浏览.
+that have like an interactive input where you can just use your navigation arrows and quickly explore.
+
+608
+00:46:59,425 --> 00:47:00,900
+你可能觉得花里胡哨,
+It might be overkill 
+
+609
+00:47:00,900 --> 00:47:02,242
+但你会惊讶地发现,
+but you'll be surprised
+
+610
+00:47:02,242 --> 00:47:07,800
+通过浏览某个目录结构,你可以很快地理解它.
+ how quickly you can make sense of some directory structure by just navigating through it.
+
+611
+00:47:07,800 --> 00:47:16,525
+几乎所有这些工具去看看选项,都可以让你编辑、复制文件……
+And pretty much all of these tools will let you edit, copy files...\N if you just look for the options for them.
+
+612
+00:47:16,525 --> 00:47:20,700
+最后的补充内容有点复杂.
+The last addendum is kind of going places.
+
+613
+00:47:20,700 --> 00:47:29,000
+我们有"cd","cd"很好用,它会让你到达很多地方.
+We have "cd", and "cd" is nice, it will get you to a lot of places. 
+
+614
+00:47:29,000 --> 00:47:32,775
+但是如果你可以快速到达一些地方,还有更方便的方法.
+But it's pretty handy if you can like quickly go places,
+
+615
+00:47:32,847 --> 00:47:33,922
+具体地说,就是
+you are...
+
+616
+00:47:33,922 --> 00:47:38,275
+你最近或经常去的地方
+either you have been to recently or that you go frequently. 
+
+617
+00:47:38,375 --> 00:47:43,200
+你可以用很多种方式做到这一点,
+And you can do this in many ways there's probably you can start thinking, 
+
+618
+00:47:43,200 --> 00:47:45,025
+我可以做书签,我可以……
+oh I can make bookmarks, I can make... 
+
+619
+00:47:45,025 --> 00:47:48,550
+我可以在shell中创建别名,我们以后会介绍到这个问题,
+I can make aliases in the Shell, that we will cover at some point,
+
+620
+00:47:48,550 --> 00:47:50,625
+可以创建符号链接……
+symlinks... 
+
+621
+00:47:51,000 --> 00:47:55,700
+但是此时,程序员已经构建了这些工具,
+But at this point ,programmers have like built all these tools, 
+
+622
+00:47:55,700 --> 00:47:59,525
+所以程序员已经找到了一个非常好的方法来做到这一点.
+so programmers have already figured out a really nice way of doing this.
+
+623
+00:47:59,525 --> 00:48:03,700
+其中一种方法是使用所谓的"autojump",
+One way of doing this is using what is called "auto jump", 
+
+624
+00:48:03,700 --> 00:48:06,050
+我想这里没有加载……
+which I think is not loaded here...
+
+625
+00:48:14,250 --> 00:48:16,925
+不过,别担心.
+Okay, don't worry. 
+
+626
+00:48:16,925 --> 00:48:19,725
+我将在命令行环境中介绍它.
+I will cover it in the command line environment.
+
+627
+00:48:21,750 --> 00:48:25,750
+我想这是因为我禁用了"Ctrl+R",
+I think it's because I disabled the "Ctrl+R" 
+
+628
+00:48:25,750 --> 00:48:29,100
+这也影响了脚本的其他部分.
+and that also affected other parts of the script. 
+
+629
+00:48:29,100 --> 00:48:34,100
+如果有任何与此相关的问题,
+I think at this point if anyone has any questions that are related to this, 
+
+630
+00:48:34,100 --> 00:48:38,075
+如果有任何不清楚的地方,我很乐意回答.
+I'll be more than happy to answer them,  if anything was left unclear.
+
+631
+00:48:38,200 --> 00:48:44,375
+如果没有的话,我们编写了一堆关于这些工具的练习,
+Otherwise, there's a bunch of exercises that we wrote, kind of touching on these topics 
+
+632
+00:48:44,375 --> 00:48:47,925
+我们鼓励你尝试解决它们,并在办公时间前来,
+and we encourage you to try them and come to office hours, 
+
+633
+00:48:47,925 --> 00:48:51,871
+我们可以帮助你弄清如何做这些事情,
+where we can help you figure out how to do them, 
+
+634
+00:48:51,871 --> 00:48:54,496
+或者一些你不清楚的bash技巧.
+or some like bash quirks that are not clear.
+

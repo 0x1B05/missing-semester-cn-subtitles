@@ -1,0 +1,4499 @@
+﻿1
+00:00:01,250 --> 00:00:04,200
+好的,那么,让我们开始今天的讲座吧.
+Okay, so again, let's get started with today's lecture. 
+
+2
+00:00:04,200 --> 00:00:07,825
+今天,我们将讨论安全和密码学,
+So today, we're going to be talking about security and cryptography.
+
+3
+00:00:07,825 --> 00:00:13,300
+今年的这节课与去年的略有不同.
+And today's lecture is going to be a little bit different than our treatment of this topic in last year's class. 
+
+4
+00:00:13,300 --> 00:00:20,000
+去年,我们更注重从计算机用户的角度讨论安全和隐私问题,
+So last year, we focused a little bit more on security and privacy from the perspective of a user of a computer, 
+
+5
+00:00:20,000 --> 00:00:24,025
+但今天我们将更多地关注安全和密码学的概念,
+but today we're going to focus a little bit more on security and cryptography concepts 
+
+6
+00:00:24,025 --> 00:00:29,025
+这些概念有利于理解我们在这门课上早些时候讨论的一些工具.
+that are relevant in understanding some of the tools that we talked about earlier in this class. 
+
+7
+00:00:29,025 --> 00:00:35,025
+例如,我们在Git讲座中讨论了哈希函数或加密哈希函数(如sha-1),
+For example, we talked about hash functions or cryptographic hash functions like sha-1 in the Git lecture, 
+
+8
+00:00:35,025 --> 00:00:42,150
+在命令行环境讲座中讲ssh时提到了公钥.
+or we talked about public keys when we talked about SSH in the command line environment lecture. 
+
+9
+00:00:42,150 --> 00:00:48,175
+因此,今天我们将更详细地讨论这些密码学概念,
+And so today, we'll talk about these different cryptographic primitives in more detail 
+
+10
+00:00:48,175 --> 00:00:51,475
+了解它们的工作原理以及它们在这些工具中的应用.
+and get an understanding of how they work and how they're used in these different tools that we're teaching in this class.
+
+11
+00:00:51,475 --> 00:00:56,625
+这个讲座没法替代正规的安全课程,
+This lecture is not a substitute for a more rigorous class in security. 
+
+12
+00:00:56,625 --> 00:01:02,225
+麻省理工有很多非常好的课程,例如MIT6.858,这门课就是关于计算机系统安全的,
+So there are a bunch of really good classes at MIT like 6.858, which is on computer system security,
+
+13
+00:01:02,225 --> 00:01:07,800
+或者MIT6.857和MIT6.875,这两门课更着重于密码学.
+or 6.857 and 6.875, which are more focused on cryptography. 
+
+14
+00:01:07,800 --> 00:01:13,625
+因此,如果没有接受过正规的安全课程的培训,不要从事安全工作.
+So don't do security work without formal training in security from these classes or elsewhere. 
+
+15
+00:01:13,625 --> 00:01:17,200
+除非你是专家,否则不要自己开发加密算法,
+And unless you're an expert, don't roll your own crypto. 
+
+16
+00:01:17,200 --> 00:01:20,050
+不要构建自己的加密实现或协议.
+Don't build your own crypto implementations or protocols. 
+
+17
+00:01:20,050 --> 00:01:22,975
+这个原则也同样适用于计算机系统安全.
+And the same principle applies to computer system security. 
+
+18
+00:01:22,975 --> 00:01:25,116
+这个讲座不是教你如何构建自己的东西,
+This lecture is not about building your own stuff.
+
+19
+00:01:25,116 --> 00:01:28,125
+而是带你了解已经存在的东西.
+it's about understanding what's already out there. 
+
+20
+00:01:28,125 --> 00:01:30,322
+这节课将对密码学的基本概念
+And so this lecture will have a very informal 
+
+21
+00:01:30,322 --> 00:01:33,675
+进行非正式但实用的处理.
+but we think practical treatment of these basic cryptography concepts, 
+
+22
+00:01:33,675 --> 00:01:38,600
+希望这节课能帮你理解之前课上讲的一些工具.
+and yeah, hopefully, it'll help you understand some of the tools we talked about earlier in this class.
+
+23
+00:01:38,600 --> 00:01:43,375
+有关今天规划有什么问题吗?太好了.
+Any questions about the plan for today's lecture? Great. 
+
+24
+00:01:43,375 --> 00:01:46,850
+那么今天的第一个话题是熵.
+So the first topic for today is something called entropy. 
+
+25
+00:01:46,850 --> 00:01:48,750
+熵是对随机性的一种度量,
+Entropy is a measure of randomness, 
+
+26
+00:01:48,750 --> 00:01:52,975
+这在确定密码强度时非常有用.
+and this is useful, for example, when trying to determine the strength of a password. 
+
+27
+00:01:52,975 --> 00:01:55,975
+让我们看看xkcd的这个漫画,
+So let's take a look at this comic from xkcd. 
+
+28
+00:01:55,975 --> 00:01:57,975
+我们很喜欢xkcd漫画.
+We're a big fan of xkcd comics. 
+
+29
+00:01:57,975 --> 00:02:01,475
+如果你以前看过这个漫画,请举手.
+So this comic raises your hand if you've seen this before. 
+
+30
+00:02:01,475 --> 00:02:02,775
+好的,有很多人都看过这个漫画.
+Okay, a good number of you. 
+
+31
+00:02:02,775 --> 00:02:08,650
+这幅漫画讲的是常要求用户设置密码的方式,
+So this comic is complaining about this common pattern that's been taught to users of computers, 
+
+32
+00:02:08,650 --> 00:02:12,575
+即当你设计密码时,
+that when you design passwords, they should be things like 
+
+33
+00:02:12,575 --> 00:02:20,400
+它们应该是像"t#0rU&b40rM$"或"p3@ch3$"这样的字符串,
+"t#0rU&b40rM$" or "p3@ch3$" -- a string in the top left -- like we should design passwords 
+
+34
+00:02:20,400 --> 00:02:24,275
+就像我们应该使用各种字符混合其他内容的密码,以使攻击者很难猜测.
+that are full of funny characters and things like that to make it hard for attackers to guess. 
+
+35
+00:02:24,275 --> 00:02:28,375
+然而,事实证明,像这样的密码实际上相当脆弱,
+And yet, it turns out that passwords like that are actually pretty weak and guessable 
+
+36
+00:02:28,375 --> 00:02:31,925
+容易被擅长暴力攻击的计算机破解.
+by computers that can guess passwords really fast and brute-force attacks. 
+
+37
+00:02:31,950 --> 00:02:37,175
+另一方面,像左下角的密码("correcthorsebatterystaple")
+And on the other hand, passwords which maybe intuitively don't look as secure, 
+
+38
+00:02:37,175 --> 00:02:40,400
+这样直觉上看起来不太安全的密码,
+like the one on the bottom left, "correcthorsebatterystaple," 
+
+39
+00:02:40,400 --> 00:02:43,375
+却被证明更安全.
+that one turns out to be way more secure.
+
+40
+00:02:43,375 --> 00:02:48,400
+那么我该如何量化这些不同密码的安全性呢?
+So how do I actually quantify the security of these different passwords? 
+
+41
+00:02:48,400 --> 00:02:53,700
+可以测算密码的随机性,即算出其中有多少比特的随机性.
+It's by measuring the amount of randomness in the password, how many bits of randomness are in there. 
+
+42
+00:02:53,700 --> 00:02:57,325
+因此,熵是以bit为单位进行度量的.
+And so entropy is measured in bits.
+
+43
+00:02:57,325 --> 00:02:59,925
+这里的bit和信息论中的bit是相同的.
+This is like the same bits from information theory.
+
+44
+00:03:05,850 --> 00:03:08,225
+我们只会讨论一种简单情况,
+And we're only going to talk about the simple case 
+
+45
+00:03:08,225 --> 00:03:10,675
+即只考虑从一组集合中随机选择,
+where you're trying to measure the amount of randomness
+
+46
+00:03:10,675 --> 00:03:14,125
+会有多少bit的随机性.
+when you're choosing from a set of things uniformly at random.
+
+47
+00:03:14,125 --> 00:03:19,450
+例如,当你想构建一个由四个随机单词组成的密码,
+So for example, when you're constructing a password that's in the format of four random words, 
+
+48
+00:03:19,450 --> 00:03:25,300
+你会考虑从某个字典中随机选择四个单词.
+you're kind of considering all possible sequences of four random words made from some dictionary you have. 
+
+49
+00:03:25,300 --> 00:03:27,453
+比如说你可能有一本十万个单词的字典,
+You might have a dictionary with, say, a hundred thousand words
+
+50
+00:03:27,453 --> 00:03:30,425
+你随机选择每个单词.
+and you're selecting each word uniformly at random. 
+
+51
+00:03:30,425 --> 00:03:34,825
+有多少种可能性?你可以算出来.
+How many possibilities are there? Well, you can go and figure that out. 
+
+52
+00:03:34,825 --> 00:03:38,710
+在这个例子中,一旦你知道有多少种可能性,
+In that example, once you know how many possibilities there are, 
+
+53
+00:03:38,710 --> 00:03:46,350
+熵就是以2为底,对该可能性数量取对数.
+the measure of entropy is log base 2 of the number of possibilities.  
+
+54
+00:03:46,350 --> 00:03:50,525
+正如漫画所展示的那样,
+And as that comic suggests, this is related to 
+
+55
+00:03:50,525 --> 00:03:54,425
+这与攻击者暴力破解能力有关.
+how long it'll take an attacker to try to brute-force through your different passwords. 
+
+56
+00:03:54,475 --> 00:03:58,850
+如果有一千个可能性,那么攻击者可以每秒尝试一千个密码,
+Like if you have a thousand possibilities, you're guessing passwords at a thousand passwords a second, 
+
+57
+00:03:58,850 --> 00:04:01,100
+那这就不是一个很好的密码.
+that's not a very good password. 
+
+58
+00:04:02,225 --> 00:04:05,475
+这是几个简单的例子.
+So this is a couple of quick examples. 
+
+59
+00:04:05,475 --> 00:04:08,600
+抛硬币有两种可能性,
+A coin flip has two possibilities, 
+
+60
+00:04:08,600 --> 00:04:10,150
+假设我们有一个公平的硬币.
+and let's assume we have a fair coin. 
+
+61
+00:04:10,150 --> 00:04:19,575
+因此,抛硬币的熵是以2为底2的对数,就熵为1bit.
+So a coin flip has log base 2 of 2, which is one bit of entropy. 
+
+62
+00:04:19,575 --> 00:04:23,125
+还比如说掷骰子.
+Another thing we might look at is something like a dice roll. 
+
+63
+00:04:24,175 --> 00:04:25,925
+有六种可能性,
+So there are six possibilities, 
+
+64
+00:04:25,925 --> 00:04:33,875
+以2为底6的对数,大约是2.6bit的熵.
+and log 2 of 6 is something like 2.6 bits of entropy. 
+
+65
+00:04:33,875 --> 00:04:37,825
+这就是我们量化随机性的方法.
+So that's how we quantify the amount of randomness in something.
+
+66
+00:04:39,175 --> 00:04:42,025
+现在,回到xkcd漫画中的那个例子,
+Now, going back to that example in the xkcd comic, 
+
+67
+00:04:42,025 --> 00:04:44,300
+当我们要想算出密码的熵是多少,
+when we want to figure out how much entropy is in a password, 
+
+68
+00:04:44,325 --> 00:04:47,925
+我们必须知道密码是如何生成的.
+we have to consider the model for how the password was generated. 
+
+69
+00:04:47,925 --> 00:04:52,825
+例如,在左上角,你可以考虑,我们取一个单词字典,
+For example, in the top left, you could consider, okay, we take one dictionary word, 
+
+70
+00:04:52,850 --> 00:04:55,525
+把单词的某些字符中用看起来像的数字进行替换,
+make some substitutions of some of the characters with numbers that look similar to that character,
+
+71
+00:04:55,525 --> 00:05:00,200
+再在末尾添加一个标点符号,
+add one punctuation mark at the end, 
+
+72
+00:05:00,200 --> 00:05:01,702
+然后再添加一个数字.
+and add one numeral after that. 
+
+73
+00:05:01,702 --> 00:05:06,575
+我们可以计算这样的密码有多少种可能性,
+We can take that model and then use common rhetoric to figure out how many possibilities there are, 
+
+74
+00:05:06,575 --> 00:05:10,075
+然后再计算熵.
+and from that, we can derive how many bits of entropy are in that password. 
+
+75
+00:05:10,075 --> 00:05:13,975
+在那个特定的例子中,我不知道他们到底用什么模型作为密码,
+So in that particular example, I don't know exactly what model they were using for the password, 
+
+76
+00:05:13,975 --> 00:05:16,575
+但他们计算出了28bits熵.
+but they calculated their 28 bits of entropy. 
+
+77
+00:05:16,950 --> 00:05:20,925
+而在左下角的示例中,"correcthorsebatterystaple"
+Whereas in the bottom-left example, "correcthorsebatterystaple", 
+
+78
+00:05:20,975 --> 00:05:26,125
+他们假设你生成密码使用的大约是2,000个单词的字典.
+they assume that you're working from a dictionary of about 2,000 words. 
+
+79
+00:05:26,125 --> 00:05:30,625
+所以把字典中的四个单词组合在一起的密码,大约有44位的熵.
+And so when you combine four of those words together, you get about 44 bits of entropy from that. 
+
+80
+00:05:30,625 --> 00:05:33,125
+因此,它比前面的那几个例子安全得多.
+So it's much more secure than the example before it.
+
+81
+00:05:33,300 --> 00:05:38,525
+关于我刚刚讲的这部分有什么问题吗?
+So any questions about this definition of entropy or why it's useful?
+
+82
+00:05:42,475 --> 00:05:45,375
+当你生成自己的密码时,请记住这一点.
+And when you're generating your own passwords, keep this in mind. 
+
+83
+00:05:45,375 --> 00:05:47,050
+你应该要一个高熵密码,
+You want a high-entropy password, 
+
+84
+00:05:47,050 --> 00:05:50,525
+具体熵要多高取决于你要保护的内容.
+and the exact number you need depends on exactly what you're trying to protect against. 
+
+85
+00:05:50,525 --> 00:05:53,875
+一般来说,在安全方面,你需要考虑你的威胁模型.
+Like in general, a concept in securities, you have to keep in mind what your threat model is. 
+
+86
+00:05:53,875 --> 00:05:58,600
+例如,你应该考虑你的攻击者是谁,他们可能使用什么样的攻击技术.
+Like what attackers you're concerned about, what kinds of technique the attackers might be using. 
+
+87
+00:05:58,600 --> 00:06:03,125
+例如,这个漫画提到了一个攻击者可以每秒猜测一千个密码.
+For example, this comic refers to an attacker that can guess a thousand passwords a second. 
+
+88
+00:06:03,125 --> 00:06:06,774
+这可能是一些网络服务上的情况,
+This might be something that's possible for say, 
+
+89
+00:06:06,774 --> 00:06:10,950
+比如攻击者会用随机密码来尝试登录你的电子邮箱.
+a web service that allows people to try to log in with your email and then random passwords that the attacker is trying. 
+
+90
+00:06:13,075 --> 00:06:18,425
+但这种每秒尝试一千次密码的模型可能并不适用于其他场景.
+But this thousand passwords a second model might not be accurate for other scenarios. 
+
+91
+00:06:18,425 --> 00:06:21,149
+例如,离线密码破解场景
+For example, an offline password cracking scenario 
+
+92
+00:06:21,149 --> 00:06:25,025
+或者攻击者已经破解了一个网站并下载了它们的数据库,
+or maybe the attacker has broken into a website and downloaded their database 
+
+93
+00:06:25,125 --> 00:06:27,600
+他们可能得到了你的密码的某种模糊形式,
+and they have some obfuscated form of your password, 
+
+94
+00:06:27,600 --> 00:06:29,425
+并且正在尝试找出正确的密码.
+and they're trying to figure out what the password is. 
+
+95
+00:06:29,425 --> 00:06:32,975
+也许他们可以并行攻击,让每秒猜测数达到一百万次.
+Maybe they can parallelize this attack and make it go to a million guesses a second .
+
+96
+00:06:32,975 --> 00:06:36,650
+所以你需要多少熵值,取决于你试图保护什么.
+and so exactly how much entropy you need depends on exactly what you're trying to protect against. 
+
+97
+00:06:36,775 --> 00:06:40,725
+不过要是密码已经受到了{\rcode2}网站保护[*]{\r},
+But roughly forty bits of entropy might be good enough for, 
+*[这里的意思应该是网站本身会对密码有一些加密等保护措施]
+
+98
+00:06:40,725 --> 00:06:45,550
+那大约四十个比特的熵可能就够了.
+which is protected by a website and you're concerned about online password guesses. 
+
+99
+00:06:45,575 --> 00:06:48,675
+如果你担心离线攻击并且想要真正的安全,
+And then maybe something like 80 bits of entropy might be good
+
+100
+00:06:48,675 --> 00:06:52,300
+那么可能需要八十比特的熵.
+if you're concerned about offline attacks and you want to be really, really secure. 
+
+101
+00:06:52,300 --> 00:06:54,400
+刚刚讲的这些只是一个大致指南.
+So they're rough guidelines you can use. 
+
+102
+00:06:58,425 --> 00:07:01,050
+那么,如何生成强密码呢?
+And then how do you actually generate strong passwords? 
+
+103
+00:07:01,050 --> 00:07:02,700
+首先,你需要一些密码模型.
+Well, you have some model for a password. 
+
+104
+00:07:02,700 --> 00:07:04,525
+例如,常用的字典,
+For example, the for dictionary works thing, 
+
+105
+00:07:04,525 --> 00:07:06,075
+你可以用一个字典.
+and you can actually get a dictionary. 
+
+106
+00:07:06,075 --> 00:07:08,275
+然后,你可以使用类似于掷骰子的方法.
+And then you can use methods like dice, where, 
+
+107
+00:07:08,275 --> 00:07:13,100
+在课程笔记中有一些链接,你可以获得一个仿真物理骰子并将其滚动,
+so there's some we linked to in the lecture notes where you can actually get physical dice and roll them 
+
+108
+00:07:13,100 --> 00:07:17,250
+然后你可以将掷骰结果映射到字典,最终将其转换为密码.
+and then map dice rolls to dictionary words in order to eventually turn that into a password. 
+
+109
+00:07:17,300 --> 00:07:21,575
+使用一些随机的物理标记,
+And doing something like this, using some kind of physical token that you know is random,
+
+110
+00:07:21,575 --> 00:07:25,175
+如平衡骰子或硬币,是一个好方法,
+like a balanced die or a coin that you know is balanced, is a good thing to do.
+
+111
+00:07:25,175 --> 00:07:29,375
+因为人类实际上并不擅长选择随机数字.
+Because humans are actually not good at choosing random numbers, right? 
+
+112
+00:07:29,375 --> 00:07:31,825
+如果我让你从1到100中随机选择一个数字,
+If I just asked you to name a random number for 1 to 100,
+
+113
+00:07:31,825 --> 00:07:35,000
+你很有可能不能均匀随机地进行选择.
+chances are that you're probably not doing so uniformly at random very well. 
+
+114
+00:07:35,000 --> 00:07:38,950
+这就是为啥我们要使用物理标记来进行随机.
+And so that's why it's actually good to use these physical tokens in order to produce randomness. 
+
+115
+00:07:41,525 --> 00:07:43,975
+熵是我们的第一个密码学概念.
+So entropy, that's our first concept recovering 
+
+116
+00:07:43,975 --> 00:07:50,450
+到现在为止有啥问题吗?好的.
+Any questions about that or about this comic? Great. 
+
+117
+00:07:50,450 --> 00:07:54,225
+那么进入有趣但稍微复杂的话题,
+So getting into slightly more interesting and complicated topics,
+
+118
+00:07:54,225 --> 00:07:57,625
+下一个我们要谈论的是哈希函数.
+the next thing we're going to talk about is hash functions. 
+
+119
+00:07:57,625 --> 00:08:03,125
+大部分应该都参加了上一次关于Git的讲座吧,那次讲座就提到了Git使用了SHA-1哈希函数.
+So hopefully, most of you were here during the get lecture where we talked about the SHA-1 hash function used in get. 
+
+120
+00:08:03,125 --> 00:08:06,450
+现在我们要聊聊更多细节,
+So now going into that topic in a little bit more detail,
+
+121
+00:08:11,475 --> 00:08:18,150
+哈希函数能够将任意长度的输入数据压缩为固定长度的输出.
+hash functions at a high level are functions that map a variable amount of data into a fixed size output. 
+
+122
+00:08:18,150 --> 00:08:23,675
+例如,SHA-1哈希函数就是一个哈希函数.
+So for example, the SHA-1 hash function is one example of a hash function 
+
+123
+00:08:23,675 --> 00:08:33,350
+SHA-1需要输入一些byte数据,但它会有恰好160bits输出.
+that takes in some input of some number of bytes and outputs exactly 160 bits of output. 
+
+124
+00:08:33,800 --> 00:08:38,025
+这就是SHA-1的一个特点.
+So that's kind of the type signature of this particular hash function. 
+
+125
+00:08:38,025 --> 00:08:41,725
+哈希函数具有一些有用的属性.
+And then these functions have some number of properties that are useful. 
+
+126
+00:08:41,725 --> 00:08:49,325
+总的来说,哈希函数可以被认为是输出一个随机数且难以逆推的函数.
+So at a high level, these can be thought about as hard-to-invert functions that have random-looking outputs. 
+
+127
+00:08:49,325 --> 00:08:54,125
+我们可以举些例子看看.
+We can actually try this out on some random piece of data. 
+
+128
+00:08:54,125 --> 00:09:01,225
+例如,如果我在我的终端中输入 {\rcode}printf 'hello'{\r},
+For example, if I enter into my terminal "printf 'hello'", this does exactly what you would expect it does, 
+
+129
+00:09:01,225 --> 00:09:02,725
+他将输出"hello",
+prints the set to standard out, 
+
+130
+00:09:02,725 --> 00:09:05,850
+然后我可以将其传递给"sha1sum"命令.
+and I can pipe this to the "sha1sum" command. 
+
+131
+00:09:05,850 --> 00:09:12,250
+这是一个命令行程序,读取标准输入流,并计算SHA-1函数,
+So this is a command-line program that accepts input via standard in and computes this SHA-1 function, 
+
+132
+00:09:12,250 --> 00:09:16,625
+该函数从输入中获取不定长的数据并输出一个160bit的数据,
+which takes in some variable number of bytes from the input and produces a 160-bit output,
+
+133
+00:09:16,625 --> 00:09:21,325
+在这里它表示为十六进制字符串.
+which in this particular case is represented or encoded as a hexadecimal string. 
+
+134
+00:09:21,325 --> 00:09:23,275
+因此,它是一个长度为40的十六进制字符串,
+So it's a length 40 hexadecimal string, 
+
+135
+00:09:23,275 --> 00:09:24,850
+并且你可以看到此输出.
+and you see this output right here. 
+
+136
+00:09:24,850 --> 00:09:29,025
+"-"只是表示它从标准输入中获取了输入.
+This "-" just means it took its input from standard in. 
+
+137
+00:09:29,025 --> 00:09:32,025
+因此,此输出看起来像是一些随机数字,
+So this output just looks like some random number, 
+
+138
+00:09:32,025 --> 00:09:35,675
+但重要的是,这实际上是一个确定的数字.
+but one important thing is that this is a deterministic number. 
+
+139
+00:09:35,675 --> 00:09:38,750
+如果你在自己的设备上执行相同的命令,
+If you try the same command on your own computer,
+
+140
+00:09:38,750 --> 00:09:41,550
+{\rcode}printf 'hello' | sha1sum{\r},你将得到和这里相同的输出.
+"printf 'hello' | sha1sum", you will get the same number out. 
+
+141
+00:09:41,575 --> 00:09:46,725
+因此,SHA-1很有名,人们在其所有参数上都达成了共识.
+So SHA-1 is some well-known function that people have agreed upon for all its parameters. 
+
+142
+00:09:46,725 --> 00:09:53,050
+只要略微调整输入,比如说将"hello"更改为"Hello",
+we'll see that if we tweak the input a little bit, like say changed "hello" to "Hello" with a capital "H", 
+
+143
+00:09:53,050 --> 00:09:55,375
+现在我得到了一个完全不同的输出.
+now I get a completely different looking output. 
+
+144
+00:09:55,375 --> 00:09:58,850
+但它是确定的,即使看起来像是一个随机数,
+And this also looks like some other kind of random-ish number, even though it is deterministic, 
+
+145
+00:09:58,850 --> 00:10:01,600
+并且你可以在自己的计算机上复现这个输出.
+and you could reproduce this on your own computer.
+
+146
+00:10:06,175 --> 00:10:15,725
+哈希函数具有许多重要属性.
+Hash functions have a number of properties that are pretty important. 
+
+147
+00:10:15,725 --> 00:10:20,050
+加密哈希函数具有的第一个属性是它们是不可逆的.
+The first property that cryptographic hash functions have is that they're non-invertible. 
+
+148
+00:10:20,050 --> 00:10:23,050
+这意味着,如果你知道此函数的输出,
+And what that means is that if you take the output from this function,
+
+149
+00:10:23,050 --> 00:10:27,164
+例如那个"aaf4...34d"的输出,
+for example, that "aaf4...34d" string shown there
+
+150
+00:10:27,164 --> 00:10:33,450
+单单从这个输出很难弄清楚输入是什么.
+from that output, it's hard to figure out what the input was that produced that output. 
+
+151
+00:10:33,725 --> 00:10:37,675
+因此,你可以很容易地计算出SHA-1哈希值,
+So you can go one way, compute the SHA-1 hash easily, 
+
+152
+00:10:37,675 --> 00:10:39,275
+但是你无法逆向操作.
+but you can't go backwards.
+
+153
+00:10:39,275 --> 00:10:44,975
+这些函数具有的另一个特性是它们具有抗碰撞性.
+Another property that these functions have is that they're collision-resistant. 
+
+154
+00:10:49,600 --> 00:10:56,475
+这个属性的意思是很难找到两个不同的输入产生相同的输出.
+And what this property means is that it's hard to find two different inputs that produce the same output. 
+
+155
+00:10:56,850 --> 00:11:01,525
+我大概讲了下什么是加密哈希函数.
+So this basically describes what a cryptographic hash function is.
+
+156
+00:11:01,525 --> 00:11:10,275
+你们有什么问题吗?
+So any questions about the kind of specification of a cryptographic hash function?  
+
+157
+00:11:10,275 --> 00:11:12,800
+那么,这些哈希函数实际上有什么用途呢?
+Okay, so what are these hash functions actually useful for? 
+
+158
+00:11:12,800 --> 00:11:17,150
+我们实际上已经在Git讲座中看到了一个应用,就是内容地址存储.
+Well, we've already seen one application in Git for content address storage. 
+
+159
+00:11:17,150 --> 00:11:24,650
+在Git中,我们希望统一命名object仓库中的对象,
+So in Git, we want some uniform way of naming different objects that are in the object store, 
+
+160
+00:11:24,650 --> 00:11:28,175
+而Git可以将它们全部命名为它们的SHA-1哈希.
+and it turns out that Git addresses all of them by their SHA-1 hash.
+
+161
+00:11:28,175 --> 00:11:31,225
+因此,你有存储好的数据,
+So you have the actual data you want to store, 
+
+162
+00:11:31,225 --> 00:11:35,550
+然后要为该数据命名,只需命名其为SHA-1哈希即可.
+and then to name that particular piece of data, you just name the SHA-1 hash. 
+
+163
+00:11:35,550 --> 00:11:38,525
+所有这些都存储在object仓库中.
+And all of that is stored in the object store in that particular way. 
+
+164
+00:11:39,475 --> 00:11:42,650
+我们在查看Git的仓库的时候可以看到.
+We see this when looking at many different parts of Git. 
+
+165
+00:11:42,650 --> 00:11:44,625
+例如,这里,我进入Git仓库.
+For example, right here, I'm going to Git repository. 
+
+166
+00:11:44,625 --> 00:11:46,725
+如果我执行"git log"',它会显示历史记录.
+If I do "git log"', it shows me the commits. 
+
+167
+00:11:46,750 --> 00:11:52,850
+例如,这个数字是这个提交的SHA-1值,
+And for example, this number up here is the cryptographic hash function SHA-1 
+
+168
+00:11:52,850 --> 00:11:56,325
+是这个提交的名字.
+applied to the commit object that describes this particular commit.
+
+169
+00:11:57,375 --> 00:12:02,100
+那么,有人知道为什么Git在这里使用加密哈希函数而不是......
+So does anybody know why Git uses a cryptographic hash function here as opposed to... 
+
+170
+00:12:02,150 --> 00:12:06,200
+你可能在其他课程,比如算法的入门课中听说过散列函数,
+So you might have heard in your other computer science classes, like say your introductory algorithms class, 
+
+171
+00:12:06,200 --> 00:12:11,575
+这个前面没有像"加密哈希函数"加上"加密"这个前缀.
+there are things called hash functions without the word 'cryptographic' appended in front of them. 
+
+172
+00:12:11,575 --> 00:12:17,775
+它们具有类似的属性,能够将可变长的输入压缩为某个固定大小的输出.
+And they have similar properties that they turn a variable-sized input into some fixed-size output. 
+
+173
+00:12:17,775 --> 00:12:20,878
+但是它们并没有完全具备
+But they don't quite have these properties 
+
+174
+00:12:20,878 --> 00:12:25,075
+比如说,难以找到产生特定输出的输入等属性.
+where it's hard to find an input that produces a particular output or things like that. 
+
+175
+00:12:25,075 --> 00:12:27,200
+这是一种比较弱的定义.
+It's a kind of weaker definition than this.
+
+176
+00:12:27,200 --> 00:12:30,825
+那么,为什么在Git中我们要拥有一个加密哈希函数
+So why is it that in Git we care about having a cryptographic hash function
+
+177
+00:12:30,825 --> 00:12:33,129
+而不是一个普通的哈希函数?
+as opposed to just a regular old hash function? 
+
+178
+00:12:33,129 --> 00:12:34,425
+大家有什么想法吗?
+Does anybody have any ideas?
+
+179
+00:12:45,625 --> 00:12:53,750
+是的,基本上说对了,我们不希望这个哈希函数的输出产生冲突.
+Yeah, that's basically it, that we don't want to have kind of conflicts in the output from this hash function. 
+
+180
+00:12:53,750 --> 00:12:58,700
+就像每个提交都由一个哈希值标识,每个文件也该由该文件的哈希值标识.
+Like every commit is identified by a hash function, every file is identified by the hash of that file. 
+
+181
+00:12:58,700 --> 00:13:03,875
+如果有两个不同的内容产生了相同的输出,也就是说,
+If it were ever the case that two different pieces of content in practice produce the same output, that is, 
+
+182
+00:13:03,875 --> 00:13:08,525
+该函数不具有抗碰撞性,那么这可能会造成很大问题.
+if the function were not collision-resistant, that could be really problematic, right?
+
+183
+00:13:08,525 --> 00:13:12,925
+因为你和我可能会尝试获取我们认为是相同的仓库,
+Because then you and I, we could have to do to get repos that we think are the same,
+
+184
+00:13:12,925 --> 00:13:14,825
+我们检出相同的提交哈希,
+we check out the same commit hash, 
+
+185
+00:13:14,825 --> 00:13:17,250
+但是最终我们却可能会得到不同的文件.
+and we might end up with different files. 
+
+186
+00:13:17,350 --> 00:13:22,950
+这绝对达咩,因为Git用于跟踪软件的开发,
+And this is concerning because Git is used to track software, a track development of software, 
+
+187
+00:13:22,950 --> 00:13:28,125
+同时它也要保证正确的人员在写代码,
+and it's also kind of involved in making sure that the right people are authoring the software,
+
+188
+00:13:28,125 --> 00:13:29,925
+过程中不能发生什么不妥之事.
+nothing funny has happened in the process. 
+
+189
+00:13:29,925 --> 00:13:31,817
+例如,有许多开源项目,
+For example, there are all these open-source projects 
+
+190
+00:13:31,817 --> 00:13:35,050
+如Linux内核,就使用Git进行进行跟踪.
+like the Linux kernel where development is done using Git. 
+
+191
+00:13:35,075 --> 00:13:38,225
+如果某个Git贡献者能够编辑某些文件
+It would be really bad if some contributor to Git could say edit some file
+
+192
+00:13:38,225 --> 00:13:42,532
+并提出一些看起来相当不错的优化请求,
+and propose some change that looks pretty benign like, 
+
+193
+00:13:42,532 --> 00:13:46,875
+比如"让我改进一下Linux的这个部分",提交该申请给Linux开发人员,
+"Oh, let me go and improve this part of Linux", submit that change request to the Linux developers, 
+
+194
+00:13:46,875 --> 00:13:52,975
+然后实际提供了一个具有相同提交哈希的Git仓库,
+and then in practice actually supply a Git repository that has the same commit hash and whatnot, 
+
+195
+00:13:52,975 --> 00:13:55,375
+但文件内容不同.
+but actually the file contents are different. 
+
+196
+00:13:55,375 --> 00:13:56,300
+这种情况非常糟糕.
+There's something malicious. 
+
+197
+00:13:56,300 --> 00:14:01,790
+因此,Git就需要依赖于这个SHA-1函数作为加密哈希函数,
+So Git actually relies on this SHA-1 function being a cryptographic hash function
+
+198
+00:14:01,790 --> 00:14:04,675
+以保证安全性.
+in order to achieve security. 
+
+199
+00:14:05,275 --> 00:14:12,725
+关于哈希函数的应用还有什么问题吗?
+Any questions about that and some other interesting applications of hash functions?
+
+200
+00:14:12,725 --> 00:14:16,150
+所以,就像我们看到的,哈希函数可以将很长的输入压缩为很短的输出,
+So, as we saw, hash functions turn big inputs into small outputs, 
+
+201
+00:14:16,150 --> 00:14:19,325
+而且由于哈希函数是抗碰撞的,
+and in a way, because the hash function is collision-resistant, 
+
+202
+00:14:19,325 --> 00:14:23,075
+输出可以用来验证或标识输入.
+the output can be used to kind of attest to or identify the input. 
+
+203
+00:14:23,075 --> 00:14:28,025
+因此,你可以将哈希看作文件的简短摘要.
+And so you can think of a hash as a short summary of a file. 
+
+204
+00:14:28,200 --> 00:14:30,900
+例如,在此目录中的一堆文件中,
+For example, in this directory of a bunch of files,
+
+205
+00:14:30,900 --> 00:14:34,950
+我可以计算该目录下的一些文件的 "sha1sum".
+I can compute the "sha1sum" of some file in this directory. 
+
+206
+00:14:35,100 --> 00:14:39,875
+这是"README.md"的SHA-1哈希值.
+And this is the SHA-1 algorithm applied to this "README.md" file. 
+
+207
+00:14:39,925 --> 00:14:44,043
+有趣的是,要想计算出另一个具有相同哈希输出的文件
+And what's interesting is that it is computationally hard or like impossible,
+
+208
+00:14:44,043 --> 00:14:47,350
+是相当困难的,
+you can kind of think of it as impossible, to find any other file, 
+
+209
+00:14:47,350 --> 00:14:50,850
+你甚至可以认为是不可能的.
+so a different file that has the same hash output. 
+
+210
+00:14:50,850 --> 00:14:56,125
+这个对于验证在从互联网下载的文件非常有用.
+And one scenario in which this is useful is when you download files from the internet. 
+
+211
+00:14:56,200 --> 00:15:03,225
+例如,有许多Linux发行版会在其网站发布大型CD或DVD映像文件.
+For example, there are lots of Linux distributions that distribute large CD or DVD images from their website. 
+
+212
+00:15:03,225 --> 00:15:06,750
+像我可以到Debian.org上下载最新版本的Debian.
+Like, I can go to Debian.org and download the latest version of Debian. 
+
+213
+00:15:07,000 --> 00:15:10,100
+问题是,在网站上托管这些文件非常昂贵.
+The thing is that hosting those files can be expensive. 
+
+214
+00:15:10,100 --> 00:15:13,075
+因此,许多好心人会提供这些文件的镜像.
+And so a lot of people are nice enough to host mirrors of these files. 
+
+215
+00:15:13,125 --> 00:15:15,675
+所以,我可以去许多其他镜像站点去下载Debian,
+So instead of downloading Debian from Debian.org, 
+
+216
+00:15:15,675 --> 00:15:18,550
+不用从Debian.org下载Debian,
+I can go to one of many other sites 
+
+217
+00:15:18,550 --> 00:15:22,900
+镜像站上的Debian和在Debian.org托管的应该是相同的文件.
+and download what are supposed to be the same files that are hosted at Debian.org. 
+
+218
+00:15:22,900 --> 00:15:26,500
+但是,我怎么知道我有没有得到正确的文件?
+But how do I know that I actually got the correct file?  
+
+219
+00:15:26,600 --> 00:15:31,975
+比如,如果有一个恶意镜像,比如你去了类似"AnishaIsEvilDebian.com"
+Like, what if I set up a malicious mirror and you go to like "AnishaIsEvilDebian.com"
+
+220
+00:15:31,975 --> 00:15:36,575
+然后尝试在上面下载Debian,那么结果可能是你的Linux安装程序被植入了后门.
+and then try to download Debian,  turns out that your Linux installation is backdoored.  
+
+221
+00:15:36,575 --> 00:15:40,650
+一种解决方案就是就是从官网下载一份副本,
+Well, one thing you could do is download a copy from the original Debian website 
+
+222
+00:15:40,650 --> 00:15:42,450
+然后和你从镜像站下载的版本进行比较.
+and then download my version and compare them. 
+
+223
+00:15:42,450 --> 00:15:44,000
+但这有点违背了初衷,对吧?
+But that kind of defeats the purpose, right? 
+
+224
+00:15:44,000 --> 00:15:47,850
+我们不想从Debian.org下载文件,因为托管这些文件很昂贵,
+Because we want to avoid downloading things from Debian org because hosting these files is expensive, 
+
+225
+00:15:47,850 --> 00:15:51,650
+我们希望让人们能够使用在其他地方的镜像.
+and we want all these different people to be able to mirror copies of the files elsewhere. 
+
+226
+00:15:51,700 --> 00:15:57,175
+那么,有没有人察觉到加密哈希函数可以用来解决这个问题.
+So, does anybody see how cryptographic hash functions could be useful to solve this problem? 
+
+227
+00:15:57,175 --> 00:16:00,300
+我想从一个不信任的源下载文件,
+That I want to download a file from an untrusted source
+
+228
+00:16:00,300 --> 00:16:03,850
+不是从可信源本身下载文件.
+but and not from like the trusted source itself.
+
+229
+00:16:03,850 --> 00:16:06,975
+但我也许可以从这个可信源获取一些简短的信息,
+But maybe I can get some small piece of information from this trusted source, 
+
+230
+00:16:06,975 --> 00:16:12,400
+以便验证我从不信任的源下载的文件.
+in order to know whether the file I downloaded from the untrusted source is the thing I was supposed to get. 
+
+231
+00:16:16,450 --> 00:16:20,650
+是的,它就是一个加密哈希函数的简单应用.
+Yes, like it's basically just a straightforward application of cryptographic hash functions. 
+
+232
+00:16:20,650 --> 00:16:26,775
+Debian可以生成正确的ISO文件或其他文件,
+So what Debian.org can do is they can produce their kind of correct ISO file or whatever they want, 
+
+233
+00:16:26,775 --> 00:16:33,250
+并且不用在他们的网站上发布文件本身,而是发布该文件的哈希值.
+and instead of publishing the file itself on their website, they can publish a hash of that file. 
+
+234
+00:16:33,250 --> 00:16:36,575
+与文件本身相比,
+So, compared to the file itself which may be many gigabytes,
+
+235
+00:16:36,575 --> 00:16:41,425
+这个哈希值可能只有160位数据,相对于发布源文件,发布哈希值非常便宜.
+this is only like in this particular case 160 bits of data, right? So very cheap to host. 
+
+236
+00:16:41,425 --> 00:16:44,425
+然后,作为用户,我可以随便从什么网站下载该文件,
+And then what I can do as a user is I can download 
+
+237
+00:16:44,425 --> 00:16:48,225
+可能是一个不受信任的网站,
+that file from any random website, it could be an untrusted website, 
+
+238
+00:16:48,225 --> 00:16:51,600
+下载完成后,我只需双重检查sha-1哈希值.
+and after I download, I just double-check the sha-1 hash. 
+
+239
+00:16:51,600 --> 00:16:56,175
+如果哈希匹配,则我知道我有正确的文件,
+And if the hash matches, then I know that I have the right file 
+
+240
+00:16:56,175 --> 00:16:58,529
+因为如果有一些不同的文件,
+because it's computationally infeasible for somebody 
+
+241
+00:16:58,529 --> 00:17:02,175
+而这些文件恰好具有相同的哈希值,这基本上是不可能的,
+to give me some different file that happens to have the same hash, 
+
+242
+00:17:02,175 --> 00:17:04,975
+因为哈希函数是抗碰撞的.
+because hash functions are collision-resistant. 
+
+243
+00:17:06,000 --> 00:17:08,700
+对此应用有任何问题吗?
+So any questions about that application?  
+
+244
+00:17:17,975 --> 00:17:23,000
+是的,这是一个很好的问题,问题是,为什么需要不同的人来托管信息?
+Yeah, so that's a good question, like why do you need different people to host the information? 
+
+245
+00:17:23,000 --> 00:17:25,225
+难道对于每个人来说托管的成本是不一样的吗?
+Like wouldn't it be equally expensive for everybody?
+
+246
+00:17:25,225 --> 00:17:27,700
+这个问题的答案有点复杂,
+So the answer to that question is a little bit complicated, 
+
+247
+00:17:27,700 --> 00:17:29,925
+但我会解释一部分.
+but like here's a partial answer. 
+
+248
+00:17:29,925 --> 00:17:34,700
+一件事是从服务器下载文件会受到服务器距离的限制.
+One thing is that downloading files from a server is affected by how far away the server is from you. 
+
+249
+00:17:34,700 --> 00:17:38,975
+举个例子,如果服务器在马萨诸塞州,而你在中国,
+So for example, if the server is in Massachusetts and you're in say China, 
+
+250
+00:17:38,975 --> 00:17:41,975
+你必须通过互联网进行大量数据的往返,
+you have to kind of make a big round trip across the internet, 
+
+251
+00:17:41,975 --> 00:17:44,200
+有许多原因,会让这个操作变得昂贵,
+and that may be expensive for a number of reasons. 
+
+252
+00:17:44,200 --> 00:17:47,442
+比如延迟高,
+Like the latency is high and the traffic needs to go through kind of 
+
+253
+00:17:47,442 --> 00:17:49,975
+流量需要通过许多不同的线才能到达你所在的位置.
+lots of different wires to make its way all the way to where you are. 
+
+254
+00:17:49,975 --> 00:17:55,225
+因此,这些网站所做的就是将他们的文件分发到世界各地的服务器上,
+And so one thing that these websites do is that they distribute their content to servers that are all over the world, 
+
+255
+00:17:55,225 --> 00:17:58,025
+然后作为用户,你从离你最近的服务器下载.
+and then as a user, you download from the server that's closest to you. 
+
+256
+00:17:58,025 --> 00:18:03,375
+比如,MIT维护一个Debian软件包仓库,里面涵盖所有的Debian软件的镜像.
+Like for example, MIT maintains a Debian package repository and kind of mirrors all the Debian stuff. 
+
+257
+00:18:03,375 --> 00:18:09,150
+因此,如果你是MIT的Debian用户,你可以使用MIT提供的镜像文件,
+So if you're a Debian user at MIT, you can use the MIT copy of everything, 
+
+258
+00:18:09,150 --> 00:18:12,175
+然后通过我们的本地网络快速访问资源,
+and then you can kind of access it over our fast local network, 
+
+259
+00:18:12,175 --> 00:18:15,225
+这样流量根本不需要通过外部互联网,
+and that traffic never needs to go to the outside Internet at all, 
+
+260
+00:18:15,225 --> 00:18:16,450
+所以速度非常快.
+so it's very fast. 
+
+261
+00:18:16,450 --> 00:18:18,200
+这是个好问题.
+That's a good question. 
+
+262
+00:18:18,200 --> 00:18:21,650
+还有其他问题吗?
+Any other questions?
+
+263
+00:18:21,650 --> 00:18:24,575
+好的,还有一个有趣的应用是
+Okay, and then one final kind of interesting application of hash functions
+
+264
+00:18:24,575 --> 00:18:26,500
+哈希函数的承诺机制.
+is something called a commitment scheme. 
+
+265
+00:18:26,500 --> 00:18:29,100
+我想玩一个游戏,
+So I want to play a game, 
+
+266
+00:18:29,100 --> 00:18:30,300
+我需要一个志愿者.
+and I need a volunteer for this. 
+
+267
+00:18:30,300 --> 00:18:33,610
+你不需要从座位上站起来,只需要你跟我交流一下.
+So you don't actually need to get up from your seat or anything, I just need you to talk with me. 
+
+268
+00:18:33,610 --> 00:18:39,800
+有人自愿参与吗?好的,你叫什么名字?Abdul Aziz?好的,太好了.
+So any volunteers raise your hand? Yeah, okay, what's your name? Abdul Aziz? Okay, great. 
+
+269
+00:18:39,800 --> 00:18:44,808
+所以,Abdul Aziz,我们要玩一个游戏,我要掷一枚硬币,
+So Abdul Aziz, we're going to play a game where I'm going to flip a coin
+
+270
+00:18:44,808 --> 00:18:46,450
+然后你要猜正面或反面,
+and then you're gonna call heads or tails, 
+
+271
+00:18:46,475 --> 00:18:48,325
+如果你猜对了,你就赢了,
+and if you call it right, you win, 
+
+272
+00:18:48,325 --> 00:18:49,875
+如果你猜错了,你就输了.
+and if you call it wrong, you lose. 
+
+273
+00:18:49,875 --> 00:18:52,400
+这个游戏没有任何利益关系,
+And there are no stakes for this game, 
+
+274
+00:18:52,400 --> 00:18:53,950
+就是为了成就感.
+but just the pride of winning. 
+
+275
+00:18:55,450 --> 00:18:59,275
+但是不幸的是,我看了一下我的钱包,只有美元,没有硬币.
+Sadly, I checked my wallet and all I have is dollar bills, I don't have any coins with me. 
+
+276
+00:18:59,275 --> 00:19:01,575
+所以,我只能在脑海中掷硬币.
+So instead, I'm just going to flip the coin in my head. 
+
+277
+00:19:01,575 --> 00:19:02,425
+好的,
+Alright, 
+
+278
+00:19:02,425 --> 00:19:05,650
+我掷硬币了,请你叫正面或反面.
+so okay, I flip the coin, call heads or tails. 
+
+279
+00:19:05,650 --> 00:19:07,800
+很抱歉,你输了,是正面.
+Sorry, you lost, it was heads. 
+
+280
+00:19:11,000 --> 00:19:16,425
+我可以作弊,对吧?我可以先听到你说的,然后我说相反的结果.
+I can cheat, right? I can just see what you say and say the opposite thing. 
+
+281
+00:19:16,425 --> 00:19:18,150
+所以让我们试着让这个游戏变得公平一些.
+So let's try fixing this game. 
+
+282
+00:19:18,150 --> 00:19:25,475
+就是如果我提前告诉你翻转结果是正面还是反面,你再猜.
+How about you call heads or tails after I say what the flip result was? 
+
+283
+00:19:25,475 --> 00:19:27,055
+好的,如果我说"结果是反面",
+Okay, yeah, so if I say, "Oh, the result is tails," 
+
+284
+00:19:27,055 --> 00:19:31,075
+你会怎么猜?你会选反面?是的.
+What are you gonna say? Are you gonna call tails? Yeah. 
+
+285
+00:19:33,325 --> 00:19:36,950
+那么,我们怎么可以
+So, is it possible to play this 
+
+286
+00:19:36,950 --> 00:19:43,675
+在没有硬币的情况下公平地玩这个"猜硬币"的游戏呢?
+"Guess what the coin flip result is" game in a fair way without having a physical coin that we share? 
+
+287
+00:19:43,675 --> 00:19:46,000
+因为我现在没有硬币.
+Like, because I can't really manipulate your physical reality. 
+
+288
+00:19:46,000 --> 00:19:48,800
+如果我在你面前抛硬币,你会相信它是公平的,对吧?
+If I flip a coin in front of you, you probably trust that it's okay, right? 
+
+289
+00:19:48,800 --> 00:19:52,725
+所以,人们发现了一种利用哈希函数的方法,是所谓的承诺方案的思想,
+So, it turns out that hash functions give us a kind of cool way to solve this problem 
+
+290
+00:19:52,725 --> 00:19:55,725
+为我们提供了一种解决这个问题的很酷的方案.
+through an idea called a commitment scheme. 
+
+291
+00:19:55,800 --> 00:20:00,575
+因此,这是解决问题的一种方案.
+So, I can say, "Here's the construction of the solution. 
+
+292
+00:20:00,600 --> 00:20:02,825
+我可以选择正面或反面,
+I can pick heads or tails, 
+
+293
+00:20:02,825 --> 00:20:09,400
+实际上我要选择一个大的随机数,比如这个数,
+and I'm actually going to pick a big random number, say like this number here, 
+
+294
+00:20:09,400 --> 00:20:15,750
+我能做的是计算这个数字的 sha1sum.
+and what I can do is compute the sha1sum of this number. 
+
+295
+00:20:15,750 --> 00:20:19,300
+在这个时刻,你还没有看到这个数,我只是在脑海中做所有这些.
+At this moment, you haven't seen this number yet, I'm just doing all this in my head. 
+
+296
+00:20:19,300 --> 00:20:23,175
+然后,我告诉你:"好的,我抛了硬币,
+And then what I do is I tell you, "Okay, I flipped a coin, 
+
+297
+00:20:23,175 --> 00:20:27,775
+我现在不会告诉你结果,因为你还没有猜正面或反面,
+and I'm not going to tell you what the result is just yet because you haven't called heads or tails, 
+
+298
+00:20:27,775 --> 00:20:30,125
+但我会告诉你结果的sha1sum.
+but I'll tell you what the sha1sum of the result is. 
+
+299
+00:20:30,125 --> 00:20:32,075
+就是这个值.
+Here you go,and I tell you this value. 
+
+300
+00:20:32,075 --> 00:20:34,450
+现在,你可以猜正面或反面了.
+Now, after this, you can call heads or tails. 
+
+301
+00:20:34,450 --> 00:20:37,600
+所以,你选什么?选正面.
+So, what do you say? Like, say heads afterwards. 
+
+302
+00:20:37,600 --> 00:20:41,000
+那么,我现在告诉你我的输入,
+What I can do is I can reveal to you what my input to this function was, 
+
+303
+00:20:41,000 --> 00:20:42,700
+然后你可以进行验证,
+and then you can cross-check this, right? 
+
+304
+00:20:42,700 --> 00:20:47,725
+对输入进行sha1sum以验证输出是否与我之前给你的一样,
+You can compute the sha1sum on the input to verify that the output is what I said it was earlier, 
+
+305
+00:20:47,725 --> 00:20:50,850
+我们需要将这些数字对应到正面或反面.
+and then we can have some way of mapping these numbers to heads or tails. 
+
+306
+00:20:50,850 --> 00:20:55,550
+比如说我们事先协商同意偶数为正面,奇数为反面,
+So, I might have agreed upon beforehand that even numbers are heads and odd numbers are tails, 
+
+307
+00:20:55,550 --> 00:20:57,600
+这是一种让游戏变公平的方法.
+and so this is a way of fixing that game. 
+
+308
+00:20:57,600 --> 00:20:59,850
+所以,现在我们可以在我们的脑海中玩这个游戏了.
+So, we can actually play this game in our heads. 
+
+309
+00:21:00,450 --> 00:21:02,600
+我可以选择一个值,
+I can pick a value, 
+
+310
+00:21:02,600 --> 00:21:04,200
+我不会告诉你这个值是什么,
+but not reveal that value to you, 
+
+311
+00:21:04,200 --> 00:21:05,825
+但我可以承诺该值.
+but I can commit to the value. 
+
+312
+00:21:05,825 --> 00:21:10,375
+因此,这是一种承诺机制,我在告诉你之后无法改变主意,
+So, this is a kind of binding commitment scheme that I can't change my mind after I've told you this, 
+
+313
+00:21:10,375 --> 00:21:12,825
+但不会向你透露原始值.
+but it doesn't reveal the original value to you. 
+
+314
+00:21:13,325 --> 00:21:16,775
+因此,这是加密哈希函数的另一个不错的应用.
+And so, this is one other neat application of cryptographic hash functions. 
+
+315
+00:21:16,925 --> 00:21:23,075
+对于承诺机制有什么问题吗?好的.
+Any questions about this particular construction? Okay, great. 
+
+316
+00:21:23,100 --> 00:21:28,775
+接下来,我们将讨论密钥生成函数,
+So, moving on to the next topic, we're going to talk about key derivation functions. 
+
+317
+00:21:38,950 --> 00:21:41,775
+通常缩写为KDF.
+Often abbreviated as KDFs. 
+
+318
+00:21:44,050 --> 00:21:48,024
+这是一个与哈希函数非常相似的概念,
+So, this is a concept that's very similar to hash functions,
+
+319
+00:21:48,024 --> 00:21:52,700
+但是它还有一个额外的特性,即计算速度较慢.
+except it has kind of one extra property that it is slow to compute. 
+
+320
+00:21:52,775 --> 00:22:07,690
+举个例子,有一个叫PBKDF2的哈希函数
+For example, there's a hash function or key derivation function known as PBKDF2, 
+
+321
+00:22:07,690 --> 00:22:09,803
+或者说密钥生成函数,
+password-based key derivation function, 
+
+322
+00:22:09,803 --> 00:22:15,045
+它具有我们先前所说的这些哈希函数类似的性质,
+that has a kind of similar form as these hash functions we were talking about here,
+
+323
+00:22:15,045 --> 00:22:18,053
+它们接受可变长度的输入并生成固定长度的输出.
+that they take in some variable length input and produce a fixed length output. 
+
+324
+00:22:18,150 --> 00:22:20,425
+但它们通常被用于一特定目的.
+But they're meant to be used for one particular purpose. 
+
+325
+00:22:20,425 --> 00:22:26,000
+这个目的通常是将固定长度的输出作为另一个加密算法中的密钥.
+The purpose is generally to use the fixed length output as a key in another cryptographic algorithm. 
+
+326
+00:22:26,000 --> 00:22:30,625
+我们稍后将讨论这些算法,比如这个函数的用途.
+And we'll talk about those algorithms, like what use the output of this thing for in a moment. 
+
+327
+00:22:30,625 --> 00:22:34,525
+但这些函数的一个特性就是它们很慢.
+But one property of these things is that they're slow. 
+
+328
+00:22:34,525 --> 00:22:39,525
+有没有人知道为什么要让算法变慢?
+Does anybody have any idea why you'd want an algorithm to be slow? Like, 
+
+329
+00:22:39,525 --> 00:22:41,800
+通常我们希望算法很快,对吧?
+normally we want algorithms to be fast, right? 
+
+330
+00:22:41,800 --> 00:22:43,725
+那么为什么我们希望算法很慢呢?
+So why would we want an algorithm to be slow? 
+
+331
+00:22:43,725 --> 00:22:56,525
+是的,没错,就是这个原因.
+Yes, yeah, that's exactly it. 
+
+332
+00:22:56,525 --> 00:22:59,125
+我重复一遍.
+So, I'll repeat so it goes into the microphone.
+
+333
+00:22:59,125 --> 00:23:01,493
+希望它变慢的原因是
+The reason you want these to be slow is 
+
+334
+00:23:01,493 --> 00:23:05,175
+在实际使用它进行密码认证时.
+when you're actually using it for something like password authentication. 
+
+335
+00:23:05,175 --> 00:23:07,435
+你保存了密码的哈希值,
+Where you have the hash of a password saved
+
+336
+00:23:07,435 --> 00:23:10,493
+然后有人输入密码,你想知道它是否与哈希值相对应.
+and then somebody inputs the password, you want to know if that corresponds to the hash. 
+
+337
+00:23:10,493 --> 00:23:13,925
+它慢一些也没关系,因为你只需要做一次这个检查.
+It's okay if it's slow because you're only doing this check kind of once. 
+
+338
+00:23:13,925 --> 00:23:16,625
+但是这个函数需要慢的真正的原因是,
+But the other scenario in which you're going to be using this function 
+
+339
+00:23:16,625 --> 00:23:19,075
+当有人试图暴力破解密码时.
+is when somebody's trying to brute-force a password. 
+
+340
+00:23:19,100 --> 00:23:21,873
+比如一个网站的密码数据库被盗,
+Say a website has their password database stolen 
+
+341
+00:23:21,873 --> 00:23:24,750
+有人在尝试破解所有密码.
+and somebody's going through all the accounts, trying to break all the passwords. 
+
+342
+00:23:24,750 --> 00:23:27,725
+那么在这种情况下,你就需要这个函数变慢,
+Well, in that case, you want this to be slow
+
+343
+00:23:27,725 --> 00:23:30,000
+因为有人将要做这个操作数百万次.
+because someone's gonna be doing this like millions and millions of times. 
+
+344
+00:23:30,000 --> 00:23:32,725
+通过使这个函数变慢,可以大大减缓攻击者的破解速度.
+And you can slow down the attacker a lot by making this function slow. 
+
+345
+00:23:32,725 --> 00:23:36,825
+所以,如果这需要一秒钟才能计算出这个函数,这不影响密码的验证.
+And so it's fine if this takes you like one second upon logging in to compute this function. 
+
+346
+00:23:36,825 --> 00:23:38,210
+但当有人进行暴力破解时,
+But when you're brute-forcing it,
+
+347
+00:23:38,210 --> 00:23:41,525
+他们无法像那个xkcd漫画中一样每秒尝试一千次.
+we don't go to a thousand guesses a second like in that xkcd comic. 
+
+348
+00:23:41,525 --> 00:23:42,525
+我们可以让它慢一点.
+We can slow it down a little bit. 
+
+349
+00:23:44,625 --> 00:23:48,400
+那么密钥生成函数的输出实际上用于什么呢?
+So what is the output of key derivation functions actually used for? 
+
+350
+00:23:48,400 --> 00:23:50,882
+这就是我们接下来要讨论的,
+Well, the next topic we're going to talk about,
+
+351
+00:23:50,882 --> 00:23:54,200
+可能是一提到密码学你就会想到的东西,
+probably like one of the most classic things when you think about cryptography,
+
+352
+00:23:54,200 --> 00:23:56,300
+就是加密和解密.
+is encryption and decryption. 
+
+353
+00:23:58,300 --> 00:24:01,525
+我们先讲是对称加密.
+The next topic is symmetric key cryptography. 
+
+354
+00:24:14,400 --> 00:24:19,875
+就像先前讲哈希函数一样,我们不会讨论实现它们的具体细节,
+And like the rest of this lecture, we're not going to talk about how you implement these. 
+
+355
+00:24:19,875 --> 00:24:24,950
+而是仅仅讨论对称加密的API,即它们该如何使用.
+We're going to talk about the API for a symmetric key, symmetric key crypto, like how it's used. 
+
+356
+00:24:24,950 --> 00:24:29,275
+对称加密系统有几个不同的函数.
+So symmetric key crypto systems have a couple different functions. 
+
+357
+00:24:29,975 --> 00:24:32,275
+它们有一个密钥生成函数,
+They have a key generation function,
+
+358
+00:24:32,275 --> 00:24:37,800
+这是一个随机生成函数,生成所谓的密钥.
+which is a randomized function that produces a thing we call the key. 
+
+359
+00:24:37,850 --> 00:24:41,550
+有另外一对函数,进行加密和解密.
+And then they have a pair of functions, encrypt and decrypt. 
+
+360
+00:24:46,175 --> 00:24:51,225
+加密需要将明文作为输入,
+And encrypt take as input something we refer to as the plaintext, 
+
+361
+00:24:52,375 --> 00:24:54,900
+明文可以是一些字节序列,一些数据.
+and this is just some sequence of bytes,  some data.  
+
+362
+00:24:54,900 --> 00:24:56,925
+它需要输入一个密钥,
+And it takes in a key, 
+
+363
+00:24:56,925 --> 00:24:59,950
+密钥就是来自这个密钥生成函数,
+so something that came as an output of this key generation function, 
+
+364
+00:24:59,950 --> 00:25:06,275
+然后产生所谓的密文.
+and produces what we call the ciphertext. 
+
+365
+00:25:06,275 --> 00:25:08,450
+然后解密函数则是相反的过程.
+And then decrypt does the opposite of this. 
+
+366
+00:25:08,450 --> 00:25:17,325
+输入密文和密钥,输出明文.
+So it takes the ciphertext along with the key and produces the plaintext. 
+
+367
+00:25:21,375 --> 00:25:26,150
+这个三个函数有几个属性.
+And this triple of functions has a couple properties. 
+
+368
+00:25:26,150 --> 00:25:30,619
+其中之一,如我们所料,
+One is that, like one you might expect, is that 
+
+369
+00:25:30,619 --> 00:25:35,950
+单单从密文无法得知明文.
+this thing doesn't really tell you all that much about this input to the encryption. 
+
+370
+00:25:35,950 --> 00:25:45,467
+所以第一个性质是,
+So property number one is given the ciphertext, 
+
+371
+00:25:45,467 --> 00:25:56,800
+只有在拥有密钥的情况下,你才能通过密文找出明文.
+you can't figure out the plaintext without the key. 
+
+372
+00:26:00,825 --> 00:26:04,575
+另一个是一个非常显然的属性,
+And the other property is kind of the obvious correctness property, 
+
+373
+00:26:04,575 --> 00:26:13,325
+即如果你使用密钥k加密
+that if you take something and you encrypt it, 
+
+374
+00:26:13,825 --> 00:26:16,075
+一个信息m,
+some message m with a key k, 
+
+375
+00:26:16,075 --> 00:26:20,075
+然后使用相同的密钥(即k)解密该密文,
+and then you decrypt that ciphertext using the same key, 
+
+376
+00:26:20,075 --> 00:26:23,175
+那么你将得到相同的消息(即m).
+that gives you back the same message. 
+
+377
+00:26:25,000 --> 00:26:28,075
+这是显而易见的.
+This is the kind of obvious correctness property. 
+
+378
+00:26:28,950 --> 00:26:30,775
+我讲明白了吗?
+So, does this description make sense? 
+
+379
+00:26:30,775 --> 00:26:33,175
+现在你们能不能
+Does it fit your kind of intuitive understanding of
+
+380
+00:26:33,175 --> 00:26:35,650
+更直观地理解密钥生成函数?
+ taking some piece of data and obscuring it?
+
+381
+00:26:35,650 --> 00:26:38,300
+我们通常将某些数据加密来隐藏原始输入,
+So you can't really tell anything about the original input, 
+
+382
+00:26:38,300 --> 00:26:41,333
+这样别人就无法知道原始输入,
+but then taking that obscured result,
+
+383
+00:26:41,333 --> 00:26:47,450
+然后我们自己使用密钥进行解密就可以获取原始数据.
+and then passing it through some decryption function given that key to retrieve the original input?
+
+384
+00:26:48,900 --> 00:26:53,775
+这个描述并不能完全阐明"安全"这一概念,
+And this isn't really a rigorous definition of what it means for something to be secure, 
+
+385
+00:26:53,775 --> 00:26:58,000
+但它足够直观,我们可以使用它来帮我们理解.
+but it's a good enough intuitive definition that we can work with it. 
+
+386
+00:26:59,300 --> 00:27:04,275
+那么,关于这个描述有没有问题?
+So any questions about that description there?
+
+387
+00:27:05,775 --> 00:27:09,003
+那么对称加密有什么应用呢?
+So where can symmetric key cryptography be useful?
+
+388
+00:27:09,003 --> 00:27:11,175
+这节课后面我们会讲解许多例子,
+We'll talk about a whole bunch of examples later in this lecture, 
+
+389
+00:27:11,175 --> 00:27:13,059
+但现在我就先举一个例子,
+but one example we'll talk about right now 
+
+390
+00:27:13,059 --> 00:27:17,025
+即将文件加密,然后把它存在一个不受信任的云服务中.
+is encrypting files for storage in an untrusted cloud service. 
+
+391
+00:27:17,050 --> 00:27:22,847
+比如说像Dropbox或Google Drive这样的服务,
+So consider something like Dropbox or Google Drive,or things like that 
+
+392
+00:27:22,847 --> 00:27:24,888
+你上传文件到这些云服务器上面,
+where you're uploading files there 
+
+393
+00:27:24,888 --> 00:27:29,150
+信任它们不会偷窥你的文件或者对其进行什么恶意操作.
+and trusting the service to not look at your files or do anything malicious with them. 
+
+394
+00:27:29,725 --> 00:27:34,925
+这些云服务商,至少在我刚刚提到的那几个,并没有在上传的时候进行加密等操作.
+These services, at least the ones I named, are not encrypted or anything like that. 
+
+395
+00:27:34,925 --> 00:27:38,450
+所以理论上,这些公司的任何员工都可以查看你的文件.
+In theory, any employee of those companies could look at your files. 
+
+396
+00:27:38,450 --> 00:27:41,837
+当然,这些公司有许多政策和技术控制
+Now, of course, these companies have lots of policies and technical controls in place
+
+397
+00:27:41,837 --> 00:27:43,975
+来确保这种情况不会发生,
+for making sure that that sort of thing doesn't happen, 
+
+398
+00:27:43,975 --> 00:27:47,125
+但这并不意味着偷窥在技术上不可实现.
+but that doesn't mean that it's not technically possible. 
+
+399
+00:27:47,150 --> 00:27:49,399
+如果你不信任这些云服务,
+So one thing you might want to do if you don't want to 
+
+400
+00:27:49,399 --> 00:27:51,925
+不想让他们偷窥你的数据,
+trust these cloud services to not peek at your data, 
+
+401
+00:27:51,925 --> 00:27:53,655
+比如拿你的数据进行机器学习,
+not do like machine learning over them, 
+
+402
+00:27:53,655 --> 00:27:55,895
+或者进行其他你不想要的操作等等.
+or do other sorts of things that you wouldn't really want, 
+
+403
+00:27:55,895 --> 00:27:57,815
+那么你可以在上传这些文件到云服务器之前
+is you can just take your files 
+
+404
+00:27:57,815 --> 00:28:02,505
+对其进行加密.
+and encrypt them before uploading them to these web services. 
+
+405
+00:28:02,600 --> 00:28:05,700
+这样是不是就提高了安全性?我可以将我的文件
+So does that idea make sense? That I can take my file, 
+
+406
+00:28:05,700 --> 00:28:09,722
+比如照片之类的,通过一个加密函数,产生密文,
+like center pictures or whatever, pass it through an encryption function and produce the ciphertext, 
+
+407
+00:28:09,722 --> 00:28:13,675
+然后加密后的文件就可以安全地上传到云服务器上进行备份等操作,
+and then place that ciphertext on the web service safe for backup purposes or whatever, 
+
+408
+00:28:13,675 --> 00:28:19,000
+如果我需要该文件,我可以检索该密文的密钥,然后将其解密回明文,
+and if I ever need that, I can retrieve the ciphertext, then use my key to decrypt it back into the plaintext, 
+
+409
+00:28:19,000 --> 00:28:21,625
+这样就得到了原始文件.
+and then use the result for doing whatever I need to do. 
+
+410
+00:28:21,625 --> 00:28:23,125
+你们有什么问题吗?
+Does that make sense?
+
+411
+00:28:23,200 --> 00:28:29,500
+是的,这是一个好问题.
+Yeah, that's a good question. 
+
+412
+00:28:29,500 --> 00:28:33,125
+问题是,是不是所有人都通过相同的加密程序进行加密?
+The question is, couldn't anybody else run it through the same encryption program? 
+
+413
+00:28:33,125 --> 00:28:37,075
+或许我应该更详细地解释一下,
+One detail maybe I should have explained in a little bit more detail is 
+
+414
+00:28:37,075 --> 00:28:41,250
+这个密钥生成函数生成的密钥是随机的,
+this key generation function is randomized, 
+
+415
+00:28:44,500 --> 00:28:47,225
+并且这个密钥具有高熵值.
+and this key has high entropy. 
+
+416
+00:28:47,225 --> 00:28:53,525
+回到我们之前讨论的主题,比如我们可能还会使用AES-256加密.
+So going back to that topic we talked about earlier, like an example is we might have AES-256. 
+
+417
+00:28:54,650 --> 00:28:57,600
+这是一种对称加密,
+This is one particular symmetric cipher, 
+
+418
+00:28:57,600 --> 00:29:02,750
+你们可能可以从它的名称猜到它的密钥具有256位熵.
+and this, as the name might indicate, has 256 bits of entropy in the key. 
+
+419
+00:29:02,750 --> 00:29:05,302
+这意味着只要攻击者(即从网络服务下载密文的人)
+And so that means that as long as the attacker, 
+
+420
+00:29:05,302 --> 00:29:09,206
+不知道你的密钥,
+whoever downloads the ciphertext from the web service, doesn't know your key, 
+
+421
+00:29:09,206 --> 00:29:13,875
+除非他们的攻击手段很牛杯,否则他们只能暴力尝试所有可能的密钥.
+unless they have some better attack in place, they'll have to try all the different possible keys. 
+
+422
+00:29:13,875 --> 00:29:18,650
+如果可能的密钥有2^256个,那么在一定的时间内尝试所有密钥是不可能的.
+And if there are 2 to the 256 keys, that's too many keys to try in a reasonable amount of time. 
+
+423
+00:29:18,650 --> 00:29:20,500
+这回答了你的问题吗?
+Does that answer the question?
+
+424
+00:29:20,500 --> 00:29:22,675
+好的,还有其他问题吗?
+Okay, any other questions?
+
+425
+00:29:35,525 --> 00:29:37,025
+这是一个很好的问题,
+That's an excellent question, 
+
+426
+00:29:37,025 --> 00:29:39,425
+也引出了我接下来要谈论的话题.
+and that leads into what I was going to talk about next. 
+
+427
+00:29:39,425 --> 00:29:40,225
+所以感谢你的提问.
+So thanks for that question. 
+
+428
+00:29:40,225 --> 00:29:45,000
+正如你所指出的,如果我丢了我的密钥,就寄了,对吧?
+As you point out, like if I lose my key, I'm kind of stuck, right? 
+
+429
+00:29:45,000 --> 00:29:45,960
+我需要我的密钥来解密.
+I need my key to decrypt. 
+
+430
+00:29:45,960 --> 00:29:47,275
+密钥就是这个加密系统的重点.
+That's kind of the point of this thing. 
+
+431
+00:29:47,275 --> 00:29:50,900
+如果我不需要密钥来解密,那么这个加密系统就不会有很好的安全性.
+If I didn't need my key to decrypt, then this wouldn't be a very good crypto system. 
+
+432
+00:29:50,900 --> 00:29:54,294
+所以我可以将这个对称加密的想法
+And so I can combine this idea of symmetric key cryptography 
+
+433
+00:29:54,294 --> 00:29:57,575
+与我们刚才谈论的密钥生成函数相结合.
+with the topic we just talked about, key derivation functions. 
+
+434
+00:29:57,575 --> 00:30:04,350
+因此,与其通过密钥生成函数随机生成密钥.
+So instead of having some key that's randomly generated with my key generation function,\N say sampling entropy from somewhere on my machine, 
+
+435
+00:30:04,350 --> 00:30:14,025
+我可以使用一个口令,并将其传递给我的密钥生成函数,
+I can have a passphrase and pass it through my key derivation function box, 
+
+436
+00:30:14,375 --> 00:30:16,475
+处理后就可以得到我的密钥.
+and this gives me my key. 
+
+437
+00:30:16,475 --> 00:30:26,275
+然后,我可以将我的明文和密钥输入到我的加密函数中,
+Then, I can take my plaintext and combine it with my key in my encrypt function, 
+
+438
+00:30:28,450 --> 00:30:30,925
+从而产生我的密文.
+and this produces my ciphertext. 
+
+439
+00:30:33,900 --> 00:30:36,800
+我将这个密文存储在网络服务上,
+I store this ciphertext on the web service, 
+
+440
+00:30:36,800 --> 00:30:38,975
+现在我不需要保存这个密钥了.
+but now I don't need to save this key. 
+
+441
+00:30:38,975 --> 00:30:41,425
+我只需要记住我的口令,
+Instead, I can just remember my passphrase, 
+
+442
+00:30:41,425 --> 00:30:45,625
+每当我需要我的密钥时,我就可以通过密钥生成函数中重新生成它.
+and whenever I need my key, I can reconstruct it from the key derivation function. 
+
+443
+00:30:45,700 --> 00:30:46,625
+问题?
+Question? 
+
+444
+00:30:56,825 --> 00:30:58,550
+是的,这是一个好问题.
+Yeah, so that's a good question. 
+
+445
+00:30:58,550 --> 00:31:03,737
+问题是,密钥生成函数为了防止暴力破解是否足够慢?
+The question is, is the key derivation function slow enough to prevent brute-force guessing? 
+
+446
+00:31:03,737 --> 00:31:07,050
+答案是,这取决于你的口令有多长.
+The answer is, it depends on how long your passphrase is. 
+
+447
+00:31:07,050 --> 00:31:10,841
+例如,如果你的口令像字符串"password"一样简单,
+For example, if your passphrase is like the string 'password', 
+
+448
+00:31:10,841 --> 00:31:12,441
+那么它很可能很快就能被破解.
+it is probably going to get broken very quickly. 
+
+449
+00:31:12,475 --> 00:31:15,800
+但要是你的口令具有高熵,安全性就足够高.
+But as long as there's enough entropy in your passphrase, this is good enough. 
+
+450
+00:31:15,800 --> 00:31:19,375
+所以,如果我要上传一些文件到Dropbox,我希望它有很高的安全性,
+So, like if I was uploading something to Dropbox and I really want it to stay secret, 
+
+451
+00:31:19,375 --> 00:31:21,375
+那么一个64位口令,
+I think a 64-bit passphrase, 
+
+452
+00:31:21,375 --> 00:31:26,525
+一个具有64位熵的口令,在这种情况下将足够安全.
+really a passphrase with 64 bits of entropy, it would be more than enough in that scenario, for example. 
+
+453
+00:31:27,250 --> 00:31:31,225
+这里还有一个简单的演示:有一些工具可以简化这个流程.
+And just a quick demo of this: so there are tools to make this really easy to do. 
+
+454
+00:31:31,225 --> 00:31:33,050
+实际上,这是课程笔记的一个练习,
+This is actually one of the exercises, 
+
+455
+00:31:33,050 --> 00:31:36,250
+我们可以使用一个名为openssl的工具,
+but we can take a tool, for example, called openssl, 
+
+456
+00:31:36,250 --> 00:31:40,025
+对某个文件实施对称加密.
+and use it to apply a symmetric cipher to some file. 
+
+457
+00:31:40,025 --> 00:31:42,700
+例如,我有"README.md".
+So, I had my README text here, for example, "README.md". 
+
+458
+00:31:42,700 --> 00:31:44,775
+它里面有很多东西,
+It has a bunch of stuff in it, 
+
+459
+00:31:44,775 --> 00:31:52,500
+我可以输入"openssl aes-256-cbc","aes-256-cbc"是一个对称加密算法,
+and I can do "openssl aes-256-cbc", this is the name of a particular symmetric cipher, 
+
+460
+00:31:52,650 --> 00:31:57,671
+然后我可以说我要将它应用于"README.md",
+and I can say that I want to apply this to "README.md" 
+
+461
+00:31:57,671 --> 00:32:02,450
+并输出为...让我们给它起一个名字,"README.enc.md",
+and produce "README.enc.md", let's give it some name.
+
+462
+00:32:02,450 --> 00:32:03,900
+然后它会要求你输入一个密码.
+And then it's asking you for a password. 
+
+463
+00:32:03,900 --> 00:32:06,615
+所以,默认情况下,它是这样工作的,我提供一个口令,
+So, by default, this works in this mode where I provide a passphrase, 
+
+464
+00:32:06,615 --> 00:32:08,471
+它经过KDF处理后生成一个密钥,
+it's run through a KDF to produce a key, 
+
+465
+00:32:08,500 --> 00:32:09,850
+然后用于加密.
+and that's used for encryption. 
+
+466
+00:32:09,850 --> 00:32:12,725
+所以,我会输入一个密码.再输入一遍....
+So, I'll type in some password, type it in again, 
+
+467
+00:32:12,725 --> 00:32:15,600
+然后现在已经生成了这个"README.enc.md".
+and now I produce this "README.enc.md" file. 
+
+468
+00:32:15,600 --> 00:32:20,025
+如果我查看这个文件,感觉它啥也不是.
+If I look at this, it kind of looks like garbage, 
+
+469
+00:32:20,050 --> 00:32:22,725
+但这正是对称加密的关键.
+And that's, at a high level, the point of a symmetric cipher. 
+
+470
+00:32:22,725 --> 00:32:27,450
+它产生的密文和随机数据一样,我们没法区分.
+It produces some ciphertext that should be kind of indistinguishable from random data. 
+
+471
+00:32:28,025 --> 00:32:30,890
+当我想要解密这个文件时,
+And when I want to decrypt this, I can run 
+
+472
+00:32:30,890 --> 00:32:36,950
+我可以运行类似的命令:"openssl aes-256-cbc -d",表示解密,
+a similar command: 'openssl aes-256-cbc -d', for decrypt,
+
+473
+00:32:36,950 --> 00:32:39,883
+"README.enc.md"作为输入,
+take the input from "README.enc.md", 
+
+474
+00:32:39,925 --> 00:32:46,950
+并将"README.dec.md"作为输出.
+and I like to do "README.dec.md" as the output. 
+
+475
+00:32:47,650 --> 00:32:50,800
+我可以比较这两个文件,
+And I can compare these two files, 
+
+476
+00:32:52,750 --> 00:32:58,300
+对称加密的属性告诉我解密后的结果应该与原始数据完全一致.
+and the correctness property of symmetric cryptography tells me that this should be identical. 
+
+477
+00:32:58,300 --> 00:32:59,975
+确实如此.
+And this indeed is identical. 
+
+478
+00:32:59,975 --> 00:33:02,125
+如果我查看返回值,返回值为0,
+If I look at the return value, compare return 0, 
+
+479
+00:33:02,125 --> 00:33:03,825
+这意味着它们是相同的文件.
+so that means that are the same file. 
+
+480
+00:33:04,550 --> 00:33:12,725
+所以,关于对称加密有什么问题吗?
+So, any questions about symmetric key cryptography? Yeah, 
+
+481
+00:33:19,750 --> 00:33:24,125
+是的,这个命令确实创建了一个新文件,
+so the particular command did make a new file, 
+
+482
+00:33:24,125 --> 00:33:27,950
+所以它以"README.md"作为我们的输入并产生了这个文件作为输出,
+so it took us input "README.md" and produced output this file, 
+
+483
+00:33:27,950 --> 00:33:30,400
+这就是该文件的加密版本.
+so that is the encrypted version of the file.
+
+484
+00:33:30,400 --> 00:33:32,650
+它并没有改变原始文件,
+It left the original untouched, 
+
+485
+00:33:32,650 --> 00:33:35,250
+但是如果我想,我可以删除它.
+but then of course I could delete it if I wanted to. 
+
+486
+00:33:45,325 --> 00:33:47,244
+是的,这是一个很好的问题.
+Yeah, that's a good question. 
+
+487
+00:33:47,244 --> 00:33:49,400
+但是我不会详细讨论.
+This is something I wasn't gonna talk about in too much detail. 
+
+488
+00:33:49,400 --> 00:33:52,600
+问题是,我在这里加了一些盐,那么它存储在哪里?
+The question is, I provided the salt argument here, and where is that stored?
+
+489
+00:33:52,600 --> 00:33:58,525
+答案是,它在这个输出的文件里面.
+So, the answer is that that is stored in this output here. 
+
+490
+00:33:58,725 --> 00:34:05,150
+因此,此输出文件存储了盐值和密文,
+So, this output format stores both the salt and the actual output ciphertext, 
+
+491
+00:34:05,150 --> 00:34:07,875
+它可以用于重构和解密.
+so can be used in the reconstruction and decrypt. 
+
+492
+00:34:11,925 --> 00:34:12,875
+是的,没错.
+Yeah, that's correct. 
+
+493
+00:34:12,875 --> 00:34:14,950
+它不需要任何数据库或其他东西.
+It doesn't keep any database or anything. 
+
+494
+00:34:14,950 --> 00:34:16,500
+它是自包含的.
+This is fully self-contained. 
+
+495
+00:34:18,700 --> 00:34:19,380
+是的,
+Yeah, 
+
+496
+00:34:19,380 --> 00:34:22,000
+正如John所说,盐并不是密码,
+and as John says, the salt is not the secret, 
+
+497
+00:34:22,000 --> 00:34:26,350
+口令才是秘密.
+like the passphrase is what is the secret thing here. 
+
+498
+00:34:27,725 --> 00:34:30,350
+好的,
+Okay, 
+
+499
+00:34:31,450 --> 00:34:34,050
+让我们回到问题.
+so let's go back to the question. 
+
+500
+00:34:34,050 --> 00:34:35,480
+什么是盐?
+What is salt? 
+
+501
+00:34:35,480 --> 00:34:38,950
+在哈希函数的背景下,
+The idea of a cryptographic salt 
+
+502
+00:34:38,950 --> 00:34:42,790
+加密盐的概念最好还是要解释一下.
+is probably best explained in the context of hash functions. 
+
+503
+00:34:46,050 --> 00:34:50,375
+哈希函数的一个常见应用是在数据库中存储密码.
+So, one common application of hash functions is to store passwords in a password database. 
+
+504
+00:34:50,375 --> 00:34:55,475
+如果我有一个网站,并且有用户会输入用户名和密码进行登录,
+If I have a website and I have logins for users, like people log in with their username and password, 
+
+505
+00:34:55,550 --> 00:34:59,925
+我不想以明文的形式存储人们的密码.
+I don't actually want to store people's passwords in plain text just like as is. 
+
+506
+00:34:59,925 --> 00:35:07,325
+有人知道我为什么不想这样做吗?
+Does anybody know why I wouldn't want to do that?  
+
+507
+00:35:07,375 --> 00:35:09,400
+是的.如果有攻击者获取了密码数据库,那会怎么样呢?
+Yes, exactly.What if there was a breach and someone got all your data?
+
+508
+00:35:09,400 --> 00:35:12,536
+所以,如果泄漏了所有用户的密码,那就真的很糟糕.
+So, it's really bad if you leak all your users' passwords. 
+
+509
+00:35:12,536 --> 00:35:16,150
+特别是许多人会在不同的网站上重复使用他们的密码.
+It's especially bad because a lot of people reuse their passwords across different sites. 
+
+510
+00:35:16,150 --> 00:35:19,725
+如果攻击者侵入一个网站,例如,前段时间雅虎的大规模泄露事件,
+So, you'll see attackers break into one thing, like there was big Yahoo breach a while ago, 
+
+511
+00:35:19,725 --> 00:35:21,900
+他们可能会找到所有的用户名和密码,
+and they find all these usernames and passwords, 
+
+512
+00:35:21,900 --> 00:35:26,725
+然后试图在Google,Facebook和YouTube等网站上使用这些相同的密码进行登录.
+and then they go and try those same login credentials on Google and on Facebook and on YouTube and whatnot. 
+
+513
+00:35:26,725 --> 00:35:28,375
+因为有些人会重复使用密码,
+These people reuse passwords, 
+
+514
+00:35:28,750 --> 00:35:31,525
+所以存储明文密码达咩.
+so it's bad to store plaintext passwords. 
+
+515
+00:35:31,525 --> 00:35:35,274
+为了保护账户安全,我们应该使用哈希函数
+So, one thing you should do is you should store hashed passwords with a hash function, 
+
+516
+00:35:35,274 --> 00:35:39,750
+或者是速度比较慢的加密哈希函数来存储加密后的密码.
+or ideally a password hashing function that's intentionally designed to be slow. 
+
+517
+00:35:39,750 --> 00:35:43,424
+一旦攻击者知道
+But one thing attackers started doing 
+
+518
+00:35:43,424 --> 00:35:46,112
+人们开始存储哈希密码之后,
+once they realized that people started storing hashed passwords 
+
+519
+00:35:46,112 --> 00:35:48,700
+攻击者开始做的一件事情就是构建所谓的"彩虹表".
+is they built these things called rainbow tables. 
+
+520
+00:35:48,700 --> 00:35:53,256
+攻击者会使用一些工具来生成可能的密码哈希映射数据库,
+What people did was they took a way of generating big password lists,
+
+521
+00:35:53,256 --> 00:35:56,075
+通常是基于一些密码模型来推断用户密码.
+like the kind of model what passwords might look like. 
+
+522
+00:35:56,075 --> 00:36:01,900
+例如,它将字典中的所有单词以及长度为0到8的字符串等全部进行哈希处理,
+Say, take all the dictionary words, take all strings of like length from zero to eight and whatnot, take all of those and then hash them 
+
+523
+00:36:03,707 --> 00:36:07,868
+并将哈希值映射回原始密码,然后存储到数据库中.
+and produce a big database mapping hashes back to their pre-image. 
+
+524
+00:36:07,868 --> 00:36:09,850
+因此,给定一个哈希函数的输出,
+And so given the output of a hash function, 
+
+525
+00:36:09,850 --> 00:36:12,300
+不必像之前说的那么暴力尝试,
+rather than have to like brute force said on the fly, 
+
+526
+00:36:12,300 --> 00:36:15,800
+你可以去这个数据库中查找,"哦,对应于这个输出的输入是什么?"
+you can just go look up in this database, "Oh, what is the input that corresponds to this output?" 
+
+527
+00:36:15,800 --> 00:36:19,475
+实际上,有些攻击者已经针对相当大的真实密码数据库建立了彩虹表.
+And people have built these for reasonably large password databases. 
+
+528
+00:36:19,650 --> 00:36:24,314
+作为防御,你可以做的一件事是,
+And so one thing that you can do in reaction to that as a defense 
+
+529
+00:36:24,314 --> 00:36:33,375
+不是仅在你的数据库中存储密码的哈希值,
+is rather than storing in your database.\N Rather than storing just the hash of the password, 
+
+530
+00:36:33,375 --> 00:36:37,975
+可以计算一个盐值.
+what you do is you compute what's called a salt value. 
+
+531
+00:36:42,300 --> 00:36:44,975
+这是一个长的随机字符串.
+And what this is is a large random string. 
+
+532
+00:36:44,975 --> 00:36:50,000
+然后,可以在密码数据库中存储盐,
+And then what you do is you store in your password database the salt, 
+
+533
+00:36:50,000 --> 00:36:54,502
+加密盐不是一个秘密,可以将盐值附加到密码后面再进行哈希处理,
+which is not really a secret like you can store this in your password database
+
+534
+00:36:54,502 --> 00:37:02,850
+然后把最终的哈希值存储在密码数据库中.
+along with a hash of the password with the salt appended to it. 
+
+535
+00:37:03,200 --> 00:37:05,150
+这有什么用处呢?
+Why is this useful?
+
+536
+00:37:05,150 --> 00:37:09,050
+这种盐是对于每个用户来说是随机唯一的.
+Well, this salt is a random unique value for every user. 
+
+537
+00:37:09,050 --> 00:37:13,275
+如果有人在两个网站上使用相同的密码"safe password one two three",
+And so if someone has the password "safe password one two three" on two web service, 
+
+538
+00:37:13,275 --> 00:37:15,966
+两个网站都直接对原始密码进行哈希并存储在数据库中,{\rcode2}[*]{\r}
+if you are just storing the hash of the password, 
+*[这里假设两个网站使用的是相同的哈希函数]
+
+539
+00:37:15,966 --> 00:37:18,334
+则存储的哈希值在两个web服务器上都是相同的,对吧?
+then the hash would be the same on both Web Services, right?
+
+540
+00:37:18,334 --> 00:37:20,382
+因为这个哈希函数是一个确定性函数.
+Because this hash function is a deterministic function. 
+
+541
+00:37:20,382 --> 00:37:23,646
+但是现在,由于我们使用了这个随机的盐值,
+But now, since we're using this randomized salt value, 
+
+542
+00:37:23,646 --> 00:37:27,486
+我们存储了密码加上盐的哈希值.
+we store the hash of the password plus the salt. 
+
+543
+00:37:27,486 --> 00:37:30,686
+因此,即使有的人在多个网站上使用相同的密码,
+And so even if someone's using the same password on multiple sites, 
+
+544
+00:37:30,686 --> 00:37:33,950
+数据库里存储的密码看起来也都不同.
+this thing looks different in both cases. 
+
+545
+00:37:33,950 --> 00:37:44,175
+这个方案就会让彩虹表攻击不再有用.
+And it makes it so these big databases mapping these short passwords \N or hash outputs to the short passwords that they came from, those are no longer useful. 
+
+546
+00:37:44,175 --> 00:37:45,950
+当你的密码使用了加密盐的保护时,
+When you have salted passwords, 
+
+547
+00:37:45,950 --> 00:37:50,825
+攻击者需要为每个受攻击的用户和网站单独进行暴力破解,
+you kind of need to do the brute-force attack for every user once you find their salt value, 
+
+548
+00:37:50,825 --> 00:37:53,350
+因为他们无法使用预先计算好的大型彩虹表.
+rather than being able to use this big precomputed database. 
+
+549
+00:37:53,350 --> 00:37:57,315
+这回答了什么是盐的问题吗?
+Does that answer the question of what a salt is?
+
+550
+00:37:57,315 --> 00:38:01,275
+那么,这些就是有关盐的一些事情.
+And so that's what that salt argument is related to. 
+
+551
+00:38:07,300 --> 00:38:11,150
+看看,对我们刚刚讲的有什么问题吗?
+Let's see, any questions about anything we talked about so far? 
+
+552
+00:38:13,000 --> 00:38:17,294
+好的,那么我要擦掉这个.
+Great, okay, so the I'm gonna go ahead and erase this.
+
+553
+00:38:17,294 --> 00:38:20,927
+然后我们最后要谈论的是
+And then the last topic we'll talk about is 
+
+554
+00:38:20,927 --> 00:38:23,325
+密码学中最令人兴奋的发展之一.
+one of the most exciting developments of cryptography. 
+
+555
+00:38:23,325 --> 00:38:24,375
+在很久很久以前就产生了这个概念,
+Happen quite a while ago, 
+
+556
+00:38:24,400 --> 00:38:25,850
+但放在现在也仍然非常酷,
+but it's still a really cool concept, 
+
+557
+00:38:25,850 --> 00:38:28,375
+即所谓的非对称加密.
+something called asymmetric key cryptography. 
+
+558
+00:38:40,550 --> 00:38:49,075
+这个想法,是现今许多安全和隐私相关的功能的基础
+And so this is an idea that actually enables a lot of the security \N and privacy-related features of basically anything you use today. 
+
+559
+00:38:49,075 --> 00:38:52,034
+例如,当你要转到"www.google.com"时,
+Like when you need to go and type in "www.google.com"
+
+560
+00:38:52,034 --> 00:38:55,475
+非对称加密就会被用来保护你通信和数据传输安全.
+asymmetric key cryptography is used as part of what goes on there. 
+
+561
+00:38:56,325 --> 00:39:00,548
+这看起来与我们讲的对称加密非常相似,
+So this is going to look pretty similar to what we talked about in symmetric key cryptography,
+
+562
+00:39:00,548 --> 00:39:02,020
+但有一个区别.
+except with a twist. 
+
+563
+00:39:04,200 --> 00:39:06,275
+这里有一个密钥生成函数,
+There's a key generation function,
+
+564
+00:39:06,275 --> 00:39:09,603
+同样是随机的,但不是生成单个密钥,
+which similarly is randomized but instead of producing a single key, 
+
+565
+00:39:09,603 --> 00:39:12,419
+而是生成一对密钥,
+it produces a pair of keys, two different things, 
+
+566
+00:39:15,969 --> 00:39:19,436
+其中一个被称为公钥,
+one of which is referred to as a public key 
+
+567
+00:39:21,961 --> 00:39:26,425
+另一个被称为私钥.
+and the other is referred to as a private key. 
+
+568
+00:39:26,425 --> 00:39:29,048
+然后可以使用它们进行加密和解密,
+And then these can be used for encryption and decryption 
+
+569
+00:39:29,048 --> 00:39:31,800
+方式与对称加密类似,
+in a manner kind of similar to symmetric key crypto, 
+
+570
+00:39:31,800 --> 00:39:34,525
+但这俩密钥的用途不同.
+except these different keys have different uses now. 
+
+571
+00:39:34,550 --> 00:39:40,775
+现在我们有一个加密函数,我在这里放一个P,表示它是明文,
+So we have an encryption function which takes in a plaintext, I'll write P here, 
+
+572
+00:39:40,775 --> 00:39:47,700
+这个加密函数还要接受公钥,然后输出密文.
+and it takes in the public key and produces the ciphertext. 
+
+573
+00:39:47,700 --> 00:39:50,675
+然后我有一个解密函数,
+And then I have a decryption function 
+
+574
+00:39:50,675 --> 00:40:01,225
+它接收我的密文和私钥,并还原出明文.
+which takes in my ciphertext and the private key and gives me back my plaintext. 
+
+575
+00:40:02,425 --> 00:40:07,605
+与前面所讲的两个属性类似,
+And then similarly to those two properties we had over there,
+
+576
+00:40:07,605 --> 00:40:09,909
+仅凭密文,
+given just the ciphertext,
+
+577
+00:40:09,909 --> 00:40:14,517
+我们无法解密出明文,除非我们有私钥.
+we can't figure out the plaintext unless we have the private key. 
+
+578
+00:40:14,575 --> 00:40:16,611
+然后,我们也有一个显然正确的属性,
+And then we have the obvious correctness property that 
+
+579
+00:40:16,611 --> 00:40:19,350
+如果我们用公钥加密某些东西,
+if we encrypt something with the public key, 
+
+580
+00:40:19,350 --> 00:40:24,125
+然后拿着那个密文
+and then take that ciphertext and try decrypting it 
+
+581
+00:40:24,125 --> 00:40:27,709
+尝试用相应的私钥来解密,
+with the corresponding private key that came from this key generation process, 
+
+582
+00:40:27,709 --> 00:40:29,924
+(公钥和私钥就是来自这个密钥生成函数),
+(That outputs these two different things at once)
+
+583
+00:40:29,924 --> 00:40:32,859
+那么最终我将得到明文P.
+then I get the same result back. 
+
+584
+00:40:35,025 --> 00:40:37,300
+所以这非常类似于上面所说的对称加密,
+So this is very similar to what's above, 
+
+585
+00:40:37,300 --> 00:40:40,925
+但有一个不同的地方,我们有两个不同用处的密钥.
+but there's a twist that we have these two different keys that have different functions. 
+
+586
+00:40:40,925 --> 00:40:45,975
+有个很棒的事儿,这个公钥就像它的名字一样,可以进行公开,
+It's really neat that this public key can actually be made, as the name indicates, public. 
+
+587
+00:40:45,975 --> 00:40:48,775
+任何人都可以在互联网上使用非对称加密,
+Like I could be using a crypto system that works like this, 
+
+588
+00:40:48,775 --> 00:40:51,775
+然后发布一个公钥供任何人查看,
+post a public key on the internet for anybody to see, 
+
+589
+00:40:51,775 --> 00:40:53,400
+但保持私钥的私密性.
+but keep my private key secret. 
+
+590
+00:40:53,400 --> 00:40:56,511
+然后我有了这个有趣的属性,
+And then I have this interesting property that anybody on the internet 
+
+591
+00:40:56,511 --> 00:41:00,991
+任何人都可以使用我的公钥加密任何内容
+can take any piece of content and encrypt it for me using my public key, 
+
+592
+00:41:01,025 --> 00:41:02,850
+并通过互联网将其发送给我.
+and send it over the internet to me. 
+
+593
+00:41:02,850 --> 00:41:05,125
+然后我可以使用我的私钥解密它,
+And then I can decrypt it using my private key, 
+
+594
+00:41:05,125 --> 00:41:07,725
+只要我的私钥保持私密,
+and as long as my private key stays secret, 
+
+595
+00:41:07,725 --> 00:41:10,989
+任何人都可以使用我的公钥,这是无关紧要的.
+it doesn't matter if my public key is available to anybody on the internet.
+
+596
+00:41:11,000 --> 00:41:13,450
+这就是非对称性.
+So here's where the asymmetry comes from. 
+
+597
+00:41:13,925 --> 00:41:18,775
+之前,有这样一种情况,假设我在网上,
+Before, we were in a scenario where, suppose I was on the internet, 
+
+598
+00:41:18,775 --> 00:41:21,300
+你没有和我面对面交谈,
+but you weren't like talking to me face-to-face, 
+
+599
+00:41:21,300 --> 00:41:24,425
+你想在一些未加密的频道上,
+and you wanted to send me some data over the internet over some 
+
+600
+00:41:24,425 --> 00:41:29,600
+使用对称加密把数据传送给我,
+unencrypted channel where anybody could listen on what you were saying, \N and you wanted to use symmetric key cryptography. 
+
+601
+00:41:29,600 --> 00:41:32,475
+我们需要事先交换密钥,
+Well, we need some way of exchanging a key in advance 
+
+602
+00:41:32,475 --> 00:41:36,059
+然后你可以使用密钥加密一些纯文本,并将那个密文传输给我,
+so that you could encrypt some plaintext with a key and give me that ciphertext over the internet
+
+603
+00:41:36,059 --> 00:41:38,700
+然后我可以使用该密钥进行解密.
+so that I could decrypt it with that key.
+
+604
+00:41:38,700 --> 00:41:43,650
+在对称加密中,如果密钥被公开了,那么游戏就结束了,
+In symmetric key crypto, if the keys public, it's game over, like anybody can decrypt your stuff. 
+
+605
+00:41:43,675 --> 00:41:45,975
+任何人都可以解密你的东西.
+Whereas in asymmetric key cryptography, 
+
+606
+00:41:45,975 --> 00:41:49,450
+而在非对称加密中,我可以拿出我的公钥并将其张贴在互联网上的公告板上,
+I could take my public key and post it on a bulletin board on the internet, 
+
+607
+00:41:49,450 --> 00:41:53,000
+你可以使用公钥来加密一些内容,
+and you can go look at that, take some contents and encrypt them for me, 
+
+608
+00:41:53,000 --> 00:41:54,150
+然后在网上发放,
+and then send them over, 
+
+609
+00:41:54,150 --> 00:41:55,775
+这将是完全可以的,
+and that would be totally fine. 
+
+610
+00:41:55,775 --> 00:41:58,100
+但是这些内容只能使用私钥来解密.
+You can only decrypt it with the private key.
+
+611
+00:41:58,100 --> 00:42:04,275
+所以有一个比喻,是将这些数学思想与现实中的锁进行类比.
+So one analogy that may be helpful is comparing these mathematical ideas to physical locks. 
+
+612
+00:42:04,275 --> 00:42:07,600
+你的房门可能有一个锁,
+You probably have a lock on your door to your house, 
+
+613
+00:42:07,600 --> 00:42:12,950
+你可以用钥匙锁门,开门
+and you can put in a key and like turn the thing in order to lock the door \N or you can turn it the other way to unlock the door. 
+
+614
+00:42:12,950 --> 00:42:14,000
+所以现在有一把的钥匙,
+So there's a single key, 
+
+615
+00:42:14,000 --> 00:42:16,075
+它既可以锁门也可以开门.
+and it can both lock and unlock the door. 
+
+616
+00:42:16,075 --> 00:42:18,096
+现在回到我们的情景上去,
+But now consider this alternative construction,
+
+617
+00:42:18,096 --> 00:42:23,728
+如果我想让你能够通过互联网发送向我发送一条消息
+which you might use if, say, I want you to be able to send me a message \N and have it be sent over the internet, 
+
+618
+00:42:23,728 --> 00:42:27,825
+而且你和我之间不需要交换钥匙.
+and you and I don't really need a way to exchange a key with you beforehand.
+
+619
+00:42:27,825 --> 00:42:30,175
+我可以买一个盒子,你可以把信放在里面,
+I could get a box which you could put a letter inside, 
+
+620
+00:42:30,175 --> 00:42:31,525
+然后你可以关上盒子.
+and you can close the box. 
+
+621
+00:42:31,525 --> 00:42:33,375
+我可以买一个锁,
+And I can get one of the padlock things, 
+
+622
+00:42:33,375 --> 00:42:38,367
+我可以打开锁并把它给你.
+which I can give you by I could like take those padlock and open it and give it to you. 
+
+623
+00:42:38,367 --> 00:42:42,271
+你可以把你的信息放在盒子里,
+And you, at your own leisure, could put your message inside a box 
+
+624
+00:42:42,271 --> 00:42:44,475
+然后用这个打开的锁,
+and take this padlock, which is open, 
+
+625
+00:42:44,750 --> 00:42:48,025
+再把盒子锁上,然后将盒子发给我.
+and shut it around the box and then send it over to me. 
+
+626
+00:42:48,025 --> 00:42:49,775
+然后我可以用我的钥匙打开盒子.
+And then I could put in my key and unlock it.
+
+627
+00:42:49,775 --> 00:42:53,337
+从这里你能看到这种不对称性,
+So do you see how there is this asymmetry there as opposed to the 
+
+628
+00:42:53,337 --> 00:42:55,225
+与我用来打开我家门的钥匙不同,
+key that I used to open the door to my house, 
+
+629
+00:42:55,225 --> 00:42:57,225
+我家门只要用同一把钥匙就可以开关门.
+where the same key opens and closes the thing? 
+
+630
+00:42:57,225 --> 00:43:01,750
+而我给你这个打开的锁,你有能力锁上它但无法打开它.
+Instead, I give you this open padlock that you have the ability to close but not open. 
+
+631
+00:43:01,750 --> 00:43:04,825
+在你锁上之后,我可以使用我钥匙
+And after you closed it, I can use my key, which I've kept secret, 
+
+632
+00:43:04,825 --> 00:43:07,150
+来打开它并取出里面的东西.
+in order to open the thing and retrieve what's inside. 
+
+633
+00:43:07,275 --> 00:43:09,425
+这个比喻也许对你们理解有帮助,也许没有.
+Maybe this analogy is helpful, maybe it's not. 
+
+634
+00:43:09,425 --> 00:43:12,600
+如果你理解了数学原理,那么这个技术就可以很好地为你效劳.
+The mathematical construction works just fine if that works for you.
+
+635
+00:43:12,600 --> 00:43:18,384
+关于非对称加解密,
+So any questions about asymmetric key encryption and decryption 
+
+636
+00:43:18,384 --> 00:43:22,900
+以及它与对称加密的关系有什么问题吗?
+and how it relates to symmetric key crypto, how it's a little bit different?
+
+637
+00:43:24,225 --> 00:43:27,728
+在我们讨论非对称加密的应用之前,
+So before we talk about applications of this idea, 
+
+638
+00:43:27,728 --> 00:43:33,875
+我将先讲讲非对称加密中的另一组概念.
+I'm going to talk about one other set of concepts in asymmetric key cryptography. 
+
+639
+00:43:33,875 --> 00:43:39,440
+这些加密系统为你提供了加密/解密相关的工具,
+These crypto systems give you another set of tools which are related to encryption and decryption, 
+
+640
+00:43:39,475 --> 00:43:41,625
+称为签名和验证.
+something called signing and verifying. 
+
+641
+00:43:41,625 --> 00:43:44,575
+这在一定程度上与现实世界有些类似,
+And this is kind of similar to the real world like I can 
+
+642
+00:43:44,575 --> 00:43:46,950
+我可以得到一份文件并签上我的大名.
+get a document and sign it with my signature. 
+
+643
+00:43:46,950 --> 00:43:50,525
+现实世界的签名相对容易伪造,
+Except real-world signatures are, I don't think that hard to forge. 
+
+644
+00:43:50,525 --> 00:43:53,425
+但是这里这些签名是相当难伪造的,因此更有用.
+These are pretty hard to forge and, therefore, more useful. 
+
+645
+00:43:53,425 --> 00:43:57,497
+签名方案是什么样的?
+What do signature schemes look like?
+
+646
+00:43:57,497 --> 00:44:05,025
+有一个函数"sign",它接收消息和私钥,
+There's a function "sign" that takes us some message and the private key, 
+
+647
+00:44:07,125 --> 00:44:10,075
+注意这是私钥,而不是公钥,
+so notice this, this is the private key, not the public key, 
+
+648
+00:44:10,075 --> 00:44:12,325
+它会生成一个签名.
+and it produces a signature. 
+
+649
+00:44:14,125 --> 00:44:23,600
+然后还有另一个函数"verify",它接收消息和签名
+And then there's another function "verify" which takes in the message, the signature, 
+
+650
+00:44:23,725 --> 00:44:26,150
+以及这里是公钥,
+and the public key this time, 
+
+651
+00:44:31,850 --> 00:44:36,425
+它会返回一个布尔值,告诉我签名是否正确.
+and it tells me it returns a boolean whether or not the signature checks out. 
+
+652
+00:44:36,425 --> 00:44:42,406
+然后这一对函数具有一些特性,
+And then this pair of functions has the property that, again, 
+
+653
+00:44:42,406 --> 00:44:50,050
+这些特性与现实里的签名和验证类似,
+these are kind of properties that follow the intuition that come from physical signatures that, 
+
+654
+00:44:50,625 --> 00:44:55,142
+即如果没有私钥,很难为任何消息产生一个签名,
+without the private key, it's hard to produce a signature
+
+655
+00:44:55,142 --> 00:44:59,046
+你就无法将消息和公钥一起提供给"verify"函数
+for any message such that you can give the message in the signature 
+
+656
+00:44:59,046 --> 00:45:02,675
+以获取返回值为true.
+and the public key to the "verify" function to get it to return true. 
+
+657
+00:45:02,675 --> 00:45:06,175
+它很难被伪造.
+Like at a high level, it's hard to forge. 
+
+658
+00:45:09,775 --> 00:45:13,750
+没有私钥是很难伪造签名的.
+It's hard to forge a signature, of course, without the private key. 
+
+659
+00:45:19,825 --> 00:45:22,680
+然后也有显然正确的属性,
+And then there's the obvious correctness property 
+
+660
+00:45:22,680 --> 00:45:27,672
+即如果你使用公钥签署了一个东西,然后尝试使用相应的私钥进行验证,
+that if you signed a thing with a public key and then try verifying it with the corresponding, 
+
+661
+00:45:27,675 --> 00:45:29,511
+不好意思,应该是用私钥签署了一个东西,
+sorry, if you sign a thing with the private key 
+
+662
+00:45:29,511 --> 00:45:31,559
+然后尝试使用相应的公钥进行验证,
+and try to verify it with the corresponding public key, 
+
+663
+00:45:31,559 --> 00:45:35,000
+它将返回一个好的验证结果.
+it returns okay that this verification checks out. 
+
+664
+00:45:36,700 --> 00:45:44,525
+因此,这是非对称加密可以做的两件事.
+So these are two different kinds of things you can do with asymmetric key crypto systems. 
+
+665
+00:45:44,525 --> 00:45:47,707
+你可能听说过,
+An example of an asymmetric key crypto system that you might have heard of 
+
+666
+00:45:47,707 --> 00:45:49,350
+有一个叫RSA的非对称加密.
+is something called RSA. 
+
+667
+00:45:49,350 --> 00:45:53,650
+RSA是由许多人共同设计的,其中一人是Ron Rivest,他是这里的教授.
+So RSA is designed by a number of people, one of whom is Ron Rivest who's a professor here. 
+
+668
+00:45:57,525 --> 00:46:01,531
+实际上还有很多很有趣的非对称加密应用,
+So there are a couple of interesting applications of asymmetric key crypto, 
+
+669
+00:46:01,531 --> 00:46:04,667
+真要讲可能需要花上几天时间,
+actually like tons and tons and tons of, you spend like days talking about this, 
+
+670
+00:46:04,667 --> 00:46:07,525
+但其中有个例子是电子邮件加密.
+but a couple examples are email encryption. 
+
+671
+00:46:07,525 --> 00:46:09,675
+我们之前谈到了发送消息的一些事情.
+So we talked a little bit about sending messages. 
+
+672
+00:46:09,675 --> 00:46:14,375
+通过非对称加密,你可以在网上发布公钥.
+What we can do with asymmetric key crypto is that you can have public keys posted online. 
+
+673
+00:46:14,375 --> 00:46:18,100
+我认为一些教练在他们的网站上发布了PGP公钥.
+I think some of the instructors have PGP public keys on their website. 
+
+674
+00:46:18,100 --> 00:46:21,775
+例如,如果你访问我的网站或John的网站,你可以找到一个公钥.
+So for example, you go to my website or John's website, you'll find a public key. 
+
+675
+00:46:21,775 --> 00:46:25,675
+然后你可以发送给我们一个加密的电子邮件.
+And then what you can do is you can send us an encrypted email. 
+
+676
+00:46:25,675 --> 00:46:30,750
+即使该消息通过Gmail或其他电子邮件服务传递到MIT的邮件服务器,
+And so even if that message goes through Gmail or whatever other mail service throughout MIT's mail servers, 
+
+677
+00:46:30,750 --> 00:46:33,758
+如果有攻击者偷窥消息,
+if there happens to be an attacker snooping on the messages,
+
+678
+00:46:33,758 --> 00:46:37,175
+他们也无法理解其内容,因为它们都被加密了.
+they can't make any sense of their contents because they're all encrypted. 
+
+679
+00:46:37,175 --> 00:46:40,734
+这真的很酷,你可以做到这一点,
+And this is really cool because you can do this without kind of
+
+680
+00:46:40,734 --> 00:46:43,190
+而且你也无需亲自找到我们并交换密钥,
+finding us in person and exchanging keys, 
+
+681
+00:46:43,190 --> 00:46:45,406
+要是使用对称加密,你必须要交换密钥.
+which you might have to do in a symmetric key crypto system. 
+
+682
+00:46:45,406 --> 00:46:49,175
+但是现在你只要在网上找到我们的公钥,
+You can just find our public key, which can be posted online without causing any issues, 
+
+683
+00:46:49,175 --> 00:46:51,400
+然后发送加密邮件给我们.
+and then send us encrypted email. 
+
+684
+00:46:51,400 --> 00:46:55,425
+此外,非对称加密还可以用于私人通信.
+Another thing asymmetric key crypto is used for is private messaging.
+
+685
+00:46:55,425 --> 00:46:57,409
+如果你使用过
+So raise your hand if you've used anything like
+
+686
+00:46:57,409 --> 00:47:01,650
+类似Signal或Telegram或者WhatsApp(理论上支持端对端加密)的请举手,
+signal or telegram or I think what's up is in theory antenna encrypted, 
+
+687
+00:47:01,650 --> 00:47:02,500
+不错,很多人都用过了...
+so a good number of you. 
+
+688
+00:47:03,125 --> 00:47:07,850
+这些私人通信应用程序也使用
+These private messaging applications also use asymmetric key crypto 
+
+689
+00:47:07,850 --> 00:47:10,575
+非对称加密技术建立私人通信通道.
+to establish private communication channels. 
+
+690
+00:47:10,575 --> 00:47:14,675
+基本上,每个人都有一对密钥,
+Basically, every person has associated with them a key pair, 
+
+691
+00:47:14,675 --> 00:47:17,450
+你的设备会运行密钥生成函数
+and so your device has run this key generation function 
+
+692
+00:47:17,450 --> 00:47:19,370
+并生成了一个公钥和一个私钥,
+produced a public key and a private key 
+
+693
+00:47:19,370 --> 00:47:22,225
+并且自动将你的公钥发布到互联网上.
+and automatically posted your public key to the internet. 
+
+694
+00:47:22,225 --> 00:47:25,675
+例如,如果你使用Signal,你的公钥就在Signal服务器上,
+So, for example, if you're using signal, your public key is on the signal servers, 
+
+695
+00:47:25,675 --> 00:47:27,700
+当有人想要联系你时,
+and then when someone wants to contact you,
+
+696
+00:47:27,700 --> 00:47:30,950
+他们的手机可以查找你的公钥,
+their phone can look up your public key, retrieve it, 
+
+697
+00:47:30,950 --> 00:47:34,025
+一旦检索到你的公钥,他们就可以为你加密信息.
+and once it's retrieved your public key, they can encrypt information for you. 
+
+698
+00:47:34,025 --> 00:47:36,275
+他们算法大概就是这样工作的,
+This is a kind of approximation of how their algorithm works, 
+
+699
+00:47:36,275 --> 00:47:38,075
+概括来说,这就是实实在在发生的事情.
+but at a high level that's what's going on.
+
+700
+00:47:38,525 --> 00:47:42,477
+非对称密钥密码的另一个有趣应用是
+Another neat application of asymmetric key crypto is 
+
+701
+00:47:42,477 --> 00:47:44,141
+我们之前谈到的,
+we were talking about earlier like 
+
+702
+00:47:44,141 --> 00:47:46,625
+就是确保你从互联网上下载了正确的软件.
+making sure you have the right software we downloaded from the internet. 
+
+703
+00:47:46,625 --> 00:47:50,100
+非对称密钥密码可用于签署软件发布,
+Asymmetric key crypto can be used to sign software releases, 
+
+704
+00:47:50,100 --> 00:47:52,461
+这是人们在从互联网上下载例如Debian软件包,
+and this is something that people do for example like Debian packages
+
+705
+00:47:52,461 --> 00:47:56,237
+或其他东西时所做的操作.
+or whatever things you download from the internet. 
+
+706
+00:47:56,237 --> 00:47:59,450
+开发人员会尝试签署他们的软件,以便你可以确保
+The developer will try to sign their software so that you can make sure 
+
+707
+00:47:59,450 --> 00:48:01,082
+从互联网上下载的任何东西
+that whatever you've downloaded from the internet 
+
+708
+00:48:01,082 --> 00:48:03,725
+都是来自正确的人.
+is actually the right thing that came from the right person.
+
+709
+00:48:04,025 --> 00:48:08,075
+我们在git的讲座中谈到了你可以使用git做的所有有趣的事情.
+We talked about in the git lecture all the interesting things you can do with git. 
+
+710
+00:48:08,100 --> 00:48:12,850
+但是我们没有涉及git中签名相关的功能.
+One thing we didn't cover was signing related functionality and git. 
+
+711
+00:48:13,450 --> 00:48:16,375
+所以git有提交,
+So git has commits, 
+
+712
+00:48:16,375 --> 00:48:19,325
+你可以将一些东西与提交关联起来,这被称为标签.
+and you can associate with commits something called tags. 
+
+713
+00:48:19,325 --> 00:48:23,188
+你可以将一个git提交与一个签名相关联,
+At a high level, you can basically take a git commit and attach a signature to it
+
+714
+00:48:23,188 --> 00:48:27,375
+将你的公钥绑定到此提交中,
+which binds your public key to this commit, 
+
+715
+00:48:27,375 --> 00:48:29,460
+然后任何拥有你的公钥的人
+and then anybody who has your public key
+
+716
+00:48:29,460 --> 00:48:31,956
+都可以使用此提交和你的公钥,
+can take the commit and your public key 
+
+717
+00:48:31,956 --> 00:48:36,300
+所以需要确保提交上有一个合法的签名.
+and make sure that there's a legitimate signature on the commit.
+
+718
+00:48:39,475 --> 00:48:43,200
+让我随便去个仓库看一下.
+So let me go to like some random repository that I have. 
+
+719
+00:48:43,900 --> 00:48:47,725
+我可以查看与仓库相关联的一些标签.
+I can look at a bunch of tags associated with the repository. 
+
+720
+00:48:47,725 --> 00:48:53,716
+如果我查看与该标签相关联的原始数据,
+If I do look at the raw data associated with this tag, 
+
+721
+00:48:53,716 --> 00:49:02,125
+它有一些元数据,然后是一段ascii码的信息块,
+it has some metadata and then a blob of like ascii encoded information 
+
+722
+00:49:02,175 --> 00:49:06,708
+我可以使用"git tag -v"命令来进行验证,
+that I can use the "git tag -v" for verify command 
+
+723
+00:49:06,708 --> 00:49:11,444
+以确保这就是来自于我.
+to make sure that oh this is a good signature from this person happens to be me.
+
+724
+00:49:11,444 --> 00:49:14,708
+所以我签署了软件发布,这样任何从互联网下载软件的人
+so I sign the software release so that anybody who downloads it from the Internet 
+
+725
+00:49:14,708 --> 00:49:17,625
+都可以确保他们得到了真实的副本.
+can make sure that they actually got an authentic copy.
+
+726
+00:49:17,625 --> 00:49:19,125
+是的,问题?
+Yes, question. 
+
+727
+00:49:28,525 --> 00:49:31,100
+所以问题是
+So the question is 
+
+728
+00:49:31,100 --> 00:49:35,000
+"verify"函数具体是在做什么或者它检查什么?
+what exactly is the verify function doing or what is it checking against? 
+
+729
+00:49:37,000 --> 00:49:42,350
+如果你想在数学原理上了解具体是什么,可以在本讲座之后找我交流.
+If you want to know mathematically what's going on, talk to me after this lecture. 
+
+730
+00:49:42,350 --> 00:49:45,815
+从API的角度来看,
+But from kind of an API perspective, what's going on here
+
+731
+00:49:45,815 --> 00:49:50,375
+这里的签名和消息只是一组字节数据.
+is that the signature and also the message here are just a blob of bytes, 
+
+732
+00:49:50,375 --> 00:49:53,495
+这些数据基本上是这样的:
+and it happens to be the case that these things are designed 
+
+733
+00:49:53,495 --> 00:50:00,200
+对于某个特定的公钥,比如我的公钥,
+such that basically if you take for some particular public key, like if you take my public key, 
+
+734
+00:50:00,200 --> 00:50:04,119
+如果你没有我的私钥,
+It's impossible for you, without knowledge of my private key,
+
+735
+00:50:04,119 --> 00:50:09,575
+就不可能找到第二个钥匙使函数返回 true .
+for any message to find a second argument to this function that makes it return true. 
+
+736
+00:50:09,575 --> 00:50:13,100
+你可以将它类比为签署一份文件.
+You can kind of compare it to signing a document. 
+
+737
+00:50:13,100 --> 00:50:15,050
+就像你不知道如何伪造我的签名一样,
+Like, you don't know how to forge my signature. 
+
+738
+00:50:15,050 --> 00:50:17,400
+我可以在任何纸张上签名,
+I can take any piece of paper and sign it, 
+
+739
+00:50:17,400 --> 00:50:20,183
+然后任何知道我的签名样式的人,
+and then anybody who knows what my signature looks like,
+
+740
+00:50:20,183 --> 00:50:23,025
+可以查看我的文件,验证签名正确.
+I can show my document - you can be like, yeah, that checks out. 
+
+741
+00:50:23,025 --> 00:50:26,839
+但没有私钥的人,
+But nobody without the private key can produce a signature 
+
+742
+00:50:26,839 --> 00:50:31,650
+无法为任何消息产生一个使此函数返回true的签名.
+that will make this function return true for any particular message. 
+
+743
+00:50:33,800 --> 00:50:38,425
+还有问题吗?我是否需要用其他方式再解释一下?
+And any related questions started, you want me to explain any other way, or does that make sense? 
+
+744
+00:50:50,750 --> 00:50:53,458
+那么对于软件签名以及非对称加密的几种应用,
+So, any questions about signing software or any of the other
+
+745
+00:50:53,458 --> 00:50:57,525
+有什么问题吗?
+handful of applications talked about of asymmetric key crypto?
+
+746
+00:50:59,025 --> 00:51:04,550
+好的,最后我想谈谈密钥分发.
+Well, so one final thing I want to talk about, we're almost out of time, is key distribution. 
+
+747
+00:51:04,550 --> 00:51:08,125
+这是非对称加密的一个有趣的方面.
+This is a kind of interesting side effect of asymmetric key cryptography. 
+
+748
+00:51:08,125 --> 00:51:12,300
+它可以实现许多有趣的功能,比如我可以在互联网上发布我的公钥,
+It enables a bunch of interesting functionality like I can post my public key on the internet. 
+
+749
+00:51:12,300 --> 00:51:14,325
+你可以找到它并给我发加密邮件.
+You can go find it and send me encrypted email. 
+
+750
+00:51:14,325 --> 00:51:17,612
+但你怎么知道找到的公钥实际上是我的公钥?
+But how do you know that the public key found is actually my public key? 
+
+751
+00:51:17,612 --> 00:51:20,600
+这似乎存在一个{\rcode2}引导问题[*]{\r},对吗?
+It seems like there's a bootstrapping problem here, right? 
+*[在数字安全和加密领域,引导问题通常是指如何在 \N 没有预共享密钥和信任基础的情况下建立安全通信渠道的问题]
+
+752
+00:51:20,600 --> 00:51:26,060
+所以,这是一个非常有趣但是有些困难的现实世界问题,
+So, this is like a really interesting and really hard real-world problem, 
+
+753
+00:51:26,060 --> 00:51:30,325
+可能有这么几种方法来解决这个问题.
+and there are a couple different approaches you might take to this problem.
+
+754
+00:51:30,325 --> 00:51:32,836
+第一种是有点糟糕的解决方案,
+One is kind of a lame solution, 
+
+755
+00:51:32,836 --> 00:51:34,865
+但它可以解决许多密码学问题.
+but this thing solves a lot of cryptography problems. 
+
+756
+00:51:34,865 --> 00:51:37,450
+就是在非网络渠道交换信息,
+This exchange the information out-of-band. 
+
+757
+00:51:37,450 --> 00:51:40,600
+也就是你想给我发加密邮件,
+What that means is, you want to send me encrypted email, 
+
+758
+00:51:40,600 --> 00:51:42,225
+你直接下课后来找我,
+we'll just talk to me after class. 
+
+759
+00:51:42,225 --> 00:51:44,550
+我会给你一张纸条上面写着我的公钥,
+I'll give you my public key on a piece of paper, 
+
+760
+00:51:44,550 --> 00:51:47,942
+由于你亲自与我交谈,你知道这确实就是我的公钥,
+and since you were talking to me in person, you know that it's actually my public key,
+
+761
+00:51:47,942 --> 00:51:51,270
+而不是有人黑进我的网站,放上的一些虚假信息.
+not just somebody like hacked my website and stuck some random number on there. 
+
+762
+00:51:51,325 --> 00:51:52,675
+这样可以解决问题,
+That solves the problem, 
+
+763
+00:51:52,675 --> 00:51:53,825
+但不太优雅.
+but it's not the most elegant.
+
+764
+00:51:53,825 --> 00:51:56,400
+还有几种不同的方法,不同的应用程序使用不同的方法.
+There are a couple other approaches that different applications use. 
+
+765
+00:51:56,400 --> 00:51:58,275
+比如,用过Signal的人,
+So, those of you who use signal,
+
+766
+00:51:58,275 --> 00:52:01,859
+你们有没有遇到过"safety number"这个短语?
+have you ever encountered the phrase "safety number" 
+
+767
+00:52:01,859 --> 00:52:04,035
+或是"用..来验证你的safety number"?
+like "verify your safety number with so and so"? 
+
+768
+00:52:04,035 --> 00:52:08,628
+对于Signal,他们有一种交换公钥的方法,
+So, with signal, they have a way of exchanging public keys 
+
+769
+00:52:08,628 --> 00:52:10,275
+就是通过Signal服务器.
+which is through the signal servers. 
+
+770
+00:52:10,275 --> 00:52:13,351
+运行Signal服务的人只需在其服务器上
+Whoever runs the signal service just maintains on their servers 
+
+771
+00:52:13,351 --> 00:52:15,775
+维护一个从电话号码到公钥的映射.
+basically a mapping from phone numbers to public keys. 
+
+772
+00:52:15,775 --> 00:52:18,275
+当我说"我要给这个号码的人发消息"时,
+And when I say, "Oh, I want to message this person with this number", 
+
+773
+00:52:18,275 --> 00:52:20,775
+我的手机会从互联网上检索他们的公钥,
+my phone just goes and retrieves their public key from the internet 
+
+774
+00:52:20,775 --> 00:52:23,050
+然后用该公钥加密消息.
+and then encrypts the message for that public key.
+
+775
+00:52:23,100 --> 00:52:30,900
+现在,有人对这个设置有什么问题吗?
+Now, does anybody see a problem with the setup?  
+
+776
+00:52:34,925 --> 00:52:37,850
+是的,正是如此.Signal服务器是保证安全性的关键点,
+Yeah, exactly. The signal servers are the point of failure there 
+
+777
+00:52:37,850 --> 00:52:41,150
+因为如果Signal服务器给我错误的公钥,
+because if the signal servers give me the wrong public key, 
+
+778
+00:52:41,150 --> 00:52:44,890
+比如假设 Signal 只是生成了一对新的密钥,并给我这个新生成的公钥,
+like suppose signal just produces a new key pair and give me their public key,
+
+779
+00:52:44,890 --> 00:52:46,426
+那他们就可以读取我所有的消息,
+now they can read all my messages. 
+
+780
+00:52:46,426 --> 00:52:50,522
+他们甚至可以在我和我的朋友之间,透明地解密我发送给他们的消息,
+And they could even sit in between and transparently decrypt the messages I send them 
+
+781
+00:52:50,522 --> 00:52:53,200
+然后重新加密并发送到最终目的地.{\rcode2}[*]{\r}
+and then re-encrypt them and send them on to their final destination. 
+*[这种攻击方式被称为"中间人攻击"]
+
+782
+00:52:53,200 --> 00:52:57,475
+所以我需要某种方法来验证我获得的公钥,
+Like, basically, I need some way of authenticating the public key I get.
+
+783
+00:52:57,475 --> 00:53:03,825
+因此,Signal有一个解决方案,本质上还是线下交换密钥.
+And so, signal has one solution to this, which is also just kind of punting the issue to out-of-band key exchange. 
+
+784
+00:53:03,825 --> 00:53:04,625
+你可以与某个人见面,
+You can meet up with somebody, 
+
+785
+00:53:04,625 --> 00:53:08,575
+他们有一个稍微简化的流程,可以在屏幕上显示二维码.
+and they have a slightly streamlined flow where they show QR codes on the screen. 
+
+786
+00:53:08,575 --> 00:53:10,975
+你可以拿一部手机拍下二维码的图片,反之亦然,
+You take one phone and take a picture of the other phone screen,  and vice versa,  
+
+787
+00:53:10,975 --> 00:53:13,350
+现在你已经交换了公钥.
+and now you've exchanged public keys in person. 
+
+788
+00:53:13,350 --> 00:53:14,625
+从那时起,
+And from that point on,
+
+789
+00:53:14,625 --> 00:53:17,075
+你已经启动了加密的端到端通信.
+You've bootstrap your encrypted end-to-end communication. 
+
+790
+00:53:17,700 --> 00:53:22,450
+它还有一个方法,即固定公钥.
+It also has an issue of, or it also has an approach of, pinning a public key. 
+
+791
+00:53:22,450 --> 00:53:26,162
+一旦你知道一个特定的电话号码有一个特定的公钥,
+So once you know that a particular phone number has a particular public key, 
+
+792
+00:53:26,162 --> 00:53:27,250
+你的手机就会记住它,
+your phone remembers that, 
+
+793
+00:53:27,250 --> 00:53:29,725
+如果发生更改,它就会向你发出警告.
+and if that ever changes, it'll complain to you. 
+
+794
+00:53:30,150 --> 00:53:33,050
+然后还有几个解决这个问题的方法.
+And then there are a couple of other solutions to this problem. 
+
+795
+00:53:33,050 --> 00:53:35,950
+PGP是一个曾经流行过的解决方案,
+PGP, one popular solution used to be popular a while ago,
+
+796
+00:53:35,950 --> 00:53:37,525
+它有一个"信任网"的概念.
+has this idea of a web of trust. 
+
+797
+00:53:37,525 --> 00:53:39,450
+就像,我信任我朋友信任的人.
+So, like, I trust people who my friends trust. 
+
+798
+00:53:39,450 --> 00:53:41,582
+所以如果John和我的教授进行了一次线下交换,
+So if John has done an out-of-band exchange with, 
+
+799
+00:53:41,582 --> 00:53:44,950
+那么我可以向我的教授发送电子邮件,
+say, my professor, then I can probably email my professor because, 
+
+800
+00:53:44,950 --> 00:53:47,350
+因为我知道John信任我的教授,而我信任John.
+like, I know that John trusts my professor and I trust John. 
+
+801
+00:53:47,350 --> 00:53:49,125
+所以你可以通过这种方式建立信任链.
+So you got this chain of trust through there. 
+
+802
+00:53:49,125 --> 00:53:50,525
+这是一种有趣的方法.
+That's one interesting approach. 
+
+803
+00:53:50,525 --> 00:53:53,142
+还有另一种模型,最近非常火,
+And then another model that's called pretty recently, 
+
+804
+00:53:53,142 --> 00:53:55,050
+是一种叫做"keybase"工具,
+as something that a tool called keybases.
+
+805
+00:53:55,050 --> 00:54:03,450
+有一个叫做"keybase.io"的网站,
+This is a really neat whoops, there's a website called keybase.io, 
+
+806
+00:54:03,450 --> 00:54:07,925
+他们有一个非常有趣的解决方案,叫做社会证明.
+and they have a really interesting solution to this bootstrapping problem, which is social proof. 
+
+807
+00:54:07,925 --> 00:54:11,850
+比如说,你可能在Facebook和Twitter上有你的朋友,
+So saying you probably have your friends on Facebook and on Twitter and whatnot, 
+
+808
+00:54:11,850 --> 00:54:14,782
+对于攻击者来说
+and it's probably pretty hard for an attacker 
+
+809
+00:54:14,782 --> 00:54:18,225
+同时入侵你朋友的Facebook账号,Twitter账号以及Hacker News账号等等,
+to break into your friend's Facebook account at the same time as their Twitter account, 
+
+810
+00:54:18,225 --> 00:54:20,475
+是非常非常困难的
+at the same time as their hacker news account,  and so on.  
+
+811
+00:54:20,475 --> 00:54:21,765
+因此,有一种有趣的方式,
+And so there's this interesting way
+
+812
+00:54:21,765 --> 00:54:25,285
+将公钥绑定到一组社交身份上,
+of binding public keys to a set of social identities 
+
+813
+00:54:25,285 --> 00:54:27,272
+如果你相信某个社交身份与你的朋友相对应,
+such that you can retrieve a public key
+
+814
+00:54:27,272 --> 00:54:31,775
+那么你可以通过这个社交身份来获取公钥.
+once you trust some number of social identities corresponding to your friend. 
+
+815
+00:54:32,000 --> 00:54:36,275
+如果你想要更详细地了解这些内容,我们在讲义中提供了链接.
+We have links to these in the lecture notes if you want to see these things in more detail. 
+
+816
+00:54:36,275 --> 00:54:40,175
+这就是我们的安全和密码学讲座,
+So that's it for our security and cryptography lecture, 
+
+817
+00:54:40,175 --> 00:54:43,325
+明天的讲座将讲一些
+and tomorrow's lecture will be on a random collection of topics 
+
+818
+00:54:43,325 --> 00:54:45,025
+我们认为很有趣的话题.
+that your instructors find interesting. 
+
+819
+00:54:45,025 --> 00:54:48,000
+希望明天在讲座上见到你们.
+So hopefully, see you in lecture tomorrow. 
+
+820
+00:54:51,675 --> 00:54:54,825
+如果有任何问题,我会在课后呆上几分钟.
+I'll also be here for a couple of minutes after class if anybody has questions. 
+
+821
+00:55:05,800 --> 00:55:07,075
+好的,
+Yes, okay, 
+
+822
+00:55:07,075 --> 00:55:09,575
+John,如果你要走,请随意.
+so John, feel free to leave if you have to leave, 
+
+823
+00:55:09,575 --> 00:55:11,025
+但我想没有人在我们之后使用这个教室.
+but I think nobody's using the classroom after us. 
+
+824
+00:55:11,025 --> 00:55:13,450
+噢,我还想谈谈另一个有趣的话题.
+I'm going to talk about one other interesting topic. 
+
+825
+00:55:13,450 --> 00:55:18,343
+John提到非对称加密速度慢,
+So John brought up the fact that asymmetric key cryptography is slow
+
+826
+00:55:18,343 --> 00:55:20,850
+对称加密速度快的事实.
+and symmetric key cryptography is fast. 
+
+827
+00:55:20,850 --> 00:55:27,175
+因此,在实践中,你可以不仅仅使用非对称加密.
+And so in practice, you don't really use just asymmetric key cryptography by itself. 
+
+828
+00:55:27,175 --> 00:55:33,550
+通常情况下,非对称加密用于启动更复杂的协议.
+It's usually used to bootstrap a more sophisticated protocol that you're using. 
+
+829
+00:55:37,550 --> 00:55:39,269
+你可能想使用
+One thing you might want to do is
+
+830
+00:55:39,269 --> 00:55:43,816
+非对称加密来签名加密邮件,对吧?
+ use asymmetric key cryptography for signing encrypted email, right?
+
+831
+00:55:43,816 --> 00:55:45,050
+我们已经讲过了这个例子.
+We talked about that example. 
+
+832
+00:55:45,050 --> 00:55:46,575
+实际上的工作原理
+And the way that works 
+
+833
+00:55:46,575 --> 00:55:51,119
+并不像我所讲的那样简单.
+isn't what you might have guessed from our straightforward explanation of asymmetric key crypto. 
+
+834
+00:55:51,119 --> 00:55:54,525
+你不能只是使用上面的加密函数就结束了.
+Like, you don't just use that encrypt function up there and call it a day. 
+
+835
+00:55:54,525 --> 00:55:56,592
+实际上,
+In practice, what you do is 
+
+836
+00:55:56,592 --> 00:55:58,960
+你所要做的是使用混合加密技术,
+you use hybrid encryption
+
+837
+00:55:58,960 --> 00:56:08,825
+结合对称加密和非对称加密.
+to use a combination of symmetric key and asymmetric key cryptography. 
+
+838
+00:56:08,950 --> 00:56:13,150
+这里,我会画一个大的图.
+What you do is, here, I'll draw this as a big block diagram. 
+
+839
+00:56:13,150 --> 00:56:14,900
+这是你要发送的信息m,
+You take your message m, 
+
+840
+00:56:14,900 --> 00:56:22,350
+然后用我所拥有的公钥进行加密.
+and then I have my public key that I want to encrypt for. 
+
+841
+00:56:22,350 --> 00:56:23,554
+但是,
+But rather than just 
+
+842
+00:56:23,554 --> 00:56:26,815
+与其将这两个信息直接通过那里的加密函数加密,
+take these two things and pass it through the encryption up there, 
+
+843
+00:56:26,815 --> 00:56:39,550
+实际上,你需要使用对称密钥生成函数来产生一个对称密钥K.
+what I do is I use the symmetric key gen function to produce a symmetric key K. 
+
+844
+00:56:41,100 --> 00:56:43,750
+我会在开头加上"symmetric(对称)"这个词,
+I'm gonna, like, prepend this with "symmetric"
+
+845
+00:56:43,750 --> 00:56:47,040
+以便我们可以将其与非对称的密钥生成函数区分开来.
+so we can distinguish it from the public key key generation function. 
+
+846
+00:56:47,400 --> 00:56:50,342
+然后我将这两个东西通过对称加密
+And then what I do is I take these two things, 
+
+847
+00:56:50,342 --> 00:56:53,850
+传递给我的对称加密盒子.
+pass them through my symmetric encryption box. 
+
+848
+00:57:02,300 --> 00:57:05,250
+这将产生密文,
+This produces the ciphertext, 
+
+849
+00:57:13,275 --> 00:57:16,539
+这个加密后的内容
+And now this by itself to the sender. Sorry, this by itself to the receiver who has the private key 
+
+850
+00:57:16,539 --> 00:57:19,739
+对拥有公钥的接收者来说并没有什么用处,
+corresponding to this public key here, this is not really useful, right? 
+
+851
+00:57:19,800 --> 00:57:23,899
+因为它用的是本地的对称密钥生成函数生成的
+Because this is encrypted with a symmetric cipher with this key K 
+
+852
+00:57:23,899 --> 00:57:29,425
+密钥K进行对称加密的.
+that came from this function that I ran on my local machine. 
+
+853
+00:57:29,425 --> 00:57:34,075
+因此,我需要用某种方式将这个对称密钥K发给用于解密邮件的人.
+So I need some way of getting this to the person who actually used to decrypt the email. 
+
+854
+00:57:34,075 --> 00:57:38,950
+因此,我将K单独拿出来.这个m可能很大,
+And so what I do is I take this thing. And now this email might have been big, 
+
+855
+00:57:38,950 --> 00:57:42,125
+所以我使用对称加密将其加密.
+and I use symmetric encryption with that because symmetric encryption is fast. 
+
+856
+00:57:42,125 --> 00:57:45,575
+但是这个密钥很小,可能只有256位,
+But this key is small, like it might be 256 bits or something, 
+
+857
+00:57:45,575 --> 00:57:50,950
+所以我可以用公钥对它进行非对称加密,
+so I can take this thing and encrypt it with asymmetric encryption using the public key, 
+
+858
+00:58:04,550 --> 00:58:07,650
+这样就可以生成一个加密密钥.
+and this gives me an encrypted key. 
+
+859
+00:58:07,800 --> 00:58:16,825
+因为那个公钥,这个加密密钥可以使用相应的私钥来解密,
+And this thing can be decrypted using the private key corresponding to that public key to reconstruct this. 
+
+860
+00:58:16,825 --> 00:58:19,150
+这是在发送者端进行的.
+So this is on the sender's end. 
+
+861
+00:58:19,150 --> 00:58:24,170
+现在,接收者获得这个密钥,将倒序进行以下步骤:
+Now, the receiver gets this and this and kind of does these things backwards. 
+
+862
+00:58:24,170 --> 00:58:25,541
+因此,你从加密密钥开始,
+So you start with the encrypted key
+
+863
+00:58:25,541 --> 00:58:30,405
+使用与这个公钥对应的私钥
+and use asymmetric decryption using your public using your private key that
+
+864
+00:58:30,405 --> 00:58:36,150
+来解密这个加密密钥得到K,
+corresponds to the posted public key  to reconstruct this key \N that were used for the symmetric encryption box, 
+
+865
+00:58:36,150 --> 00:58:40,343
+然后使用刚刚解出来的对称密钥K
+and then use symmetric key decryption using that key that was reconstructed 
+
+866
+00:58:40,343 --> 00:58:44,650
+结合密文还原出原始消息.
+to take this ciphertext and produce the original message. 
+
+867
+00:58:44,750 --> 00:58:47,986
+因此,这是对称和非对称加密
+So there's a kind of interesting example of how
+
+868
+00:58:47,986 --> 00:58:52,300
+在实践中结合的有趣例子.
+in practice symmetric and asymmetric key cryptography is combined. 
+
+869
+00:58:54,475 --> 00:58:55,925
+问题?
+Question?
+
+870
+00:59:00,450 --> 00:59:05,425
+那么问题是,在这里你会使用相同的对称密钥生成器吗?
+So the question is, will you be using the same symmetric key generators?
+
+871
+00:59:07,275 --> 00:59:13,400
+是的.因此,你需要事先协商在此处使用哪个盒子(也就是使用哪个加密算法啦~).
+Yes. Okay, so you need to kind of agree ahead of time which box you're using here. 
+
+872
+00:59:13,400 --> 00:59:19,450
+例如,你可能会说,我将在这里使用AES-256-GCM,
+So you might be like, oh, I'm going to use AES-256-GCM up here, 
+
+873
+00:59:19,450 --> 00:59:22,500
+但这是一个众所周知的函数,
+but this is a well-known function, 
+
+874
+00:59:22,500 --> 00:59:23,975
+它是公开的.
+and it's public. 
+
+875
+00:59:23,975 --> 00:59:26,950
+攻击者可以知道此函数的所有参数.
+Like the attackers allowed to know all the parameters this function. 
+
+876
+00:59:26,950 --> 00:59:31,025
+这是攻击者不知道的唯一秘密.
+This is the only secret thing that the attacker doesn't know, the key. 
+
+877
+00:59:31,750 --> 00:59:40,525
+还有其他问题吗?是的,那是一个非常好的问题.
+Any other questions? Yeah, that's a really good question. 
+
+878
+00:59:40,525 --> 00:59:42,765
+什么样的数据值得加密?
+What kind of data is important enough to encrypt?
+
+879
+00:59:42,765 --> 00:59:47,050
+我认为这取决于你的威胁模型.
+And I think that depends on your threat model. 
+
+880
+00:59:47,050 --> 00:59:49,060
+你担心什么样的攻击者?
+Like, who, what kind of attackers are you concerned about?
+
+881
+00:59:49,060 --> 00:59:51,300
+你想保护什么?
+What are you trying to protect against? 
+
+882
+00:59:51,300 --> 00:59:55,150
+或者,你可能认为你根本什么都不在意,
+So you might have the stance that you just don't really care, 
+
+883
+00:59:55,150 --> 00:59:58,100
+你与任何人的通信都可以公开.
+and that like anything you communicate with anybody is allowed to be public. 
+
+884
+00:59:58,100 --> 01:00:03,900
+我愿意将我与每个人的所有对话公开发布到互联网上供所有人查看.
+I might be willing to post all my conversation with everybody for everybody to see publicly on the Internet. 
+
+885
+01:00:03,900 --> 01:00:06,780
+另一方面,
+On the other hand, maybe you're doing some 
+
+886
+01:00:06,780 --> 01:00:08,572
+也许你正在从事一些非常注重安全性的工作,
+like security-sensitive works here, 
+
+887
+01:00:08,572 --> 01:00:10,876
+比如为美国政府签订合同,
+working under a contract for the US government, 
+
+888
+01:00:10,876 --> 01:00:13,125
+开发一些敏感的军事项目等等.
+developing some sensitive military stuff. 
+
+889
+01:00:13,125 --> 01:00:15,550
+如果你在旅行中通过互联网发送这些信息,
+If you're sending that through the open Internet while you're traveling, 
+
+890
+01:00:15,550 --> 01:00:18,044
+你可能希望非常确定
+you probably want to be pretty darn sure that no
+
+891
+01:00:18,044 --> 01:00:21,180
+没有窃听者或其他人能够看到你发送的内容,
+eavesdroppers or anybody else along the way can see what you're sending, 
+
+892
+01:00:21,180 --> 01:00:23,550
+并且你发送的信息确实到达了正确的位置,
+and that whatever you're sending is in fact going to the right place, 
+
+893
+01:00:23,550 --> 01:00:27,300
+并且接收方能够验证该信息确实来自你.
+and that whoever is receiving it can authenticate that it in fact came from you. 
+
+894
+01:00:28,475 --> 01:00:32,444
+因此,根据你的情况不同,你会担心各种不同类型的对手,
+So you might be worried about all different kinds of adversaries depending on your scenario, 
+
+895
+01:00:32,444 --> 01:00:33,724
+从脚本小子
+from random script kiddies 
+
+896
+01:00:33,775 --> 01:00:37,400
+到国家级攻击者,
+who are trying to break into websites to nation-state level attackers, 
+
+897
+01:00:37,400 --> 01:00:42,050
+你需要不同类型的技术来防御不同类别的攻击者.
+and you'll need different types of techniques for defending against the different categories of attackers. 
+
+898
+01:00:44,600 --> 01:00:51,850
+还有其他问题吗?
+Any other questions?
+
+899
+01:00:51,850 --> 01:00:58,375
+好的,希望明天能看到你们,明儿会讲一些我们仨讲师都感兴趣的主题,这些主题之间比较跳跃.
+Well, so hopefully, see some of you tomorrow for a random collection of things that John, Jose,  and I find interesting. 
+

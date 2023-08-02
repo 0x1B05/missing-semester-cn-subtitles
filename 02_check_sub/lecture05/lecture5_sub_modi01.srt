@@ -1,0 +1,3439 @@
+﻿1
+00:00:00,400 --> 00:00:02,850
+好的,大家都能听到我讲话吗?
+Okay, can everyone hear me okay? 
+
+2
+00:00:02,900 --> 00:00:05,175
+好的,欢迎回来.
+Okay, so welcome back.
+
+3
+00:00:05,175 --> 00:00:10,150
+我想谈一些事务.
+I'm gonna address a couple of items in kind of the administratrivia. 
+
+4
+00:00:10,150 --> 00:00:14,875
+第一周结束后,我们发了一封电子邮件
+With the end of the first week,we sent an email, 
+
+5
+00:00:14,875 --> 00:00:19,225
+通知你们第一周的视频已经上传,
+noticing you that we have uploaded the videos for the first week, 
+
+6
+00:00:19,225 --> 00:00:20,800
+你们可以在网上找到它们.
+so you can now find them online.
+
+7
+00:00:20,800 --> 00:00:25,300
+视频里有课程的全程录像,
+They have all the screen recordings for the things that we were doing, 
+
+8
+00:00:25,300 --> 00:00:27,050
+你们回头可以看看,
+so you can go back to them.
+
+9
+00:00:27,050 --> 00:00:30,600
+如果你们对我们某些讲解的很快的东西感到困惑,
+Look if you're were confused about if we did something quick 
+
+10
+00:00:30,625 --> 00:00:35,575
+如果对讲义里的任何东西感到疑惑，可以随时向我们提问,.
+and, again, feel free to ask us any questions if anything in the lecture notes is not clear. 
+
+11
+00:00:35,575 --> 00:00:41,425
+我们还发了一份调查问卷,你们可以给我们反馈,
+We also kind of sent you a survey so you can give us feedback about 
+
+12
+00:00:41,425 --> 00:00:48,865
+告诉我们哪些地方不清楚,或是需要更详细的解释,或者其他任何问题,
+what was not clear, what items you would want a more thorough explanation or any other item, 
+
+13
+00:00:48,865 --> 00:00:52,400
+如果你们发现练习太难或太容易,
+if you're finding the exercises too hard, too easy, 
+
+14
+00:00:52,400 --> 00:00:57,975
+请在那个网址里留言,我们会非常感激你们的反馈,
+go into that URL and we'll really appreciate getting that feedback, 
+
+15
+00:00:57,975 --> 00:01:00,325
+因为这将使接下来的讲座和未来的开课变得更好.
+because that will kind of make the course better
+
+16
+00:01:00,475 --> 00:01:04,000
+
+for the remaining lectures and for future iterations of the course. 
+
+17
+00:01:04,000 --> 00:01:06,925
+这些事情说完了,
+With that out of the way ...
+
+18
+00:01:06,925 --> 00:01:11,625
+我们尽量及时上传视频,
+Oh, and we're gonna try to upload the videos in a more timely manner. 
+
+19
+00:01:11,725 --> 00:01:15,025
+不会等到周末才上传,
+We don't want to kind of wait until the end of the week for that. 
+
+20
+00:01:15,025 --> 00:01:16,125
+所以请持续关注.
+So keep tuned for that.
+
+21
+00:01:18,400 --> 00:01:21,000
+这些都说完了,现在我要开始这次讲座了,
+That out of the way, now I'm gonna...
+
+22
+00:01:21,000 --> 00:01:23,950
+这次的讲座是关于命令行环境的,
+This lecture's called command-line environment 
+
+23
+00:01:23,950 --> 00:01:27,925
+我们会讲一些不同的话题.
+and we're going to cover a few different topics. 
+
+24
+00:01:27,925 --> 00:01:34,850
+我在这里写一下,你们可以方便参考,
+So the main topics we're gonna cover, so you can keep track, 
+
+25
+00:01:34,850 --> 00:01:38,100
+可能在这里更好.
+it's probably better here, keep track of what I'm talking.
+
+26
+00:01:38,100 --> 00:01:42,250
+第一个是作业控制,
+The first is gonna be job control. 
+
+27
+00:01:42,250 --> 00:01:46,750
+第二个是终端复用器.
+The second one is gonna be terminal multiplexers.
+
+28
+00:01:51,675 --> 00:01:57,600
+然后我会解释什么是dotfiles以及如何配置你的 shell.
+Then I'm gonna explain what dotfiles are and how to configure your shell.
+
+29
+00:01:57,600 --> 00:02:01,450
+最后,如何高效地使用服务器.
+And lastly, how to efficiently work with remote machines. 
+
+30
+00:02:01,450 --> 00:02:08,425
+所以如果有什么不清楚的地方,请记住这个结构.
+So if things are not fully clear, kind of keep the structure. 
+
+31
+00:02:08,425 --> 00:02:12,775
+它们在一定程度上有交叉,涉及如何使用你的终端,
+They all kind of interact in some way, of how you use your terminal,
+
+32
+00:02:12,775 --> 00:02:16,750
+但它们依然是一些相对独立的话题.
+but they are somewhat separate topics, so keep that in mind. 
+
+33
+00:02:16,750 --> 00:02:20,100
+那么我们就来看一下作业控制.
+So let's go with job control. 
+
+34
+00:02:20,100 --> 00:02:26,250
+到目前为止,我们使用shell的方式一直很单一,
+So far we have been using the shell in a very, kind of mono-command way. 
+
+35
+00:02:26,250 --> 00:02:29,275
+比如,你写一个命令,然后命令被执行,
+Like, you execute a command and then the command executes, 
+
+36
+00:02:29,275 --> 00:02:32,200
+然后你得到一些输出,这就是你目前经常做的.
+then you get some output, and that's all about what you can do.
+
+37
+00:02:32,200 --> 00:02:37,475
+如果你想同时运行几个东西,或者如果你想停止一个程序的执行,那就不清楚该怎么做了.
+And if you want to run several things, it's not clear how you will do it. 
+
+38
+00:02:37,475 --> 00:02:40,600
+
+Or if you want to stop the execution of a program, 
+
+39
+00:02:40,750 --> 00:02:41,650
+
+it's again,
+
+40
+00:02:41,650 --> 00:02:44,575
+那又该怎么做呢?
+like how do I know how to stop a program? 
+
+41
+00:02:44,575 --> 00:02:48,250
+我们可以用一个叫做 "sleep" 的命令来演示这一点.
+Let's showcase this with a command called "sleep".
+
+42
+00:02:48,250 --> 00:02:51,075
+"sleep" 是一个带有参数的命令,
+"sleep" is a command that takes an argument, 
+
+43
+00:02:51,075 --> 00:02:54,225
+这个参数是一个整数,执行这个命令后会睡眠.
+and that argument is going to be an integer number, and it will sleep.
+
+44
+00:02:54,225 --> 00:02:58,650
+它会在后台睡眠这么多秒.
+It will just kind of be there, on the background, for that many seconds. 
+
+45
+00:02:58,650 --> 00:03:03,700
+如果我们执行类似于 `sleep 20` 的命令,该进程将会休眠 20 秒.
+So if we do something like "sleep 20", this process is gonna be sleeping for 20 seconds.
+
+46
+00:03:03,700 --> 00:03:08,050
+但我们不想等待 20 秒钟才能完成命令.
+But we don't want to wait 20 seconds for the command to complete. 
+
+47
+00:03:08,050 --> 00:03:10,800
+因此,我们可以输入 "Ctrl+C".
+So what we can do is type "Ctrl+C".
+
+48
+00:03:10,800 --> 00:03:18,163
+通过输入 "Ctrl+C",我们可以看到,在这里,终端这样("^C")通知我们(进程已经停止),
+By typing "Ctrl+C" We can see that, here, the terminal kind of let us know in this,
+
+49
+00:03:18,250 --> 00:03:23,250
+这是我们在上一节关于vim的讲座中介绍过的一部分,
+be one of the syntaxes that we covered in the editors last vim lecture, 
+
+50
+00:03:23,250 --> 00:03:27,550
+我们输入了 "Ctrl+C",它停止了进程的执行.
+that we typed "Ctrl+C" and it stopped the execution of the process.
+
+51
+00:03:27,575 --> 00:03:35,350
+实际上,这里正在使用一种名为信号的 UNIX 通信机制.
+What is actually going on here is that this is using a UNIX communication mechanism called signals.
+
+52
+00:03:35,350 --> 00:03:41,925
+当我们键入 "Ctrl+C" 时,
+When we type "Ctrl+C", what the terminal did for us, or the shell did for us,
+
+53
+00:03:41,925 --> 00:03:48,850
+终端为我们发送了一个名为 "SIGINT" 的信号,该信号表示信号中断,
+is send a signal called "SIGINT", that stands for SIGnal INTerrupt, 
+
+54
+00:03:48,850 --> 00:03:51,525
+告诉程序停止自己.
+that tells the program to stop itself.
+
+55
+00:03:51,525 --> 00:03:55,575
+还有许多这样的信号.
+And there are many, many, many signals of this kind. 
+
+56
+00:03:55,575 --> 00:04:05,150
+如果你输入 `man signal`,然后向下滚动,你就会看到信号的列表.
+If you do "man signal", and just go down a little bit, here you have a list of them.
+
+57
+00:04:05,200 --> 00:04:07,675
+它们都有数字标识符,
+They all have like number identifiers, 
+
+58
+00:04:07,675 --> 00:04:11,125
+名称和一些描述.
+they have kind of a short name and you can find a description.
+
+59
+00:04:11,125 --> 00:04:16,750
+例如,我刚刚描述的信号在这里,编号为 2,是 "SIGINT".
+So for example, the one I have just described is here, number 2, "SIGINT".
+
+60
+00:04:16,750 --> 00:04:22,300
+这是终端在想要中断程序执行时发送给程序的信号.
+This is the signal that a terminal will send to a program when it wants to interrupt its execution.
+
+61
+00:04:22,300 --> 00:04:28,725
+还有一些信号需要熟悉,例如 "SIGQUIT",
+A few more to be kind of familiar with is "SIGQUIT",
+
+62
+00:04:28,725 --> 00:04:29,975
+emm..
+this is... again
+
+63
+00:04:29,975 --> 00:04:34,775
+如果你在终端想要退出程序执行.
+if you work from a terminal and you want to quit the execution of a program,
+
+64
+00:04:34,775 --> 00:04:37,950
+对于大多数程序,它们将执行相同的操作,
+which for most programs it will do the same thing. 
+
+65
+00:04:37,950 --> 00:04:41,600
+但现在我们将展示一个不同的程序,
+But we're gonna showcase now a program which will be different,
+
+66
+00:04:41,600 --> 00:04:44,000
+这是将发送的信号.
+and this is the signal that will be sent. 
+
+67
+00:04:44,000 --> 00:04:46,750
+有时候可能会有些混淆.
+It can be confusing sometimes. 
+
+68
+00:04:46,750 --> 00:04:48,850
+我们来看看这些信号,
+Kind of looking at these signals, for example, 
+
+69
+00:04:48,850 --> 00:04:54,425
+例如,"SIGTERM" 在大多数情况下等同于 "SIGINT" 和 "SIGQUIT",
+the "SIGTERM" is for most cases equivalent to "SIGINT" and "SIGQUIT" 
+
+70
+00:04:54,425 --> 00:04:58,000
+但是它并不通过终端发送.
+but it's just when it's not sent through a terminal.
+
+71
+00:04:59,550 --> 00:05:03,975
+我们将要介绍的其他一些信号包括 "SIGHUP",
+A few more that we're gonna cover is "SIGHUP", 
+
+72
+00:05:03,975 --> 00:05:06,600
+它表示终端出现挂起(hang-up).
+it's when there's like a hang-up in the terminal.
+
+73
+00:05:06,600 --> 00:05:08,750
+例如,当你在终端中运行程序时,
+So for example, when you are in your terminal, 
+
+74
+00:05:08,750 --> 00:05:13,800
+如果你关闭终端,但终端中仍在运行一些程序,
+if you close your terminal and there are still things running in the terminal,
+
+75
+00:05:13,800 --> 00:05:20,125
+那么程序将发送该信号告诉所有进程应该关闭,
+that's the signal that the program is gonna send to all the processes to tell that they should close,
+
+76
+00:05:20,175 --> 00:05:26,475
+就像命令行通信中出现了故障,它们现在应该关闭.
+like there was a hang-up in the command line communication and they should close now. 
+
+77
+00:05:28,575 --> 00:05:34,725
+信号可以做更多的事情,而不仅仅是要求它们停止,中断程序.
+Signals can do more things than just like stopping, like interrupting programs and like asking them to finish.
+
+78
+00:05:34,725 --> 00:05:41,625
+你可以使用 "SIGSTOP" 暂停程序的执行,
+You can for example use the "SIGSTOP" to pause the execution of the program, 
+
+79
+00:05:41,625 --> 00:05:47,000
+然后使用 "SIGCONT" 命令,
+and then you can use the "SIGCONT" command for continuing, 
+
+80
+00:05:47,000 --> 00:05:50,600
+使其在稍后的时间点继续执行程序.
+to continue the execution of the program at a point later in time.
+
+81
+00:05:50,625 --> 00:05:56,500
+由于所有这些可能有些抽象,让我们看一些例子.
+Since all of this might be slightly too abstract, let's see a few examples.
+
+82
+00:05:56,500 --> 00:06:03,350
+首先,让我们展示一个 python 程序.
+First, let's showcase a python program. 
+
+83
+00:06:03,350 --> 00:06:06,575
+我将非常快速地浏览一遍程序.
+I'm going to very quickly go through the program.
+
+84
+00:06:06,575 --> 00:06:11,341
+这是一个python程序,像大多数python程序一样,
+This is a python program, and like most python programs,
+
+85
+00:06:11,341 --> 00:06:17,825
+它正在导入这个"signal"库并在此处定义这个"handler"函数.
+is importing this signal library and is defining this handler here. 
+
+86
+00:06:17,825 --> 00:06:20,450
+这个"handler"是在输出，
+And this handler is writing,
+
+87
+00:06:20,450 --> 00:06:23,300
+"哦,我收到了一个'SIGINT',但我不会停在这里".
+"Oh, I got a 'SIGINT', but I'm not gonna stop here". 
+
+88
+00:06:23,300 --> 00:06:31,025
+之后,我们告诉python,当它收到"SIGINT"时,我们希望这个程序停止.
+And after that, we kind of tell python that we want this program, when it gets a "SIGINT", to stop.
+
+89
+00:06:31,025 --> 00:06:33,581
+程序的其余部分是一个非常简单的程序,
+The rest of the program is a very silly program 
+
+90
+00:06:33,581 --> 00:06:35,175
+只会打印数字.
+that is just gonna be printing numbers. 
+
+91
+00:06:35,175 --> 00:06:37,600
+让我们运行看看.
+So let's see this in action.
+
+92
+00:06:37,600 --> 00:06:39,775
+我们运行`python sigint.py`.
+We do "python sigint.py". 
+
+93
+00:06:39,775 --> 00:06:41,300
+它正在计数.
+And it's counting. 
+
+94
+00:06:41,300 --> 00:06:45,225
+我们尝试使用"Ctrl+C"来停止它,这会发送"SIGINT",
+We try doing "Ctrl+C", this sends a "SIGINT",
+
+95
+00:06:45,225 --> 00:06:47,300
+但程序实际上并没有停止.
+but the program didn't actually stop. 
+
+96
+00:06:47,300 --> 00:06:52,300
+这是因为这个程序不想退出,它可以处理"SIGINT",
+This is because we have a way in the program of dealing with this exception, and we didn't want to kind of exit.
+
+97
+00:06:52,300 --> 00:07:00,125
+如果我们按"Ctrl+\"来发送"SIGQUIT",
+If we send a "SIGQUIT", which is done through "Ctrl+\", here, 
+
+98
+00:07:00,125 --> 00:07:03,975
+我们可以看到,由于程序没有处理"SIGQUIT"的方法,
+we can see that since the program doesn't have a way of dealing with "SIGQUIT",
+
+99
+00:07:03,975 --> 00:07:08,300
+它会执行默认操作,即终止程序.
+it does the default operation, which is kind of terminate the program.
+
+100
+00:07:08,300 --> 00:07:14,525
+这有啥用呢?例如,如果有人"Ctrl+C"了你的程序,
+And you could use this, for example, if someone "Ctrl+C" your program, 
+
+101
+00:07:14,525 --> 00:07:16,500
+你的程序应该执行某些操作,
+and your program is supposed to do something,
+
+102
+00:07:16,500 --> 00:07:20,475
+例如保存程序的中间状态到文件中,
+like you maybe want to save the intermediate state of your program to a file, 
+
+103
+00:07:20,475 --> 00:07:22,125
+以便以后恢复.
+so you can recover it for later.
+
+104
+00:07:22,125 --> 00:07:25,250
+这就是你编写此类处理程序的方法.
+This is how you could write a handler like this.
+
+105
+00:07:29,525 --> 00:07:31,500
+你能再重复一遍问题吗?
+Can you repeat the question? 
+
+106
+00:07:35,675 --> 00:07:39,875
+我输入了"Ctrl+C"尝试停止它,但它没有停止,
+So what I typed is, I type "Ctrl+C" to try to stop it but it didn't, 
+
+107
+00:07:39,875 --> 00:07:42,275
+因为"SIGINT"被程序捕获了.
+because "SIGINT" is captured by the program. 
+
+108
+00:07:42,275 --> 00:07:48,575
+然后我输入了"Ctrl+\",这会发送一个不同的信号"SIGQUIT",
+Then I type "Ctrl+\", which sends a "SIGQUIT", which is like a different signal,
+
+109
+00:07:48,575 --> 00:07:51,800
+而这个信号没有被程序捕获.
+and this signal is not captured by the program. 
+
+110
+00:07:51,800 --> 00:07:57,450
+值得一提的是,有一些信号是软件无法捕获的.
+It's also worth mentioning that there is a couple of signals that cannot be captured by software. 
+
+111
+00:07:57,550 --> 00:08:05,796
+例如,有一些信号像"SIGKILL"是不能被捕获的.
+There is a couple of signals like "SIGKILL" that cannot be captured. 
+
+112
+00:08:05,796 --> 00:08:09,425
+如果这样做,它将终止进程的执行,无论如何.
+Like that, it will terminate the execution of the process, no matter what. 
+
+113
+00:08:09,425 --> 00:08:11,325
+这有时可能是有害的.
+And it can be sometimes harmful. 
+
+114
+00:08:11,325 --> 00:08:12,825
+你应该不想默认调用它.
+You do not want to be using it by default, 
+
+115
+00:08:12,825 --> 00:08:17,000
+因为这可能会留下孤儿进程.
+because this can leave for example an orphan child, orphaned children processes. 
+
+116
+00:08:17,025 --> 00:08:20,675
+例如,如果一个进程有其他子进程,它会启动,
+Like if a process has other small children processes that it started, 
+
+117
+00:08:20,725 --> 00:08:25,975
+而你"SIGKILL"它,所有子进程都会继续在那里运行,
+and you "SIGKILL" it, all of those will keep running in there, 
+
+118
+00:08:25,975 --> 00:08:31,225
+但它们没有了父进程,就很可能会遇到非常奇怪的行为.
+but they won't have a parent, and you can might have a really weird behavior going on.
+
+119
+00:08:32,700 --> 00:08:36,175
+如果我们注销(退出当前用户账户),程序会收到什么信号?
+What signal is given to the program if we log off? 
+
+120
+00:08:36,175 --> 00:08:37,400
+如果你注销?
+If you log off?
+
+121
+00:08:37,400 --> 00:08:38,850
+那将是...
+That would be... 
+
+122
+00:08:38,850 --> 00:08:45,875
+例如,如果你在ssh连接中关闭连接,那就是挂起信号"SIGHUP",
+so for example, if you're in an ssh connection and you close the connection, that is the hang-up signal,"SIGHUP",
+
+123
+00:08:45,950 --> 00:08:49,825
+我举个例子.
+which I'm gonna cover in an example. 
+
+124
+00:08:49,900 --> 00:08:51,250
+这就是会被发送的信号.
+So this is what would be sent up.
+
+125
+00:08:51,250 --> 00:08:58,075
+你可以编写一个包装器(比如异常处理),忽略该信号,
+And you could write for example, if you want the process to keep working even if you close that, 
+
+126
+00:08:58,075 --> 00:09:02,100
+以使该进程在关闭时继续工作.
+you can write a wrapper around that to ignore that signal.
+
+127
+00:09:05,175 --> 00:09:10,300
+让我们展示一下"SIGSTOP"和"SIGCONT"能做什么.
+Let's display what we could do with the stop and continue.
+
+128
+00:09:10,300 --> 00:09:13,950
+例如,我们可以启动一个耗时很长的进程.
+So, for example, we can start a really long process. 
+
+129
+00:09:13,950 --> 00:09:16,700
+比如我们睡眠一千秒,这将花费很长时间.
+Let's sleep a thousand, we're gonna take forever.
+
+130
+00:09:16,700 --> 00:09:20,375
+我们可以按"Ctrl+C",不对,"Ctrl+Z",
+We can "Ctrl+C", "Ctrl+Z", sorry, 
+
+131
+00:09:20,425 --> 00:09:25,075
+如果我们这样做,我们可以看到终端显示"it's suspended".
+and if we do "Ctrl+Z" we can see that the terminal is saying "it's suspended".
+
+132
+00:09:25,075 --> 00:09:30,500
+这实际上意味着该进程被发送了一个"SIGSTOP"信号,
+What this actually meant is that this process was sent a "SIGSTOP" signal 
+
+133
+00:09:30,500 --> 00:09:34,275
+现在仍然在那里,你可以继续执行它,
+and now is still there, you could continue its execution, 
+
+134
+00:09:34,275 --> 00:09:37,200
+但现在它完全停止运行了,不过依然在后台,
+but right now it's completely stopped and in the background
+
+135
+00:09:37,200 --> 00:09:41,750
+我们可以启动一个不同的程序.
+and we can launch a different program. 
+
+136
+00:09:41,750 --> 00:09:47,050
+当我们尝试运行这个程序时,请注意我在末尾加了一个"&".
+When we try to run this program, please notice that I have included an "&" at the end. 
+
+137
+00:09:47,050 --> 00:09:52,450
+这告诉bash我希望该程序在后台运行.
+This tells bash that I want this program to start running in the background.
+
+138
+00:09:52,450 --> 00:09:59,975
+这个程序依然是在运行当中,只不过是在后台运行的.
+This is kind of related to all these concepts of running programs in the shell, but backgrounded.
+
+139
+00:09:59,975 --> 00:10:07,525
+程序将开始运行,但不会在提示符旁边显示出来.
+And what is gonna happen is the program is gonna start but it's not gonna take over my prompt.
+
+140
+00:10:07,525 --> 00:10:11,625
+如果我只是运行此命令而没有这个"&"符号,我将无法继续执行任何操作.
+If I just ran this command without this, I could not do anything. 
+
+141
+00:10:11,625 --> 00:10:18,225
+在命令完成或我手动终结它之前,我将无法继续使用提示符.
+I would have no access to the prompt until the command either finished or I ended it abruptly. 
+
+142
+00:10:18,225 --> 00:10:23,225
+但如果我这样做,它会说"有一个新的进程是这个".
+But if I do this, it's saying "oh,like there's a new process which is this".
+
+143
+00:10:23,275 --> 00:10:27,275
+这是进程的标识号,我们现在可以忽略它.
+This is the process identifying number, we can ignore this for now. 
+
+144
+00:10:27,275 --> 00:10:35,750
+如果我键入`jobs`命令,我会得到输出,表示我有一个已暂停的作业,即`sleep 1000`.
+And if I type the command "jobs", I get the output that I have a suspended job that is the "sleep 1000" job. 
+
+145
+00:10:35,750 --> 00:10:41,350
+然后我有另一个正在运行的作业,即`nohup sleep 2000`.
+And then I have another running job, which is this "NOHUP sleep 2000". 
+
+146
+00:10:41,350 --> 00:10:45,700
+假设我想继续第一个作业.
+Say I want to continue the first job.
+
+147
+00:10:45,700 --> 00:10:48,925
+第一个作业已暂停,不再执行.
+The first job is suspended, it's not executing anymore. 
+
+148
+00:10:48,925 --> 00:10:53,600
+我可以通过`bg %1`命令继续执行.
+I can continue that doing "bg %1"
+
+149
+00:10:53,600 --> 00:11:01,225
+"%"是指我想引用这个特定的进程.
+That "%" is referring to the fact that I want to refer to this specific process. 
+
+150
+00:11:01,225 --> 00:11:06,425
+现在,如果我这样做并查看作业,现在这个作业再次在运行.
+And now, if I do that and I look at the jobs, now this job is running again. 
+
+151
+00:11:06,425 --> 00:11:08,725
+现在两个都在运行.
+Now both of them are running. 
+
+152
+00:11:08,725 --> 00:11:14,025
+如果我想停止所有这些,我可以使用"kill"命令.
+If I wanted to stop these all, I can use the "kill" command.
+
+153
+00:11:14,025 --> 00:11:22,475
+"kill"命令用于杀死作业,即停止它们,
+The kill command (blabla....) is kind of for killing jobs, which is just like stopping them, intuitively, 
+
+154
+00:11:22,475 --> 00:11:24,275
+这非常有用.
+but actually it's really useful. 
+
+155
+00:11:24,275 --> 00:11:28,200
+"kill"命令允许你发送任何类型的Unix信号.
+Like the kill command just allows you to send any sort of Unix signal.
+
+156
+00:11:28,200 --> 00:11:34,675
+例如,在这里,我们不完全杀死它,而是发送一个停止信号.
+So here for example, instead of killing it completely, we just send a stop signal.
+
+157
+00:11:34,675 --> 00:11:38,875
+我将发送一个停止信号,这将再次暂停该进程.
+Here I'm gonna send a stop signal, which is gonna pause the process again. 
+
+158
+00:11:38,875 --> 00:11:41,800
+我仍然必须打上标识符,
+And I still have to include the identifier,
+
+159
+00:11:41,800 --> 00:11:46,875
+因为没有标识符,shell将不知道是停止哪一个.
+because without the identifier the shell wouldn't know whether to stop the first one or the second one.
+
+160
+00:11:46,875 --> 00:11:52,300
+现在它说已被暂停,因为有一个信号被发送.
+Now that's said this has been suspended, because there was a signal sent.
+
+161
+00:11:52,300 --> 00:12:00,050
+如果我再次键入`jobs`命令,我们可以看到第二个正在运行,而第一个已被停止.
+If I do "jobs", again, we can see that the second one is running and the first one has been stopped.
+
+162
+00:12:00,050 --> 00:12:07,300
+回到之前的一个问题,如果你关闭终端窗口,会发生什么?
+Going back to one of the questions, what happens when you close the shell, for example,
+
+163
+00:12:07,300 --> 00:12:10,400
+为什么有时候人们会建议
+and why sometimes people will say that
+
+164
+00:12:10,400 --> 00:12:16,350
+在远程会话中运行作业之前使用 "nohup" 命令?
+you should use this "nohup" command before your run jobs in a remote session. 
+
+165
+00:12:16,350 --> 00:12:23,725
+这是因为如果我们尝试向第一个作业发送挂起命令,
+This is because if we try to send a hang up command to the first job
+
+166
+00:12:23,725 --> 00:12:28,300
+类似于其他信号,第一个作业将会被挂起,
+it's gonna, in a similar fashion as the other signals, 
+
+167
+00:12:28,300 --> 00:12:32,450
+这将终止该作业.
+it's gonna hang it up and that's gonna terminate the job.
+
+168
+00:12:32,525 --> 00:12:39,375
+第一个作业不再存在,而第二个作业仍在运行.
+And the first job isn't there anymore whereas we have still the second job running.
+
+169
+00:12:39,375 --> 00:12:44,425
+然而,如果我们尝试向第二个作业发送信号,
+However, if we try to send the signal to the second job what will happen 
+
+170
+00:12:44,425 --> 00:12:48,875
+如果我们现在关闭终端窗口,它仍将继续运行.
+if we close our terminal right now is it's still running. 
+
+171
+00:12:48,875 --> 00:12:52,450
+就像 "nohup" 一样,
+Like "nohup", what it's doing is kind of encapsulating
+
+172
+00:12:52,450 --> 00:12:57,550
+它将所执行的命令封装起来,
+whatever command you're executing and ignoring wherever you get a hang up signal,
+
+173
+00:12:57,550 --> 00:13:02,125
+忽略任何挂起信号,并使其继续运行.
+and just ignoring that so it can keep running.
+
+174
+00:13:02,700 --> 00:13:09,200
+如果我们向第二个作业发送"kill"信号,
+And if we send the "kill" signal to the second job, 
+
+175
+00:13:09,200 --> 00:13:13,075
+那么它将无法被忽略,这将杀死该作业,无论如何.
+that one can't be ignored and that will kill the job, no matter what.
+
+176
+00:13:13,100 --> 00:13:16,025
+我们就没有任何作业在运行了.
+And we don't have any jobs anymore. 
+
+177
+00:13:16,025 --> 00:13:22,850
+作业控制部分就讲完了.
+That kind of completes the section on job control.
+
+178
+00:13:22,850 --> 00:13:28,350
+到目前为止有没有什么问题?有没有什么没有讲清楚的地方?
+Any questions so far? Anything that wasn't kind of fully clear?
+
+179
+00:13:28,425 --> 00:13:32,350
+"bg"是干啥的?
+What does "bg" do?  
+
+180
+00:13:32,350 --> 00:13:33,550
+"bg"有两个命令.
+So "bg"...There are like two commands. 
+
+181
+00:13:33,550 --> 00:13:39,475
+当你的作业被后台运行并停止时,
+Whenever you have a command that has been backgrounded and it is stopped  
+
+182
+00:13:39,475 --> 00:13:44,725
+你可以使用 "bg" ("background"的缩写) 命令来继续在后台运行该进程.
+you can use "bg" short for "background" to continue that process running on the background.
+
+183
+00:13:44,725 --> 00:13:50,975
+这相当于向其发送一个继续信号,使其继续运行.
+That's equivalent of just kind of sending it a continue signal, so it keeps running.
+
+184
+00:13:50,975 --> 00:13:53,725
+然后还有另一个命令叫做 "fg",
+And then there's another one which is called "fg", 
+
+185
+00:13:53,725 --> 00:13:59,825
+"fg"用在你想将其恢复到前台并重新连接标准输出.
+if you want to kind of recover it to the foreground and you want to reattach your standard output.
+
+186
+00:14:04,625 --> 00:14:12,650
+好的,作业控制是很有用的,同时我认为了解这些标记同样有用
+Okay, good. Jobs are useful and in general, I think knowing about signals can be really beneficial 
+
+187
+00:14:12,650 --> 00:14:14,650
+尤其是在处理一些Unix系统的问题
+when dealing with some part of Unix 
+
+188
+00:14:14,650 --> 00:14:18,200
+但是通常情况下
+but most of the time what you actually want to do is 
+
+189
+00:14:18,200 --> 00:14:23,875
+当你想要编辑器放在一个窗口里,程序在另一个窗口跑,
+something along the lines of having your editor in one side and then the program in another, 
+
+190
+00:14:23,875 --> 00:14:28,500
+并且可能要监视标签中的资源消耗时,
+and maybe monitoring what the resource consumption is in our tab. 
+
+191
+00:14:28,500 --> 00:14:34,375
+解决的办法你们应该也看到过很多次了,
+We could achieve this using probably what you have seen a lot of the time,
+
+192
+00:14:34,375 --> 00:14:35,650
+就是打开更多的窗口.
+which is just opening more windows. 
+
+193
+00:14:35,650 --> 00:14:37,500
+我们可以一直打开终端窗口.
+We can keep opening terminal windows. 
+
+194
+00:14:37,500 --> 00:14:41,500
+但事实是,这种情况有更方便的解决方案,
+But the fact is there are kind of more convenient solutions to this 
+
+195
+00:14:41,500 --> 00:14:43,650
+就是使用终端复用器.
+and this is what a terminal multiplexer does. 
+
+196
+00:14:43,650 --> 00:14:51,525
+像tmux这样的终端复用器可以让你创建不同的工作空间,
+A terminal multiplexer like tmux will let you create different workspaces 
+
+197
+00:14:51,550 --> 00:14:54,375
+让你可以快速地重新组织环境,
+that you can work in, and quickly kind of,
+
+198
+00:14:54,375 --> 00:14:57,658
+而且它有很多功能.
+this has a huge variety of functionality, 
+
+199
+00:14:57,658 --> 00:15:03,025
+它可以让你重新设置环境并且会给你不同的会话.
+It will let you kind of rearrange the environment  and it will let you have different sessions. 
+
+200
+00:15:03,100 --> 00:15:08,000
+还有一个更古老的命令,叫做"screen",
+There's another more older command, which is called "screen", 
+
+201
+00:15:08,000 --> 00:15:09,600
+它可能字面上更容易理解.
+that might be more readily available.
+
+202
+00:15:09,600 --> 00:15:12,425
+我认为这个概念可以推广到两个方面.
+But I think the concept kind of extrapolates to both. 
+
+203
+00:15:12,425 --> 00:15:16,025
+我们推荐学习 tmux,
+We recommend tmux, that you go and learn it.
+
+204
+00:15:16,025 --> 00:15:17,550
+实际上我们有相应的练习.
+And in fact, we have exercises on it. 
+
+205
+00:15:17,550 --> 00:15:20,725
+现在我将展示一个不同的场景.
+I'm gonna showcase a different scenario right now. 
+
+206
+00:15:20,775 --> 00:15:22,175
+当我谈及...
+So whenever I talked...
+
+207
+00:15:22,175 --> 00:15:24,775
+哦,让我做个简短的笔记.
+Oh, let me make a quick note. 
+
+208
+00:15:24,775 --> 00:15:29,025
+tmux 有三个核心概念,我会详细讲解.
+There are kind of three core concepts in tmux, that I'm gonna go through 
+
+209
+00:15:29,125 --> 00:15:36,550
+主要思想是有所谓的"会话(session)",
+and the main idea is that there are what is called "sessions". 
+
+210
+00:15:37,925 --> 00:15:44,800
+会话包含"窗口(window)",而窗口包含"面板(pane)".
+Sessions have "windows" and windows have "panes". 
+
+211
+00:15:45,650 --> 00:15:50,000
+记住这个层次结构非常必要.
+It's gonna be kind of useful to keep this hierarchy in mind.
+
+212
+00:15:50,000 --> 00:15:57,446
+你可以将"窗口(window)"基本上等同于其他编辑器和浏览器中的"标签(tabs)".
+You can pretty much equate "windows" to what "tabs" are in other editors and others,like for example your web browser. 
+
+213
+00:15:57,446 --> 00:16:00,550
+
+
+
+214
+00:16:00,550 --> 00:16:06,725
+我将主要介绍你在不同层次上能做什么.
+I'm gonna go through the features, mainly what you can do at the different levels.
+
+215
+00:16:06,725 --> 00:16:10,600
+首先,当我们运行 tmux 时,它会启动一个会话.
+So first, when we do tmux, that starts a session. 
+
+216
+00:16:10,600 --> 00:16:14,950
+在这里,现在似乎什么都没有改变,
+And here right now it seems like nothing changed
+
+217
+00:16:14,950 --> 00:16:20,850
+但现在我们在可以理解为另一个 shell 中.
+but what's happening right now is we're within a shell that is different from the one we started before.
+
+218
+00:16:20,850 --> 00:16:24,250
+因此,在我们原本的 shell 中,
+So in our shell we started a process, 
+
+219
+00:16:24,250 --> 00:16:28,750
+我们启动了一个进程,即 tmux,然后 tmux 启动了一个不同的进程,即我们当前所在的 shell.
+that is tmux and that tmux started a different process, which is the shell we're currently in.
+
+220
+00:16:28,750 --> 00:16:34,325
+这个很好的一点是,这个 tmux 进程与原始 shell 进程是分开的.
+And the nice thing about this is that that tmux process is separate from the original shell process.
+
+221
+00:16:34,325 --> 00:16:44,800
+在这里,我们可以做一些事情.
+So here, we can do things. 
+
+222
+00:16:44,850 --> 00:16:48,975
+例如,我们可以执行`ls -la`,查看里面发生了什么.
+We can do "ls -la", for example, to tell us what is going on in here.
+
+223
+00:16:49,025 --> 00:16:54,225
+然后我们可以开始运行我们的程序,它将在其中运行,
+And then we can start running our program, and it will start running in there
+
+224
+00:16:54,225 --> 00:17:15,650
+我们可以使用"Ctrl+A d"来分离会话.
+and we can do "Ctrl+A d", for example, to detach to detach from the session. 
+
+225
+00:17:15,700 --> 00:17:21,900
+如果我们使用"tmux a",那么我们会重新连接到会话.
+And if we do "tmux a" that's gonna reattach us to the session. 
+
+226
+00:17:21,900 --> 00:17:24,950
+我们暂且离开那个python计数程序,
+So the process, we abandon the process kind of counting numbers.
+
+227
+00:17:24,950 --> 00:17:30,750
+那是个很简单的python计数程序,我们就让它在那儿跑着,
+This really silly python program that was just counting numbers, we like left it running there.
+
+228
+00:17:30,750 --> 00:17:31,800
+并且如果我们 tmux...
+And if we tmux... 
+
+229
+00:17:31,800 --> 00:17:34,050
+嘿,进程仍然在那里运行.
+Hey, the process is still running there. 
+
+230
+00:17:34,050 --> 00:17:37,850
+我们可以关闭这个终端并打开一个新的终端,
+And we could close this entire terminal and open a new one 
+
+231
+00:17:37,850 --> 00:17:42,600
+我们仍然可以重新连接,因为这个 tmux 会话仍在运行.
+and we could still reattach because this tmux session is still running.
+
+232
+00:17:43,150 --> 00:17:44,800
+再次说明,
+Again, we can... 
+
+233
+00:17:44,800 --> 00:17:48,650
+在更深入之前...
+Before I go any further.
+
+234
+00:17:48,650 --> 00:17:49,875
+
+Pretty much... 
+
+235
+00:17:49,875 --> 00:17:53,875
+与 Vim 不同,它没有模式的概念,
+Tmux is unlike Vim, where you have this notion of modes,
+
+236
+00:17:53,875 --> 00:18:01,575
+而是采用了更类似于 Emacs 的方式,
+tmux will work in a more emacsy way, which is every command, pretty much every command in tmux,
+
+237
+00:18:02,375 --> 00:18:05,925
+你可以emmm
+you could enter it through the... 
+
+238
+00:18:05,925 --> 00:18:08,175
+几乎每个 tmux 命令都可以通过其命令行输入.
+it has a command line, that we could use. 
+
+239
+00:18:08,175 --> 00:18:11,600
+但我建议你熟悉键位绑定.
+But I recommend you to get familiar with the key bindings.
+
+240
+00:18:11,600 --> 00:18:17,400
+一开始可能有点难以理解,但一旦你熟悉了它们...
+It can be somehow non intuitive at first, but once you get used to them...
+
+241
+00:18:17,400 --> 00:18:24,650
+现在":exit",嗯,"Ctrl+C"
+":exit" right now, "Ctrl+C",yeah
+
+242
+00:18:24,650 --> 00:18:31,025
+当你熟悉了它们之后,你会比使用命令更快地使用键位绑定.
+When you get familiar with them, you will be much faster just using the key bindings than using the commands.
+
+243
+00:18:31,025 --> 00:18:33,350
+关于键位绑定的一个注意点:
+One note about the key bindings: 
+
+244
+00:18:33,350 --> 00:18:40,150
+所有的键位绑定都有一个形式,需要你输入一个前缀,然后再按一些其他键.
+all the key bindings have a form that is like you type a prefix and then some key.
+
+245
+00:18:40,150 --> 00:18:44,925
+例如,要分离,我们要按下"Ctrl+A",然后再按"D".
+So for example, to detach we do "Ctrl+A" and then "D". 
+
+246
+00:18:44,925 --> 00:18:49,825
+这意味着你首先按下"Ctrl+A",然后松开它,再按"D"来分离.
+This means you press "Ctrl+A" first, you release that, and then press "D" to detach.
+
+247
+00:18:49,825 --> 00:18:54,500
+在默认的tmux中,前缀是"Ctrl+B",
+On default tmux, the prefix is "Ctrl+B", 
+
+248
+00:18:54,500 --> 00:18:59,025
+但你会发现大多数人将其重新映射为"Ctrl+A",
+but you will find that most people will have this remapped to "Ctrl+A"
+
+249
+00:18:59,025 --> 00:19:02,375
+因为在键盘上更加人性化.
+because it's a much more ergonomic type on the keyboard. 
+
+250
+00:19:02,375 --> 00:19:06,450
+你可以在练习中了解更多关于如何进行这些操作的信息,
+You can find more about how to do these things in one of the exercises,
+
+251
+00:19:06,450 --> 00:19:13,250
+我们会链接到基础知识和如何利用tmux进行效率提升.
+where we link you to the basics and how to do some kind of quality of life modifications to tmux.
+
+252
+00:19:13,250 --> 00:19:16,075
+回到会话的概念,
+Going back to the concept of sessions, 
+
+253
+00:19:16,075 --> 00:19:24,625
+我们可以通过像`tmux new`这样的命令创建一个新的会话,我们可以给会话命名.
+we can create a new session just doing something like "tmux new" and we can give sessions names. 
+
+254
+00:19:24,625 --> 00:19:31,450
+所以我们可以像`tmux new -t foobar`这样做,这是一个完全不同的会话,我们已经开始了.
+So we can do like "tmux new -t foobar" and this is a completely different session, that we have started.
+
+255
+00:19:31,600 --> 00:19:36,725
+我们可以在这里工作,也可以从中分离出来.
+We can work here, we can detach from it. 
+
+256
+00:19:36,725 --> 00:19:40,825
+`tmux ls`会告诉我们我们有两个不同的会话:
+"tmux ls" will tell us that we have two different sessions:
+
+257
+00:19:40,825 --> 00:19:43,725
+第一个是命名为"0",因为我没有给它命名,
+the first one is named "0", because I didn't give it a name, 
+
+258
+00:19:43,725 --> 00:19:45,950
+第二个被称为"foobar".
+and the second one is called "foobar".
+
+259
+00:19:45,950 --> 00:19:53,525
+我可以连接到"foobar"会话,也可以结束它.
+I can attach the "foobar" session and I can end it.
+
+260
+00:19:53,525 --> 00:20:00,575
+这非常好,因为有了这个,你可以在完全不同的项目中工作.
+And it's really nice because having this you can kind of work in completely different projects.
+
+261
+00:20:00,575 --> 00:20:07,925
+例如,有两个不同的tmux会话和不同的编辑器会话,不同的进程正在运行......
+For example, having two different tmux sessions and different editor sessions, different processes running...
+
+262
+00:20:07,925 --> 00:20:15,225
+当你在一个会话中时,我们从窗口的概念开始讲起.
+When you are within a session, we start with the concept of windows. 
+
+263
+00:20:15,225 --> 00:20:23,725
+这里我们有一个单独的窗口,但是我们可以使用"Ctrl+A c"("c"表示"create")来创建一个新窗口.
+Here we have a single window, but we can use "Ctrl+A c" (for "create") to open a new window. 
+
+264
+00:20:23,725 --> 00:20:26,875
+这里没有执行任何操作.
+And here nothing is executing.
+
+265
+00:20:26,875 --> 00:20:35,225
+它的作用是,tmux为我们打开了一个新的shell,我们可以在这里运行这些程序.
+What it's doing is, tmux has opened a new shell for us and we can start running another one of these programs here.
+
+266
+00:20:35,225 --> 00:20:42,925
+为了快速跳转标签,我们可以按"Ctrl+A p",
+And to quickly jump between the tabs, we can do "Ctrl+A p",
+
+267
+00:20:42,925 --> 00:20:47,975
+"p"(表示"previous")来切换到上一个窗口.
+"p" for "previous", and that will go up to the previous window.
+
+268
+00:20:47,975 --> 00:20:51,625
+"Ctrl+A n"("n"表示"next")来到下一个窗口.
+"Ctrl+A n", to go to the next window. 
+
+269
+00:20:51,625 --> 00:20:53,625
+你也可以使用数字.
+You can also use the numbers. 
+
+270
+00:20:53,625 --> 00:20:56,175
+所以如果我们打开了很多这些标签,
+So if we start opening a lot of these tabs,
+
+271
+00:20:56,175 --> 00:21:04,750
+我们可以使用"Ctrl+A 1"来特定地跳转到编号为"1"的窗口.
+we could use "Ctrl+A 1", to specifically jump to the to the window that is number "1".
+
+272
+00:21:04,750 --> 00:21:10,625
+最后,当然你也可以重新命名它们.
+And, lastly, it's also pretty useful to know sometimes that you can rename them.
+
+273
+00:21:10,625 --> 00:21:13,659
+例如,这里我正在执行这个python进程,
+For example here I'm executing this python process, 
+
+274
+00:21:13,659 --> 00:21:16,852
+但是这个窗口不能见名知意,我想......
+but that might not be really informative and I want...
+
+275
+00:21:16,875 --> 00:21:21,250
+我可能想要有像"execution"之类的名字,
+I maybe want to have something like "execution" or something like that 
+
+276
+00:21:21,250 --> 00:21:27,175
+那我们就可以重新命名该窗口的名称,以便有个良好的窗口管理.
+and that will rename the name of that window so you can have this really neatly organized.
+
+277
+00:21:27,175 --> 00:21:35,925
+这样做并不能满足你想要在终端中同时显示两个栏目的需求.
+This still doesn't solve the need when you want to have two things at the same time in your terminal,like in the same display. 
+
+278
+00:21:35,925 --> 00:21:37,850
+这就是面板(pane)存在的原因.
+This is what panes are for. 
+
+279
+00:21:37,850 --> 00:21:40,894
+现在,我们有一个只有一个面板的窗口
+Right now, here we have a window with a single pane 
+
+280
+00:21:40,894 --> 00:21:43,994
+到目前为止,我们打开的所有窗口都只有一个面板.
+all the windows that we have opened so far have a single pane. 
+
+281
+00:21:43,994 --> 00:21:56,800
+但是如果我们按下`Ctrl+A "`,这将把当前显示屏分成两个不同的面板.
+But if we do 'Ctrl+A "', this will split the current display into two different panes.
+
+282
+00:21:56,800 --> 00:22:01,625
+你看,我们打开的下面的窗口是一个新的shell,
+So, you see, the one we open below is a different shell from the one we have above,
+
+283
+00:22:01,625 --> 00:22:05,375
+我们可以在这里运行任何进程.
+and we can run any process that we want here. 
+
+284
+00:22:05,375 --> 00:22:12,525
+我们可以继续分裂,如果我们按下`Ctrl+A %`,那么就会垂直分裂.
+We can keep splitting this, if we do "Ctrl+A %" that will split vertically. 
+
+285
+00:22:12,600 --> 00:22:18,175
+你可以使用许多不同的命令来重新排列这些选项卡.
+And you can kind of rearrange these tabs using a lot of different commands.
+
+286
+00:22:18,175 --> 00:22:25,350
+其中一个我发现非常有用的命令是,当你需要重新排列它们.
+One that I find very useful, when you are starting and it's kind of frustrating, rearranging them. 
+
+287
+00:22:25,350 --> 00:22:29,275
+要移动这些面板,
+Before I explain that, to move through these panes, 
+
+288
+00:22:29,275 --> 00:22:32,825
+这是你想一直做的事情,
+which is something you want to be doing all the time 
+
+289
+00:22:32,825 --> 00:22:35,850
+你只需按下"Ctrl+A"和箭头键,
+You just do "Ctrl+A" and the arrow keys, 
+
+290
+00:22:35,850 --> 00:22:41,575
+这样就可以快速浏览不同的窗口
+and that will let you quickly navigate through the different windows, 
+
+291
+00:22:41,575 --> 00:22:44,125
+并再次执行操作...
+and execute again...
+
+292
+00:22:44,125 --> 00:22:48,525
+比如我正在做很多`ls -la`,我可以做`htop`,
+Like I'm doing a lot of "ls -la", I can do "htop", 
+
+293
+00:22:48,525 --> 00:22:53,225
+我们将在调试和分析讲座中解释这个.
+that we'll explain in the debugging and profiling lecture.
+
+294
+00:22:53,775 --> 00:22:55,775
+我们可以浏览它们,
+And we can just navigate through them, 
+
+295
+00:22:55,850 --> 00:22:59,475
+重新组织它们一样,还有一堆其他的命令,
+again like to rearrange there's another slew of commands,
+
+296
+00:22:59,475 --> 00:23:04,275
+你可以在练习中学习,`Ctrl+A <space>` 是个很有用的命令,
+you will go through some in the exercises, "Ctrl+A <space>" is pretty neat, 
+
+297
+00:23:04,425 --> 00:23:07,550
+因为它会将当前的选项卡等距分布,
+because it will kind of equispace the current ones
+
+298
+00:23:07,550 --> 00:23:10,825
+让你可以进行不同的布局.
+and let you through different layouts. 
+
+299
+00:23:10,825 --> 00:23:16,175
+有些布局里的窗口太小了.
+Some of them are too small for my current terminal config.
+
+300
+00:23:16,175 --> 00:23:19,175
+我现在已经讲了tmux的大部分内容.
+but that covers, I think, most of it. 
+
+301
+00:23:19,250 --> 00:23:24,525
+哦,还有,例如,
+Oh, there's also, here, for example, 
+
+302
+00:23:24,525 --> 00:23:33,925
+这个已经启动了的vim程序界面,对于当前的tmux面板来说太小了.
+this vim execution that we have started, is too small for what the current tmux pane is. 
+
+303
+00:23:33,925 --> 00:23:38,675
+因此,相对于拥有多个终端窗口,
+So one of the things that really is much more convenient to do in tmux,
+
+304
+00:23:38,675 --> 00:23:42,625
+一个非常方便的事情就是可以在tmux中放大它,
+in contrast to having multiple terminal windows, 
+
+305
+00:23:42,625 --> 00:23:48,550
+你可以通过按下"Ctrl+A z"来要求"扩张".
+is that you can zoom into this, you can ask by doing "Ctrl+A z", for "zoom".
+
+306
+00:23:48,550 --> 00:23:53,150
+它会扩展面板占据所有的空间,
+It will expand the pane to take over all the space, 
+
+307
+00:23:53,150 --> 00:23:56,950
+然后再按下"Ctrl+A z"即可返回.
+and then "Ctrl+A z" again, will go back to it.
+
+308
+00:24:02,700 --> 00:24:09,350
+对于终端多路复用器或tmux有什么问题吗?
+Any questions for terminal multiplexers, or like, tmux concretely?
+
+309
+00:24:11,575 --> 00:24:16,775
+它们是在运行所有相同的东西吗?
+Is it running all the same thing? 
+
+310
+00:24:16,775 --> 00:24:23,775
+在不同的窗口中运行是否有任何执行差异?
+Like, is there any difference in execution between running it in different windows or like different (blabla...)?
+
+311
+00:24:23,775 --> 00:24:28,600
+tmux分割开的shell是否完全相同?我的问题说清楚了吗?
+Is it really just doing it all the same, so that you can see it? 
+
+312
+00:24:28,600 --> 00:24:35,250
+是的,它不会与在计算机中打开两个终端窗口有任何区别.
+Yeah, it wouldn't be any different from having two terminal windows open in your computer.
+
+313
+00:24:35,250 --> 00:24:36,850
+就像他们两个一起被执行一样
+Like both of them are gonna be running. 
+
+314
+00:24:36,850 --> 00:24:41,675
+当然,当它到达CPU时,这将再次进行多路复用.
+Of course, when it gets to the CPU, this is gonna be multiplexed again.
+
+315
+00:24:41,675 --> 00:24:46,225
+就像有一个时间共享机制,但没有任何区别.
+Like there's like a timesharing mechanism going there but there's no difference. 
+
+316
+00:24:46,225 --> 00:24:50,000
+tmux通过为你提供这个
+like tmux is just making this much more convenient to use 
+
+317
+00:24:50,000 --> 00:24:55,225
+可以快速操作的可视化布局,使用会变得更加方便.
+by giving you kind of this visual layout that you can quickly manipulate through. 
+
+318
+00:24:55,225 --> 00:24:59,975
+其中有一项优势会在我们等会讲解服务器时体现,
+And one of the main advantages will come when we reach the remote machines
+
+319
+00:24:59,975 --> 00:25:02,375
+因为你可以留下其中之一,
+because you can leave one of these, 
+
+320
+00:25:02,375 --> 00:25:05,725
+我们可以从其中一个tmux系统中分离出来,
+we can detach from one of these tmux systems,
+
+321
+00:25:05,725 --> 00:25:09,074
+关闭连接,即使我们关闭连接
+close the connection and even if we close the connection 
+
+322
+00:25:09,125 --> 00:25:11,875
+并且终端将发送挂起信号,
+and the terminal is gonna send a hang-up signal,
+
+323
+00:25:11,875 --> 00:25:16,475
+但这也不会关闭所有已启动的tmux.
+that's not gonna close all the tmuxes that have been started.
+
+324
+00:25:16,950 --> 00:25:19,150
+还有其他问题吗?
+Any other questions?
+
+325
+00:25:21,875 --> 00:25:28,925
+让我禁用按键记录器.
+Let me disable the key-caster.
+
+326
+00:25:33,225 --> 00:25:37,600
+现在我们要开始讲解dotfiles,
+So now we're gonna move into the topic of dotfiles and, 
+
+327
+00:25:37,600 --> 00:25:42,859
+以及一般如何配置你的shell以执行你想要执行的任务,
+in general, how to kind of configure your shell to do the things you want to do
+
+328
+00:25:42,900 --> 00:25:46,375
+主要是如何更快地更方便地执行它们.
+and mainly how to do them quicker and in a more convenient way. 
+
+329
+00:25:46,375 --> 00:25:49,625
+首先要讲一下别名,别名就是一个很方便的东西.
+I'm gonna motivate this using aliases first.
+
+330
+00:25:49,625 --> 00:25:55,975
+所谓别名,就是现在,某件事儿你可能需要做很多次,
+So what an alias is, is that by now, you might be starting to do something like a lot of the time, 
+
+331
+00:25:55,975 --> 00:26:05,100
+例如,我想查看一个目录,并将所有内容以列表格式和可读格式显示出来.
+I just want to ls a directory and I want to display all the contents into a list format and in a human readable thing. 
+
+332
+00:26:05,100 --> 00:26:06,475
+这很好.
+And it's fine. 
+
+333
+00:26:06,475 --> 00:26:07,850
+它不是那么长的命令.
+Like it's not that long of a command.
+
+334
+00:26:07,850 --> 00:26:10,525
+但是,随着你构建越来越长的命令,
+But as you start building longer and longer commands, 
+
+335
+00:26:10,525 --> 00:26:14,825
+反复输入它们可能会变得有点麻烦.
+it can become kind of bothersome having to retype them again and again.
+
+336
+00:26:14,825 --> 00:26:17,650
+别名在这种情况下就可以非常方便.
+This is one of the reasons why aliases are useful. 
+
+337
+00:26:17,650 --> 00:26:21,875
+别名可以映射长命令为一个短的字符串,
+Alias is a command that will be a built-in in your shell,
+
+338
+00:26:21,875 --> 00:26:28,125
+然后内置在你的shell当中.
+and what it will do is it will remap a short sequence of characters to a longer sequence.
+
+339
+00:26:28,125 --> 00:26:36,875
+例如,如果我执行`alias ll="ls -lah"`,
+So if I do, for example, here `alias ll="ls -lah"`
+
+340
+00:26:36,875 --> 00:26:42,675
+
+If I execute this command, this is gonna call the "alias" command with this argument
+
+341
+00:26:42,675 --> 00:26:49,125
+然后我的shell环境就会知道这个映射的存在.
+and this is gonna update the environment in my shell to be aware of this mapping.
+
+342
+00:26:49,125 --> 00:26:57,850
+因此,如果我现在执行`ll`,他将会执行`ls -lah`,我们不必键入完整的命令.
+So if I now do "ll", it's executing that command without me having to type the entire command.
+
+343
+00:26:57,850 --> 00:27:01,375
+它可以非常方便,有很多很多用途.
+It can be really handy for many, many reasons. 
+
+344
+00:27:01,375 --> 00:27:06,000
+需要注意的一件事是,
+One thing to note before I go any further is that here, 
+
+345
+00:27:06,000 --> 00:27:10,075
+这里的"alias"与其他命令没有什么特殊之处,
+"alias" is not anything special compared to other commands, 
+
+346
+00:27:10,075 --> 00:27:11,850
+它只是接受单个参数.
+it's just taking a single argument.
+
+347
+00:27:11,850 --> 00:27:18,875
+在等号周围不能有空格,因为别名只接受一个参数,
+And there is no space around this equals and that's because alias takes a single argument
+
+348
+00:27:18,875 --> 00:27:25,250
+如果你你在等号周围加空格,它会认为你给了它超过了一个参数,
+and if you try doing something like this, that's giving it more than one argument
+
+349
+00:27:25,250 --> 00:27:29,175
+那是不起作用的,因为那不符合它的格式.
+and that's not gonna work because that's not the format it expects. 
+
+350
+00:27:29,175 --> 00:27:33,900
+除此之外,别名还有其他用法,
+So other use cases that work for aliases,
+
+351
+00:27:33,900 --> 00:27:40,050
+例如,对于某些事情来说,使用别名可能更方便,
+as I was saying, for some things it might be much more convenient,
+
+352
+00:27:40,050 --> 00:27:43,700
+比如我的最爱之一就是`git status`.
+like one of my favorites is "git status". 
+
+353
+00:27:43,700 --> 00:27:47,800
+它非常长,我不喜欢经常输入那么长的命令,
+It's extremely long, and I don't like typing that long of a command every so often,
+
+354
+00:27:47,800 --> 00:27:49,650
+因为这最终会花费很多时间.
+because you end up taking a lot of time. 
+
+355
+00:27:49,650 --> 00:27:53,775
+因此,把`git status`替换为"gs".
+So "gs" will replace for doing the "git status"
+
+356
+00:27:53,775 --> 00:28:02,675
+你还可以使用别名来更正经常打错的命令.比如说"sl=ls".
+You can also use them to alias things that you mistype often, so you can do "sl=ls",that will work. 
+
+357
+00:28:06,000 --> 00:28:11,025
+其他有用的映射方式是,
+Other useful mappings are,
+
+358
+00:28:11,025 --> 00:28:17,675
+你可能想将一个命令取别名为带有选项的自身.
+you might want to alias a command to itself but with a default flag.  
+
+359
+00:28:17,675 --> 00:28:21,250
+比如我现在要创建一个别名,
+So here what is going on is I'm creating an alias
+
+360
+00:28:21,250 --> 00:28:23,975
+它是移动命令的别名,
+which is an alias for the move command, 
+
+361
+00:28:23,975 --> 00:28:30,050
+即"mv",并将其别名为相同的命令,但添加了"-i"标志.
+which is mv and I'm aliasing it to the same command but adding the "-i" flag.
+
+362
+00:28:30,075 --> 00:28:33,575
+如果你查看man页面,
+And this "-i" flag, if you go through the man page and look at it, 
+
+363
+00:28:33,575 --> 00:28:34,775
+你会发现"-i"标志代表"interactive".
+it stands for "interactive". 
+
+364
+00:28:34,775 --> 00:28:39,875
+这将在我覆盖文件之前提示我.
+And what it will do is it will prompt me before I do an overwrite.
+
+365
+00:28:39,875 --> 00:28:48,000
+一旦我执行了这个命令,我就可以像这样移动"aliases.sh"到"case.sh".
+So once I have executed this, I can do something like I want to move "aliases.sh" into "case.sh".
+
+366
+00:28:48,000 --> 00:28:53,025
+默认情况下,"mv"命令不会询问,如果"case.sh"已经存在,它将被覆盖.
+By default "mv" won't ask, and if "case.sh" already exists, it will be over.
+
+367
+00:28:53,025 --> 00:28:56,125
+那很好,我要覆盖那里的任何东西.
+That's fine, I'm going to overwrite whatever that's there. 
+
+368
+00:28:56,125 --> 00:29:01,750
+但现在,"mv"已经被扩展为"mv -i",
+But here it's now expanded,"mv" has been expanded into this "mv -i" 
+
+369
+00:29:01,750 --> 00:29:07,625
+执行它会来询问"你确定要覆盖它吗?
+and it's using that to ask me "Oh, are you sure you want to overwrite this?"
+
+370
+00:29:07,625 --> 00:29:12,200
+我可以选择不覆盖,以避免丢失文件.
+And I can say no, I don't want to lose that file. 
+
+371
+00:29:12,200 --> 00:29:19,075
+最后,你可以使用`alias mv`命令来查询这个别名的含义.
+Lastly, you can use "alias mv" to ask for what this alias stands for. 
+
+372
+00:29:19,075 --> 00:29:21,925
+这样可以快速确定
+So it will tell you so you can quickly make sure
+
+373
+00:29:21,925 --> 00:29:25,950
+你实际执行的命令是什么.
+what the command that you are actually executing is. 
+
+374
+00:29:26,200 --> 00:29:30,225
+例如,有一个不方便的部分是,
+One inconvenient part about, for example, having aliases is 
+
+375
+00:29:30,225 --> 00:29:35,663
+如果你有别名,那么如何将它们持久化到你当前的环境中呢?
+how will you go about persisting them into your current environment? 
+
+376
+00:29:35,663 --> 00:29:40,525
+如果我现在关闭这个终端,所有这些别名都会消失.
+Like, if I were to close this terminal now, all these aliases will go away. 
+
+377
+00:29:40,525 --> 00:29:44,400
+你不想一遍又一遍地重新输入这些命令.
+And you don't want to be kind of retyping these commands and more generally, 
+
+378
+00:29:44,400 --> 00:29:50,975
+更一般地说,如果你开始配置你的shell,你需要某种方式来存储所有这些配置.
+if you start configuring your shell more and more, you want some way of bootstrapping all this configuration. 
+
+379
+00:29:51,575 --> 00:30:01,825
+你会发现大多数shell命令程序都使用一些基于文本的配置文件.
+You will find that most shell command programs will use some sort of text based configuration file. 
+
+380
+00:30:01,825 --> 00:30:07,200
+由于历史原因,我们通常称其为"dotfiles",因为它们以"."开头.
+And this is what we usually all "dotfiles", because they start with a dot for historical reasons.
+
+381
+00:30:07,200 --> 00:30:15,175
+所以对于我们的shell,比如bash,我们可以查看".bashrc"文件.
+So for bash in our case, which is a shell, we can look at the ".bashrc". 
+
+382
+00:30:15,175 --> 00:30:20,175
+作为演示,这里我一直在使用zsh,
+For demonstration purposes, here I have been using zsh,
+
+383
+00:30:20,175 --> 00:30:24,700
+这是一个不同的shell,我将会配置bash,然后启动bash.
+which is a different shell, and I'm gonna be configuring bash, and starting bash. 
+
+384
+00:30:24,700 --> 00:30:30,325
+所以比如我在这里创建一个条目,
+So if I create an entry here and I say
+
+385
+00:30:30,325 --> 00:30:36,325
+我说`sl`映射到`ls`.我已经修改了它,现在我启动bash.
+"sl" maps to "ls". And I have modified that, and now I start bash.
+
+386
+00:30:36,325 --> 00:30:41,725
+bash现在是完全未配置的,但现在如果我输入`sl`...
+bash is kind of completely unconfigured, but now if I do "sl"... 
+
+387
+00:30:41,850 --> 00:30:44,350
+芜湖~翻车了.
+Hm, that's unexpected.
+
+388
+00:30:46,050 --> 00:30:48,275
+哦,好的.
+Oh, good. Good getting that. 
+
+389
+00:30:48,275 --> 00:30:52,100
+那很重要,
+So it matters where you config file is,
+
+390
+00:30:52,100 --> 00:30:55,500
+你的配置文件要放在你的home目录中.
+your config file needs to be in your home folder. 
+
+391
+00:30:55,500 --> 00:31:01,075
+因此,bash的配置文件将位于"~"中,
+So your configuration file for bash will live in that "~",
+
+392
+00:31:01,075 --> 00:31:06,150
+它会扩展到你的home目录,然后是".bashrc".
+which will expand to your home directory, and then ".bashrc".
+
+393
+00:31:06,150 --> 00:31:16,100
+在这里,我们可以创建别名,现在我们开启一个bash会话并运行`sl`.
+And here we can create the alias and now we start a bash session and we do "sl". 
+
+394
+00:31:16,100 --> 00:31:24,575
+现在它已经加载了这个别名,在bash程序启动时即加载了所有的配置.
+Now it has been loaded, and this is loaded at the beginning when this bash program is started. 
+
+395
+00:31:24,575 --> 00:31:31,700
+现在不仅可以使用别名,还可以有很多其他的配置.
+And all this configuration is loaded, and you can not only use aliases, they can have a lot of parts of configuration.
+
+396
+00:31:31,700 --> 00:31:36,050
+例如,在这里,我有一个相当无用的提示符.
+So for example here, I have a prompt which is fairly useless. 
+
+397
+00:31:36,050 --> 00:31:40,875
+它只告诉我使用的shell名称是bash,版本是5.0.
+Like it has just given me the name of the shell, which is bash, and the version, which is 5.0. 
+
+398
+00:31:40,875 --> 00:31:46,875
+我不想显示它,而且在你的shell中也有许多像这样没啥用的东西,
+I don't want this to be displayed and as with many things in your shell, 
+
+399
+00:31:46,875 --> 00:31:48,925
+这只是一个环境变量.
+this is just an environment variable. 
+
+400
+00:31:48,925 --> 00:31:55,200
+"PS1"是提示你输入的字符串(这里原来是"bash-5.0$"),
+So the "PS1" is just the prompt string for your prompt 
+
+401
+00:31:55,200 --> 00:32:02,975
+我们实际上可以修改它,使其成为一个"> ".
+and we can actually modify this to just be a "> " symbol.
+
+402
+00:32:02,975 --> 00:32:06,025
+现在已经修改过了,我们已经有了这个.
+and now that has been modified, and we have that. 
+
+403
+00:32:06,025 --> 00:32:10,100
+但是,如果我们退出并再次调用bash,这个修改就会丢失.
+But if we exit and call bash again, that was lost. 
+
+404
+00:32:10,100 --> 00:32:14,075
+但是,如果我们添加这个条目并说,
+However, if we add this entry and say, 
+
+405
+00:32:14,075 --> 00:32:20,725
+我们希望"PS1"是这样的,然后再次调用bash,
+oh we want "PS1" to be this and we call bash again, 
+
+406
+00:32:20,725 --> 00:32:21,950
+这个修改就会被保留下来.
+this has been persisted. 
+
+407
+00:32:21,950 --> 00:32:25,500
+我们可以继续修改这个配置.
+And we can keep modifying this configuration.
+
+408
+00:32:25,500 --> 00:32:33,450
+所以也许我们想在提示符里显示出我们当前的工作目录,
+So maybe we want to include where the working directory that we are in, 
+
+409
+00:32:33,450 --> 00:32:37,525
+这就和其他shell里我们看到的一样了.
+and that's telling us the same information that we had in the others.
+
+410
+00:32:37,525 --> 00:32:43,650
+还有许多许多选项,Shell是高度可配置的,
+And there are many, many options, like shells are highly, highly configurable, 
+
+411
+00:32:43,650 --> 00:32:50,600
+不仅是通过这些文件配置Shell,
+and it's not only shells that are configured through these files, 
+
+412
+00:32:50,600 --> 00:32:52,675
+还有许多其他程序.
+there are many other programs. 
+
+413
+00:32:52,675 --> 00:32:57,000
+就像我们在编辑器讲座中看到的那样,Vim也是通过这种方式进行配置的.
+As we saw for example in the editors lecture, Vim is also configured this way. 
+
+414
+00:32:57,000 --> 00:33:06,975
+我们给你这个vimrc文件,并告诉你将它放在"~/.vimrc"下,
+We gave you this vimrc file and told you to put it under your "~/.vimrc" 
+
+415
+00:33:06,975 --> 00:33:10,575
+这是相同的概念,但只是针对Vim.
+and this is the same concept, but just for Vim. 
+
+416
+00:33:10,575 --> 00:33:15,200
+即在启动时让它加载一系列的指令,
+It's just giving it a set of instructions that it should load when it's started, 
+
+417
+00:33:15,200 --> 00:33:19,225
+以便你可以保持所需的配置.
+so you can keep a configuration that you want.
+
+418
+00:33:19,225 --> 00:33:24,075
+甚至许多程序也支持这种方式.
+And even (non...) kind of a lot of programs will support this. 
+
+419
+00:33:24,075 --> 00:33:27,475
+例如,我的终端模拟器,这是另一个概念,
+For instance, my terminal emulator, which is another concept,
+
+420
+00:33:27,475 --> 00:33:36,000
+是运行shell的程序,并将其显示在计算机屏幕上.
+which is the program that is running the shell, in a way, and displaying this into the screen in my computer.
+
+421
+00:33:36,000 --> 00:33:50,000
+它也可以通过这种方式进行配置,因此如果我修改它,我可以更改字体的大小.
+It can also be configured this way, so if I modify this I can change the size of the font. 
+
+422
+00:33:50,000 --> 00:33:55,925
+例如,现在,我已经为演示目的增加了字体大小,
+Like right now, for example, I have increased the font size a lot for demonstration purposes, 
+
+423
+00:33:55,925 --> 00:34:03,475
+但如果我更改这个条目并使其为28,然后写入这个值,
+but if I change this entry and make it for example 28 and write this value, 
+
+424
+00:34:03,475 --> 00:34:07,200
+你会发现字体的大小已经改变了,
+you see that the size of the font has changed,
+
+425
+00:34:07,200 --> 00:34:13,925
+因为我编辑了这个配置文件,它指定了我的终端模拟器应该如何工作.
+because I edited this text file that specifies how my terminal emulator should work.
+
+426
+00:34:19,275 --> 00:34:22,500
+还有其他问题关于dotfiles吗?
+Any questions so far? With dotfiles.
+
+427
+00:34:27,700 --> 00:34:36,025
+好的,知道有这么多的配置可能会让人感到有些不知所措,是吗?
+Okay, it can be a bit daunting knowing that there is like this endless wall of configurations,
+
+428
+00:34:36,025 --> 00:34:40,975
+你咋知道哪些内容可以进行配置呢?
+and how do you go about learning about what can be configured?
+
+429
+00:34:40,975 --> 00:34:49,300
+好消息是,我们在讲义中已经为你提供了非常好的资源链接.
+The good news is that we have linked you to really good resources in the lecture notes.
+
+430
+00:34:49,300 --> 00:34:55,250
+很多人喜欢配置这些工具,
+But the main idea is that a lot of people really like just configuring these tools 
+
+431
+00:34:55,250 --> 00:34:59,300
+他们把自己的配置文件上传到了GitHub这样的在线仓库中.
+and have uploaded their configuration files to GitHub, 
+
+432
+00:34:59,300 --> 00:35:01,575
+
+another different kind of repositories online. 
+
+433
+00:35:01,575 --> 00:35:03,875
+例如,在GitHub上
+So for example, here we are on GitHub,
+
+434
+00:35:03,875 --> 00:35:06,071
+搜索"dotfiles",你会发现
+we search for "dotfiles", and can see that 
+
+435
+00:35:06,071 --> 00:35:11,575
+有成千上万的人在分享他们的配置文件.
+there are like thousands of repositories of people sharing their configuration files. 
+
+436
+00:35:11,575 --> 00:35:12,400
+
+
+437
+00:35:12,400 --> 00:35:15,675
+我们的课程导师也链接了我们的dotfiles.
+We have also like, the class instructors have linked our dotfiles. 
+
+438
+00:35:15,675 --> 00:35:19,950
+因此,如果你想知道我们配置中的每一行是如何工作的,
+So if you really want to know how any part of our setup is working
+
+439
+00:35:19,950 --> 00:35:22,375
+你可以查看这些文件并尝试弄清楚.
+you can go through it and try to figure it out. 
+
+440
+00:35:22,375 --> 00:35:24,525
+也欢迎你们随时向我们询问.
+You can also feel free to ask us. 
+
+441
+00:35:24,525 --> 00:35:27,575
+例如,如果我们转到这个仓库,
+If we go for example to this repository here
+
+442
+00:35:27,575 --> 00:35:31,300
+我们会发现有很多文件可以配置.
+we can see that there's many, many files that you can configure. 
+
+443
+00:35:31,300 --> 00:35:35,275
+例如,有一个用于bash的文件,前几个用于git,
+For example, there is one for bash, the first couple of ones are for git, 
+
+444
+00:35:35,275 --> 00:35:41,775
+这些可能会在版本控制讲座中进行介绍.
+that will be probably be covered in the version control lecture tomorrow. 
+
+445
+00:35:41,775 --> 00:35:49,475
+如果我们例如转到bash配置文件,它是一种不同形式的bashrc,
+If we go for example to the bash profile, which is a different form of what we saw in the bashrc,
+
+446
+00:35:49,475 --> 00:35:55,875
+它非常有用,因为你可以通过查看手册页来学习,
+it can be really useful because you can learn through just looking at the manual page, 
+
+447
+00:35:55,875 --> 00:36:03,425
+但是手册页通常只是所有不同选项的描述性解释,
+but the manual pages is, a lot of the time just kind of like a descriptive explanation of all the different options
+
+448
+00:36:03,425 --> 00:36:10,575
+我们可以通过看其他人的示例并尝试理解他们为什么这样做
+and sometimes it's more helpful going through examples of what people have done and trying to understand why they did it
+
+449
+00:36:10,575 --> 00:36:12,125
+以及它如何完善他们的工作流程来学习.
+and how it's helping their workflow. 
+
+450
+00:36:12,125 --> 00:36:17,675
+我们可以看到这里已经进行了不区分大小写的文件名扩展操作.
+We can say here that this person has done case-insensitive globbing.
+
+451
+00:36:17,675 --> 00:36:25,775
+我们在shell脚本和工具中介绍了globbing(通配符扩展)这种文件名展开技巧.
+We covered globbing as this kind of filename expansion trick in the shell scripting and tools.
+
+452
+00:36:25,775 --> 00:36:30,825
+这里你说"不,我不想区分大小写."
+And here you say no, I don't want this to matter, whether using uppercase and lowercase, 
+
+453
+00:36:30,825 --> 00:36:35,575
+只需在shell中设置此选项即就可使shell按照你期望的方式运行.
+and just setting this option in the shell for these things to work this way
+
+454
+00:36:35,575 --> 00:36:38,025
+类似地,还有一些别名.
+Similarly, there is for example aliases. 
+
+455
+00:36:38,025 --> 00:36:41,250
+在这里,你可以看到这个人正在做很多别名.
+Here you can see a lot of aliases that this person is doing. 
+
+456
+00:36:41,250 --> 00:36:43,250
+例如,"d"代表"cd ~/Document/Dropbox"
+For example, "d" for "cd ~/Document/Dropbox"
+
+457
+00:36:43,575 --> 00:36:47,600
+因为这样更短.
+sorry, because that's just much shorter. 
+
+458
+00:36:47,600 --> 00:36:48,925
+"g"代表"git"...
+"g" for "git"...
+
+459
+00:36:48,925 --> 00:36:52,575
+我们来看一下vimrc.
+Say we go, for example, with vimrc. 
+
+460
+00:36:52,575 --> 00:36:59,025
+通过查看它并尝试提取有用信息,这些文件实际上信息量很大.
+It can be actually very, very informative, going through this and trying to extract useful information.
+
+461
+00:36:59,025 --> 00:37:07,050
+我们不建议只是将一个巨大的配置文件复制到你的配置文件中,
+We do not recommend just kind of getting one huge blob of this and copying this into your config files,
+
+462
+00:37:07,050 --> 00:37:13,050
+虽然这可能看起来更漂亮,但你可能真的不了解其中的细节.
+because maybe things are prettier, but you might not really understand what is going on.
+
+463
+00:37:13,050 --> 00:37:20,300
+最后,关于dotfiles我想提到的一件事是,
+Lastly one thing I want to mention about dotfiles is that
+
+464
+00:37:20,300 --> 00:37:27,125
+人们将这些文件推送到GitHub中
+people not only try to push these files into GitHub 
+
+465
+00:37:27,125 --> 00:37:30,600
+以便其他人阅读,这是其中一个原因.
+just so other people can read it, that's one reason. 
+
+466
+00:37:30,600 --> 00:37:36,175
+这样还确保他们可以很快重现他们的配置.
+They also make really sure they can reproduce their setup. 
+
+467
+00:37:36,175 --> 00:37:39,875
+为此,他们使用了各种不同的工具.
+And to do that they use a slew of different tools.
+
+468
+00:37:39,875 --> 00:37:42,125
+扯得有点远了
+Oops, went a little too far. 
+
+469
+00:37:42,125 --> 00:37:45,100
+例如GNU Stow,
+So GNU Stow is, for example, one of them 
+
+470
+00:37:45,100 --> 00:37:49,125
+他们的技巧是,
+and the trick that they are doing is 
+
+471
+00:37:49,125 --> 00:37:56,900
+他们将所有的dotfiles都放在一个文件夹中,并通过一个工具瞒天过海,
+they are kind of putting all their dotfiles in a folder and they are kind of faking to the system, 
+
+472
+00:37:56,900 --> 00:38:02,125
+这是一种名为符号链接的工具,它会让伪装的文件看起来是真的.
+using a tool called symlinks, that they are actually what they're not. 
+
+473
+00:38:02,150 --> 00:38:05,975
+我来快速画一下我所说的意思.
+I'm gonna draw really quick what I mean by that. 
+
+474
+00:38:05,975 --> 00:38:11,150
+通常的文件夹结构可能是这样的:你有你的home文件夹,
+So a common folder structure might look like you have your home folder 
+
+475
+00:38:11,150 --> 00:38:17,225
+在这个home文件夹中可能会有你的bashrc,
+and in this home folder you might have your bashrc, 
+
+476
+00:38:17,225 --> 00:38:21,325
+它包含了你的bash配置,你可能会有你的vimrc,
+that contains your bash configuration, you might have your vimrc 
+
+477
+00:38:21,325 --> 00:38:26,625
+如果你能把它们放在git下就太好了.
+and it would be really great if you could keep this under version control. 
+
+478
+00:38:26,625 --> 00:38:29,975
+但是问题是,你可能不想在你的home文件夹中放置一个git仓库.
+But the thing is, you might not want to have a git repository,
+
+479
+00:38:30,025 --> 00:38:32,375
+关于git的内容明天会讲到
+which will be covered tomorrow, in your home folder. 
+
+480
+00:38:32,375 --> 00:38:37,725
+所以人们通常会创建一个dotfiles仓库,
+So what people usually do is they create a dotfiles repository,
+
+481
+00:38:37,725 --> 00:38:45,675
+然后在这里为他们的bashrc和vimrc创建条目.
+and then they have entries here for their bashrc and their vimrc. 
+
+482
+00:38:45,675 --> 00:38:50,125
+这其实就是文件所在的地方,
+And this is where actually the files are 
+
+483
+00:38:50,125 --> 00:38:55,975
+他们只是告诉操作系统,
+and what they are doing is they're just telling the OS to forward, 
+
+484
+00:38:55,975 --> 00:39:00,000
+无论何时有人想要读取这个文件或者写入这个文件,
+whenever anyone wants to read this file or write to this file, 
+
+485
+00:39:00,100 --> 00:39:02,575
+都把这个请求转移到请求另一个文件.
+just forward this to this other file.
+
+486
+00:39:02,575 --> 00:39:08,475
+这是一个叫做符号链接的概念,在这种情况下很有用,
+This is a concept called symlinks and it's useful in this scenario,
+
+487
+00:39:08,475 --> 00:39:12,775
+它通常是UNIX中一个非常有用的工具,
+but it in general it's a really useful tool in UNIX 
+
+488
+00:39:12,775 --> 00:39:15,375
+我们在讲座中还没有涉及到,
+that we haven't covered so far in the lectures
+
+489
+00:39:15,375 --> 00:39:18,725
+但是你应该熟悉.
+but you might be... that you should be familiar with. 
+
+490
+00:39:18,725 --> 00:39:25,150
+通常情况下,语法是使用"ln -s"指定一个符号链接,
+And in general, the syntax will be "ln -s" for specifying a symbolic link 
+
+491
+00:39:25,150 --> 00:39:30,575
+然后把你想要创建的文件的路径
+and then you will put the path to the file
+
+492
+00:39:30,575 --> 00:39:36,450
+和你想要创建的符号链接放在一起.
+that you want to create and then the symlink that you want to create.
+
+493
+00:39:40,925 --> 00:39:43,263
+
+...
+
+494
+00:39:43,263 --> 00:39:46,125
+所有这些高级工具,我们在这里列出来的,
+And all these kind of fancy tools that we're seeing here listed,
+
+495
+00:39:46,125 --> 00:39:49,250
+它们都可以用一些技巧实现,
+they all amount to doing some sort of this trick, 
+
+496
+00:39:49,250 --> 00:39:53,950
+这样你就可以把所有的dotfiles整齐地放在一个文件夹里,
+so that you can have all your dotfiles neat and tidy into a folder, 
+
+497
+00:39:53,950 --> 00:39:57,050
+它们可以使用git来管理,
+and then they can be version-controlled, 
+
+498
+00:39:57,050 --> 00:40:03,500
+也可以被符号链接,这样其它程序可以在它们的默认位置找到它们.
+and they can be symlinked so the rest of the programs can find them in their default locations.
+
+499
+00:40:04,475 --> 00:40:09,750
+关于dotfiles有什么问题吗?
+Any questions regarding dotfiles?
+
+500
+00:40:11,225 --> 00:40:16,225
+你需要在你的home文件夹
+Do you need to have the dotfiles in your home folder, 
+
+501
+00:40:16,225 --> 00:40:20,450
+和git文件夹中都有dotfiles吗?
+and then also dotfiles in the version control folder?
+
+502
+00:40:20,925 --> 00:40:26,000
+几乎每个程序,例如,
+So what you will have is, pretty much every program, for example 
+
+503
+00:40:26,000 --> 00:40:29,600
+bash程序总是会查找"~/.bashrc".
+bash will always look for "~/.bashrc". 
+
+504
+00:40:29,600 --> 00:40:34,000
+这就是程序要查找的位置.
+That's where the program is going to look for.
+
+505
+00:40:34,000 --> 00:40:40,925
+当你创建一个符号链接时,你把你的"~/.bashrc"放在一个特殊的UNIX文件中,
+What you do when you do a symlink is, you place your "~/.bashrc"
+
+506
+00:40:40,925 --> 00:40:45,300
+这个文件只是Unix中的一种特殊的文件,
+it's just a file that is kind of a special file in UNIX, 
+
+507
+00:40:45,300 --> 00:40:50,175
+它说:"无论何时你想读取这个文件,都要去找那个文件."
+that says oh, whenever you want to read this file go to this other file.
+
+508
+00:40:50,175 --> 00:40:53,925
+这个文件没有内容,
+There's no content, like there is no... 
+
+509
+00:40:53,925 --> 00:40:56,275
+比如你的别名不是这个dotfiles的一部分.
+your aliases are not part of this dotfile. 
+
+510
+00:40:56,275 --> 00:40:59,525
+这个文件只是一个指针,告诉你应该取哪个地址
+That file is just kind of like a pointer, saying now you should go that other way. 
+
+511
+00:40:59,525 --> 00:41:04,125
+通过这样做,你可以把你的其他文件放在那个文件夹中.
+And by doing that you can have your other file in that other folder.
+
+512
+00:41:04,125 --> 00:41:09,475
+如果版本控制没有用处,那么想一想如果你想将它们放到Dropbox文件夹中,
+If version controlling is not useful, think about what if you want to have them in your Dropbox folder, 
+
+513
+00:41:09,475 --> 00:41:11,950
+这样它们就可以同步到云端,
+so they're synced to the cloud, for example.  
+
+514
+00:41:11,950 --> 00:41:15,925
+还有另一种情况,这时符号链接也非常有用,
+That's kind of another use case where like symlinks could be really useful
+
+515
+00:41:15,925 --> 00:41:20,567
+你不需要将dotfiles文件夹放在主目录中,对吧?
+So you don't need the folder dotfiles to be in the home directory, right? 
+
+516
+00:41:20,575 --> 00:41:23,450
+因为你可以使用符号链接,指向其他位置.
+Because you can just use the symlink, that points somewhere else.
+
+517
+00:41:23,450 --> 00:41:30,350
+只要你有一种方式让默认路径解析到你所在的位置就可以了.
+As long as you have a way for the default path to resolve wherever you have it, yeah.
+
+518
+00:41:33,750 --> 00:41:37,825
+最后我想说...
+Last thing I want to cover in the lecture... 
+
+519
+00:41:37,825 --> 00:41:41,025
+哦,抱歉,有没有其他关于dotfiles的问题?
+Oh, sorry, any other questions about dotfiles?
+
+520
+00:41:48,575 --> 00:41:52,800
+最后我想在讲座中讨论一下与远程服务器的交互,
+Last thing I want to cover in the lecture is working with remote machines, 
+
+521
+00:41:52,800 --> 00:41:57,075
+这是你迟早都要碰到的.
+which is a thing that you will run into, sooner or later. 
+
+522
+00:41:57,075 --> 00:42:00,275
+如果你知道一些东西,
+And there are a few things that will make your life much easier 
+
+523
+00:42:00,275 --> 00:42:04,500
+它们会让你在与远程服务器交互时更加轻松.
+when dealing with remote machines if you know about them. 
+
+524
+00:42:04,500 --> 00:42:08,650
+也许现在因为你在使用Athena集群(MIT提供的一种高性能计算机资源共享平台，Athena用户可以通过网络连接到这个集群上运行科学计算程序.),
+Right now maybe because you are using the Athena cluster,
+
+525
+00:42:08,650 --> 00:42:10,925
+但在你的编程生涯中,
+but later on, during your programming career, 
+
+526
+00:42:10,925 --> 00:42:17,775
+有一个非常普遍的概念,就是你有你的本地工作环境,
+it's pretty sure that there is a fairly ubiquitous concept of having kind of your local working environment 
+
+527
+00:42:17,850 --> 00:42:21,850
+然后有一些运行代码的生产服务器,你需要得到服务器上的一些信息
+and then having some production server that is actually running the code, really good to get for me, 
+
+528
+00:42:21,875 --> 00:42:27,550
+因此熟悉如何与远程服务器进行交互非常重要.
+so it is really good to get familiar about how to work in/with remote machines.
+
+529
+00:42:27,550 --> 00:42:34,125
+处理远程服务器的主要命令是"ssh".
+So the main command for working with remote machines is "ssh".It's "ssh".
+
+530
+00:42:38,450 --> 00:42:45,950
+"ssh"就像一个安全的Shell,它将负责送我们到想要到达的地方
+"ssh" is just like a secure shell, it's just gonna take the responsibility for kind of reaching wherever we want 
+
+531
+00:42:45,950 --> 00:42:50,900
+或者告诉它在那个地方去打开一个会话.
+or tell it to go and trying to kind of open a session there.
+
+532
+00:42:50,900 --> 00:42:53,175
+这里的语法是:
+So here the syntax is: 
+
+533
+00:42:53,175 --> 00:42:56,800
+"jjgo"是我在远程服务器上使用的用户名,
+"jjgo" is the user that I want to use in the remote machine,
+
+534
+00:42:56,800 --> 00:43:01,675
+这是因为该用户与我本地机器上的用户不同,
+and this is because the user is different from the one I have my local machine, 
+
+535
+00:43:01,675 --> 00:43:03,600
+这在很多情况下都是这样,
+which will be the case a lot of the time,
+
+536
+00:43:03,600 --> 00:43:12,800
+然后"@"告诉终端这个符号分离了用户和地址.
+then the "@" is telling the terminal that this separates what the user is from what the address is.
+
+537
+00:43:12,800 --> 00:43:14,775
+这里我使用的是一个IP地址,
+And here I'm using an IP address 
+
+538
+00:43:14,775 --> 00:43:20,775
+因为现在要连接的远程的服务器实际上是我的电脑里的一个虚拟机,
+because what I'm actually doing is I have a virtual machine in my computer,
+
+539
+00:43:20,775 --> 00:43:23,350
+
+that is the one that is remote right now. 
+
+540
+00:43:23,350 --> 00:43:25,650
+我将要通过ssh连接它.
+And I'm gonna be ssh'ing into it. 
+
+541
+00:43:25,650 --> 00:43:28,675
+这是我使用的URL,抱歉,
+This is the URL that I'm using, sorry, 
+
+542
+00:43:28,675 --> 00:43:32,675
+我使用的IP地址,但是你也可能会看到类似这样的东西:
+the IP that I'm using, but you might also see things like
+
+543
+00:43:32,675 --> 00:43:39,875
+我想以在"foobar.mit.edu"上以"jjgo"的名义使用ssh.
+oh I want to ssh as "jjgo" at "foobar.mit.edu"
+
+544
+00:43:39,875 --> 00:43:46,975
+如果你使用一些具有DNS名称的远程服务器,这可能是更常见的.
+That's probably something more common, if you are using some remote server that has a DNS name.
+
+545
+00:43:48,275 --> 00:43:52,500
+回到常规命令,
+So going back to a regular command,
+
+546
+00:43:53,175 --> 00:43:58,425
+我们尝试ssh,它会要求我们输入密码,这是很正常.
+we try to ssh, it asks us for a password, really common thing. 
+
+547
+00:43:58,425 --> 00:44:00,475
+现在我们已经连接成功了.
+And now we're there. We have...
+
+548
+00:44:00,475 --> 00:44:02,849
+我们仍然在我们同一个终端模拟器中,
+we're still in our same terminal emulator 
+
+549
+00:44:02,850 --> 00:44:09,275
+但现在ssh会将远程shell正在显示的内容转发到当前的界面
+but right now ssh is kind of forwarding the entire virtual display to display 
+
+550
+00:44:09,275 --> 00:44:11,800
+
+what the remote shell is displaying. 
+
+551
+00:44:11,800 --> 00:44:17,775
+我们可以在这里执行命令并查看远程文件.
+And we can execute commands here and we'll see the remote files 
+
+552
+00:44:17,775 --> 00:44:20,975
+关于ssh,
+A couple of handy things to know about ssh, 
+
+553
+00:44:20,975 --> 00:44:25,000
+有一些简便的操作在数据整理讲座中简要介绍过,
+that were briefly covered in the data wrangling lecture, 
+
+554
+00:44:25,000 --> 00:44:29,850
+它不仅仅适用于连接,
+is that ssh is not only good for just opening connections. 
+
+555
+00:44:29,850 --> 00:44:33,900
+还可以让你远程执行命令.
+It will also let you just execute commands remotely.
+
+556
+00:44:33,900 --> 00:44:39,650
+例如,如果我这样做,它会再次询问我的密码.
+So for example, if I do that, it's gonna ask me "what is my password?" again. 
+
+557
+00:44:39,650 --> 00:44:43,425
+它会执行这个命令,然后回到我的终端,
+And it's executing this command then coming back to my terminal 
+
+558
+00:44:43,425 --> 00:44:47,625
+并通过当标准输出将该命令的结果,
+and piping the output of what that command was, in the remote machine,
+
+559
+00:44:47,625 --> 00:44:50,575
+也就是远程服务器的输出,传输过来.
+through the standard output in my current shell. 
+
+560
+00:44:50,575 --> 00:44:54,425
+然后我可以使用这个.
+And I could have this in...
+
+561
+00:44:58,075 --> 00:45:02,750
+我可以将其放入管道中,
+I could have this in a pipe, and this will work 
+
+562
+00:45:02,750 --> 00:45:08,300
+并在本地管道中继续工作.
+and we'll just drop all this output and then have a local pipe where I can keep working.
+
+563
+00:45:08,300 --> 00:45:12,675
+到目前为止,老是要输入密码有点不方便.
+So far, it has been kind of inconvenient, having to type our password. 
+
+564
+00:45:12,675 --> 00:45:15,025
+有一个很好的技巧可以解决这个问题.
+There's one really good trick for this.
+
+565
+00:45:15,025 --> 00:45:17,325
+它就是我们一个叫"ssh密钥"的东西.
+It's we can use something called "ssh keys". 
+
+566
+00:45:17,325 --> 00:45:22,825
+ssh密钥使用公钥加密来创建一对ssh密钥,
+ssh keys just use public key encryption to create a pair of ssh keys, 
+
+567
+00:45:22,825 --> 00:45:29,725
+一个公钥和一个私钥,然后你可以将公钥部分给服务器.
+a public key and a private key, and then you can give the server the public part of the key.
+
+568
+00:45:29,725 --> 00:45:35,475
+因此,你复制公钥,每当你尝试进行身份验证时,
+So you copy the public key and then whenever you try to authenticate instead of using your password, 
+
+569
+00:45:35,475 --> 00:45:39,450
+它将使用私钥向服务器证明你就是你
+it's gonna use the private key to prove to the server 
+
+570
+00:45:39,450 --> 00:45:41,650
+
+that you are actually who you say you are.
+
+571
+00:45:41,650 --> 00:45:49,575
+我们可以快速展示如何做到这一点.
+We can quickly showcase how you will go about doing this.
+
+572
+00:45:49,575 --> 00:45:54,025
+现在我没有任何ssh密钥,所以我要创建一对.
+Right now I don't have any ssh keys, so I'm gonna create a couple of them. 
+
+573
+00:45:54,025 --> 00:45:59,025
+第一件事,它会问我想让这个密钥存储在哪里.
+First thing, it's just gonna ask me where I want this key to live.
+
+574
+00:45:59,025 --> 00:46:00,925
+显然,它正在执行这个操作.
+Unsurprisingly, it's doing this. 
+
+575
+00:46:00,925 --> 00:46:05,625
+这是我的home文件夹,然后它使用这个".ssh"路径,
+This is my home folder and then it's using this ".ssh" path,
+
+576
+00:46:05,625 --> 00:46:09,750
+这是我们之前提到过的dotfiles的概念.
+which refers back to the same concept that we covered earlier about having dotfiles. 
+
+577
+00:46:09,750 --> 00:46:17,350
+".ssh"是一个包含许多配置文件的文件夹,用于配置ssh.
+Like ".ssh" is a folder that contains a lot of the configuration files for how you want ssh to behave. 
+
+578
+00:46:17,575 --> 00:46:19,925
+因此,它会要求我们输入一个密码.
+So it will ask us a passphrase.
+
+579
+00:46:19,925 --> 00:46:22,975
+这个密码是用来加密密钥的私钥部分的,
+The passphrase is to encrypt the private part of the key 
+
+580
+00:46:22,975 --> 00:46:25,450
+因为如果有人得到了你的私钥,
+because if someone gets your private key, 
+
+581
+00:46:25,450 --> 00:46:28,425
+如果你的私钥没有受到密码保护,
+if you don't have a password protected private key, 
+
+582
+00:46:28,425 --> 00:46:32,550
+如果他们得到了那个私钥,他们就可以在服务器上冒充你.
+if they get that key they can use that key to impersonate you in any server. 
+
+583
+00:46:32,550 --> 00:46:38,225
+而如果你添加了密码,他们必须知道密码才能使用私钥.
+Whereas if you add a passphrase, they will have to know what the passphrase is to actually use the key.
+
+584
+00:46:40,200 --> 00:46:43,650
+现在创建了一个"keeper".
+It has created a keeper. 
+
+585
+00:46:43,650 --> 00:46:51,925
+我们可以检查这两个文件现在是否在".ssh"下,
+We can check that these two files are now under ".ssh".
+
+586
+00:46:51,925 --> 00:46:53,400
+我们可以看到...
+And we can see...
+
+587
+00:46:53,400 --> 00:47:00,275
+我们有这两个文件:
+We have these two files: 
+
+588
+00:47:00,275 --> 00:47:02,950
+我们有25519和公钥.
+we have the 25519 and the public key.
+
+589
+00:47:02,950 --> 00:47:10,300
+如果我们通过 "cat" 命令查看这个密钥,那么这个密钥实际上不是什么复杂的二进制文件,
+And if we "cat" through the output, that key is actually not like any fancy binary file, 
+
+590
+00:47:15,625 --> 00:47:24,325
+它只是一个文本文件,里面包含了公钥和一些别名,
+it's just a text file that has the contents of the public key and some alias name for it, 
+
+591
+00:47:24,325 --> 00:47:27,050
+这样我们就知道这个公钥是什么.
+so we can know what this public key is. 
+
+592
+00:47:27,050 --> 00:47:30,100
+我们告诉服务器
+The way we can tell the server that 
+
+593
+00:47:30,100 --> 00:47:35,925
+我们有 ssh 授权,
+we're authorized to ssh there is by just actually copying this file, 
+
+594
+00:47:35,925 --> 00:47:41,225
+可以通过将这个文件复制到 ".ssh/authorized_keys" 文件中来
+like copying this string into a file, that is ".ssh/authorized_keys". 
+
+595
+00:47:41,225 --> 00:47:46,825
+这里
+So here what I'm doing is 
+
+596
+00:47:46,825 --> 00:47:53,675
+我正在使用 "cat" 命令来查看这个文件的输出,它只是一个我们想要复制的文本行,
+I'm catting the output of this file which is just this line of text that we want to copy
+
+597
+00:47:53,675 --> 00:47:56,050
+然后将其传输到 ssh 中,
+and I'm piping that into ssh 
+
+598
+00:47:56,050 --> 00:48:05,150
+然后远程使用 "tee" 命令将标准输入的内容输入到 ".ssh/authorized_keys" 中.
+and then remotely I'm asking "tee" to dump the contents of the standard input into ".ssh/authorized_keys". 
+
+599
+00:48:05,150 --> 00:48:11,425
+如果我们这样做,显然会要求我们输入密码.
+And if we do that, obviously it's gonna ask us for a password.
+
+600
+00:48:14,300 --> 00:48:22,150
+复制成功后,我们可以检查一下,如果再次尝试 ssh,
+It was copied, and now we can check that if we try to ssh again,
+
+601
+00:48:22,150 --> 00:48:29,475
+它会首先要求我们输入密码,但是你可以安排在会话中保存密码,
+It's gonna first ask us for a passphrase but you can arrange that so that it's saved in the session
+
+602
+00:48:29,475 --> 00:48:34,950
+这样我们就不必为服务器输入密钥.
+and we didn't actually have to type the key for the server.
+
+603
+00:48:34,950 --> 00:48:37,325
+我可以再次演示一下.
+And I can kind of show that again.
+
+604
+00:48:45,600 --> 00:48:47,600
+还有更多有用的内容.
+More things that are useful. 
+
+605
+00:48:47,600 --> 00:48:49,125
+哦,我们可以做...
+Oh, we can do... 
+
+606
+00:48:49,125 --> 00:48:52,075
+如果那个命令看起来有点奇怪,
+If that command seemed a little bit janky,
+
+607
+00:48:52,075 --> 00:48:55,150
+你实际上可以使用专门为此构建的命令,
+you can actually use this command that is built for this, 
+
+608
+00:48:55,150 --> 00:49:00,675
+这样你就不必构建那个很长的命令了.
+so you don't have to kind of craft this "ssh" command.
+
+609
+00:49:00,675 --> 00:49:04,200
+这个命令就叫做 "ssh-copy-id".
+That is just called "ssh-copy-id". 
+
+610
+00:49:04,200 --> 00:49:09,850
+我们可以做同样的事情,它会复制密钥.
+And we can do the same and it's gonna copy the key. 
+
+611
+00:49:09,850 --> 00:49:14,575
+现在,如果我们尝试 ssh,
+And now, if we try to ssh,
+
+612
+00:49:14,575 --> 00:49:20,300
+我们可以在不输入任何密钥或密码的情况下进行 ssh.
+we can ssh without actually typing any key at all, or any password.
+
+613
+00:49:20,300 --> 00:49:21,675
+还有一件事儿.
+More things. 
+
+614
+00:49:21,675 --> 00:49:24,125
+我们可能想要复制文件.
+We will probably want to copy files. 
+
+615
+00:49:24,125 --> 00:49:29,825
+你不能使用 "cp" 命令,但可以使用 "scp" 命令,即 "ssh 复制".
+You cannot use "cp" but you can use "scp", for "ssh copy".
+
+616
+00:49:29,825 --> 00:49:37,275
+在这里,我们可以指定要复制的本地文件名为 "notes.md",语法和"mv"有些相似.
+And here we can specify that we want to copy this local file called notes and the syntax is kind of similar.
+
+617
+00:49:37,325 --> 00:49:44,175
+我们要将它复制到远程这个位置,然后使用";"分隔要复制到的路径.
+We want to copy to this remote and then we have a semicolon to separate what the path is going to be.
+
+618
+00:49:44,175 --> 00:49:51,100
+然后我们指定要将其复制为 "notes",但我们也可以将其复制为 "foobar".
+And then we have oh, we want to copy this as "notes" but we could also copy this as "foobar".
+
+619
+00:49:51,100 --> 00:49:59,700
+如果我们这样做,它将被执行,并告诉我们所有的内容都已经被复制到那里了.
+And if we do that, it has been executed and it's telling us that all the contents have been copied there.
+
+620
+00:49:59,700 --> 00:50:05,250
+如果你要复制很多文件,那么你应该使用一个更好的命令,
+If you're gonna be copying a lot of files, there is a better command that you should be using
+
+621
+00:50:05,325 --> 00:50:11,500
+它叫做 "rsync".例如,在这里仅通过指定这三个标志,
+that is called "rsync". For example, here just by specifying these three flags,
+
+622
+00:50:11,500 --> 00:50:16,425
+我告诉 "rsync" 在可能的情况下保留所有权限,
+I'm telling "rsync" bo kind of preserve all the permissions whenever possible
+
+623
+00:50:16,425 --> 00:50:19,925
+以尝试检查文件是否已经被复制.
+to try to check if the file has already been copied. 
+
+624
+00:50:19,925 --> 00:50:23,975
+例如,"scp"将尝试复制已经存在的文件.
+For example, "scp" will try to copy files that are already there.
+
+625
+00:50:23,975 --> 00:50:29,125
+例如,如果你在复制过程中断开连接,
+This will happen for example if you are trying to copy and the connection interrupts in the middle of it. 
+
+626
+00:50:29,125 --> 00:50:32,179
+"scp"会从头开始复制每个文件,
+"scp" will start from the very beginning, trying to copy every file,
+
+627
+00:50:32,179 --> 00:50:36,450
+而"rsync"会从停止的地方继续.
+whereas "rsync" will continue from where it stopped.
+
+628
+00:50:36,475 --> 00:50:43,375
+在这里,我们要求它复制整个文件夹,
+And here, we ask it to copy the entire folder 
+
+629
+00:50:43,425 --> 00:50:47,450
+它只需要很快地复制整个文件夹.
+and it's just really quickly copied the entire folder. 
+
+630
+00:50:47,450 --> 00:50:54,392
+关于ssh的另一个需要知道的事情是,
+One of the other things to know about ssh is that
+
+631
+00:50:54,392 --> 00:51:00,150
+".ssh/config"是ssh的dotfiles的等效文件.
+the equivalent of the dotfile for ssh is the ".ssh/config".
+
+632
+00:51:00,150 --> 00:51:06,825
+因此,如果我们编辑ssh配置文件,
+So if we edit the ".ssh/config" to be..
+
+633
+00:51:13,175 --> 00:51:23,191
+如果我将ssh配置文件编辑成这样,就不必每次都输入
+If I edit the ssh config to look something like this, instead of having to, every time, type "ssh jjgo",
+
+634
+00:51:23,191 --> 00:51:30,325
+"ssh jjgo"这个非常长的字符串,这样我就可以引用特定的远程主机.
+like having this really long string so I can like refer to this specific remote, I want to refer, with the specific user name,
+
+635
+00:51:30,325 --> 00:51:35,375
+我想引用特定的用户名,我可以在这里加上一些内容,例如这是用户名,这是主机名,
+I can have something here like that says this is the username, this is the host name, 
+
+636
+00:51:35,375 --> 00:51:41,075
+该主机所指的内容以及你应该使用这个身份验证文件.
+that this host is referring to and you should use this identity file. 
+
+637
+00:51:41,075 --> 00:51:46,300
+如果我将此内容复制到本地文件夹中,
+And if I copy this,this is right now in my local folder, 
+
+638
+00:51:46,300 --> 00:51:49,250
+我可以将其复制到ssh中.
+I can copy this into ssh.
+
+639
+00:51:49,250 --> 00:51:53,025
+现在,不用输入这个很长的命令
+Now, instead of having to do this really long command, 
+
+640
+00:51:53,025 --> 00:51:57,675
+我只需要说我想要ssh连接到名为VM的主机.
+I can just say I just want to ssh into the host called VM.
+
+641
+00:51:57,675 --> 00:52:04,650
+通过这样做,它会从ssh配置中获取所有的配置并将其应用于这里.
+And by doing that, it's grabbing all that configuration from the ".ssh/config" and applying it here.
+
+642
+00:52:04,650 --> 00:52:10,475
+这个解决方案比创建ssh别名之类的东西要好得多,
+And this solution is much better than something like creating an alias for ssh,
+
+643
+00:52:10,475 --> 00:52:16,075
+因为像"scp"和"rsync"这样的其他程序也知道ssh的dotfiles,
+because other programs like "scp" and "rsync" also know about the dotfiles for ssh 
+
+644
+00:52:16,275 --> 00:52:20,475
+并且在有时会使用它们.
+and will use them whenever they are there.
+
+645
+00:52:21,300 --> 00:52:26,100
+关于远程机器,我最后要介绍的是在这里,
+Last thing I want to cover about remote machines is that here, 
+
+646
+00:52:26,100 --> 00:52:33,375
+例如,我们将有tmux,
+for example, we'll have tmux and we can, like I was saying before, 
+
+647
+00:52:33,375 --> 00:52:44,650
+我们可以像之前说的那样开始编辑某个文件并开始运行某个作业.
+we can start editing some file and we can start running some job.
+
+648
+00:52:53,075 --> 00:52:56,325
+例如,像"htop"这样的东西.
+For example, something like "htop". 
+
+649
+00:52:56,325 --> 00:53:05,925
+这正在运行,我们可以从中分离,关闭连接,然后再次ssh.
+And this is running here, we can detach from it, close the connection and then ssh back. 
+
+650
+00:53:05,925 --> 00:53:09,125
+然后,如果你执行`tmux a`,一切都与你离开的状态一样,
+And then, if you do "tmux a", everything is as you left it, 
+
+651
+00:53:09,125 --> 00:53:11,325
+就好像什么也没有改变.
+like nothing has really changed. 
+
+652
+00:53:11,325 --> 00:53:16,325
+如果在后台有执行的事情,它们将继续执行.
+And like if you have things executing there in the background, they will keep executing.
+
+653
+00:53:16,325 --> 00:53:23,650
+我想这就是我要讲的有关这个工具的所有内容.
+I think that, pretty much, ends all I have to say for this tool.
+
+654
+00:53:23,650 --> 00:53:26,875
+关于远程机器有什么问题吗?
+Any questions related to remote machines?
+
+655
+00:53:32,650 --> 00:53:37,550
+这是一个非常好的问题.让我想想该怎么回答.
+That's a really good question. So what I do for that,
+
+656
+00:53:37,550 --> 00:53:44,975
+哦,是的,抱歉.问题是,如何在本地机器上使用tmux,
+Oh, yes, sorry. So the question is, how do you deal with trying to use tmux in your local machine,
+
+657
+00:53:44,975 --> 00:53:47,875
+同时又要在远程机器上使用tmux?
+and also trying to use tmux in the remote machine? 
+
+658
+00:53:47,875 --> 00:53:51,075
+有几个处理这个问题的技巧.
+There are a couple of tricks for dealing with that.
+
+659
+00:53:51,075 --> 00:53:53,675
+第一个是更改前缀.
+The first one is changing the prefix. 
+
+660
+00:53:53,675 --> 00:54:00,225
+例如,我在本地机器上将前缀从"Ctrl+B"更改为"Ctrl+A",
+So what I do, for example, is in my local machine the prefix I have changed from "Ctrl+B" to "Ctrl+A" and
+
+661
+00:54:00,225 --> 00:54:03,050
+然后在远程机器上仍为"Ctrl+B".
+then in remove machines this is still "Ctrl+B". 
+
+662
+00:54:03,050 --> 00:54:05,443
+所以我可以在两者之间切换,
+So I can kind of swap between,
+
+663
+00:54:05,450 --> 00:54:08,500
+如果我想对本地的tmux执行操作,
+if I want to do things to the local tmux 
+
+664
+00:54:08,500 --> 00:54:13,700
+我会按"Ctrl+A",如果我想对远程的tmux执行操作,我会按"Ctrl+B".
+I will do "Ctrl+A" and if I want to do things to the remote tmux I would do "Ctrl+B".
+
+665
+00:54:13,700 --> 00:54:20,275
+另一件事是你可以有不同的配置文件,
+Another thing is that you can have separate configs, 
+
+666
+00:54:20,275 --> 00:54:25,050
+所以我可以做类似于这样的事情......
+so I can do something like this, and then...
+
+667
+00:54:25,050 --> 00:54:30,925
+哦,因为我没有自己的ssh配置文件.
+Ah, because I don't have my own ssh config, yeah. 
+
+668
+00:54:30,925 --> 00:54:32,875
+但如果你......
+But if you...
+
+669
+00:54:32,875 --> 00:54:34,875
+嗯,我可以`ssh VM`.
+Um, I can `ssh VM`. 
+
+670
+00:54:34,875 --> 00:54:40,750
+这里,你看到的两个条之间的差异,
+Here, what you see, the difference between these two bars, 
+
+671
+00:54:40,750 --> 00:54:44,025
+例如,是因为tmux配置不同.
+for example, is because the tmux config is different.
+
+672
+00:54:44,025 --> 00:54:54,000
+就像你将在练习中看到的那样,tmux配置在".tmux.conf"文件中,
+As you will see in the exercises, the tmux configuration is in the ".tmux.conf"
+
+673
+00:54:54,000 --> 00:54:59,625
+你可以在".tmux.conf"中做很多事情,
+And in ".tmux.conf", here you can do a lot of things 
+
+674
+00:54:59,625 --> 00:55:02,575
+比如根据你所在的主机更改颜色,
+like changing the color depending on the host you are...
+
+675
+00:55:02,575 --> 00:55:07,225
+以便快速获得视觉反馈,
+so you can get like quick visual feedback about where you are, 
+
+676
+00:55:07,225 --> 00:55:08,725
+或者如果你有一个嵌套会话.
+or like if you have a nested session.
+
+677
+00:55:08,725 --> 00:55:10,875
+此外,
+Also, tmux will...
+
+678
+00:55:10,900 --> 00:55:15,600
+如果你在同一台主机上,并且尝试在一个tmux会话中使用tmux,
+if you're in the same host and you try to tmux within a tmux session, 
+
+679
+00:55:15,600 --> 00:55:19,450
+tmux会阻止你这样做,以避免出现问题.
+it will kind of prevent you from doing it so you don't run into issues.
+
+680
+00:55:21,550 --> 00:55:26,225
+如果有关我们涵盖的所有主题的其他问题,请随意问.
+Any other questions related, to kind of all the topics we have covered.
+
+681
+00:55:28,350 --> 00:55:31,100
+对于那个问题的另一个答案是,
+Another answer to that question is also, 
+
+682
+00:55:31,100 --> 00:55:35,100
+如果你将前缀键击两次,它会将其发送一次到底层shell.
+if you type the prefix twice, it sends it once to the underlying shell.
+
+683
+00:55:35,100 --> 00:55:40,350
+因此,本地绑定是"Ctrl+A",远程绑定是"Ctrl+A",
+So the local binding is "Ctrl+A" and the remote binding is "Ctrl+A", 
+
+684
+00:55:40,350 --> 00:55:45,525
+你可以键入"Ctrl+A","Ctrl+A",然后键入"D",例如从远程分离.
+You could type "Ctrl+A", "Ctrl+A" and then "D", for example, detaches from the remote, basically.
+
+685
+00:55:52,300 --> 00:55:56,325
+我想今天的课程到此结束了,
+I think that ends the class for today, 
+
+686
+00:55:56,325 --> 00:55:59,625
+有很多与所有这些主题相关的练习,
+there's a bunch of exercises related to all these main topics 
+
+687
+00:55:59,625 --> 00:56:03,125
+我们今天也有办公时间.
+and we're gonna be holding office hours today, too. 
+
+688
+00:56:03,175 --> 00:56:05,875
+可以随时来问我们任何问题.
+So feel free to come and ask us any questions.
+
